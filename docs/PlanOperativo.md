@@ -9,7 +9,7 @@
 🎯 *Meta:* Tener totalmente definida la idea, funcionalidades y flujo de usuario.
 
 **Tareas:**
-- [✅] Definir usuario objetivo y problema que resuelve la app.  
+- [x] Definir usuario objetivo y problema que resuelve la app.  
 - [ ] Crear lista de funcionalidades (`must-have`, `should-have`, `nice-to-have`).  
 - [ ] Redactar historias de usuario.  
 - [ ] Esquematizar flujo de uso básico (desde login hasta dashboard).  
