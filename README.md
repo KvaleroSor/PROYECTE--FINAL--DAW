@@ -1,22 +1,28 @@
-# 💰 Proyecto Final DAW — App de Gestión Financiera Personal
+# 💰 App de Gestión Financiera Personal
 
-## 🧭 Descripción general
-Aplicación web diseñada para ayudar a personas sin conocimientos financieros a **gestionar su dinero de forma sencilla**, **entender sus gastos** y **fomentar el ahorro**.  
-El usuario podrá registrar sus ingresos y gastos, establecer gastos fijos y, en base a su nómina mensual, el sistema calculará automáticamente cuánto puede destinar a **ahorro**, **ocio**, **gastos variables** e **inversión**.
-
-El objetivo principal es **educar financieramente a través de la práctica**, ofreciendo una herramienta útil, intuitiva y visualmente atractiva.
+Aplicación web para ayudar a personas sin conocimientos financieros a **gestionar su dinero de forma sencilla**, distribuyendo automáticamente su nómina entre **ahorro, gastos fijos, ocio e inversión**.
 
 ---
 
-## 🎯 Objetivos del proyecto
-- Fomentar la **educación financiera** mediante una herramienta accesible y visual.  
-- Permitir una **gestión clara y sencilla de los gastos personales**.  
-- Ayudar al usuario a **distribuir su nómina automáticamente** según categorías financieras.  
-- Mostrar estadísticas y gráficos que ayuden a **entender los hábitos de consumo**.  
+## 🚀 Características principales
+- Registro de **ingresos** y **gastos** por categorías.
+- Asignación de **gastos fijos** (alquiler, luz, etc.).
+- Cálculo automático del **presupuesto mensual**:
+  - 💰 Ahorro  
+  - 🛒 Gastos variables  
+  - 🎉 Ocio  
+  - 📈 Inversión
+- Dashboard con estadísticas y gráficos financieros.
+- Configuración personalizable de porcentajes de reparto.
 
 ---
 
-## ⚙️ Stack Tecnológico
+## 🧠 Objetivo
+Ayudar a las personas a **aprender a gestionar su dinero**, entender en qué gastan y crear hábitos financieros saludables sin necesidad de conocimientos previos.
+
+---
+
+## 🛠️ Stack Tecnológico
 
 | Capa | Tecnología |
 |------|-------------|
@@ -28,25 +34,13 @@ El objetivo principal es **educar financieramente a través de la práctica**, o
 
 ---
 
-## 🧱 Arquitectura general del proyecto
-
+## ⚙️ Estructura inicial del proyecto
 ```bash
 root/
 ├── backend/
 │   ├── src/
-│   │   ├── models/
-│   │   ├── routes/
-│   │   ├── controllers/
-│   │   └── app.js
-│   ├── package.json
-│   └── .env
-│
+│   └── package.json
 ├── frontend/
 │   ├── app/
-│   ├── components/
-│   ├── hooks/
-│   ├── utils/
-│   ├── package.json
-│   └── tailwind.config.js
-│
+│   └── package.json
 └── README.md
