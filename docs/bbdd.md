@@ -99,4 +99,4 @@
 
 +------------------------------------------------------+
 
-![Diagrama ER](Diagrama%20sin%20título.png)
+![Diagrama ER](Diagrama%20sin%20título.jpg)
