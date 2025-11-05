@@ -72,6 +72,4 @@
 
 ## 🔗 Relaciones generales
 
-
-
 ![Diagrama ER](Diagrama%20sin%20título.jpg)

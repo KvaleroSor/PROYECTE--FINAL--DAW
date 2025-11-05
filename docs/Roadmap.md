@@ -9,10 +9,10 @@ Construir una aplicación web full stack que permita a los usuarios registrar in
 **Meta:** tener muy claro *qué problema resuelve la app* y *cómo lo va a resolver*.
 
 ### Tareas sugeridas
-- [ ] Definir el **usuario objetivo** (perfil, necesidades, nivel de conocimientos financieros).
+- [x] Definir el **usuario objetivo** (perfil, necesidades, nivel de conocimientos financieros).
 - [ ] Describir el **problema real** que la app soluciona.
 - [ ] Identificar el **valor añadido** de tu solución frente a otras apps.
-- [ ] Crear una lista de **funcionalidades** y priorizarlas:
+- [x] Crear una lista de **funcionalidades** y priorizarlas:
   - `must-have` → imprescindibles para el MVP  
   - `should-have` → útiles pero no urgentes  
   - `nice-to-have` → futuras mejoras
