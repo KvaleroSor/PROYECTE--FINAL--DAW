@@ -7,6 +7,8 @@ router.post("/", async (req, res) => {
     try {
         const reqUser = req.body;
 
+        console.log(reqUser);
+
         const resultNewUser = await postUser(reqUser);
 
         res.status(201).json({

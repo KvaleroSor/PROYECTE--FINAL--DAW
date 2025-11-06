@@ -3,9 +3,11 @@ import hashingPassword from '../../utils/hashingPassword.js';
 
 const postUser = async (newUser) => {
     try{
-        const { name, email, pasword_hash } = newUser;
+        const { name, email, password_hash } = newUser;
     
-        const password_hashed = await hashingPassword(pasword_hash);
+        const password_hashed = await hashingPassword(password_hash);
+
+        console.log(newUser);
     
         const registeredUser = await User.create({
             name: name,
