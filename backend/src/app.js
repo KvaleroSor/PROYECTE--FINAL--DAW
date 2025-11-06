@@ -29,7 +29,7 @@ app.use(cors());
  * Routes for users
  */
 
-app.use("/api/user/", postUser);
+app.use("/api/users", postUser);
 
 
 export default app;
