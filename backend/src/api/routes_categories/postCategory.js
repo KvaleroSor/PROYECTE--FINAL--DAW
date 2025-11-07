@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
         res.status(201).json({
             mensaje: "✅ - THE CATEGORY HAS BEEN CREATED",
             data_recived: reqCategory,
-            new_user: resultNewCategory,
+            new_category: resultNewCategory,
         });
     } catch (err) {
         res.status(500).json({
