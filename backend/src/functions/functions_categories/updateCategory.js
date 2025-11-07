@@ -2,7 +2,7 @@ import Category from "../../models/categories.js";
 
 const updateCategory = async (id, data) => {
     try {
-        const ressultUpdate = await Spend.findByIdAndUpdate(id, data, {
+        const ressultUpdate = await Category.findByIdAndUpdate(id, data, {
             new: true,
             runValidators: true,
         });
