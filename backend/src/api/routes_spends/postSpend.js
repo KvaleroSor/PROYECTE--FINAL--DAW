@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
         });
     } catch (err) {
         res.status(500).json({
-            mensaje: `❌ ERROR - THE SPEND HAS NOT BEEN CREATED | SERVIDOR`,
+            mensaje: `❌ ERROR - INTERNAL ERROR | SERVIDOR`,
             error: err.mensage,
         });
     }

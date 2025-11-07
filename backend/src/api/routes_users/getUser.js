@@ -11,7 +11,7 @@ router.get("/", async (req, res) => {
             ? res.status(404).json({
                   mensaje: "❌ ERROR - THE USERS HAVE NOT BEEN FOUNDED | SERVER",
               })
-            : res.status(201).json({
+            : res.status(200).json({
                   mensaje: "✅ - THE USERS HAVE BEEN FOUNDED",
                   data: resultGet
               });

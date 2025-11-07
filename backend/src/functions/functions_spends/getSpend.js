@@ -6,7 +6,7 @@ const getSpend = async () => {
 
         return resultGet;
     } catch (err) {
-        console.log("❌ ERROR - THE SPEND COULD NOT BE FOUND  | BBDD");
+        console.log("❌ ERROR - THE SPEND COULD NOT BE FOUND | BBDD");
     }
 };
 

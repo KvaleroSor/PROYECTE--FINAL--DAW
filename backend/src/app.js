@@ -10,6 +10,7 @@ import postCategory from './api/routes_categories/postCategory.js';
 import updateSpend from './api/routes_spends/updateSpend.js';
 import deleteSpend from './api/routes_spends/deleteSpend.js';
 import getSpend from './api/routes_spends/getSpend.js';
+import getSpendById from './api/routes_spends/getSpendById.js';
 
 const app = express();
 
@@ -51,7 +52,7 @@ app.use("/api/spends", postSpend);
 app.use("/api/spends", updateSpend);
 app.use("/api/spends", deleteSpend);
 app.use("/api/spends", getSpend);
-// app.use("/api/spends", getSpendById);
+app.use("/api/spends", getSpendById);
 
 /**
  * Routes for categories 💰

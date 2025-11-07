@@ -6,7 +6,7 @@ const getUser = async () => {
 
         return resultGet;
     } catch (err) {
-        console.log("❌ ERROR - THE USERS COULD NOT BE FOUND  | BBDD");
+        console.log("❌ ERROR - THE USERS COULD NOT BE FOUND | BBDD");
     }
 };
 
