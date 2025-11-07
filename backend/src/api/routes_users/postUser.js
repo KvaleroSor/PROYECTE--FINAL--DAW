@@ -6,8 +6,11 @@ const router = Router();
 router.post("/", async (req, res) => {
     try {
         const reqUser = req.body;
+        const { name, email, password_hash } = reqUser; 
 
-        console.log(reqUser);
+        if(!name || !email || !password_hash){
+            res.status(204).send();
+        }
 
         const resultNewUser = await postUser(reqUser);
 
@@ -18,7 +21,7 @@ router.post("/", async (req, res) => {
         });
     } catch (err) {
         res.status(500).json({
-            mensaje: `❌ ERROR - NO SE HA CREADO EL USUARIO`,
+            mensaje: `❌ ERROR - NO SE HA CREADO EL USUARIO | SERVIDOR`,
             error: err.mensage,
         });
     }

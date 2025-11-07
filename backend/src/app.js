@@ -1,6 +1,10 @@
 import express from 'express';
 import cors from 'cors';
 import postUser from './api/routes_users/postUser.js';
+import updateUser from './api/routes_users/updateUser.js';
+import deleteUser from './api/routes_users/deleteUser.js';
+import getUser from './api/routes_users/getUser.js';
+import getUserById from './api/routes_users/getUserById.js';
 
 const app = express();
 
@@ -26,10 +30,23 @@ app.use(cors());
 */
 
 /**
- * Routes for users
+ * Routes for users 🧑🏽‍💻👩🏽‍💻
  */
 
 app.use("/api/users", postUser);
+app.use("/api/users", updateUser);
+app.use("/api/users", deleteUser);
+app.use("/api/users", getUser);
+app.use("/api/users", getUserById);
 
+/**
+ * Routes for spends 💰
+ */
+
+// app.use("/api/spends", postSpend);
+// app.use("/api/spends", updateSpend);
+// app.use("/api/spends", deleteSpend);
+// app.use("/api/spends", getSpend);
+// app.use("/api/spends", getSpendById);
 
 export default app;

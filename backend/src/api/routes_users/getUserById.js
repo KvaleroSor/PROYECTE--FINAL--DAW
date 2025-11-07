@@ -1,19 +1,20 @@
 import { Router } from "express";
-import getUser from "../../functions/functions_users/getUser.js";
+import getUserById from "../../functions/functions_users/getUserById.js";
 
 const router = Router();
 
-router.get("/", async (req, res) => {
+router.get("/:id", async (req, res) => {
     try {
-        const resultGet = await getUser();
+        const id = req.params.id;        
+        const resultGetId = await getUserById(id);
 
-        !resultGet
+        !resultGetId
             ? res.status(404).json({
                   mensaje: "❌ ERROR - USUARIOS NO ENCONTRADOS | SERVER",
               })
             : res.status(201).json({
                   mensaje: "✅ - USUARIO ENCONTRADO CON EXITO",
-                  data: resultGet
+                  data: resultGetId,
               });
     } catch (err) {
         res.status(500).json({
