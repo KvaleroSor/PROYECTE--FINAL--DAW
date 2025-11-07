@@ -5,7 +5,7 @@ const getUserById = async (id) => {
         const resultGetId = await User.findById(id);
         return resultGetId;
     }catch(err){
-        console.log("❌ ERROR - NO SE HA PODIDO ENCONTRAR AL USUARIO");
+        console.log("❌ ERROR - THE USER COULD NOT BE FOUND");
         console.error(err);
         throw err;
     }

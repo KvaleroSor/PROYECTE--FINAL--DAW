@@ -1,23 +1,23 @@
 import { Router } from "express";
-import deleteUser from "../../functions/functions_users/deleteUser.js";
+import deleteSpend from "../../functions/functions_spends/deleteSpend.js";
 
 const router = Router();
 
 router.delete("/:id", async (req, res) => {
     try {
         const id = req.params.id;
-        const result = await deleteUser(id);
+        const result = await deleteSpend(id);
 
         !result
             ? res.status(404).json({
-                  mensaje: "❌ ERROR - THE USER COULD NOT BE DELETED | SERVER",
+                  mensaje: "❌ ERROR - THE SPEND COULD NOT BE DELETED | SERVER",
               })
             : res.status(200).json({
-                  mensaje: "❌ CONGRATS - THE USER HAS BEEN DELETED",
+                  mensaje: "❌ CONGRATS - THE SPEND HAS BEEN DELETED",
               });
     } catch (err) {
         res.status(500).json({
-            mensaje: "❌ ERROR - INTERNAL ERROR | SERVER",
+            mensaje: "❌ ERROR - FROM SERVER",
         });
     }
 });

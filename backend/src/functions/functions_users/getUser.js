@@ -6,7 +6,7 @@ const getUser = async () => {
 
         return resultGet;
     } catch (err) {
-        console.log("❌ ERROR - NO SE HA PODIDO ENCONTRAR USUARIOS | BBDD");
+        console.log("❌ ERROR - THE USERS COULD NOT BE FOUND | BBDD");
     }
 };
 

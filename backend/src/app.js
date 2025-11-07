@@ -5,6 +5,12 @@ import updateUser from './api/routes_users/updateUser.js';
 import deleteUser from './api/routes_users/deleteUser.js';
 import getUser from './api/routes_users/getUser.js';
 import getUserById from './api/routes_users/getUserById.js';
+import postSpend from './api/routes_spends/postSpend.js';
+import postCategory from './api/routes_categories/postCategory.js';
+import updateSpend from './api/routes_spends/updateSpend.js';
+import deleteSpend from './api/routes_spends/deleteSpend.js';
+import getSpend from './api/routes_spends/getSpend.js';
+import getSpendById from './api/routes_spends/getSpendById.js';
 
 const app = express();
 
@@ -26,7 +32,6 @@ app.use(cors());
 | 422 Unprocessable Entity | Datos válidos en formato pero con errores de validación (por ejemplo, campos que no cumplen el schema). |
 | 500 Internal Server Error | Error inesperado en el servidor. |
 | 503 Service Unavailable | El servidor no puede procesar temporalmente la petición. |
-
 */
 
 /**
@@ -43,10 +48,16 @@ app.use("/api/users", getUserById);
  * Routes for spends 💰
  */
 
-// app.use("/api/spends", postSpend);
-// app.use("/api/spends", updateSpend);
-// app.use("/api/spends", deleteSpend);
-// app.use("/api/spends", getSpend);
-// app.use("/api/spends", getSpendById);
+app.use("/api/spends", postSpend);
+app.use("/api/spends", updateSpend);
+app.use("/api/spends", deleteSpend);
+app.use("/api/spends", getSpend);
+app.use("/api/spends", getSpendById);
+
+/**
+ * Routes for categories 💰
+ */
+
+app.use("/api/categories", postCategory);
 
 export default app;

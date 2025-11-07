@@ -1,18 +1,18 @@
 import { Router } from "express";
-import getUser from '../../functions/functions_users/getUser.js';
+import getSpend from './../../functions/functions_spends/getSpend.js';
 
 const router = Router();
 
 router.get("/", async (req, res) => {
     try {
-        const resultGet = await getUser();
+        const resultGet = await getSpend();
 
         !resultGet
             ? res.status(404).json({
-                  mensaje: "❌ ERROR - THE USERS HAVE NOT BEEN FOUNDED | SERVER",
+                  mensaje: "❌ ERROR - THE SPENDS HAVE NOT BEEN FOUNDED | SERVER",
               })
-            : res.status(200).json({
-                  mensaje: "✅ - THE USERS HAVE BEEN FOUNDED",
+            : res.status(201).json({
+                  mensaje: "✅ - THE SPENDS HAVE BEEN FOUNDED",
                   data: resultGet
               });
     } catch (err) {

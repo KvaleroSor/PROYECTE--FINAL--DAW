@@ -1,5 +1,5 @@
 import { Router } from "express";
-import updateUser from "./../../functions/functions_users/updateUser.js";
+import updateSpend from './../../functions/functions_spends/updateSpend.js';
 
 const router = Router();
 
@@ -8,14 +8,14 @@ router.put("/:id", async (req, res) => {
         const id = req.params.id;
         const data = req.body;
 
-        const resultUpdate = await updateUser(id, data);
+        const resultUpdate = await updateSpend(id, data);
 
         !resultUpdate
             ? res.status(404).json({
-                  mensaje: "❌ ERROR - THE SPEND COULD NOT BE FOUND | SERVER",
+                  mensaje: "❌ ERROR - THE USER HAS NOT BEEN FOUND | SERVER",
               })
             : res.status(200).json({
-                  mensaje: "✅ EXITO - THE SPEND HAS BEEN UPDATED",
+                  mensaje: "✅ EXITO - THE USER HAS BEEN UPDATED",
                   data_recibed: data,
                   data_updated: resultUpdate,
               });

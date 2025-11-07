@@ -15,13 +15,13 @@ router.post("/", async (req, res) => {
         const resultNewUser = await postUser(reqUser);
 
         res.status(201).json({
-            mensaje: "✅ - USUARIO CREADO CON EXITO",
+            mensaje: "✅ - THE USER HAS BEEN CREATED",
             data_recived: reqUser,
             new_user: resultNewUser,
         });
     } catch (err) {
         res.status(500).json({
-            mensaje: `❌ ERROR - NO SE HA CREADO EL USUARIO | SERVIDOR`,
+            mensaje: `❌ ERROR - INTERNAL ERROR | SERVIDOR`,
             error: err.mensage,
         });
     }

@@ -1,9 +1,37 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
-/**
- * 
- * para referenciar con id 
- * 
- * type: mongoose.Schema.Types.ObjectId,
- * 
- */
+const spendSchema = new mongoose.Schema({
+    user_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "User",
+    },
+    categories: [
+        {
+            category_id: {
+                type: mongoose.Schema.Types.ObjectId,
+                required: true,
+                ref: "Categories",
+            },
+        },
+    ],
+    description: {
+        type: String,
+        required: true,
+    },
+    amount: {
+        type: Number,
+        required: true,
+    },
+    date: {
+        type: Date,
+        defualt: Date.now,
+    },
+    payment_type: {
+        type: String,
+        required: false,
+    },
+});
+
+const Spend = mongoose.model("Spend", spendSchema);
+export default Spend;

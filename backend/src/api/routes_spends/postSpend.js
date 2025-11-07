@@ -16,13 +16,14 @@ router.post("/", async (req, res) => {
         const resultNewSpend = await postSpend(reqSpend);
 
         res.status(201).json({
-            mensaje: "✅ - THE USER HAS BEEN CREATED",
+            mensaje: "✅ - THE SPEND HAS BEEN CREATED",
             data_recived: reqSpend,
-            new_user: resultNewSpend,
+            new_spend: resultNewSpend,
         });
     } catch (err) {
         res.status(500).json({
-            mensaje: `❌ ERROR - THE USER HAS NOT BEEN CREATED | SERVIDOR`,
+            mensaje: `❌ ERROR - INTERNAL ERROR | SERVIDOR`,
+
             error: err.mensage,
         });
     }
