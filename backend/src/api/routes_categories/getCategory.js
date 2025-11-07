@@ -1,5 +1,5 @@
 import { Router } from "express";
-import getCategory from "../../functions/functions_categories/getCategories.js";
+import getCategory from "../../functions/functions_categories/getCategory.js";
 
 const router = Router();
 
@@ -9,10 +9,10 @@ router.get("/", async (req, res) => {
 
         !resultGet
             ? res.status(404).json({
-                  mensaje: "❌ ERROR - THE CATEGORIES HAVE NOT BEEN FOUNDED | SERVER",
+                  mensaje: "❌ ERROR - THE CATEGORIES HAVE NOT BEEN FOUND | SERVER",
               })
             : res.status(201).json({
-                  mensaje: "✅ - THE CATEGORIES HAVE BEEN FOUNDED",
+                  mensaje: "✅ - THE CATEGORIES HAVE BEEN FOUND",
                   data: resultGet
               });
     } catch (err) {

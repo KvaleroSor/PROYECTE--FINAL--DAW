@@ -13,7 +13,7 @@ router.delete("/:id", async (req, res) => {
                   mensaje: "❌ ERROR - THE CATEGORY COULD NOT BE DELETED | SERVER",
               })
             : res.status(200).json({
-                  mensaje: "❌ CONGRATS - THE CATEGORY HAS BEEN DELETED",
+                  mensaje: "✅ CONGRATS - THE CATEGORY HAS BEEN DELETED",
               });
     } catch (err) {
         res.status(500).json({

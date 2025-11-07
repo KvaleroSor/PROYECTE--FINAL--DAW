@@ -1,5 +1,5 @@
 import { Router } from "express";
-import getCategoryById from '../../functions/functions_categories/getCategoryById';
+import getCategoryById from '../../functions/functions_categories/getCategoryById.js';
 
 const router = Router();
 
