@@ -49,4 +49,15 @@ app.use("/api/users", getUserById);
 // app.use("/api/spends", getSpend);
 // app.use("/api/spends", getSpendById);
 
+/**
+ * Routes for categories 📋
+ */
+
+// app.use("/api/categories", postCategory);
+// app.use("/api/categories", updateCategory);
+// app.use("/api/categories", deleteCategory);
+// app.use("/api/categories", getCategory);
+// app.use("/api/categories", getCategoryById);
+
+
 export default app;
