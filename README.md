@@ -5,36 +5,39 @@ Aplicación web para ayudar a personas sin conocimientos financieros a **gestion
 ---
 
 ## 🚀 Características principales
-- Registro de **ingresos** y **gastos** por categorías.
-- Asignación de **gastos fijos** (alquiler, luz, etc.).
-- Cálculo automático del **presupuesto mensual**:
-  - 💰 Ahorro  
-  - 🛒 Gastos variables  
-  - 🎉 Ocio  
-  - 📈 Inversión
-- Dashboard con estadísticas y gráficos financieros.
-- Configuración personalizable de porcentajes de reparto.
+
+-   Registro de **ingresos** y **gastos** por categorías.
+-   Asignación de **gastos fijos** (alquiler, luz, etc.).
+-   Cálculo automático del **presupuesto mensual**:
+    -   💰 Ahorro
+    -   🛒 Gastos variables
+    -   🎉 Ocio
+    -   📈 Inversión
+-   Dashboard con estadísticas y gráficos financieros.
+-   Configuración personalizable de porcentajes de reparto.
 
 ---
 
 ## 🧠 Objetivo
+
 Ayudar a las personas a **aprender a gestionar su dinero**, entender en qué gastan y crear hábitos financieros saludables sin necesidad de conocimientos previos.
 
 ---
 
 ## 🛠️ Stack Tecnológico
 
-| Capa | Tecnología |
-|------|-------------|
-| **Frontend** | React + Next.js |
-| **Estilos** | Tailwind CSS |
-| **Backend** | Node.js + Express |
-| **Base de datos** | MongoDB |
-| **Control de versiones** | Git + GitHub |
+| Capa                     | Tecnología        |
+| ------------------------ | ----------------- |
+| **Frontend**             | React + Next.js   |
+| **Estilos**              | Tailwind CSS      |
+| **Backend**              | Node.js + Express |
+| **Base de datos**        | MongoDB           |
+| **Control de versiones** | Git + GitHub      |
 
 ---
 
 ## ⚙️ Estructura inicial del proyecto
+
 ```bash
 root/
 ├── backend/
@@ -44,3 +47,26 @@ root/
 │   ├── app/
 │   └── package.json
 └── README.md
+```
+
+---
+
+## 🚀 Poner en marcha el proyecto+
+
+Nos situaremos en el directorio de "backend"
+
+-   npm install
+
+    -   Instalamos todas las dependencias que necesite el proyecto.
+
+-   npm run dev
+
+    -   Arrancaremos nuestro servidor de node con express.
+
+-   Anotación:
+    -   Nos deberá salir en la terminal lo siguiente:
+    ```
+    ✅🚀 BBDD conectada
+    ✅🚀 Servidor escuchando el puerto 3003
+    ```
+  
