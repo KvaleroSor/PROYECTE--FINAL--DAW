@@ -1,5 +1,5 @@
 import { Router } from "express";
-import getUser from "../../functions/functions_users/getUser.js";
+import getUser from '../../functions/functions_users/getUser.js';
 
 const router = Router();
 
@@ -9,15 +9,15 @@ router.get("/", async (req, res) => {
 
         !resultGet
             ? res.status(404).json({
-                  mensaje: "❌ ERROR - USUARIOS NO ENCONTRADOS | SERVER",
+                  mensaje: "❌ ERROR - THE USERS HAVE NOT BEEN FOUNDED | SERVER",
               })
             : res.status(201).json({
-                  mensaje: "✅ - USUARIO ENCONTRADO CON EXITO",
+                  mensaje: "✅ - THE USERS HAVE BEEN FOUNDED",
                   data: resultGet
               });
     } catch (err) {
         res.status(500).json({
-            mensaje: `❌ ERROR - NO SE HA CREADO EL USUARIO | SERVIDOR`,
+            mensaje: `❌ ERROR - INTERNAL ERROR | SERVER`,
             error: err.mensage,
         });
     }
