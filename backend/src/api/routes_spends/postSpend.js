@@ -18,7 +18,7 @@ router.post("/", async (req, res) => {
         res.status(201).json({
             mensaje: "✅ - THE USER HAS BEEN CREATED",
             data_recived: reqSpend,
-            new_user: resultNewSpend,
+            new_spend: resultNewSpend,
         });
     } catch (err) {
         res.status(500).json({
