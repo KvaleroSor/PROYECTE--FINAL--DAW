@@ -1,0 +1,31 @@
+import { Router } from 'express';
+import postSpend from './../../functions/functions_spends/postSpend.js';
+
+const router = Router();
+
+router.post("/", async (req, res) => {
+    try {
+        const reqSpend = req.body;
+        const { user_id, categories, description, amount, date } = reqSpend;
+
+        if(!user_id || categories.length === 0 || !description || !amount || !date ){
+            console.log("❌ ERROR - SOME ELEMENT OF THE NEW SPEND IS EMPTY | SERVER");
+            res.status(204).send();
+        }
+
+        const resultNewSpend = await postSpend(reqSpend);
+
+        res.status(201).json({
+            mensaje: "✅ - THE USER HAS BEEN CREATED",
+            data_recived: reqSpend,
+            new_user: resultNewSpend,
+        });
+    } catch (err) {
+        res.status(500).json({
+            mensaje: `❌ ERROR - THE USER HAS NOT BEEN CREATED | SERVIDOR`,
+            error: err.mensage,
+        });
+    }
+});
+
+export default router;
