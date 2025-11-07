@@ -24,7 +24,7 @@ const postUser = async (newUser) => {
         return registeredUser;
     }catch(err){
         console.error(err);
-        console.log("❌ ERROR - NO SE HA CREADO EL USUARIO | BBDD");
+        console.log("❌ ERROR - THE USER HAS NOT BEEN CREATED | BBDD");
         throw err;
     }
 };

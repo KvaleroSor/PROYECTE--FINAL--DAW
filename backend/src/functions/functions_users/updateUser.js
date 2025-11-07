@@ -20,7 +20,7 @@ const updateUser = async (id, data) => {
 
         return ressultUpdate;
     } catch (err) {
-        console.log("❌ ERROR - NO SE HA PODIDO ACTUALIZAR EL USUARIO | BBDD");
+        console.log("❌ ERROR - THE USER HAS NOT BEEN UPDATED | BBDD");
         console.error(err);
         throw err;
     }

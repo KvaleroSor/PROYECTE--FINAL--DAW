@@ -5,6 +5,8 @@ import updateUser from './api/routes_users/updateUser.js';
 import deleteUser from './api/routes_users/deleteUser.js';
 import getUser from './api/routes_users/getUser.js';
 import getUserById from './api/routes_users/getUserById.js';
+import postSpend from './api/routes_spends/postSpend.js';
+import postCategory from './api/routes_categories/postCategory.js';
 
 const app = express();
 
@@ -43,10 +45,16 @@ app.use("/api/users", getUserById);
  * Routes for spends 💰
  */
 
-// app.use("/api/spends", postSpend);
+app.use("/api/spends", postSpend);
 // app.use("/api/spends", updateSpend);
 // app.use("/api/spends", deleteSpend);
 // app.use("/api/spends", getSpend);
 // app.use("/api/spends", getSpendById);
+
+/**
+ * Routes for categories 💰
+ */
+
+app.use("/api/categories", postCategory);
 
 export default app;

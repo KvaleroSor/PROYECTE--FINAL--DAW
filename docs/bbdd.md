@@ -28,7 +28,7 @@
 | usuario_id | integer (FK → User.id) | Usuario al que pertenece |
 | categories | array (FK → Category.id) | Lista de categorías asociadas al gasto |
 | description | string | Descripción opcional del gasto |
-| import | number | Importe gastado |
+| amount | number | Importe gastado |
 | date | date | Fecha del gasto |
 | payment_type | string | Tipo de pago (efectivo, tarjeta, etc.) |
 
