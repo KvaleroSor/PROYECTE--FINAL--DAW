@@ -10,14 +10,14 @@ router.delete("/:id", async (req, res) => {
 
         !result
             ? res.status(404).json({
-                  mensaje: "ERROR - NO SE HA PODIDO BORRAR LA PELÍCULA | SERVER",
+                  mensaje: "❌ ERROR - THE USER COULD NOT BE DELETED | SERVER",
               })
             : res.status(200).json({
-                  mensaje: "EXITO - BORRADO CON EXITO",
+                  mensaje: "❌ CONGRATS - THE USER HAS BEEN DELETED",
               });
     } catch (err) {
         res.status(500).json({
-            mensaje: "ERROR - ERROR DESDE EL SERVER",
+            mensaje: "❌ ERROR - ERROR FROM SERVER",
         });
     }
 });
