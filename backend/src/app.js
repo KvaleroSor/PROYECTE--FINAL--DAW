@@ -60,4 +60,15 @@ app.use("/api/spends", getSpendById);
 
 app.use("/api/categories", postCategory);
 
+/**
+ * Routes for categories 📋
+ */
+
+// app.use("/api/categories", postCategory);
+// app.use("/api/categories", updateCategory);
+// app.use("/api/categories", deleteCategory);
+// app.use("/api/categories", getCategory);
+// app.use("/api/categories", getCategoryById);
+
+
 export default app;
