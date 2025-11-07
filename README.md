@@ -51,7 +51,7 @@ root/
 
 ---
 
-## 🚀 Poner en marcha el proyecto+
+## 🚀 Poner en marcha el proyecto
 
 Nos situaremos en el directorio de "backend"
 
