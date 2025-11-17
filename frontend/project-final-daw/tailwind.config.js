@@ -10,6 +10,7 @@ module.exports = {
             colors: {
                 // 🎨 PALETA PRINCIPAL
                 pastelGreen: "#D9F2C2",
+                // pastelGreen: "#EBDACC",
                 pastelBlue: "#A7D9E7",
 
                 // 🎨 SECUNDARIOS
@@ -18,7 +19,12 @@ module.exports = {
 
                 // 🎨 BASE
                 baseBg: "#FAFAF7",
+                // baseBg: "#F9F5F1",
                 cardBg: "#FFFFFF",
+                limaBg: "#EAF8C8",
+                limaSoftBg: "#F3FBD9",
+                baseVerdePastelBg: "#DDF0D9",
+                // baseVerdePastelBg: "#DCE2EC",
 
                 // 🎨 TEXTOS
                 textPrimary: "#2F2F2F",
