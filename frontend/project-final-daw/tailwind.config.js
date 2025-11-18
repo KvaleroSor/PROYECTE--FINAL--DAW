@@ -21,6 +21,9 @@ module.exports = {
                 baseBg: "#FAFAF7",
                 // baseBg: "#F9F5F1",
                 cardBg: "#FFFFFF",
+                verdeAzuladoOscuroBase: "#19625C",
+                cyanBrillante: "#00C7C7",
+                tealMedio: "#1A8B84",
                 limaBg: "#EAF8C8",
                 limaSoftBg: "#F3FBD9",
                 baseVerdePastelBg: "#DDF0D9",
@@ -29,6 +32,7 @@ module.exports = {
                 // 🎨 TEXTOS
                 textPrimary: "#2F2F2F",
                 textSecondary: "#6F6F6F",
+                textLeftLandingPage: "#FFFFFF",
 
                 // 🎨 BORDES
                 borderSoft: "#E5E7EB",
@@ -41,3 +45,9 @@ module.exports = {
     },
     plugins: [],
 };
+
+/**
+ * #19625C - Verde azulado oscuro (el más oscuro)
+ * #1A8B84 - Teal medio 
+ * #00C7C7 - Cyan brillante (el más claro/vibrante)
+ */
