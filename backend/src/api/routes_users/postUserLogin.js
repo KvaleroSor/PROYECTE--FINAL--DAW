@@ -8,9 +8,6 @@ router.post("/login", async (req, res) => {
     try {
         const { email, password } = req.body;
         const user = await postUserLogin(email);
-        console.log(user);
-        console.log(user.email);
-        console.log(user.password_hash);
 
         //Validem el usuari que tinguem nosaltres guardat en la BBDD, que ens haja tornat algo.
         if (!user) {
@@ -19,10 +16,10 @@ router.post("/login", async (req, res) => {
             });
         }
 
+        //Validem el password una vegada hem encontrat l´usuari
         const isValid = await verifyPassword(user.password_hash, password);
         console.log(isValid);
-        //Validem la password que ens ha entrat desde el form i la que tinguem en la BBDD
-        //que fa referencia a eixe email
+
         if (!isValid) {
             return res.status(401).json({
                 mensaje: "ERROR - INCORRECT PASSWORD",
