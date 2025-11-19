@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
-const handler = NextAuth({
+export const authOptions = {
   providers: [
     Credentials({
       name: "Credentials",
@@ -22,7 +22,9 @@ const handler = NextAuth({
 
           const data = await res.json();
 
-          if (!res.ok) return null;
+          if (!res.ok || !data.user) return null;
+
+          delete data.user.password_hash;
 
           return data.user;
         } catch (error) {
@@ -46,10 +48,12 @@ const handler = NextAuth({
   },
 
   pages: {
-    signIn: "/login",
+    signIn: "/",
   },
 
   secret: process.env.NEXTAUTH_SECRET,
-});
+};
+
+const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };

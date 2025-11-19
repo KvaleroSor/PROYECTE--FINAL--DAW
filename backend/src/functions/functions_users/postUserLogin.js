@@ -1,14 +1,9 @@
 import User from './../../models/users.js';
 
 const postUserLogin = async(email) => {
+    // console.log(`Email --> ${email}`);
     try{
-        const userLoged = await User.findOne({ email });
-
-        if(!userLoged) {
-            return res.status(401).json({
-                mensaje: "ERROR - EMAIL HAS NOT BEEN FIND"
-            });
-        }
+        const userLoged = await User.findOne({ email });            
 
         return userLoged;
     }catch(err){

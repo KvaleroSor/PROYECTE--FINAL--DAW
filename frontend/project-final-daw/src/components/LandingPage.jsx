@@ -1,6 +1,7 @@
 "use client";
-import { useState } from "react";
-// import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { signIn, useSession } from "next-auth/react";
+import { useState, useEffect } from "react";
 import { FaInstagram, FaFacebook, FaXTwitter } from "react-icons/fa6";
 import {
     Sparkles,
@@ -16,14 +17,44 @@ import {
 import Button from "./Button.jsx";
 
 const LandingPage = () => {
+    const {data: session} = useSession();
+    const router = useRouter();
     const [isEmail, setIsEmail] = useState("");
     const [isPassword, setIsPassword] = useState("");
     const [isShowPassword, setIsShowPassword] = useState(false);
+    const [isError, setIsError] = useState("");
+
+    useEffect(() => {
+        if (session) {
+            router.push("/dashboard");
+        }
+    }, [session]);
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
+        const res = await signIn("credentials", {
+            email: isEmail,
+            password: isPassword,
+            redirect: false,
+        });
+
+        if (res.error) {
+            setIsError("❌ | CREDENCIALES INCORRECTAS");
+        }
+
+        console.log(res);
+        setIsEmail("");
+        setIsPassword("");
+    };
+
+    // 🛑🚨 DIVIDIR EN DOS COMPONENTS - PART ESQUERRA I PART DRETA.
 
     return (
         // <div className="w-full min-h-screen flex justify-center items-center bg-baseBg">
         //     <div className="w-[95%] max-w-[1700px] h-auto bg-cardBg shadow-2xl rounded-2xl overflow-hidden">
         <div className="min-h-screen flex flex-col lg:flex-row">
+            {/* //PART DRETA */}
             <div className="w-1/2 flex justify-center items-center bg-verdeAzuladoOscuroBase p-14">
                 <div className="w-full max-w-xl flex flex-col gap-8 text-textLeftLandingPage">
                     <h3 className="text-[4rem] font-light">
@@ -94,7 +125,7 @@ const LandingPage = () => {
                     </div>
                 </div>
             </div>
-
+            {/* //PART ESQUERRA */}
             <div className="lg:w-1/2 bg-white flex flex-col items-center justify-center p-8 lg:p-16">
                 <div className="max-w-lg w-full">
                     <div className="mb-10">
@@ -106,7 +137,10 @@ const LandingPage = () => {
                         </p>
                     </div>
 
-                    <form className="space-y-5 sm:space-y-6">
+                    <form
+                        className="space-y-5 sm:space-y-6"
+                        onSubmit={handleSubmit}
+                    >
                         <div className="space-y-2">
                             <label
                                 htmlFor="email"
@@ -163,9 +197,10 @@ const LandingPage = () => {
                                 </button>
                             </div>
                         </div>
+                        {isError && <p style={{ color: "red" }}>{isError}</p>}
                         <div className="flex flex-col justify-center items-center gap-4 mt-4">
-                            <Button textButton={"Iniciar Sesión"}/>
-                            <Button textButton={"Crear Cuenta"}/>
+                            <Button textButton={"Iniciar Sesión"} />
+                            <Button textButton={"Crear Cuenta"} />
                         </div>
                     </form>
                 </div>

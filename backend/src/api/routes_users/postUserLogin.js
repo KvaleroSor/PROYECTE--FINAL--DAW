@@ -26,7 +26,11 @@ router.post("/login", async (req, res) => {
             });
         }
 
-        res.json(user);
+        const userObj = {
+            user,
+        };
+
+        res.json(userObj);
     } catch (err) {
         res.status(500).json({
             mensaje: `❌ ERROR - INTERNAL ERROR | SERVER`,
