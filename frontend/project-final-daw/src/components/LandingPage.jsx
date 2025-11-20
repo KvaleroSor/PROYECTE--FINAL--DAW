@@ -17,12 +17,15 @@ import {
 import Button from "./Button.jsx";
 
 const LandingPage = () => {
-    const {data: session} = useSession();
+    const { data: session } = useSession();
     const router = useRouter();
     const [isEmail, setIsEmail] = useState("");
     const [isPassword, setIsPassword] = useState("");
     const [isShowPassword, setIsShowPassword] = useState(false);
     const [isError, setIsError] = useState("");
+
+    // console.log(isEmail);
+    // console.log(isPassword);
 
     useEffect(() => {
         if (session) {
@@ -46,6 +49,7 @@ const LandingPage = () => {
         console.log(res);
         setIsEmail("");
         setIsPassword("");
+        setIsError("");
     };
 
     // 🛑🚨 DIVIDIR EN DOS COMPONENTS - PART ESQUERRA I PART DRETA.

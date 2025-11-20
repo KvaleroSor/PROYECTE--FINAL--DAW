@@ -9,7 +9,7 @@ export const authOptions = {
         email: {},
         password: {},
       },
-      async authorize(credentials) {
+      async authorize(credentials) {        
         try {
           const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URI}/api/users/login`, {
             method: "POST",
