@@ -29,7 +29,9 @@ export default async function DashboardLayout({ children }) {
 
                 <div className="grid grid-rows-[80px_auto]">
                     <Header />
-                    <Body />
+                    <main className="w-full h-full">
+                        {children}
+                    </main>                    
                 </div>
             </div>
         </div>
