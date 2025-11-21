@@ -59,8 +59,8 @@ const LandingPage = () => {
         //     <div className="w-[95%] max-w-[1700px] h-auto bg-cardBg shadow-2xl rounded-2xl overflow-hidden">
         <div className="min-h-screen flex flex-col lg:flex-row">
             {/* //PART DRETA */}
-            <div className="w-1/2 flex justify-center items-center bg-verdeAzuladoOscuroBase p-14">
-                <div className="w-full max-w-xl flex flex-col gap-8 text-textLeftLandingPage">
+            <div className="w-1/2 flex justify-center items-center bg-verdeAzulado-medium p-14">
+                <div className="w-full max-w-xl flex flex-col gap-8 text-white">
                     <h3 className="text-[4rem] font-light">
                         Tu Espacio Digital
                     </h3>

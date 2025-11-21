@@ -14,7 +14,7 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
     return (
-        <html lang="en" className="h-full overflow-y-scroll no-scrollbar">
+        <html lang="en" className="h-full overflow-y-scroll no-scrollbar ">
             <body className={`${exo2.className} h-full`}>
                 <Providers>{children}</Providers>
             </body>

@@ -7,12 +7,12 @@ import Body from "./components/Body.jsx";
 
 /**
  * 📝 Anotacions
- * 
+ *
  * Revisar si dur el session desde la función o desde useSession
- * 
- * 
- * @param {*} param0 
- * @returns 
+ *
+ *
+ * @param {*} param0
+ * @returns
  */
 
 export default async function DashboardLayout({ children }) {
