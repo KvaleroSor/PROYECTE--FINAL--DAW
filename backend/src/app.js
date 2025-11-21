@@ -3,6 +3,7 @@ import cors from 'cors';
 
 //USERS
 import postUser from './api/routes_users/postUser.js';
+import postUserLogin from './api/routes_users/postUserLogin.js';
 import updateUser from './api/routes_users/updateUser.js';
 import deleteUser from './api/routes_users/deleteUser.js';
 import getUser from './api/routes_users/getUser.js';
@@ -34,6 +35,7 @@ app.use(cors());
  */
 
 app.use("/api/users", postUser);
+app.use("/api/users", postUserLogin);
 app.use("/api/users", updateUser);
 app.use("/api/users", deleteUser);
 app.use("/api/users", getUser); 
