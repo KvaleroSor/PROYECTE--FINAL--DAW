@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
     Plus,
     ShoppingCart,
@@ -11,10 +11,15 @@ import {
     Smartphone,
     Palette,
     X,
+    Repeat,
 } from "lucide-react";
+import postCategory from "@/services/categories/postCategory.js";
 
 const FormSpend = () => {
-    const [isSelectedIcon, setIsSelectedIcon] = useState(false);
+    const [isSelectedIcon, setIsSelectedIcon] = useState(null);
+    const [isName, setIsName] = useState("");
+    const [isColor, setisColor] = useState("");
+
     const [isActive, setisActive] = useState("");
     const availableIcons = [
         { icon: ShoppingCart, name: "ShoppingCart" },
@@ -27,32 +32,71 @@ const FormSpend = () => {
         { icon: Plus, name: "Plus" },
     ];
 
-    const handleSubmitCategory = async () => {
-        
+    const handleSubmitCategory = async (e) => {
+        e.preventDefault();
+
+        const buttonClicked = e.nativeEvent.submitter.id;
+
+        if (buttonClicked === "button-create") {
+            const data = {
+                name: isName,
+                color: isColor,
+                icon: isSelectedIcon,
+            };
+
+            const res = await postCategory(data);
+            console.log(res);
+
+            if (!res) {
+                console.log(`Algo mal ha pasado`);
+            }
+        }else if(buttonClicked === "button-update"){
+            //Lògica per actualitzar data del form.
+
+            console.log('Actualizando datos...!');
+        }
+
+        resetForm();
+    };
+
+    const resetForm = () => {
+        setIsName("");
+        setisColor("");
+        setIsSelectedIcon(false);
     };
 
     return (
         <>
             <form
                 className="flex flex-col justify-start items-center gap-3 text-[#1A8B84]"
-                onSubmit={handleSubmitCategory}
+                onSubmit={(e) => {
+                    handleSubmitCategory(e);
+                }}
             >
                 <div className="w-full space-y-2 space-x-3 flex flex-row justify-start items-center">
                     <label htmlFor="name">Nombre</label>
                     <input
                         id="name"
                         type="text"
-                        placeholder="Nombre Categoria"
+                        placeholder="Nombre Categoría"
                         className="h-12 w-full bg-gray-50 border border-gray-200 focus:outline-none focus:bg-white focus:border-[#1A8B84] transition-colors rounded-lg p-2 focus:bg-gradient-to-br from-[#1A8B84]/10 to-[#00C7C7]/10 shadow-md"
+                        onChange={(e) => {
+                            setIsName(e.target.value || "");
+                        }}
+                        value={isName}
                     />
                 </div>
                 <div className="w-full flex flex-row justify-start items-center">
-                    <label htmlFor="name">Color</label>
+                    <label htmlFor="color">Color</label>
                     <input
-                        id="name"
+                        id="color"
                         type="text"
-                        placeholder="Nombre Categoria"
+                        placeholder="Color Categoría"
                         className="h-12 w-full bg-gray-50 border border-gray-200 focus:outline-none focus:bg-white focus:border-[#1A8B84] transition-colors rounded-lg p-2 focus:bg-gradient-to-br from-[#1A8B84]/10 to-[#00C7C7]/10 shadow-md ml-8"
+                        onChange={(e) => {
+                            setisColor(e.target.value || "");
+                        }}
+                        value={isColor}
                     />
                 </div>
                 <div className="grid grid-cols-4 sm:grid-cols-8 gap-3 mt-5">
@@ -85,13 +129,22 @@ const FormSpend = () => {
                         );
                     })}
                 </div>
-                <div className="flex justify-center items-center w-full">
+                <div className="flex justify-center items-center w-full gap-3">
                     <button
+                        id="button-create"
                         type="submit"
                         className="w-auto p-4 rounded-lg mt-3 flex items-center h-12 bg-gradient-to-r from-[#19625C] via-[#1A8B84] to-[#00C7C7] hover:from-[#145047] hover:via-[#156F69] hover:to-[#00B0B0] text-white transition-all duration-300 group shadow-lg shadow-[#1A8B84]/20"
                     >
                         <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
                         <span>Crear Categoría</span>
+                    </button>
+                    <button
+                        id="button-update"
+                        type="submit"
+                        className="w-auto p-4 rounded-lg mt-3 flex items-center h-12 bg-gradient-to-r from-[#19625C] via-[#1A8B84] to-[#00C7C7] hover:from-[#145047] hover:via-[#156F69] hover:to-[#00B0B0] text-white transition-all duration-300 group shadow-lg shadow-[#1A8B84]/20"
+                    >
+                        <Repeat className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
+                        <span>Actualizar Categoría</span>
                     </button>
                 </div>
             </form>
