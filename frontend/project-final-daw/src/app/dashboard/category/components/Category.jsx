@@ -1,4 +1,4 @@
-import { useCategories } from '@/app/context/CategoryContext.js';
+import { useCategories } from "@/app/context/CategoryContext.js";
 import {
     Plus,
     ShoppingCart,
@@ -12,11 +12,12 @@ import {
     Repeat,
     Icon,
     MoreVertical,
-    CircleX
+    CircleX,
 } from "lucide-react";
 
 const Category = ({ category }) => {
-    const { setIsCategory, setIsUpdatedPushed } = useCategories();
+    const { setIsCategory, setIsUpdatedPushed, deleteCategory } =
+        useCategories();
     const { name, color, icon } = category;
 
     const availableIcons = [
@@ -30,19 +31,26 @@ const Category = ({ category }) => {
         { icon: Plus, name: "Plus" },
     ];
 
-    const handleClick = async (cat) => {
-        console.log(cat);
-        setIsCategory(cat);
-        setIsUpdatedPushed(true);
+    const handleClick = async (e, cat) => {
+        // console.log(cat);
+        if (e.target.closest("button")?.id !== "button-delete") {
+            setIsCategory(cat);
+            setIsUpdatedPushed(true);
+        } else {
+            const res = await deleteCategory(cat._id);
+            console.log(res);
+        }
     };
-
 
     const iconCategory = availableIcons.find((i) => i.name === icon);
 
     return (
         <>
-            <div className="w-[250px] group relative bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-xl hover:border-[#1A8B84]/20 transition-all duration-300 overflow-hidden cursor-pointer"
-                onClick={() => {handleClick(category)}}
+            <div
+                className="w-[250px] group relative bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-xl hover:border-[#1A8B84]/20 transition-all duration-300 overflow-hidden cursor-pointer"
+                onClick={(e) => {
+                    handleClick(e, category);
+                }}
             >
                 <div
                     className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none"
@@ -51,10 +59,10 @@ const Category = ({ category }) => {
                     }}
                 />
 
-                <div className="relative flex items-start justify-between mb-4 group-hover:scale-110 transition-all duration-300">
+                <div className="relative flex items-start justify-between mb-4 group-hover:scale-105 transition-all duration-300">
                     <div className="flex items-center gap-4">
                         <div
-                            className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg shadow-[#1A8B84]/20 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}                            
+                            className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg shadow-[#1A8B84]/20 group-hover:scale-110 group-hover:rotate-3 transition-all duration-300`}
                         >
                             {iconCategory && (
                                 <iconCategory.icon className="w-7 h-7" />
@@ -67,17 +75,16 @@ const Category = ({ category }) => {
                             </p> */}
                         </div>
                     </div>
-                   
-                    <button 
+
+                    <button
+                        id="button-delete"
                         type="button"
-                        className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors">
+                        className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
+                        // onClick={() => {handleButtonClick(category)}}
+                    >
                         <CircleX className="w-6 h-6" />
                     </button>
                 </div>
-
-                {/* <div className=""></div>
-                <h1>{name}</h1>
-                <p>{color}</p> */}
             </div>
         </>
     );

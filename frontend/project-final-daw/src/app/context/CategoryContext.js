@@ -4,7 +4,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import getCategories from "@/services/categories/getCategories.js";
 import postCategory from "@/services/categories/postCategory.js";
 import udapteCategory from "@/services/categories/updateCategory.js";
-import { data } from "autoprefixer";
+import removeCategory from "@/services/categories/removeCategory.js";
 
 const CategoriesContext = createContext();
 
@@ -26,8 +26,11 @@ export const CategoriesProvider = ({ children }) => {
             const data = await getCategories();
             setIsCategories(data.data);
         } catch (err) {
-            console.error("ERROR - NO SE PUEDEN CARGAR LAS CATEGORIAS | GLOBAL CONTEXT:", err);
-        }finally{
+            console.error(
+                "ERROR - NO SE PUEDEN CARGAR LAS CATEGORIAS | GLOBAL CONTEXT:",
+                err
+            );
+        } finally {
             setIsLoading(false);
         }
     };
@@ -39,10 +42,13 @@ export const CategoriesProvider = ({ children }) => {
     const createCategory = async (newCategory) => {
         try {
             const res = await postCategory(newCategory);
-            await fetchCategories(); 
+            await fetchCategories();
             return res;
         } catch (err) {
-            console.error("ERROR - NO SE PUEDE CREAR LA CATEGORIA | GLOBAL CONTEXT:", err);
+            console.error(
+                "ERROR - NO SE PUEDE CREAR LA CATEGORIA | GLOBAL CONTEXT:",
+                err
+            );
         }
     };
 
@@ -50,14 +56,16 @@ export const CategoriesProvider = ({ children }) => {
     // ACTUALIZAR CATEGORÍAS
     // --------------------------
 
-    const updatedCategory = async(id, dataCategory) => {
-        try{
+    const updatedCategory = async (id, dataCategory) => {
+        try {
             const res = await udapteCategory(id, dataCategory);
             await fetchCategories();
             return res;
-
-        }catch(err){
-            console.error("ERROR - NO SE PUEDE ACTUALIZAR LA CATEGORIA | GLOBAL CONTEXT:", err);
+        } catch (err) {
+            console.error(
+                "ERROR - NO SE PUEDE ACTUALIZAR LA CATEGORIA | GLOBAL CONTEXT:",
+                err
+            );
         }
     };
 
@@ -66,7 +74,16 @@ export const CategoriesProvider = ({ children }) => {
     // --------------------------
 
     const deleteCategory = async (id) => {
-        
+        try {
+            const res = await removeCategory(id);
+            await fetchCategories();
+            return res;
+        } catch (err) {
+            console.error(
+                "ERROR - NO SE PUEDE ELIMINAR LA CATEGORIA | GLOBAL CONTEXT:",
+                err
+            );
+        }
     };
 
     useEffect(() => {
@@ -81,13 +98,14 @@ export const CategoriesProvider = ({ children }) => {
                 isCategoryName,
                 isCategoryColor,
                 isUpdatedPushed,
+                setIsCategory,
+                setIsCategoryName,
+                setIsCategoryColor,
+                setIsUpdatedPushed,
                 fetchCategories,
                 createCategory,
                 updatedCategory,
-                setIsCategory, 
-                setIsCategoryName,
-                setIsCategoryColor,
-                setIsUpdatedPushed
+                deleteCategory,
             }}
         >
             {children}
