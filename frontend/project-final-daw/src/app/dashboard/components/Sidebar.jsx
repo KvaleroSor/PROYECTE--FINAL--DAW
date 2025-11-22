@@ -19,8 +19,8 @@ const Sidebar = () => {
     };
 
     return (
-        <aside className="w-full h-screen sm:w-60 text-white font-light grid grid-rows-[1fr_auto] gap-6 mt-2 opacity-75%">
-            <nav className="bg-verdeAzulado-medium w-full rounded-2xl p-3 mb-2">
+        <aside className="w-full h-screen sm:w-60 text-white font-light grid grid-rows-[1fr_auto] gap-6 mt-2">
+            <nav className="bg-gradient-to-r from-[#19625C] via-[#1A8B84] to-[#00C7D9] w-full rounded-2xl p-3 mb-2">
                 <Link href="/dashboard">
                     <h2 className="mb-4 text-xl flex flex-row gap-2">
                         App Gastos |{" "}
@@ -28,7 +28,7 @@ const Sidebar = () => {
                     </h2>
                 </Link>
                 <ul className="flex flex-col gap-2">
-                    <li className="cursor-pointer flex flex-row gap-3 p-2 hover:bg-white hover:text-verdeAzulado-medium hover:rounded-xl">
+                    <li className="cursor-pointer flex flex-row gap-3 p-2 hover:bg-white hover:text-verdeAzulado-medium hover:rounded-xl hover:border-[black] ">
                         <Users className="w-4 h-4 sm:w-5 sm:h-5 stroke-current" />
                         <span>Usuarios</span>
                     </li>
@@ -55,7 +55,7 @@ const Sidebar = () => {
                     </li>
                 </ul>
             </nav>
-            <div className="flex flex-start mb-3 h-[90px] items-center bg-verdeAzulado-medium w-full h-auto rounded-xl p-3">
+            <div className="flex flex-start mb-3 h-[110px] items-center w-full h-auto rounded-xl p-3 bg-gradient-to-r from-[#19625C] via-[#1A8B84] to-[#00C7C7]">
                 <button
                     type="button"
                     id="signOut"

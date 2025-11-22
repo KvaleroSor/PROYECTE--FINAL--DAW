@@ -1,15 +1,14 @@
 import { useSession } from "next-auth/react";
+import FormSpend from "../spend/components/FormSpend.jsx";
 
 const Body = () => {
     return (
         <>
             <div className="h-full grid grid-rows-[auto_auto_auto] lg:grid-rows-[3fr_2fr_5fr] sm:grid-cols-1">
                 <div className="w-full flex flex-col sm:flex-row">
-                    <div className="basis-[55%] border-2 rounded-xl m-3 flex justify-center items-center">
-                        <h1>CREAR GASTO</h1>
-                        <form>
-                            <label htmlFor=""></label>
-                        </form>
+                    <div className="basis-[55%] border-2 rounded-xl m-3 flex flex-col justify-center items-center gap-5">
+                        <h1 className="text-3xl text-[#1A8B84]">CREAR CATEGORIA</h1>
+                        <FormSpend />
                     </div>
                     <div className="basis-[45%] border-2 rounded-xl m-3 flex justify-center items-center">CAJA 2</div>
                 </div>

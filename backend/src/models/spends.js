@@ -8,11 +8,9 @@ const spendSchema = new mongoose.Schema({
     },
     categories: [
         {
-            category_id: {
-                type: mongoose.Schema.Types.ObjectId,
-                required: true,
-                ref: "Categories",
-            },
+            type: mongoose.Schema.Types.ObjectId,
+            required: true,
+            ref: "Categories",
         },
     ],
     description: {
