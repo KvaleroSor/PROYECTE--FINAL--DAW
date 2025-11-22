@@ -1,39 +1,35 @@
-import { getServerSession } from "next-auth";
-import { authOptions } from "../api/auth/[...nextauth]/route";
-import { redirect } from "next/navigation";
+"use client"; 
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
+
 import Sidebar from "./components/Sidebar.jsx";
 import Header from "./components/Header.jsx";
-import Body from "./components/Body.jsx";
+import { CategoriesProvider } from "@/app/context/CategoryContext.js";
 
-/**
- * 📝 Anotacions
- *
- * Revisar si dur el session desde la función o desde useSession
- *
- *
- * @param {*} param0
- * @returns
- */
+export default function DashboardLayout({ children }) {
+    const router = useRouter();
+    const { data: session, status } = useSession();
 
-export default async function DashboardLayout({ children }) {
-    const session = await getServerSession(authOptions);
-
-    if (!session) {
-        redirect("/");
-    }
+    useEffect(() => {
+        if (status === "unauthenticated") {
+            router.push("/");
+        }
+    }, [status, router]);
 
     return (
-        <div className="min-h-screen w-full">
-            <div className="grid grid-cols-1 md:grid-cols-[240px_1fr]">
-                <Sidebar />
+        <CategoriesProvider>
+            <div className="min-h-screen w-full">
+                <div className="grid grid-cols-1 md:grid-cols-[240px_1fr]">
+                    <Sidebar />
 
-                <div className="grid grid-rows-[80px_auto]">
-                    <Header />
-                    <main className="w-full h-full">
-                        {children}
-                    </main>                    
+                    <div className="grid grid-rows-[80px_auto]">
+                        <Header />
+                        <main className="w-full h-full">{children}</main>
+                    </div>
                 </div>
             </div>
-        </div>
+        </CategoriesProvider>
     );
 }

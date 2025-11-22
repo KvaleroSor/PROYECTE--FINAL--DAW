@@ -1,5 +1,6 @@
 import { useSession } from "next-auth/react";
 import FormSpend from "../spend/components/FormSpend.jsx";
+import GridCategories from "../category/components/GridCategories.jsx";
 
 const Body = () => {
     return (
@@ -14,8 +15,10 @@ const Body = () => {
                 </div>
                 <div className="border-2 rounded-xl m-3 flex justify-center items-center">Carrusel de gastos mostrados por categorías</div>
                 <div className="w-full flex flex-col sm:flex-row">
-                    <div className="basis-[60%] border-2 rounded-xl m-3 flex justify-center items-center">CAJA 1</div>
-                    <div className="basis-[40%] w-full border-2 rounded-xl m-3 flex justify-center items-center">CAJA 2</div>
+                    <div className="basis-[60%] border-2 rounded-xl m-3 flex justify-center items-center">
+                        <GridCategories />
+                    </div>
+                    <div className="basis-[40%] w-full border-2 rounded-xl m-3 flex justify-center items-center">CAJA 4</div>
                 </div>
             </div>
         </>

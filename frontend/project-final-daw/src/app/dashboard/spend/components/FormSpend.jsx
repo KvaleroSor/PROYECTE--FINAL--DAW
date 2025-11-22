@@ -1,5 +1,5 @@
 "use client";
-
+import { useCategories } from "@/app/context/CategoryContext.js";
 import { useState, useEffect } from "react";
 import {
     Plus,
@@ -13,14 +13,25 @@ import {
     X,
     Repeat,
 } from "lucide-react";
-import postCategory from "@/services/categories/postCategory.js";
 
 const FormSpend = () => {
+    const {
+        isUpdatedPushed,
+        isCategory,
+        isCategoryName,
+        isCategoryColor,
+        setIsCategory,
+        setIsCategoryName,
+        setIsCategoryColor,
+        setIsUpdatedPushed,
+        createCategory,
+        updatedCategory,
+    } = useCategories();
     const [isSelectedIcon, setIsSelectedIcon] = useState(null);
-    const [isName, setIsName] = useState("");
-    const [isColor, setisColor] = useState("");
+    // const [isName, setIsName] = useState("");
+    // const [isColor, setisColor] = useState("");
+    // const [isActive, setisActive] = useState("");
 
-    const [isActive, setisActive] = useState("");
     const availableIcons = [
         { icon: ShoppingCart, name: "ShoppingCart" },
         { icon: Home, name: "Home" },
@@ -32,36 +43,61 @@ const FormSpend = () => {
         { icon: Plus, name: "Plus" },
     ];
 
+    useEffect(() => {
+        if (isUpdatedPushed && isCategory) {
+            setIsCategoryName(isCategory.name);
+            setIsCategoryColor(isCategory.color);
+            setIsSelectedIcon(isCategory.icon);
+        }
+    }, [isUpdatedPushed]);
+
     const handleSubmitCategory = async (e) => {
         e.preventDefault();
 
-        const buttonClicked = e.nativeEvent.submitter.id;
+        const buttonPushed = e.nativeEvent.submitter.id;
 
-        if (buttonClicked === "button-create") {
-            const data = {
-                name: isName,
-                color: isColor,
-                icon: isSelectedIcon,
-            };
+        const data = {
+            name: isCategoryName,
+            color: isCategoryColor,
+            icon: isSelectedIcon,
+        };
 
-            const res = await postCategory(data);
-            console.log(res);
+        if (buttonPushed === "button-create") {
+            console.log("Hola button_create");
 
-            if (!res) {
-                console.log(`Algo mal ha pasado`);
+            try {
+                const res = await createCategory(data);
+
+                if (!res) {
+                    console.log(`Algo mal ha pasado`);
+                }
+
+                console.log(res);
+                resetForm();
+            } catch (err) {
+                console.error(err);
             }
-        }else if(buttonClicked === "button-update"){
-            //Lògica per actualitzar data del form.
+        } else if (buttonPushed === "button-update") {
+            console.log("Hola button_update");
+            try {
+                const res = await updatedCategory(isCategory._id, data);
 
-            console.log('Actualizando datos...!');
+                if (!res) {
+                    console.log(`Algo mal ha pasado`);
+                }
+
+                console.log(res);
+                setIsUpdatedPushed(false);
+                resetForm();
+            } catch (err) {
+                console.error(err);
+            }
         }
-
-        resetForm();
     };
 
     const resetForm = () => {
-        setIsName("");
-        setisColor("");
+        setIsCategoryName("");
+        setIsCategoryColor("");
         setIsSelectedIcon(false);
     };
 
@@ -81,9 +117,9 @@ const FormSpend = () => {
                         placeholder="Nombre Categoría"
                         className="h-12 w-full bg-gray-50 border border-gray-200 focus:outline-none focus:bg-white focus:border-[#1A8B84] transition-colors rounded-lg p-2 focus:bg-gradient-to-br from-[#1A8B84]/10 to-[#00C7C7]/10 shadow-md"
                         onChange={(e) => {
-                            setIsName(e.target.value || "");
+                            setIsCategoryName(e.target.value || "");
                         }}
-                        value={isName}
+                        value={isCategoryName}
                     />
                 </div>
                 <div className="w-full flex flex-row justify-start items-center">
@@ -94,9 +130,9 @@ const FormSpend = () => {
                         placeholder="Color Categoría"
                         className="h-12 w-full bg-gray-50 border border-gray-200 focus:outline-none focus:bg-white focus:border-[#1A8B84] transition-colors rounded-lg p-2 focus:bg-gradient-to-br from-[#1A8B84]/10 to-[#00C7C7]/10 shadow-md ml-8"
                         onChange={(e) => {
-                            setisColor(e.target.value || "");
+                            setIsCategoryColor(e.target.value || "");
                         }}
-                        value={isColor}
+                        value={isCategoryColor}
                     />
                 </div>
                 <div className="grid grid-cols-4 sm:grid-cols-8 gap-3 mt-5">
