@@ -111,12 +111,14 @@ const Sidebar = () => {
                     )}
                 </Link>
             </nav>
-            <div className="w-full flex flex-start mb-3 h-[90px] items-center rounded-xl p-3 bg-background-slate border-2 shadow-md hover:shadow-xl cursor-pointer">
+            <div
+                className="w-full flex flex-start mb-3 h-[90px] items-center rounded-xl p-3 bg-background-slate border-2 shadow-md hover:shadow-xl cursor-pointer"
+                onClick={handleSignOut}
+            >
                 <button
                     type="button"
                     id="signOut"
                     className="flex flex-row gap-3"
-                    onClick={handleSignOut}
                 >
                     <DoorOpen className="w-4 h-4 sm:w-5 sm:h-5 text-slate-600" />
                     Cerrar Sesión
