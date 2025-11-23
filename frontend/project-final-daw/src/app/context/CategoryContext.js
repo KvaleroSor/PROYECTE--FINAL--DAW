@@ -97,7 +97,8 @@ export const CategoriesProvider = ({ children }) => {
     const deleteCategory = async (id) => {
         try {
             const res = await removeCategory(id);
-            await fetchCategories();
+            await fetchCategories();            
+            setIsCategory({});
             return res;
         } catch (err) {
             console.error(
