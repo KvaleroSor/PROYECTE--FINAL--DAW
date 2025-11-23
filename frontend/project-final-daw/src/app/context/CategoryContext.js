@@ -2,6 +2,7 @@
 
 import { createContext, useContext, useState, useEffect } from "react";
 import getCategories from "@/services/categories/getCategories.js";
+import getCategoryById from "@/services/categories/getCategoryById.js";
 import postCategory from "@/services/categories/postCategory.js";
 import udapteCategory from "@/services/categories/updateCategory.js";
 import removeCategory from "@/services/categories/removeCategory.js";
@@ -36,6 +37,25 @@ export const CategoriesProvider = ({ children }) => {
     };
 
     // --------------------------
+    // DEVOLVER CATEGORÍA POR ID
+    // --------------------------
+
+    const fetchCategoryById = async (id) => {
+        try {
+            setIsLoading(true);
+            const data = await getCategoryById(id);
+            setIsCategory(data.data);
+        } catch (err) {
+            console.error(
+                "ERROR - NO SE PUEDE CARGAR LA CATEGORÍA | GLOBAL CONTEXT:",
+                err
+            );
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    // --------------------------
     // CREAR CATEGORÍAS
     // --------------------------
 
@@ -60,6 +80,7 @@ export const CategoriesProvider = ({ children }) => {
         try {
             const res = await udapteCategory(id, dataCategory);
             await fetchCategories();
+            await fetchCategoryById(id);
             return res;
         } catch (err) {
             console.error(
@@ -103,6 +124,7 @@ export const CategoriesProvider = ({ children }) => {
                 setIsCategoryColor,
                 setIsUpdatedPushed,
                 fetchCategories,
+                fetchCategoryById,
                 createCategory,
                 updatedCategory,
                 deleteCategory,

@@ -28,10 +28,6 @@ const FormSpend = () => {
         updatedCategory,
     } = useCategories();
     const [isSelectedIcon, setIsSelectedIcon] = useState(null);
-    // const [isName, setIsName] = useState("");
-    // const [isColor, setisColor] = useState("");
-    // const [isActive, setisActive] = useState("");
-
     const availableIcons = [
         { icon: ShoppingCart, name: "ShoppingCart" },
         { icon: Home, name: "Home" },
@@ -49,7 +45,7 @@ const FormSpend = () => {
             setIsCategoryColor(isCategory.color);
             setIsSelectedIcon(isCategory.icon);
         }
-    }, [isUpdatedPushed]);
+    }, [isUpdatedPushed, isCategory]);
 
     const handleSubmitCategory = async (e) => {
         e.preventDefault();
@@ -62,9 +58,7 @@ const FormSpend = () => {
             icon: isSelectedIcon,
         };
 
-        if (buttonPushed === "button-create") {
-            console.log("Hola button_create");
-
+        if (buttonPushed === "button-create") {            
             try {
                 const res = await createCategory(data);
 
@@ -77,8 +71,7 @@ const FormSpend = () => {
             } catch (err) {
                 console.error(err);
             }
-        } else if (buttonPushed === "button-update") {
-            console.log("Hola button_update");
+        } else if (buttonPushed === "button-update") {            
             try {
                 const res = await updatedCategory(isCategory._id, data);
 
@@ -104,7 +97,7 @@ const FormSpend = () => {
     return (
         <>
             <form
-                className="flex flex-col justify-start items-center gap-3 text-[#1A8B84]"
+                className="flex flex-col justify-start items-center gap-3 text-slate-700"
                 onSubmit={(e) => {
                     handleSubmitCategory(e);
                 }}
@@ -115,7 +108,7 @@ const FormSpend = () => {
                         id="name"
                         type="text"
                         placeholder="Nombre Categoría"
-                        className="h-12 w-full bg-gray-50 border border-gray-200 focus:outline-none focus:bg-white focus:border-[#1A8B84] transition-colors rounded-lg p-2 focus:bg-gradient-to-br from-[#1A8B84]/10 to-[#00C7C7]/10 shadow-md"
+                        className="h-12 w-full bg-gray-50 border border-gray-200 focus:outline-none focus:bg-white focus:border-slate-900 transition-colors rounded-lg p-2 focus:bg-slate-100 shadow-md"
                         onChange={(e) => {
                             setIsCategoryName(e.target.value || "");
                         }}
@@ -128,7 +121,7 @@ const FormSpend = () => {
                         id="color"
                         type="text"
                         placeholder="Color Categoría"
-                        className="h-12 w-full bg-gray-50 border border-gray-200 focus:outline-none focus:bg-white focus:border-[#1A8B84] transition-colors rounded-lg p-2 focus:bg-gradient-to-br from-[#1A8B84]/10 to-[#00C7C7]/10 shadow-md ml-8"
+                        className="h-12 w-full bg-gray-50 border border-gray-200 focus:outline-none focus:bg-white focus:bg-white focus:border-slate-900 transition-colors rounded-lg p-2 focus:bg-slate-100 shadow-md ml-8"
                         onChange={(e) => {
                             setIsCategoryColor(e.target.value || "");
                         }}
@@ -143,10 +136,10 @@ const FormSpend = () => {
                             <button
                                 key={icon.name}
                                 type="button"
-                                className={`w-full aspect-square rounded-lg border-2 transition-all duration-300 flex items-center justify-center group hover:scale-105 p-2 ${
+                                className={`w-14 h-14 aspect-square rounded-2xl border-2 transition-all duration-100 flex items-center justify-center group hover:scale-105 p-2 ${
                                     isActive
-                                        ? "border-[#1A8B84] bg-gradient-to-br from-[#1A8B84]/10 to-[#00C7C7]/10 shadow-md"
-                                        : "border-gray-200 hover:border-[#1A8B84]/50 bg-gray-50 hover:bg-white"
+                                        ? "border-slate-900 bg-white bg-green-300/25 shadow-md"
+                                        : "border-slate-300 hover:border-slate-900 bg-gray-100 hover:bg-white"
                                 }`}
                                 onClick={() =>
                                     setIsSelectedIcon((prev) =>
@@ -155,10 +148,10 @@ const FormSpend = () => {
                                 }
                             >
                                 <IconComponent
-                                    className={`w-6 h-6 transition-colors ${
+                                    className={`w-7 h-7 transition-colors ${
                                         isSelectedIcon
-                                            ? "text-[#1A8B84]"
-                                            : "group-hover:text-[#1A8B84]"
+                                            ? "text-slate-600"
+                                            : "text-slate-600"
                                     }`}
                                 />
                             </button>
@@ -169,7 +162,7 @@ const FormSpend = () => {
                     <button
                         id="button-create"
                         type="submit"
-                        className="w-auto p-4 rounded-lg mt-3 flex items-center h-12 bg-gradient-to-r from-[#19625C] via-[#1A8B84] to-[#00C7C7] hover:from-[#145047] hover:via-[#156F69] hover:to-[#00B0B0] text-white transition-all duration-300 group shadow-lg shadow-[#1A8B84]/20"
+                        className="w-auto p-4 h-11 sm:h-12 flex justify-center items-center bg-white border-2 border-slate-600 hover:bg-slate-100 transition-all duration-300 rounded-xl group"
                     >
                         <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
                         <span>Crear Categoría</span>
@@ -177,7 +170,7 @@ const FormSpend = () => {
                     <button
                         id="button-update"
                         type="submit"
-                        className="w-auto p-4 rounded-lg mt-3 flex items-center h-12 bg-gradient-to-r from-[#19625C] via-[#1A8B84] to-[#00C7C7] hover:from-[#145047] hover:via-[#156F69] hover:to-[#00B0B0] text-white transition-all duration-300 group shadow-lg shadow-[#1A8B84]/20"
+                        className="w-auto p-4 h-11 sm:h-12 flex justify-center items-center bg-white border-2 border-slate-600 hover:bg-slate-100 transition-all duration-300 rounded-xl group"
                     >
                         <Repeat className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
                         <span>Actualizar Categoría</span>

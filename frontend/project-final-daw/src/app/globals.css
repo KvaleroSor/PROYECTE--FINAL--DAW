@@ -4,7 +4,7 @@
 
 /* Aquí luego podrás poner tus estilos globales adicionales */
 body {
-  @apply bg-neutros-whiteSmoke text-black;
+  @apply bg-background-slate text-black;
 }
 
 .no-scrollbar::-webkit-scrollbar {
