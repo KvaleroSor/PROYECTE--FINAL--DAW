@@ -1,6 +1,6 @@
 const getCategories = async (id) => {
     const res = await fetch(
-        `${process.env.URI_BACKEND_DEPLOYED}/api/categories/${id}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/categories/${id}`,
         {
             method: "GET",
             headers: {
