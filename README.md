@@ -51,7 +51,7 @@ root/
 
 ---
 
-## 🚀 Poner en marcha el proyecto
+## 🚀 Poner en marcha el proyecto | BACKEND
 
 Nos situaremos en el directorio de "backend"
 
@@ -69,4 +69,28 @@ Nos situaremos en el directorio de "backend"
     ✅🚀 BBDD conectada
     ✅🚀 Servidor escuchando el puerto 3003
     ```
-  
+
+## 🚀 Poner en marcha el proyecto | FRONTEND
+
+Nos situaremos en el directorio de "frontend/project-final-daw"
+
+-   npm install
+
+    -   Instalamos todas las dependencias que necesite el proyecto.
+
+-   npm run dev
+
+    -   Arrancaremos nuestro servidor de node con express.
+
+-   Anotación:
+    -   Nos deberá salir en la terminal lo siguiente:
+    ```
+       ▲ Next.js 16.0.3 (Turbopack)
+    -   Local: http://localhost:3000
+    -   Network: http://192.168.1.40:3000
+    -   Environments: .env
+    
+    ✓ Starting...
+    ✓ Ready in 662ms
+    ```
+```
