@@ -40,7 +40,7 @@ const CategoryByIdTemp = () => {
                     Selecciona una categoria…
                 </p>
             ) : (
-                <div className="flex flex-col gap-10">
+                <div className="flex flex-col justify-center items-center gap-10">
                     <h1 className="text-4xl">CATEGORÍAS POR ID</h1>
 
                     <div className="w-[500px] group bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-xl hover:border-slate-300 transition-all duration-300 overflow-hidden cursor-pointer">
