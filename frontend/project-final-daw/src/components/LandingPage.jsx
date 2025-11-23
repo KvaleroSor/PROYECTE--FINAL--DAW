@@ -59,7 +59,7 @@ const LandingPage = () => {
             {/* //PART ESQUERRA */}
             <div className="w-1/2 flex justify-center items-center bg-background-slate p-14">
                 <div className="w-full max-w-xl flex flex-col gap-8">
-                    <h3 className="text-[4rem] font-light ">
+                    <h3 className="text-[4rem] font-light">
                         Tu App Favorita para Gestionar los Gastos
                     </h3>
 
@@ -129,10 +129,10 @@ const LandingPage = () => {
             </div>
             {/* //PART DRETA */}
             <div className="lg:w-1/2 bg-white flex flex-col items-center justify-center p-8 lg:p-16">
-                <div className="max-w-lg w-full">
+                <div className="max-w-lg w-full border border-slate-200 p-10 rounded-xl shadow-2xl">
                     <div className="mb-10">
-                        <h1 className="text-6xl mb-2 text-gray-800 pb-2">
-                            Inicio de sesión
+                        <h1 className="text-6xl mb-2 text-gray-800 pb-2 font-light">
+                            
                         </h1>
                         <p className="text-xl text-gray-600">
                             Ingresa tus credenciales para acceder a tu cuenta
