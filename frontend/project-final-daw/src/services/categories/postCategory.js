@@ -1,6 +1,6 @@
 const postCategory = async (dataCategory) => {
     const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/categories`,
+        `${process.env.URI_BACKEND_DEPLOYED}/api/categories`,
         {
             method: "POST",
             headers: {

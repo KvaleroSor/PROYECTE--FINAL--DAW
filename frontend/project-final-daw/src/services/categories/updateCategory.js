@@ -1,6 +1,6 @@
 const updateCategory = async (id, dataCategory) => {
     const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/categories/${id}`,
+        `${process.env.URI_BACKEND_DEPLOYED}/api/categories/${id}`,
         {
             method: "PUT",
             headers: {
