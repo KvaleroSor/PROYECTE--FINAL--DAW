@@ -51,7 +51,7 @@ root/
 
 ---
 
-## 🚀 Poner en marcha el proyecto | BACKEND
+## 🚀 Poner en marcha el proyecto | BACKEND | DESARROLLO
 
 Nos situaremos en el directorio de "backend"
 
@@ -70,7 +70,7 @@ Nos situaremos en el directorio de "backend"
     ✅🚀 Servidor escuchando el puerto 3003
     ```
 
-## 🚀 Poner en marcha el proyecto | FRONTEND
+## 🚀 Poner en marcha el proyecto | FRONTEND | DESARROLLO
 
 Nos situaremos en el directorio de "frontend/project-final-daw"
 
@@ -94,3 +94,15 @@ Nos situaremos en el directorio de "frontend/project-final-daw"
     ✓ Starting...
     ✓ Ready in 662ms
     ```
+
+## 🚀 Link despliegue Vercel | FRONTEND
+
+```
+- https://proyecte-final-daw.onrender.com
+```
+
+## 🚀 Link despliegue Render | BACKEND
+
+```
+- proyecte-final-daw.vercel.app
+```

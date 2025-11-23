@@ -150,7 +150,7 @@ const FormSpend = () => {
                                 <IconComponent
                                     className={`w-7 h-7 transition-colors ${
                                         isSelectedIcon
-                                            ? "text-slate-600"
+                                            ? "text-slate-600 bg-green-300/25"
                                             : "text-slate-600"
                                     }`}
                                 />
