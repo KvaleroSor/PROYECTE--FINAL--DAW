@@ -84,6 +84,7 @@ Nos situaremos en el directorio de "frontend/project-final-daw"
 
 -   Anotación:
     -   Nos deberá salir en la terminal lo siguiente:
+    
     ```
        ▲ Next.js 16.0.3 (Turbopack)
     -   Local: http://localhost:3000
