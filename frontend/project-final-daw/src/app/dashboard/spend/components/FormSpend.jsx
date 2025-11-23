@@ -128,7 +128,7 @@ const FormSpend = () => {
                         value={isCategoryColor}
                     />
                 </div>
-                <div className="grid grid-cols-4 sm:grid-cols-8 gap-3 mt-5">
+                <div className="grid grid-cols-4 sm:grid-cols-8 gap-3 mt-5 mb-5">
                     {availableIcons.map((icon) => {
                         const IconComponent = icon.icon;
                         const isActive = isSelectedIcon === icon.name;
