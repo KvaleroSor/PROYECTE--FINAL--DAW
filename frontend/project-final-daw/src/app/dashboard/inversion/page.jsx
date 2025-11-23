@@ -1,7 +1,7 @@
-export default function GastosPage() {
+export default function InversionPage() {
     return (
-        <div>
-            <h1 className="text-2xl font-bold">Gestión de gastos</h1>
+        <div className="flex justify-center items-center">
+            <h1 className="text-4xl font-light">Inversión | En Desarrollo...!</h1>
         </div>
     );
 }
