@@ -138,7 +138,7 @@ const FormSpend = () => {
                                 type="button"
                                 className={`w-14 h-14 aspect-square rounded-2xl border-2 transition-all duration-100 flex items-center justify-center group hover:scale-105 p-2 ${
                                     isActive
-                                        ? "border-slate-900 bg-white bg-green-300/25 shadow-md"
+                                        ? "border-slate-900 bg-green-300/25 shadow-md"
                                         : "border-slate-300 hover:border-slate-900 bg-gray-100 hover:bg-white"
                                 }`}
                                 onClick={() =>
