@@ -162,7 +162,7 @@ const FormSpend = () => {
                     <button
                         id="button-create"
                         type="submit"
-                        className="w-auto p-4 h-11 sm:h-12 flex justify-center items-center bg-white border-2 border-slate-600 hover:bg-slate-100 transition-all duration-300 rounded-xl group"
+                        className="w-auto p-4 h-11 sm:h-12 flex justify-center items-center bg-white border-2 border-slate-300 hover:bg-slate-100 transition-all duration-300 rounded-xl group"
                     >
                         <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
                         <span>Crear Categoría</span>
@@ -170,7 +170,7 @@ const FormSpend = () => {
                     <button
                         id="button-update"
                         type="submit"
-                        className="w-auto p-4 h-11 sm:h-12 flex justify-center items-center bg-white border-2 border-slate-600 hover:bg-slate-100 transition-all duration-300 rounded-xl group"
+                        className="w-auto p-4 h-11 sm:h-12 flex justify-center items-center bg-white border-2 border-slate-300 hover:bg-slate-100 transition-all duration-300 rounded-xl group"
                     >
                         <Repeat className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
                         <span>Actualizar Categoría</span>
