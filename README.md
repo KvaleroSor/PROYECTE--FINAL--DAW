@@ -101,11 +101,11 @@ Nos situaremos en el directorio de "frontend/project-final-daw"
 ## 🚀 Link despliegue Vercel | FRONTEND
 
 ```
-- https://proyecte-final-daw.onrender.com
+- proyecte-final-daw.vercel.app
 ```
 
 ## 🚀 Link despliegue Render | BACKEND
 
 ```
-- proyecte-final-daw.vercel.app
+- https://proyecte-final-daw.onrender.com
 ```
