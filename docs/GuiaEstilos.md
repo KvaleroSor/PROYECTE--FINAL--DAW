@@ -14,8 +14,7 @@
 4. [Componentes](#componentes)
 5. [Sistema de Elevación](#sistema-de-elevación)
 6. [Bordes y Radios](#bordes-y-radios)
-7. [Iconografía](#iconografía)
-8. [Responsive Design](#responsive-design)
+7. [Responsive Design](#responsive-design)
 
 ---
 
@@ -56,13 +55,13 @@
 ### Colores Principales (Categorías/Acentos)
 
 ```css
---main-indigo: #6366F1  
+--main-indigo: #6366F1 
 --main-purple: #8B5CF6  
 --main-pink: #EC4899    
 --main-rose: #F43F5E    
 --main-emerald: #10B981 
 --main-sky: #0EA5E9     
-
+```
 **Uso por contexto:**
 
 | Color | Uso Principal | Ejemplo |
