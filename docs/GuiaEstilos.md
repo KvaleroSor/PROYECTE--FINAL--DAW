@@ -1,7 +1,5 @@
 # 🎨 Guía de Estilos - Balance.app
 
-> Sistema de diseño y documentación de estilos para la aplicación de gestión de gastos
-
 **Versión:** 1.0.0  
 **Última actualización:** Noviembre 2025  
 **Estilo:** Minimal Modern con colores vibrantes
@@ -18,8 +16,6 @@
 6. [Bordes y Radios](#bordes-y-radios)
 7. [Iconografía](#iconografía)
 8. [Responsive Design](#responsive-design)
-9. [Tokens CSS](#tokens-css)
-10. [Patrones de Uso](#patrones-de-uso)
 
 ---
 
@@ -29,8 +25,8 @@
 
 #### Backgrounds
 ```css
---background-slate: #F8FAFC   /* Fondo principal de la app */
---cards-slate: #FFFFFF        /* Fondo de tarjetas y cards */
+--background-slate: #F8FAFC   
+--cards-slate: #FFFFFF        
 ```
 
 **Uso:**
@@ -39,7 +35,7 @@
 
 #### Bordes
 ```css
---border-slate: #E2E8F0       /* Bordes sutiles */
+--border-slate: #E2E8F0      
 ```
 
 **Uso:**
@@ -47,7 +43,7 @@
 
 #### Textos
 ```css
---text-slate: #0F172A         /* Texto principal (casi negro) */
+--text-slate: #0F172A       
 ```
 
 **Uso:**
@@ -60,13 +56,12 @@
 ### Colores Principales (Categorías/Acentos)
 
 ```css
---main-indigo: #6366F1        /* Azul índigo */
---main-purple: #8B5CF6        /* Morado */
---main-pink: #EC4899          /* Rosa */
---main-rose: #F43F5E          /* Rosa rojo */
---main-emerald: #10B981       /* Verde esmeralda */
---main-sky: #0EA5E9           /* Azul cielo */
-```
+--main-indigo: #6366F1  
+--main-purple: #8B5CF6  
+--main-pink: #EC4899    
+--main-rose: #F43F5E    
+--main-emerald: #10B981 
+--main-sky: #0EA5E9     
 
 **Uso por contexto:**
 
@@ -130,15 +125,6 @@ font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans
 
 ---
 
-### Pesos de Fuente
-
-```css
-font-weight: 400;  /* Normal - text-normal (default) */
-font-weight: 500;  /* Medium - font-medium */
-font-weight: 600;  /* Semibold - font-semibold */
-font-weight: 700;  /* Bold - font-bold */
-```
-
 **Guía de uso:**
 - **400 (Normal):** Texto de párrafos, descripciones
 - **500 (Medium):** Botones, labels de inputs
@@ -169,82 +155,6 @@ font-weight: 700;  /* Bold - font-bold */
 <label className="text-sm font-medium text-text-slate">
   Correo Electrónico
 </label>
-```
-
----
-
-## 📏 Espaciado y Layout
-
-### Sistema de Espaciado
-
-Basado en la escala de Tailwind (1 unidad = 0.25rem = 4px):
-
-```css
-space-1:  4px   (0.25rem)
-space-2:  8px   (0.5rem)
-space-3:  12px  (0.75rem)
-space-4:  16px  (1rem)     ← Más común
-space-6:  24px  (1.5rem)   ← Muy común
-space-8:  32px  (2rem)     ← Común
-space-12: 48px  (3rem)
-space-16: 64px  (4rem)
-```
-
----
-
-### Márgenes y Paddings Estándar
-
-#### Cards
-```tsx
-// Card de categoría
-<div className="p-4">          // Padding interno: 16px
-<div className="p-6">          // Padding interno: 24px (más espacioso)
-
-// Grid de cards
-<div className="gap-4">        // Espacio entre cards: 16px
-<div className="gap-6">        // Espacio entre cards: 24px
-```
-
-#### Secciones
-```tsx
-// Padding de secciones
-<section className="px-6 py-8">       // Mobile
-<section className="px-8 py-12">      // Desktop
-
-// Contenedores
-<div className="max-w-7xl mx-auto">   // Contenedor máximo: 1280px
-```
-
-#### Formularios
-```tsx
-// Espacio entre inputs
-<div className="space-y-4">           // 16px entre elementos
-<div className="space-y-6">           // 24px entre elementos
-
-// Padding de inputs
-<input className="px-4 py-3" />       // 16px horizontal, 12px vertical
-```
-
----
-
-### Grid System
-
-```tsx
-// Categorías (visible en dashboard)
-<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
-  {/* Cards de categorías */}
-</div>
-
-// Features (landing page - 4 boxes)
-<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-  {/* Feature cards */}
-</div>
-
-// Layout principal (Split-screen landing)
-<div className="flex flex-col lg:flex-row">
-  <div className="lg:w-1/2">Hero</div>
-  <div className="lg:w-1/2">Login</div>
-</div>
 ```
 
 ---
@@ -475,26 +385,6 @@ disabled:bg-slate-100 disabled:cursor-not-allowed
 
 ---
 
-### 5. Icon Selector (Crear Categoría)
-
-```tsx
-<div className="flex gap-2 flex-wrap">
-  <button className="w-12 h-12 rounded-xl border-2 border-border-slate
-                     hover:border-main-indigo hover:bg-indigo-50
-                     flex items-center justify-center transition-all">
-    <ShoppingCart className="w-5 h-5 text-slate-600" />
-  </button>
-  
-  {/* Selected state */}
-  <button className="w-12 h-12 rounded-xl border-2 border-main-indigo
-                     bg-indigo-50 flex items-center justify-center">
-    <Home className="w-5 h-5 text-main-indigo" />
-  </button>
-</div>
-```
-
----
-
 ## 🎭 Sistema de Elevación
 
 ### Sombras Definidas
@@ -531,39 +421,6 @@ box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12), 0 8px 16px rgba(0, 0, 0, 0.08);
 
 ---
 
-### Implementación
-
-```tsx
-// Con Tailwind utilities
-<div className="shadow-sm">Nivel 1</div>
-<div className="shadow-md">Nivel 2</div>
-<div className="shadow-lg">Nivel 3</div>
-<div className="shadow-xl">Nivel 4</div>
-
-// Con inline styles (para sombras custom)
-<div style={{
-  boxShadow: '0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06)'
-}}>
-  Card con sombra custom
-</div>
-```
-
----
-
-## 🔲 Bordes y Radios
-
-### Border Radius
-
-```css
---radius-lg:  8px     /* rounded-lg */
---radius-xl:  12px    /* rounded-xl */   ← MÁS COMÚN
---radius-2xl: 16px    /* rounded-2xl */  ← MUY COMÚN
---radius-3xl: 24px    /* rounded-3xl */
---radius-full: 9999px /* rounded-full */
-```
-
----
-
 ### Uso por Componente
 
 | Componente | Border Radius | Clase |
@@ -583,369 +440,14 @@ box-shadow: 0 20px 60px rgba(0, 0, 0, 0.12), 0 8px 16px rgba(0, 0, 0, 0.08);
 
 ```css
 /* Grosor */
-border: 1px solid;           /* border */
-border: 2px solid;           /* border-2 */
+border: 1px solid;          
+border: 2px solid;          
 
 /* Colores */
-border-border-slate          /* #E2E8F0 - Default */
-border-main-indigo           /* Focus states */
-border-rose-500              /* Errors */
+border-border-slate         
+border-main-indigo          
+border-rose-500            
 ```
-
-**Ejemplos:**
-```tsx
-// Input default
-<input className="border-2 border-border-slate focus:border-main-indigo" />
-
-// Card con borde
-<div className="border border-border-slate rounded-2xl" />
-
-// Separador
-<div className="border-b border-border-slate" />
-```
-
----
-
-## 🎯 Iconografía
-
-### Biblioteca
-**Lucide React** - Consistente con el estilo minimal
-
-```tsx
-import { Home, ShoppingCart, Heart, Settings } from 'lucide-react';
-```
-
----
-
-### Tamaños Estándar
-
-| Uso | Clase | Tamaño | Ejemplo |
-|-----|-------|--------|---------|
-| **Pequeño** | `w-4 h-4` | 16px | Botones pequeños, badges |
-| **Normal** | `w-5 h-5` | 20px | Navegación, inputs |
-| **Mediano** | `w-6 h-6` | 24px | Cards de categoría |
-| **Grande** | `w-8 h-8` | 32px | Features, hero sections |
-
----
-
-### Colores de Íconos
-
-```tsx
-// Default (gris medio)
-<Icon className="w-5 h-5 text-slate-600" />
-
-// Destacado (casi negro)
-<Icon className="w-5 h-5 text-text-slate" />
-
-// Sutil (gris claro)
-<Icon className="w-5 h-5 text-slate-400" />
-
-// Con color principal
-<Icon className="w-6 h-6 text-main-indigo" />
-<Icon className="w-6 h-6 text-main-pink" />
-```
-
----
-
-### Íconos de Categorías
-
-Cada categoría tiene su ícono característico:
-
-| Categoría | Ícono | Color |
-|-----------|-------|-------|
-| Cama | Bed / Home | Pink |
-| Coche | Car | Emerald |
-| Salud | Heart / Activity | Purple |
-| Comida | UtensilsCrossed | Rose |
-| Tecnología | Laptop / Smartphone | Emerald |
-| Despensa | ShoppingCart | Sky |
-| Deporte | Trophy / Dumbbell | Yellow |
-| Cena | UtensilsCrossed | Rose |
-| Almuerzo | Coffee | Emerald |
-
----
-
-## 📱 Responsive Design
-
-### Breakpoints
-
-```css
-sm:  640px   /* Móviles grandes */
-md:  768px   /* Tablets */        ← Punto de quiebre principal
-lg:  1024px  /* Laptops */        ← Split-screen activo
-xl:  1280px  /* Desktops */
-2xl: 1536px  /* Pantallas grandes */
-```
-
----
-
-### Mobile First
-
-Todos los estilos se escriben mobile-first y se expanden:
-
-```tsx
-// Mobile por defecto, tablet arriba
-<div className="p-4 md:p-6 lg:p-8">
-
-// 1 columna mobile, 3 en tablet, 5 en desktop
-<div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4">
-
-// Columnas apiladas en mobile, lado a lado en desktop
-<div className="flex flex-col lg:flex-row">
-```
-
----
-
-### Componentes Responsive
-
-#### Landing Page
-```tsx
-// Hero + Login (split-screen)
-<div className="min-h-screen flex flex-col lg:flex-row">
-  {/* Hero - full width mobile, 50% desktop */}
-  <div className="w-full lg:w-1/2 p-8 lg:p-12">
-    {/* Features grid - 1 col mobile, 2 cols desktop */}
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {/* Feature cards */}
-    </div>
-  </div>
-  
-  {/* Login - full width mobile, 50% desktop */}
-  <div className="w-full lg:w-1/2 flex items-center justify-center p-8">
-    {/* Login card */}
-  </div>
-</div>
-```
-
-#### Dashboard
-```tsx
-// Sidebar oculto en mobile
-<div className="flex">
-  <aside className="hidden lg:flex w-64">
-    {/* Sidebar */}
-  </aside>
-  
-  <main className="flex-1">
-    {/* Main content */}
-  </main>
-</div>
-```
-
-#### Categorías Grid
-```tsx
-<div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
-  {/* Category cards */}
-</div>
-```
-
----
-
-## 🎨 Tokens CSS
-
-### Implementación en `globals.css`
-
-```css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-:root {
-  /* Colores Base */
-  --background: #F8FAFC;
-  --surface: #FFFFFF;
-  --border: #E2E8F0;
-  --text-primary: #0F172A;
-  --text-secondary: #64748B;
-  --text-muted: #94A3B8;
-  
-  /* Colores Principales */
-  --indigo: #6366F1;
-  --purple: #8B5CF6;
-  --pink: #EC4899;
-  --rose: #F43F5E;
-  --emerald: #10B981;
-  --sky: #0EA5E9;
-  
-  /* Espaciado */
-  --spacing-xs: 4px;
-  --spacing-sm: 8px;
-  --spacing-md: 16px;
-  --spacing-lg: 24px;
-  --spacing-xl: 32px;
-  
-  /* Bordes */
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
-  --radius-xl: 24px;
-  
-  /* Sombras */
-  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
-  --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.08), 0 3px 8px rgba(0, 0, 0, 0.06);
-  --shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.12), 0 8px 16px rgba(0, 0, 0, 0.08);
-  
-  /* Transiciones */
-  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-normal: 200ms cubic-bezier(0.4, 0, 0.2, 1);
-  --transition-slow: 300ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-body {
-  @apply bg-background-slate text-black;
-}
-
-/* Utilidades custom */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
-
-.no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-}
-```
-
----
-
-## 📖 Patrones de Uso
-
-### Landing Page
-
-```tsx
-<div className="min-h-screen flex flex-col lg:flex-row">
-  {/* Hero Section - Izquierda */}
-  <div className="w-full lg:w-1/2 bg-background-slate p-12 flex flex-col justify-center">
-    <h1 className="text-4xl font-bold text-text-slate mb-4">
-      Tu App Favorita para Gestionar los Gastos
-    </h1>
-    
-    <p className="text-lg text-slate-600 mb-12">
-      Donde tus ideas cobran vida. Únete a nuestra comunidad...
-    </p>
-    
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-      {/* Feature Cards */}
-      <div className="p-6 bg-slate-50 rounded-2xl border border-border-slate">
-        <h3 className="font-semibold mb-2">Experiencia Única</h3>
-        <p className="text-sm text-slate-600">Descripción...</p>
-      </div>
-    </div>
-  </div>
-  
-  {/* Login Section - Derecha */}
-  <div className="w-full lg:w-1/2 bg-cards-slate p-12 flex items-center justify-center">
-    <div className="w-full max-w-md bg-cards-slate rounded-3xl p-8 shadow-xl border border-border-slate">
-      <h2 className="text-2xl font-bold text-text-slate mb-6">
-        Balance.app
-      </h2>
-      
-      {/* Form */}
-      <form className="space-y-4">
-        <input 
-          type="email"
-          className="w-full h-12 px-4 border-2 border-border-slate
-                     focus:border-main-indigo rounded-xl"
-          placeholder="tu-email@email.com"
-        />
-        
-        <button className="w-full h-12 bg-main-indigo hover:bg-indigo-600
-                           text-white rounded-xl">
-          Iniciar Sesión
-        </button>
-      </form>
-    </div>
-  </div>
-</div>
-```
-
----
-
-### Dashboard con Sidebar
-
-```tsx
-<div className="flex min-h-screen bg-background-slate">
-  {/* Sidebar */}
-  <aside className="w-64 bg-cards-slate border-r border-border-slate">
-    {/* Navigation */}
-  </aside>
-  
-  {/* Main Content */}
-  <main className="flex-1">
-    {/* Header */}
-    <header className="h-16 bg-cards-slate border-b border-border-slate px-6
-                       flex items-center">
-      <h1 className="text-xl font-semibold text-text-slate">
-        Hola desde el header
-      </h1>
-    </header>
-    
-    {/* Content */}
-    <div className="p-6">
-      {/* Sección Crear Categoría */}
-      <section className="bg-cards-slate rounded-3xl p-8 mb-6
-                          border border-border-slate">
-        <h2 className="text-2xl font-bold text-text-slate mb-6">
-          CREAR CATEGORÍA
-        </h2>
-        
-        <div className="space-y-4">
-          <input 
-            placeholder="Nombre Categoría"
-            className="w-full h-12 px-4 border-2 border-border-slate
-                       focus:border-main-indigo rounded-xl"
-          />
-        </div>
-      </section>
-      
-      {/* Grid de Categorías */}
-      <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
-        {/* Category cards */}
-      </div>
-    </div>
-  </main>
-</div>
-```
-
----
-
-### Card de Categoría
-
-```tsx
-<div className="flex flex-col items-center gap-3 p-4 bg-cards-slate
-                rounded-2xl border border-border-slate
-                hover:shadow-md transition-all duration-200 cursor-pointer">
-  {/* Icon */}
-  <div className="w-12 h-12 rounded-xl bg-pink-100 
-                  flex items-center justify-center">
-    <Home className="w-6 h-6 text-main-pink" />
-  </div>
-  
-  {/* Name */}
-  <span className="text-sm font-medium text-text-slate">Cama</span>
-  
-  {/* Options */}
-  <button className="w-6 h-6 rounded-full border border-border-slate
-                     hover:bg-slate-50 flex items-center justify-center">
-    <MoreVertical className="w-4 h-4 text-slate-500" />
-  </button>
-</div>
-```
-
----
-
-## ✅ Checklist de Consistencia
-
-Al crear nuevos componentes, verifica:
-
-- [ ] ¿Usa colores de la paleta definida?
-- [ ] ¿El espaciado es consistente (4, 8, 16, 24px)?
-- [ ] ¿Los border-radius son `rounded-xl` o `rounded-2xl`?
-- [ ] ¿Las transiciones son de 200ms?
-- [ ] ¿Los estados hover están definidos?
-- [ ] ¿Es responsive (mobile-first)?
-- [ ] ¿Los íconos son de Lucide React?
-- [ ] ¿El contraste de texto es suficiente?
 
 ---
 
