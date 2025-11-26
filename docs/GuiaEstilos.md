@@ -430,12 +430,12 @@ Bordes:      #E2E8F0
 Textos:      #0F172A, #64748B, #94A3B8
 
 Acentos:
-🔵 Indigo:   #6366F1
-🟣 Purple:   #8B5CF6  
-🌸 Pink:     #EC4899
-🌹 Rose:     #F43F5E
-💚 Emerald:  #10B981
-🩵 Sky:      #0EA5E9
+  --> Indigo:   #6366F1
+  --> Purple:   #8B5CF6  
+  --> Pink:     #EC4899
+  --> Rose:     #F43F5E
+  --> Emerald:  #10B981
+  --> Sky:      #0EA5E9
 ```
 
 ### Componentes Clave
