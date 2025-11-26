@@ -34,6 +34,8 @@ Ayudar a las personas a **aprender a gestionar su dinero**, entender en qué gas
 | **Backend**              | Node.js + Express |
 | **Base de datos**        | MongoDB           |
 | **Control de versiones** | Git + GitHub      |
+| **Depliegue Backend**    | Render            |
+| **Despliegue Frontend**  | Vercel            |   
 
 ---
 
