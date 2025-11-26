@@ -15,6 +15,7 @@ Aplicación web para ayudar a personas sin conocimientos financieros a **gestion
     -   📈 Inversión
 -   Dashboard con estadísticas y gráficos financieros.
 -   Configuración personalizable de porcentajes de reparto.
+-   Control y seguimiento de la inversión.
 
 ---
 

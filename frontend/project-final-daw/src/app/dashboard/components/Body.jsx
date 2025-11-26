@@ -10,16 +10,19 @@ const Body = () => {
                 <div className="w-full flex flex-col sm:flex-row">
                     <div className="basis-[55%] border-2 rounded-xl m-3 flex flex-col justify-center items-center gap-5">
                         <h1 className="text-3xl text-slate-700">CREAR CATEGORIA</h1>
+                        {/* CAJA 1 */}
                         <FormSpend />
                     </div>
                     <div className="basis-[45%] border-2 rounded-xl m-3 flex justify-center items-center">CAJA 2</div>
                 </div>
                 <div className="border-2 rounded-xl m-3 flex justify-center items-center">
                     <GridCategories />
+                    {/* CARRUSEL DE CATEGORIAS */}
                 </div>
                 <div className="w-full flex flex-col sm:flex-row">
                     <div className="basis-[60%] border-2 rounded-xl m-3 flex justify-center items-center">
                         <CategoryByIdTemp />
+                        {/* CAJA 3 */}
                     </div>
                     <div className="basis-[40%] w-full border-2 rounded-xl m-3 flex justify-center items-center">CAJA 4</div>
                 </div>
@@ -29,3 +32,4 @@ const Body = () => {
 };
 
 export default Body;
+ 

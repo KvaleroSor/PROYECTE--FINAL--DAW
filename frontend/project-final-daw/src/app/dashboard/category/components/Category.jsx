@@ -32,7 +32,7 @@ const Category = ({ category }) => {
         { icon: Plus, name: "Plus" },
     ];
 
-    const handleClick = async (e, cat) => {        
+    const handleClick = async (e, cat) => {
         if (e.target.closest("button")?.id !== "button-delete") {
             setIsCategory(cat);
             setIsUpdatedPushed(true);
@@ -48,20 +48,23 @@ const Category = ({ category }) => {
     return (
         <>
             <div
-                className="w-[250px] group relative bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-xl hover:border-slate-300 transition-all duration-300 overflow-hidden cursor-pointer"
+                className="w-[250px] group bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-xl hover:border-slate-300 transition-all duration-300 overflow-hidden cursor-pointer"
                 onClick={(e) => {
                     handleClick(e, category);
                 }}
             >
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
+                {/* <div className="inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" /> */}
 
-                <div className="relative flex items-start justify-between mb-4 group-hover:scale-105 transition-all duration-300">
+                <div className="flex items-start justify-between mb-4 group-hover:scale-105 transition-all duration-300">
                     <div className="flex items-center gap-4">
                         <div
                             className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 border-2`}
-                            style={{ backgroundColor: toRGBA(color, 0.25), border: `2px solid ${toRGBA(color, 0.6)}`}}
+                            style={{
+                                backgroundColor: toRGBA(color, 0.25),
+                                border: `2px solid ${toRGBA(color, 0.6)}`,
+                            }}
                         >
-                            {Icono && (                                
+                            {Icono && (
                                 <Icono className="w-7 h-7 text-gray-700" />
                             )}
                         </div>
