@@ -102,11 +102,8 @@ bg-indigo-900   // Muy oscuro
 
 ### Fuente Principal
 ```css
-font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+font-family: "Exo 2", sans-serif;
 ```
-
-**Razón:** Fuente del sistema para máxima legibilidad y rendimiento.
-
 ---
 
 ### Escala Tipográfica
@@ -129,32 +126,6 @@ font-family: system-ui, -apple-system, 'Segoe UI', 'Helvetica Neue', Arial, sans
 - **500 (Medium):** Botones, labels de inputs
 - **600 (Semibold):** Subtítulos, nombres de categorías
 - **700 (Bold):** Títulos principales, hero text
-
----
-
-### Ejemplos de Implementación
-
-```tsx
-// Título Hero (Landing)
-<h1 className="text-4xl font-bold text-text-slate">
-  Tu App Favorita para Gestionar los Gastos
-</h1>
-
-// Subtítulo
-<p className="text-lg text-slate-600">
-  Donde tus ideas cobran vida...
-</p>
-
-// Texto de card
-<p className="text-sm text-slate-600">
-  Experiencia Única
-</p>
-
-// Label de input
-<label className="text-sm font-medium text-text-slate">
-  Correo Electrónico
-</label>
-```
 
 ---
 
@@ -475,18 +446,6 @@ Card Categoría:   p-4, rounded-2xl, border
 Card Login:       p-8, rounded-3xl, shadow-xl
 Sidebar:          w-64, border-r
 ```
-
----
-
-## 🔄 Actualización y Mantenimiento
-
-**Responsable:** Equipo de desarrollo  
-**Frecuencia:** Revisar trimestralmente  
-**Proceso:**
-1. Revisar nuevos componentes creados
-2. Verificar consistencia con la guía
-3. Actualizar ejemplos si hay cambios
-4. Documentar nuevos patrones
 
 ---
 
