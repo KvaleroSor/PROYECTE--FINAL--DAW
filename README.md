@@ -98,13 +98,13 @@ Nos situaremos en el directorio de "frontend/project-final-daw"
     ✓ Ready in 662ms
     ```
 
-## 🚀 Link despliegue Vercel | FRONTEND
+## 🚀 Link despliegue Vercel | FRONTEND | PRODUCCIÓN
 
 ```
 - proyecte-final-daw.vercel.app
 ```
 
-## 🚀 Link despliegue Render | BACKEND
+## 🚀 Link despliegue Render | BACKEND | PRODUCCIÓN
 
 ```
 - https://proyecte-final-daw.onrender.com
