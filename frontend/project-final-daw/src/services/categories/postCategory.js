@@ -1,4 +1,4 @@
-const postCategory = async (dataCategory) => {
+const postCategory = async (dataCategory) => {    
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/categories`,
         {
@@ -9,7 +9,8 @@ const postCategory = async (dataCategory) => {
             body: JSON.stringify({
                 name: dataCategory.name,
                 color: dataCategory.color,
-                icon: dataCategory.icon
+                icon: dataCategory.icon, 
+                user_id: dataCategory.user_id
             }),
         }
     );

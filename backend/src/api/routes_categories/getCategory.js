@@ -3,11 +3,12 @@ import getCategory from "../../functions/functions_categories/getCategory.js";
 
 const router = Router();
 
-router.get("/", async (req, res) => {
+router.get("/user/:userId", async (req, res) => {
     try {
-        const resultGet = await getCategory();
+        const userId = req.params.userId;
+        const resultGet = await getCategory(userId);
 
-        !resultGet
+        !resultGet || resultGet.length === 0
             ? res.status(404).json({
                   mensaje: "❌ ERROR - THE CATEGORIES HAVE NOT BEEN FOUND | SERVER",
               })
@@ -18,7 +19,7 @@ router.get("/", async (req, res) => {
     } catch (err) {
         res.status(500).json({
             mensaje: `❌ ERROR - INTERNAL ERROR | SERVER`,
-            error: err.mensage,
+            error: err.message,
         });
     }
 });

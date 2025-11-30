@@ -29,6 +29,11 @@ const spendSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
 });
 
 const Spend = mongoose.model("Spend", spendSchema);

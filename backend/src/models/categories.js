@@ -13,6 +13,11 @@ const categoriesSchema = new mongoose.Schema({
         type: String,
         required: false,
     },
+    user_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+        required: true,
+    },
 });
 
 const Category = mongoose.model("Category", categoriesSchema);

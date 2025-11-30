@@ -1,5 +1,6 @@
 "use client";
 
+import { useSession } from "next-auth/react";
 import { createContext, useContext, useState, useEffect } from "react";
 import getCategories from "@/services/categories/getCategories.js";
 import getCategoryById from "@/services/categories/getCategoryById.js";
@@ -10,6 +11,7 @@ import removeCategory from "@/services/categories/removeCategory.js";
 const CategoriesContext = createContext();
 
 export const CategoriesProvider = ({ children }) => {
+    const { data: session } = useSession();
     const [isCategories, setIsCategories] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isCategory, setIsCategory] = useState({});
@@ -22,9 +24,11 @@ export const CategoriesProvider = ({ children }) => {
     // --------------------------
 
     const fetchCategories = async () => {
+        if(!session?.user?.id) return;
+
         try {
             setIsLoading(true);
-            const data = await getCategories();
+            const data = await getCategories(session.user.id);
             setIsCategories(data.data);
         } catch (err) {
             console.error(

@@ -1,7 +1,6 @@
 import User from './../../models/users.js';
 
 const postUserLogin = async(email) => {
-    // console.log(`Email --> ${email}`);
     try{
         const userLoged = await User.findOne({ email });            
 

@@ -1,4 +1,4 @@
-const getCategories = async (id) => {
+const getCategoryById = async (id) => {
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/categories/${id}`,
         {
@@ -17,4 +17,4 @@ const getCategories = async (id) => {
     return await res.json();
 };
 
-export default getCategories;
+export default getCategoryById;
