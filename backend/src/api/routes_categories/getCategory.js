@@ -3,10 +3,10 @@ import getCategory from "../../functions/functions_categories/getCategory.js";
 
 const router = Router();
 
-router.get("/user/:userId", async (req, res) => {
+router.get("/user/:user_id", async (req, res) => {
     try {
-        const userId = req.params.userId;
-        const resultGet = await getCategory(userId);
+        const user_id = req.params.user_id;
+        const resultGet = await getCategory(user_id);
 
         !resultGet || resultGet.length === 0
             ? res.status(404).json({

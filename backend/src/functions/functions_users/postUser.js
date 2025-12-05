@@ -1,32 +1,47 @@
-import User from './../../models/users.js';
-import hashingPassword from '../../utils/hashingPassword.js';
+import User from "./../../models/users.js";
+import hashingPassword from "../../utils/hashingPassword.js";
 
 /**
- * @description La intenció es generar un token quan l´usuari 
- * inicie sessió correctament i aprofitar el token per
- * l´autenticació
- * 
- * @param {*} newUser 
- * @returns 
+ * @description Quan l´usuari done a "crear usuari":
+ *
+ *  1- Comprobar que el correu no estiga ja guardat amb la BBDD per a que no hi hagen duplicitats.
+ *  2- Si el correu no està duplicat:
+ *      2.1 - Comprobar que no hi hagen camps "requerits" buits.
+ *      2.2 - Assegurar-se que "hashegem" la password.
+ *
+ *
+ * @param {*} newUser
+ * @returns
  */
 
-const postUser = async (newUser) => {
-    try{
-        const { name, email, password_hash } = newUser;
+const postNewUser = async (newUser) => {
+    try {
+        const { name, email, password_hash, nomina, percentageSpend } = newUser;
         const password_hashed = await hashingPassword(password_hash);
-    
+
+        //Realitzar accions de "SEGURETAT" abans de crear el nou usuari.
+        const userSearched = await User.findOne({ email });
+
+        if (userSearched) {
+            console.error(err);
+            console.log("❌ ERROR - THE USER WITH THIS EMAIL EXIST | BBDD");
+            return;
+        }
+
         const registeredUser = await User.create({
             name: name,
             email: email,
-            password_hash: password_hashed
+            password_hash: password_hashed,
+            nomina: nomina,
+            PercentageSpend: percentageSpend
         });
-    
+
         return registeredUser;
-    }catch(err){
+    } catch (err) {
         console.error(err);
         console.log("❌ ERROR - THE USER HAS NOT BEEN CREATED | BBDD");
         throw err;
     }
 };
 
-export default postUser;
+export default postNewUser;

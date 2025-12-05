@@ -23,6 +23,23 @@ import getCategoryById from './api/routes_categories/getCategoryById.js';
 import updateCategory from './api/routes_categories/updateCategory.js';
 import deleteCategory from './api/routes_categories/deleteCategory.js';
 
+//INVERSION
+import postInversion from './api/routes_inversion/postInversion.js';
+import getInversion from './api/routes_inversion/getInversion.js';
+import updateInversion from './api/routes_inversion/updateInversion.js';
+import deleteInversion from './api/routes_inversion/deleteInversion.js';
+
+//NOMINA
+import postNomina from './api/routes_nomina/postNomina.js';
+import getNomina from './api/routes_nomina/getNomina.js'
+import updateNomina from './api/routes_nomina/updateNomina.js';
+import deleteNomina from './api/routes_nomina/deleteNomina.js';
+
+//SPEND PERCENTAGE
+import postPercentageSpend from './api/routes_percentage_spends/postPercentageSpends.js';
+import getPercentageSpend from './api/routes_percentage_spends/getPercentageSpend.js';
+import updatePercentageSpend from './api/routes_percentage_spends/updatePercentageSpend.js';
+import deletePercentageSpend from './api/routes_percentage_spends/deletePercentageSpend.js';
 //========================================================================================//
 
 const app = express();
@@ -60,6 +77,33 @@ app.use("/api/categories", updateCategory);
 app.use("/api/categories", deleteCategory);
 app.use("/api/categories", getCategory);
 app.use("/api/categories", getCategoryById);
+
+/**
+ * Routes for inversions 📋
+ */
+
+app.use("/api/inversion", postInversion);
+app.use("/api/inversion", updateInversion);
+app.use("/api/inversion", deleteInversion);
+app.use("/api/inversion", getInversion);
+
+/**
+ * Routes for Nominas
+ */
+
+app.use("/api/nomina", postNomina);
+app.use("/api/nomina", updateNomina);
+app.use("/api/nomina", deleteNomina);
+app.use("/api/nomina", getNomina);
+
+/**
+ * Routes for Spend Percentage
+ */
+
+app.use("/api/spendpercentage", postPercentageSpend);
+app.use("/api/spendpercentage", getPercentageSpend);
+app.use("/api/spendpercentage", updatePercentageSpend);
+app.use("/api/spendpercentage", deletePercentageSpend);
 
 
 export default app;

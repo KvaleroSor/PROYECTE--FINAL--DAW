@@ -1,5 +1,5 @@
 import { Router } from "express";
-import postUser from "../../functions/functions_users/postUser.js";
+import postNewUser from "../../functions/functions_users/postUser.js";
 
 const router = Router();
 
@@ -12,7 +12,7 @@ router.post("/", async (req, res) => {
             res.status(204).send();
         }
 
-        const resultNewUser = await postUser(reqUser);
+        const resultNewUser = await postNewUser(reqUser);
 
         res.status(201).json({
             mensaje: "✅ - THE USER HAS BEEN CREATED",

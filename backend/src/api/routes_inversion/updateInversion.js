@@ -1,5 +1,5 @@
 import { Router } from "express";
-import updateSpend from './../../functions/functions_spends/updateSpend.js';
+import updateInversion from './../../functions/functions_inversion/updateInversion.js';
 
 const router = Router();
 
@@ -8,14 +8,14 @@ router.put("/:id", async (req, res) => {
         const id = req.params.id;
         const data = req.body;
 
-        const resultUpdate = await updateSpend(id, data);
+        const resultUpdate = await updateInversion(id, data);
 
         !resultUpdate
             ? res.status(404).json({
-                  mensaje: "❌ ERROR - THE SPEND HAS NOT BEEN FOUND | SERVER",
+                  mensaje: "❌ ERROR - THE INVERSION HAS NOT BEEN FOUND | SERVER",
               })
             : res.status(200).json({
-                  mensaje: "✅ EXITO - THE SPEND HAS BEEN UPDATED",
+                  mensaje: "✅ EXITO - THE INVERSION HAS BEEN UPDATED",
                   data_recibed: data,
                   data_updated: resultUpdate,
               });

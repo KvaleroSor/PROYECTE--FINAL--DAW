@@ -1,8 +1,9 @@
 import Spend from "../../models/spends.js";
 
-const getSpend = async () => {
+const getSpend = async (user_id) => {
     try {
-        const resultGet = await Spend.find({});
+        const userObjectId = new mongoose.Types.ObjectId(user_id);
+        const resultGet = await Spend.find({user_id: userObjectId});
 
         return resultGet;
     } catch (err) {

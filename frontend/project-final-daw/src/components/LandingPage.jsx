@@ -1,60 +1,19 @@
 "use client";
-import { useRouter } from "next/navigation";
-import { signIn, useSession } from "next-auth/react";
-import { useState, useEffect } from "react";
+
 import { FaInstagram, FaFacebook, FaXTwitter } from "react-icons/fa6";
 import {
     Sparkles,
     Zap,
     Shield,
     Heart,
-    Mail,
-    Lock,
-    Eye,
-    EyeOff,
-    ArrowRight,
 } from "lucide-react";
-import Button from "./Button.jsx";
+
+import FormLogin from "./FormLogin.jsx";
 
 const LandingPage = () => {
-    const { data: session } = useSession();
-    const router = useRouter();
-    const [isEmail, setIsEmail] = useState("");
-    const [isPassword, setIsPassword] = useState("");
-    const [isShowPassword, setIsShowPassword] = useState(false);
-    const [isError, setIsError] = useState("");
 
-    // console.log(isEmail);
-    // console.log(isPassword);
 
-    useEffect(() => {
-        if (session) {
-            router.push("/dashboard");
-        }
-    }, [session]);
-
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-
-        const res = await signIn("credentials", {
-            email: isEmail,
-            password: isPassword,
-            redirect: false,
-        });
-
-        if (res.error) {
-            setIsError("❌ | CREDENCIALES INCORRECTAS");
-        }
-
-        console.log(res);
-        setIsEmail("");
-        setIsPassword("");
-        setIsError("");
-    };
-
-    // 🛑🚨 DIVIDIR EN DOS COMPONENTS - PART ESQUERRA I PART DRETA.
-
-    return (        
+    return (
         <div className="min-h-screen flex flex-col lg:flex-row">
             {/* //PART ESQUERRA */}
             <div className="w-1/2 flex justify-center items-center bg-background-slate p-14">
@@ -138,78 +97,11 @@ const LandingPage = () => {
                             Ingresa tus credenciales para acceder a tu cuenta
                         </p>
                     </div>
-
-                    <form
-                        className="space-y-5 sm:space-y-6"
-                        onSubmit={handleSubmit}
-                    >
-                        <div className="space-y-2">
-                            <label
-                                htmlFor="email"
-                                className="text-gray-700 text-xl"
-                            >
-                                Correo Electrónico
-                            </label>
-                            <div className="relative">
-                                <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-700" />
-                                <input
-                                    id="email"
-                                    type="email"
-                                    placeholder="emial@email.com"
-                                    value={isEmail}
-                                    onChange={(e) => setIsEmail(e.target.value)}
-                                    className="w-full pl-11 h-11 sm:h-12 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-slate-900 focus:ring-0 transition-colors text-base outline-none focus:outline-none"
-                                    required
-                                />
-                            </div>
-                        </div>
-                        <div className="space-y-2">
-                            <label
-                                htmlFor="password"
-                                className="text-gray-700 text-xl"
-                            >
-                                Contraseña
-                            </label>
-
-                            <div className="relative">
-                                <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-700" />
-                                <input
-                                    id="password"
-                                    type={isShowPassword ? "text" : "password"}
-                                    placeholder="••••••••"
-                                    value={isPassword}
-                                    onChange={(e) =>
-                                        setIsPassword(e.target.value)
-                                    }
-                                    className="w-full pl-11 pr-11 h-11 sm:h-12 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-slate-900 transition-colors text-base outline-none focus:outline-none"
-                                    required
-                                />
-                                <button
-                                    type="button"
-                                    onClick={() =>
-                                        setIsShowPassword(!isShowPassword)
-                                    }
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
-                                >
-                                    {isShowPassword ? (
-                                        <EyeOff className="w-5 h-5 text-gray-700" />
-                                    ) : (
-                                        <Eye className="w-5 h-5 text-gray-700" />
-                                    )}
-                                </button>
-                            </div>
-                        </div>
-                        {isError && <p style={{ color: "red" }}>{isError}</p>}
-                        <div className="flex flex-col justify-center items-center gap-4 mt-4">
-                            <Button textButton={"Iniciar Sesión"} />
-                            <Button textButton={"Crear Cuenta"} />
-                        </div>
-                    </form>
+                    <FormLogin />
                 </div>
             </div>
         </div>
-        //     </div>
-        // </div>
+
     );
 };
 
