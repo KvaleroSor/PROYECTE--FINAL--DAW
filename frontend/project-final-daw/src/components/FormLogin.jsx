@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import ButtonLogin from "./Button.jsx";
 import PercentageSelector, { BUDGET_PRESETS } from "./PercentageSelector.jsx";
 import { SquareUser, Mail, Lock, Eye, EyeOff, Euro } from "lucide-react";
-import postNewUser from "@/services/users/postNewUser.js";
+// import postNewUser from "@/services/users/postNewUser.js";
 
 const FormLogin = () => {
     const [isName, setIsName] = useState("");
@@ -67,9 +67,28 @@ const FormLogin = () => {
                 return;
             }
 
-            const result = await postNewUser(dataNewUser);
-            console.log(result);
-            setIsLoginMode(true);
+            try{
+                const response = await fetch('/api/register', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(dataNewUser)
+                });
+
+                const result = await response.json();
+
+                if(response.ok){
+                    console.log('✅ - USER CREATED SUCCESFULLY: ', result);
+                    setIsLoginMode(true);                    
+                }else{
+                    setIsError(`❌ ERROR - USER COULDN´T BEEN CREATED | ${result.mensaje}`);
+                }
+
+            }catch(error){
+                console.error("❌ ERROR - CONNECTION ERROR");
+                setIsError(`❌ ERROR - CONNECTION ERROR`);
+            }
         } else {
             const res = await signIn("credentials", {
                 email: isEmail,
