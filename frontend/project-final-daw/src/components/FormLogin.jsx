@@ -27,12 +27,6 @@ const FormLogin = () => {
         }
     }, [session]);
 
-    const budgedPreset = BUDGET_PRESETS.find(
-        (p) => p.id === isSpendingPercentage
-    );
-    const distributionSpendPercentage = budgedPreset?.distribution;
-    const nameSpendPercentage = budgedPreset?.value;
-
     const handleCleanUpValuesForm = () => {
         setIsName("");
         setIsEmail("");
@@ -47,6 +41,12 @@ const FormLogin = () => {
         e.preventDefault();
 
         if (!isLoginMode) {
+            const budgedPreset = BUDGET_PRESETS.find(
+                (p) => p.id === isSpendingPercentage
+            );
+            const distributionSpendPercentage = budgedPreset?.distribution;
+            const nameSpendPercentage = budgedPreset?.name;
+
             const dataNewUser = {
                 name: isName,
                 email: isEmail,
@@ -69,6 +69,7 @@ const FormLogin = () => {
 
             const result = await postNewUser(dataNewUser);
             console.log(result);
+            setIsLoginMode(true);
         } else {
             const res = await signIn("credentials", {
                 email: isEmail,
