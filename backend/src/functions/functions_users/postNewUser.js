@@ -1,4 +1,4 @@
-import User from "./../../models/users.js";
+import User from "../../models/users.js";
 import hashingPassword from "../../utils/hashingPassword.js";
 
 /**
@@ -33,7 +33,7 @@ const postNewUser = async (newUser) => {
             email: email,
             password_hash: password_hashed,
             nomina: nomina,
-            PercentageSpend: percentageSpend
+            percentageSpend: percentageSpend
         });
 
         return registeredUser;

@@ -9,6 +9,7 @@ const postNewUser = async (dataNewUser) => {
             },
             body: JSON.stringify({
                 name: dataNewUser.name,
+                email: dataNewUser.email,
                 password_hash: dataNewUser.password_hash,
                 nomina: dataNewUser.nomina,
                 percentageSpend: dataNewUser.percentageSpend,                

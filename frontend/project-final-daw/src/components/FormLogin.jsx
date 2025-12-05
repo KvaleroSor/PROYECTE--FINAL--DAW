@@ -16,7 +16,7 @@ const FormLogin = () => {
     const [isShowPassword, setIsShowPassword] = useState(false);
     const [isError, setIsError] = useState("");
     const [isLoginMode, setIsLoginMode] = useState(true);
-    const [budgetPreset, setBudgetPreset] = useState("");
+    // const [budgetPreset, setBudgetPreset] = useState("");
 
     const { data: session } = useSession();
     const router = useRouter();
@@ -33,28 +33,40 @@ const FormLogin = () => {
     const distributionSpendPercentage = budgedPreset?.distribution;
     const nameSpendPercentage = budgedPreset?.value;
 
+    const handleCleanUpValuesForm = () => {
+        setIsName("");
+        setIsEmail("");
+        setIsPassword("");
+        setIsPasswordConfirm("");
+        setIsNomina("");
+        setIsSpendingPercentage("");
+        setIsError("");
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const dataNewUser = {
-            name: isName,
-            email: isEmail,
-            password_hash: isPassword,
-            nomina: isNomina,
-            percentageSpend: {
-                namePercentageSpend: nameSpendPercentage,
-                fixedExpenses: distributionSpendPercentage.fixedExpenses,
-                leisureExpenses: distributionSpendPercentage.leisureExpenses,
-                investment: distributionSpendPercentage.investment,
-                savings: distributionSpendPercentage.savings,
-            },
-        };
-
-        if (isPassword !== isPasswordConfirm && !isLoginMode) {
-            setIsError("❌ | LAS CONTRASEÑAS NO COINCIDEN");
-        }
-
         if (!isLoginMode) {
+            const dataNewUser = {
+                name: isName,
+                email: isEmail,
+                password_hash: isPassword,
+                nomina: isNomina,
+                percentageSpend: {
+                    namePercentageSpend: nameSpendPercentage,
+                    fixedExpenses: distributionSpendPercentage.fixedExpenses,
+                    leisureExpenses:
+                        distributionSpendPercentage.leisureExpenses,
+                    investment: distributionSpendPercentage.investment,
+                    savings: distributionSpendPercentage.savings,
+                },
+            };
+
+            if (isPassword !== isPasswordConfirm) {
+                setIsError("❌ | LAS CONTRASEÑAS NO COINCIDEN");
+                return;
+            }
+
             const result = await postNewUser(dataNewUser);
             console.log(result);
         } else {
@@ -64,15 +76,13 @@ const FormLogin = () => {
                 redirect: false,
             });
             console.log(res);
+
+            if (res.error) {
+                setIsError("❌ | CREDENCIALES INCORRECTAS");
+            }
         }
 
-        if (res.error) {
-            setIsError("❌ | CREDENCIALES INCORRECTAS");
-        }
-
-        setIsEmail("");
-        setIsPassword("");
-        setIsError("");
+        handleCleanUpValuesForm();
     };
 
     return (

@@ -1,12 +1,12 @@
 import { Router } from "express";
-import postNewUser from "../../functions/functions_users/postUser.js";
+import postNewUser from "../../functions/functions_users/postNewUser.js";
 
 const router = Router();
 
 router.post("/", async (req, res) => {
     try {
         const reqUser = req.body;
-        const { name, email, password_hash } = reqUser; 
+        const { name, email, password_hash, percentageSpend } = reqUser; 
 
         if(!name || !email || !password_hash){
             res.status(204).send();

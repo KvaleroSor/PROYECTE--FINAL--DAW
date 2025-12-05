@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 
 //USERS
-import postUser from './api/routes_users/postUser.js';
+import postUser from './api/routes_users/postNewUser.js';
 import postUserLogin from './api/routes_users/postUserLogin.js';
 import updateUser from './api/routes_users/updateUser.js';
 import deleteUser from './api/routes_users/deleteUser.js';
