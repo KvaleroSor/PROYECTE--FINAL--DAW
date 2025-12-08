@@ -3,6 +3,10 @@ import { useSession } from "next-auth/react";
 const postCategory = async (dataCategory) => {    
     const { data: session } = useSession();
 
+    console.log("🧑🏽‍💻 SESSION USER - ", session?.user);
+    console.log("🧑🏽‍💻 SESSION USER ID - ", session?.user.user_id);
+
+
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/categories`,
         {
@@ -15,7 +19,7 @@ const postCategory = async (dataCategory) => {
                 name: dataCategory.name,
                 color: dataCategory.color,
                 icon: dataCategory.icon, 
-                user_id: dataCategory.user_id
+                user_id: session?.user?.user_id,
             }),
         }
     );
