@@ -1,9 +1,14 @@
+import { useSession } from "next-auth/react";
+
 const postCategory = async (dataCategory) => {    
+    const { data: session } = useSession();
+
     const res = await fetch(
         `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/categories`,
         {
             method: "POST",
             headers: {
+                "Authorization": `Bearer ${session.accesToken}`,
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
