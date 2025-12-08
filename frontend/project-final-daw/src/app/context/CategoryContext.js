@@ -65,7 +65,7 @@ export const CategoriesProvider = ({ children }) => {
 
     const createCategory = async (newCategory) => {
         try {
-            const res = await postCategory(newCategory);
+            const res = await postCategory(newCategory, session);
             await fetchCategories();
             return res;
         } catch (err) {
