@@ -39,15 +39,32 @@ export const authOptions = {
         }),
     ],
     callbacks: {
-        async jwt({ token, user }) {            
+        async jwt({ token, user }) {
+            console.log("🔑 JWT CALLBACK - User received:", user);
+            console.log("🔑 JWT CALLBACK - Token before:", token);
+            
             if (user?.token) {
                 token.accessToken = user.token;
+                // Guardar información del usuario en el token
+                token.user_id = user.id;
+                token.email = user.email;
+                token.name = user.name;
             }
+            
+            console.log("🔑 JWT CALLBACK - Token after:", token);
             return token;
         },
         async session({ session, token }) {
-            // Pasar el token a la sesión
+            console.log("📋 SESSION CALLBACK - Token received:", token);
+            console.log("📋 SESSION CALLBACK - Session before:", session);
+            
+            // Pasar el token y la información del usuario a la sesión
             session.accessToken = token.accessToken;
+            session.user.user_id = token.user_id;
+            session.user.email = token.email;
+            session.user.name = token.name;
+            
+            console.log("📋 SESSION CALLBACK - Session after:", session);
             return session;
         },
     },

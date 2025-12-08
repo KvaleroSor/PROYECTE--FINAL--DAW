@@ -29,7 +29,7 @@ const FormSpend = () => {
         updatedCategory,
     } = useCategories();
     const [isSelectedIcon, setIsSelectedIcon] = useState(null);
-    const session = useSession();
+    const { data: session } = useSession();
     const availableIcons = [
         { icon: ShoppingCart, name: "ShoppingCart" },
         { icon: Home, name: "Home" },
@@ -53,9 +53,8 @@ const FormSpend = () => {
         e.preventDefault();
 
         console.log("🔍 SESSION COMPLETE:", session);
-        console.log("🔍 SESSION DATA:", session?.data);
         console.log("🔍 SESSION USER:", session?.data?.user);
-        console.log("🔍 USER ID:", session?.data?.user?.id);
+        console.log("🔍 USER ID:", session?.user?.user_id);
 
         const buttonPushed = e.nativeEvent.submitter.id;
 
@@ -63,7 +62,7 @@ const FormSpend = () => {
             name: isCategoryName,
             color: isCategoryColor,
             icon: isSelectedIcon,
-            user_id: session?.data?.user?.id,
+            user_id: session?.user?.user_id,
         };
 
         console.log("📤 DATA TO SEND:", data);
