@@ -1,6 +1,7 @@
 import { Router } from "express";
 import postUserLogin from "./../../functions/functions_users/postUserLogin.js";
 import verifyPassword from "../../utils/verifyPassword.js";
+import jwt from "jasonwebtoken";
 
 const router = Router();
 
@@ -20,6 +21,13 @@ router.post("/login", async (req, res) => {
         const isValid = await verifyPassword(user.password_hash, password);
         console.log(isValid);
 
+        //Creamos el token
+        const token = jwt.sign(
+            { userId: user._id }, 
+            process.env.JWT_SECRET, 
+            { expiresIn: "1d" } 
+        );
+
         if (!isValid) {
             return res.status(401).json({
                 mensaje: "ERROR - INCORRECT PASSWORD",
@@ -28,6 +36,7 @@ router.post("/login", async (req, res) => {
 
         const userObj = {
             user,
+            token,
         };
 
         res.json(userObj);

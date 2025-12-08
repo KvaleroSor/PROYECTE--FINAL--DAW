@@ -1,14 +1,16 @@
 import { Router } from "express";
 import postCategory from "../../functions/functions_categories/postCategory.js";
+import auth from './../../middleware/auth.js';
 
 const router = Router();
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
     try {
         const { name, color, icon, user_id } = req.body;
 
         console.log("📝 DATA RECEIVED:", req.body);
         console.log("👤 USER ID EXTRACTED:", user_id);
+        console.log("🎛️ TOKEN", req,Headers);
 
         if (!user_id) {
             console.log("❌ ERROR - YOU DON´T HAVE PERMISSIONS | SERVER");
