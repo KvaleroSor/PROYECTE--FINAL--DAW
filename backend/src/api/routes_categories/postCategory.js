@@ -7,6 +7,9 @@ const router = Router();
 router.post("/", auth, async (req, res) => {
     try {
         const { name, color, icon, user_id } = req.body;
+        const { userIdToken } = req.user.user_id;
+
+        console.log("🧟‍♂️ USER ID TOKEN: ", userIdToken);
 
         console.log("📝 DATA RECEIVED:", req.body);
         console.log("👤 USER ID EXTRACTED:", user_id);
