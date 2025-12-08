@@ -6,7 +6,9 @@ const router = Router();
 
 router.get("/user/:user_id", auth, async (req, res) => {
     try {
-        const user_id = req.params.user_id;
+        const user_id = req.user?.userId;
+        console.log("📋 GET CATEGORIES - User ID from token:", user_id);
+        
         const resultGet = await getCategory(user_id);
 
         !resultGet || resultGet.length === 0

@@ -26,9 +26,13 @@ export const CategoriesProvider = ({ children }) => {
     const fetchCategories = async () => {
         if(!session?.user?.user_id) return;
 
+        console.log("🔄 FETCH CATEGORIES - Context");
+        console.log("👤 Session User ID:", session?.user?.user_id);
+        console.log("🔑 Session Access Token:", session?.accessToken);
+        
         try {
             setIsLoading(true);
-            const data = await getCategories(session.user.user_id);
+            const data = await getCategories(session.user.user_id, session);
             setIsCategories(data.data);
         } catch (err) {
             console.error(
