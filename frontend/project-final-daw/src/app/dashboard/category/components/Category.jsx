@@ -16,7 +16,7 @@ import {
 } from "lucide-react";
 import { toRGBA } from "@/app/functions/toRGBA.js";
 
-const Category = ({ category }) => {
+const Category = ({ category, session }) => {
     const { setIsCategory, setIsUpdatedPushed, deleteCategory } =
         useCategories();
     const { name, color, icon } = category;
@@ -37,7 +37,7 @@ const Category = ({ category }) => {
             setIsCategory(cat);
             setIsUpdatedPushed(true);
         } else {
-            const res = await deleteCategory(cat._id);
+            const res = await deleteCategory(cat._id, session);
             console.log(res);
         }
     };

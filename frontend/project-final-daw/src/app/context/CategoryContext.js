@@ -24,12 +24,12 @@ export const CategoriesProvider = ({ children }) => {
     // --------------------------
 
     const fetchCategories = async () => {
-        if(!session?.user?.user_id) return;
+        if (!session?.user?.user_id) return;
 
         console.log("🔄 FETCH CATEGORIES - Context");
         console.log("👤 Session User ID:", session?.user?.user_id);
         console.log("🔑 Session Access Token:", session?.accessToken);
-        
+
         try {
             setIsLoading(true);
             const data = await getCategories(session.user.user_id, session);
@@ -48,10 +48,10 @@ export const CategoriesProvider = ({ children }) => {
     // DEVOLVER CATEGORÍA POR ID
     // --------------------------
 
-    const fetchCategoryById = async (id) => {
+    const fetchCategoryById = async (id, session) => {
         try {
             setIsLoading(true);
-            const data = await getCategoryById(id);
+            const data = await getCategoryById(id, session);
             setIsCategory(data.data);
         } catch (err) {
             console.error(
@@ -71,7 +71,7 @@ export const CategoriesProvider = ({ children }) => {
         console.log("🚀 INICIANDO CREACIÓN DE CATEGORÍA - Context");
         console.log("📋 Datos de categoría:", newCategory);
         console.log("🔐 Sesión en context:", session);
-        
+
         try {
             const res = await postCategory(newCategory, session);
             console.log("✅ CATEGORÍA CREADA EXITOSAMENTE:", res);
@@ -89,11 +89,14 @@ export const CategoriesProvider = ({ children }) => {
     // ACTUALIZAR CATEGORÍAS
     // --------------------------
 
-    const updatedCategory = async (id, dataCategory) => {
+    const updatedCategory = async (id, dataCategory, session) => {
         try {
-            const res = await udapteCategory(id, dataCategory);
+            const res = await udapteCategory(id, dataCategory, session);
+
+            console.log("➡️ RESPUESTA FUNCTION FETCH:", res);
+
             await fetchCategories();
-            await fetchCategoryById(id);
+            await fetchCategoryById(id, session);
             return res;
         } catch (err) {
             console.error(
@@ -107,10 +110,10 @@ export const CategoriesProvider = ({ children }) => {
     // ELIMINAR CATEGORÍAS
     // --------------------------
 
-    const deleteCategory = async (id) => {
+    const deleteCategory = async (id, session) => {
         try {
-            const res = await removeCategory(id);
-            await fetchCategories();            
+            const res = await removeCategory(id, session);
+            await fetchCategories();
             setIsCategory({});
             return res;
         } catch (err) {

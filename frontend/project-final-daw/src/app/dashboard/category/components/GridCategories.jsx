@@ -4,8 +4,10 @@ import { useCategories } from "@/app/context/CategoryContext.js";
 import { useState, useEffect } from "react";
 // import getCategories from "@/services/categories/getCategories.js";
 import Category from "./Category.jsx";
+import { useSession } from "next-auth/react";
 
 const GridCategories = () => {
+    const { data: session } = useSession();
     const { isCategories, isLoading } = useCategories();
     const [isData, setIsData] = useState(null);
 
@@ -21,7 +23,7 @@ const GridCategories = () => {
         <>
             <div className="flex flex-wrap justify-center gap-2 m-2">
                 {isCategories?.map((category) => (
-                    <Category key={category.id} category={category} />
+                    <Category key={category.id} category={category} session={session} />
                 ))}
             </div>
         </>

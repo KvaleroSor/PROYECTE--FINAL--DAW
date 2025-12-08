@@ -89,7 +89,7 @@ const FormSpend = () => {
             }
         } else if (buttonPushed === "button-update") {            
             try {
-                const res = await updatedCategory(isCategory._id, data);
+                const res = await updatedCategory(isCategory._id, data, session);
 
                 if (!res) {
                     console.log(`Algo mal ha pasado`);
