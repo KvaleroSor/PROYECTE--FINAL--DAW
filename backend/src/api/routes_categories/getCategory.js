@@ -1,9 +1,10 @@
 import { Router } from "express";
 import getCategory from "../../functions/functions_categories/getCategory.js";
+import auth from './../../middleware/auth.js';
 
 const router = Router();
 
-router.get("/user/:user_id", async (req, res) => {
+router.get("/user/:user_id", auth, async (req, res) => {
     try {
         const user_id = req.params.user_id;
         const resultGet = await getCategory(user_id);

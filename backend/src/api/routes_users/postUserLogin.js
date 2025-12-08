@@ -25,7 +25,7 @@ router.post("/login", async (req, res) => {
         const isValid = await verifyPassword(user.password_hash, password);
         console.log("✅ PASSWORD VALID:", isValid);
 
-        //Creamos el token
+        //Creem el token
         if (!process.env.JWT_SECRET) {
             console.log("❌ JWT_SECRET IS MISSING!");
             throw new Error("JWT_SECRET not configured");
