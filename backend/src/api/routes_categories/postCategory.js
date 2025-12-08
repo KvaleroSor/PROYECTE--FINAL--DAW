@@ -6,12 +6,11 @@ const router = Router();
 
 router.post("/", auth, async (req, res) => {
     try {
-        const { name, color, icon, user_id } = req.body;
-        const userIdFromToken = req.user.user_id; // Obtener el user_id del token JWT
+        const { name, color, icon } = req.body;
+        const userIdFromToken = req.user.userId; // Usar 'userId' del token decodificado
 
         console.log("🧟‍♂️ USER ID FROM TOKEN: ", userIdFromToken);
         console.log("📝 DATA RECEIVED:", req.body);
-        console.log("👤 USER ID FROM BODY:", user_id);
         console.log("🎛️ HEADERS:", req.headers.authorization);
 
         if (!userIdFromToken) {
