@@ -64,8 +64,13 @@ export const CategoriesProvider = ({ children }) => {
     // --------------------------
 
     const createCategory = async (newCategory) => {
+        console.log("🚀 INICIANDO CREACIÓN DE CATEGORÍA - Context");
+        console.log("📋 Datos de categoría:", newCategory);
+        console.log("🔐 Sesión en context:", session);
+        
         try {
             const res = await postCategory(newCategory, session);
+            console.log("✅ CATEGORÍA CREADA EXITOSAMENTE:", res);
             await fetchCategories();
             return res;
         } catch (err) {
