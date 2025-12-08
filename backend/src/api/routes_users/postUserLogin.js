@@ -1,7 +1,7 @@
 import { Router } from "express";
 import postUserLogin from "./../../functions/functions_users/postUserLogin.js";
 import verifyPassword from "../../utils/verifyPassword.js";
-import jwt from "jasonwebtoken";
+import jwt from "jsonwebtoken";
 
 const router = Router();
 
