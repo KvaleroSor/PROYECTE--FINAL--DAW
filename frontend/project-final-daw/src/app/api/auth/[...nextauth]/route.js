@@ -3,8 +3,11 @@ import Credentials from "next-auth/providers/credentials";
 
 export const authOptions = {
     providers: [
-        CredentialsProvider({
+        Credentials({
             async authorize(credentials) {
+                console.log("🚀 AUTHORIZE FUNCTION CALLED"); // Test básico
+                console.log("📧 Email:", credentials.email);
+                
                 const res = await fetch(
                     `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/users/login`,
                     {
@@ -18,6 +21,10 @@ export const authOptions = {
                 );
 
                 const data = await res.json();
+                
+                // 🔍 DEBUGGING - Ver qué devuelve el backend
+                console.log("Backend status:", res.status);
+                console.log("Backend response:", data);
 
                 if (res.ok && data.user) {
                     return {

@@ -10,7 +10,7 @@ router.post("/", auth, async (req, res) => {
 
         console.log("📝 DATA RECEIVED:", req.body);
         console.log("👤 USER ID EXTRACTED:", user_id);
-        console.log("🎛️ TOKEN", req,Headers);
+        console.log("🎛️ TOKEN", req,headers);
 
         if (!user_id) {
             console.log("❌ ERROR - YOU DON´T HAVE PERMISSIONS | SERVER");
@@ -31,7 +31,7 @@ router.post("/", auth, async (req, res) => {
             mensaje: "✅ - THE CATEGORY HAS BEEN CREATED",
             data_recived: dataNewCategory,
             new_category: resultNewCategory,
-            user_id_saved: resultNewCategory.user_id, // Mostrar explícitamente el user_id
+            user_id_saved: resultNewCategory.user_id,
         });
     } catch (err) {
         res.status(500).json({
