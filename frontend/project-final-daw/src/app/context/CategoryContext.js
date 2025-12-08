@@ -24,11 +24,11 @@ export const CategoriesProvider = ({ children }) => {
     // --------------------------
 
     const fetchCategories = async () => {
-        if(!session?.user?.id) return;
+        if(!session?.user?.user_id) return;
 
         try {
             setIsLoading(true);
-            const data = await getCategories(session.user.id);
+            const data = await getCategories(session.user.user_id);
             setIsCategories(data.data);
         } catch (err) {
             console.error(
@@ -63,7 +63,7 @@ export const CategoriesProvider = ({ children }) => {
     // CREAR CATEGORÍAS
     // --------------------------
 
-    const createCategory = async (newCategory) => {
+    const createCategory = async (newCategory, session) => {
         console.log("🚀 INICIANDO CREACIÓN DE CATEGORÍA - Context");
         console.log("📋 Datos de categoría:", newCategory);
         console.log("🔐 Sesión en context:", session);

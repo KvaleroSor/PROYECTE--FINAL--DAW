@@ -11,7 +11,7 @@ const postCategory = async (dataCategory, session) => {
         {
             method: "POST",
             headers: {
-                Authorization: `Bearer ${session?.accessToken}`,
+                "Authorization": `Bearer ${session?.accessToken}`,
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
@@ -27,9 +27,18 @@ const postCategory = async (dataCategory, session) => {
     console.log("📡 Response ok:", res.ok);
 
     if (!res.ok) {
-        throw new Error(
-            "ERROR - NO SE HA PODIDO HACER FETCH PARA CREAR LA CATEGORÍA"
-        );
+        // Intentar obtener el mensaje de error del servidor
+        let errorMessage = `HTTP ${res.status} - ${res.statusText}`;
+        
+        try {
+            const errorData = await res.json();
+            console.log("❌ ERROR DATA FROM SERVER:", errorData);
+            errorMessage += ` - ${errorData.message || errorData.error || JSON.stringify(errorData)}`;
+        } catch (e) {
+            console.log("❌ No se pudo parsear el error del servidor");
+        }
+        
+        throw new Error(errorMessage);
     }
     return await res.json();
 };

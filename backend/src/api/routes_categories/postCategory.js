@@ -7,24 +7,23 @@ const router = Router();
 router.post("/", auth, async (req, res) => {
     try {
         const { name, color, icon, user_id } = req.body;
-        // const { userIdToken } = req.user.user_id;
+        const userIdFromToken = req.user.user_id; // Obtener el user_id del token JWT
 
-        console.log("🧟‍♂️ USER ID TOKEN: ", req.user.user_id);
-
+        console.log("🧟‍♂️ USER ID FROM TOKEN: ", userIdFromToken);
         console.log("📝 DATA RECEIVED:", req.body);
-        console.log("👤 USER ID EXTRACTED:", user_id);
-        console.log("🎛️ TOKEN", req,headers);
+        console.log("👤 USER ID FROM BODY:", user_id);
+        console.log("🎛️ HEADERS:", req.headers.authorization);
 
-        if (!user_id) {
+        if (!userIdFromToken) {
             console.log("❌ ERROR - YOU DON´T HAVE PERMISSIONS | SERVER");
-            return res.status(401).json({ error: "User ID missing" });
+            return res.status(401).json({ error: "User ID missing from token" });
         }
 
         const dataNewCategory = {
             name: name,
             color: color,
             icon: icon,
-            user_id: user_id 
+            user_id: userIdFromToken // Usar el user_id del token, no del body
         }
 
         const resultNewCategory = await postCategory(dataNewCategory);
@@ -34,7 +33,7 @@ router.post("/", auth, async (req, res) => {
             mensaje: "✅ - THE CATEGORY HAS BEEN CREATED",
             data_recived: dataNewCategory,
             new_category: resultNewCategory,
-            user_id_saved: resultNewCategory.user_id,
+            user_id_saved: userIdFromToken,
         });
     } catch (err) {
         res.status(500).json({

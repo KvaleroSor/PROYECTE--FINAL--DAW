@@ -76,7 +76,7 @@ const FormSpend = () => {
         if (buttonPushed === "button-create") {                 
             try {
                 // console.log(data);            
-                const res = await createCategory(data);
+                const res = await createCategory(data, session);
 
                 if (!res) {
                     console.log(`Algo mal ha pasado`);
