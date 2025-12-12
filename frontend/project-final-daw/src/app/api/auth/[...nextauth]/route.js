@@ -32,6 +32,7 @@ export const authOptions = {
                         email: data.user.email,
                         name: data.user.name,
                         token: data.token, 
+                        role: data.role,
                     };
                 }
                 return null;
@@ -49,6 +50,7 @@ export const authOptions = {
                 token.user_id = user.id;
                 token.email = user.email;
                 token.name = user.name;
+                token.role = user.role;
             }
             
             console.log("🔑 JWT CALLBACK - Token after:", token);
@@ -63,6 +65,7 @@ export const authOptions = {
             session.user.user_id = token.user_id;
             session.user.email = token.email;
             session.user.name = token.name;
+            session.user.role = token.role;
             
             console.log("📋 SESSION CALLBACK - Session after:", session);
             return session;

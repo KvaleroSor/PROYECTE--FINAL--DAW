@@ -7,7 +7,7 @@ const auth = (req, res, next) => {
     
     const tokenAutentication = req.headers.authorization;
 
-    if (!tokenAutentication || !tokenAutentication.startsWith("Bearer")) { // Corregido: startsWith
+    if (!tokenAutentication || !tokenAutentication.startsWith("Bearer")) {
         console.log("❌ NO AUTHORIZATION TOKEN");
         return res.status(401).json({
             mensaje: "❌ ERROR - NO AUTHORIZATION",

@@ -22,7 +22,7 @@ router.post("/", auth, async (req, res) => {
             name: name,
             color: color,
             icon: icon,
-            user_id: userIdFromToken // Usar el user_id del token, no del body
+            user_id: userIdFromToken // Tinguem que gastar el user_id del token
         }
 
         const resultNewCategory = await postCategory(dataNewCategory);

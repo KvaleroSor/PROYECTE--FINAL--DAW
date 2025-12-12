@@ -9,6 +9,9 @@ import deleteUser from './api/routes_users/deleteUser.js';
 import getUser from './api/routes_users/getUser.js';
 import getUserById from './api/routes_users/getUserById.js';
 
+//ADMINS
+import getUserRole from './api/routes_admin/getUserRole.js';
+
 //SPENDS
 import postSpend from './api/routes_spends/postSpend.js';
 import updateSpend from './api/routes_spends/updateSpend.js';
@@ -104,6 +107,12 @@ app.use("/api/spendpercentage", postPercentageSpend);
 app.use("/api/spendpercentage", getPercentageSpend);
 app.use("/api/spendpercentage", updatePercentageSpend);
 app.use("/api/spendpercentage", deletePercentageSpend);
+
+/**
+ * Routes for Admin
+ */
+
+app.use("/api/admin", getUserRole);
 
 
 export default app;
