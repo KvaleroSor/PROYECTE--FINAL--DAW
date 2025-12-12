@@ -1,5 +1,7 @@
 import { Router } from "express";
 import getUserRole from "./../../functions/functions_admins/getUserRole.js";
+import auth from "../../middleware/auth.js";
+import authAdmin from "../../middleware/authAdmin.js";
 
 const router = Router();
 
