@@ -44,8 +44,11 @@ router.post("/login", async (req, res) => {
         }
 
         const userObj = {
-            user,
-            token,
+            id: user._id,
+            email: user.email,
+            name: user.name,
+            role: user.role,
+            token: token
         };
 
         console.log("✅ LOGIN SUCCESS");

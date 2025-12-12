@@ -29,6 +29,7 @@ export const CategoriesProvider = ({ children }) => {
         console.log("🔄 FETCH CATEGORIES - Context");
         console.log("👤 Session User ID:", session?.user?.user_id);
         console.log("🔑 Session Access Token:", session?.accessToken);
+        console.log("👨🏽‍💼 Role del usuario:", session?.role);
 
         try {
             setIsLoading(true);
