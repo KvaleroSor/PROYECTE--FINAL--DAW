@@ -9,7 +9,7 @@ router.post("/login", async (req, res) => {
     try {
         console.log("🔐 LOGIN ATTEMPT:", req.body.email);
         console.log("🔑 JWT_SECRET EXISTS:", !!process.env.JWT_SECRET);
-        
+
         const { email, password } = req.body;
         const user = await postUserLogin(email);
 
@@ -30,11 +30,11 @@ router.post("/login", async (req, res) => {
             console.log("❌ JWT_SECRET IS MISSING!");
             throw new Error("JWT_SECRET not configured");
         }
-        
+
         const token = jwt.sign(
-            { userId: user._id }, 
-            process.env.JWT_SECRET, 
-            { expiresIn: "1d" } 
+            { userId: user._id, role: user.role },
+            process.env.JWT_SECRET,
+            { expiresIn: "1d" }
         );
 
         if (!isValid) {
