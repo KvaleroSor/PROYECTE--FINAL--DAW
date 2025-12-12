@@ -12,7 +12,8 @@ const postNewUser = async (dataNewUser) => {
                 email: dataNewUser.email,
                 password_hash: dataNewUser.password_hash,
                 nomina: dataNewUser.nomina,
-                percentageSpend: dataNewUser.percentageSpend,                
+                percentageSpend: dataNewUser.percentageSpend,    
+                role: dataNewUser.role            
             }),
         }
     );

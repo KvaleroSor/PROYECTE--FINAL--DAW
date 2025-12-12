@@ -16,7 +16,7 @@ import hashingPassword from "../../utils/hashingPassword.js";
 
 const postNewUser = async (newUser) => {
     try {
-        const { name, email, password_hash, nomina, percentageSpend } = newUser;
+        const { name, email, password_hash, nomina, percentageSpend, role } = newUser;
         const password_hashed = await hashingPassword(password_hash);
 
         //Realitzar accions de "SEGURETAT" abans de crear el nou usuari.
@@ -33,7 +33,8 @@ const postNewUser = async (newUser) => {
             email: email,
             password_hash: password_hashed,
             nomina: nomina,
-            percentageSpend: percentageSpend
+            percentageSpend: percentageSpend,
+            role: role,
         });
 
         return registeredUser;

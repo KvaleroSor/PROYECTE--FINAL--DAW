@@ -6,7 +6,7 @@ const router = Router();
 router.post("/", async (req, res) => {
     try {
         const reqUser = req.body;
-        const { name, email, password_hash, percentageSpend } = reqUser; 
+        const { name, email, password_hash } = reqUser; 
 
         if(!name || !email || !password_hash){
             res.status(204).send();

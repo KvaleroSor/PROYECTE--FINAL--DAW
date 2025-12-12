@@ -42,6 +42,7 @@ export async function POST(request) {
                     password_hash: userData.password_hash,
                     nomina: userData.nomina,
                     percentageSpend: userData.percentageSpend,
+                    role: userData.role
                 }),
             }
         );
