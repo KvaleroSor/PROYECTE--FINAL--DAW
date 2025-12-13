@@ -110,6 +110,9 @@ app.use("/api/spendpercentage", deletePercentageSpend);
 
 /**
  * Routes for Admin
+ * 
+ * URL --> Per a que el admin puga vore tots els users que tinguen role "user".
+ * 
  */
 
 app.use("/api/admin", getUserRole);
