@@ -13,18 +13,6 @@ const getUserAdmin = async () => {
                     as: "categories",
                 },
             },
-            {
-                $addFields: {
-                    totalCategorias: { $size: "$categorias" },
-                },
-            },
-            {
-                $project: {
-                    name: 1,
-                    email: 1,
-                    totalCategories: 1,
-                },
-            },
         ]);
 
         // return resultGet;
