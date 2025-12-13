@@ -32,6 +32,7 @@ const getUserAdmin = async () => {
         return resultAgregate;
     } catch (err) {
         console.log("❌ ERROR - THE USERS COULD NOT BE FOUND | BBDD");
+        console.error(err);
     }
 };
 
