@@ -6,8 +6,12 @@ const authAdmin = (req, res, next) => {
     }
 
     const role = req.user.role;
+    const email = req.user.email;
+    const name = req.user.name;
 
     console.log("👨🏽‍💼 USER ROLE: ", role);
+    console.log("👨🏽‍💼 USER EMAIL: ", email);
+    console.log("👨🏽‍💼 USER NAME: ", name);
 
     if (role !== "admin") {
         return res.status(403).json({
