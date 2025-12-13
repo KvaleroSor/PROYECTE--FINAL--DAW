@@ -28,7 +28,7 @@ export const authOptions = {
 
                 if (res.ok && data) {
                     return {
-                        id: data._id,
+                        id: data.id,
                         email: data.email,
                         name: data.name,
                         token: data.token, 

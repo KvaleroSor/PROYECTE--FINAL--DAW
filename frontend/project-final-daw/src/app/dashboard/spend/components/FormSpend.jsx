@@ -53,7 +53,7 @@ const FormSpend = () => {
         e.preventDefault();
 
         console.log("🔍 SESSION COMPLETE:", session);
-        console.log("🔍 SESSION USER:", session?.data?.user);
+        console.log("🔍 SESSION USER:", session?.user);
         console.log("🔍 USER ID:", session?.user?.user_id);
 
         const buttonPushed = e.nativeEvent.submitter.id;

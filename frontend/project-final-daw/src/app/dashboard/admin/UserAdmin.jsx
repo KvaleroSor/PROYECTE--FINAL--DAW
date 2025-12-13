@@ -41,7 +41,7 @@ const UserAdmin = () => {
                             {/* <div className="inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" /> */}
 
                             <div className="flex items-start justify-between gap-6 mb-4 group-hover:scale-105 transition-all duration-300">
-                                <div className="flex items-center gap-4">
+                                <div className="flex items-center gap-4 text-slate-600">
                                     <div>
                                         <div className="flex flex-row gap-2">
                                             <h3>Nombre: </h3>
@@ -56,6 +56,10 @@ const UserAdmin = () => {
                                         <div className="flex flex-row gap-2">
                                             <p>Role: </p>
                                             <p>{user.role}</p>
+                                        </div>
+                                        <div className="flex flex-row gap-2">
+                                            <p>Núm. Categorias: </p>
+                                            <p>{user.categories.length}</p>
                                         </div>
                                     </div>
                                 </div>
