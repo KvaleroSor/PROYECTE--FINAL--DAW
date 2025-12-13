@@ -1,19 +1,18 @@
 import { getServerSession } from "next-auth";
-import { authOptions } from "@/lib/auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/route";
 import UserAdmin from "./UserAdmin.jsx";
-import Body from "./../components/Body.jsx";
 import { redirect } from "next/navigation";
 
-export default function DashboardPage() {
-    const session = getServerSession(authOptions);
+export default async function DashboardPage() {
+    const session = await getServerSession(authOptions);
 
     if (!session) {
         redirect("/login");
     }
 
-    if (session.user.role === "admin") {
-        return <UserAdmin />;
+    if (session?.user?.role !== "admin") {
+        redirect("/dashboard");
     }
 
-    return <Body />;
+    return <UserAdmin />;
 }

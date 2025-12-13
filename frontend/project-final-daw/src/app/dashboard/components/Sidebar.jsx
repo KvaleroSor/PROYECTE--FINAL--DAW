@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import { redirect, usePathname } from "next/navigation";
+import { usePathname } from "next/navigation";
 
 const Sidebar = () => {
     const { data: session, status } = useSession();
@@ -22,8 +22,8 @@ const Sidebar = () => {
     if (!session) return null;
 
     const handleSignOut = (e) => {
-        signOut();
-        redirect("/");
+        signOut({ callbackUrl: "/"});
+        
     };
 
     return (

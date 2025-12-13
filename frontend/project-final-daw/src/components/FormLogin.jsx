@@ -90,6 +90,8 @@ const FormLogin = () => {
                 setIsError(`❌ ERROR - CONNECTION ERROR`);
             }
         } else {
+            //ESTEM NO MODO LOGIN
+
             console.log("🧾 EMAIL QUE LLEGA AL LOGIN: ", isEmail);
             console.log("🔏 PASSWORD QUE LLEGA AL LOGIN: ", isPassword);
             
@@ -99,6 +101,7 @@ const FormLogin = () => {
                 redirect: false,
             });
             console.log(res);
+            
 
             if (res.error) {
                 setIsError("❌ | CREDENCIALES INCORRECTAS");
