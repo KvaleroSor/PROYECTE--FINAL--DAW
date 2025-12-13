@@ -90,6 +90,9 @@ const FormLogin = () => {
                 setIsError(`❌ ERROR - CONNECTION ERROR`);
             }
         } else {
+            console.log("🧾 EMAIL QUE LLEGA AL LOGIN: ", isEmail);
+            console.log("🔏 PASSWORD QUE LLEGA AL LOGIN: ", isPassword);
+            
             const res = await signIn("credentials", {
                 email: isEmail,
                 password: isPassword,

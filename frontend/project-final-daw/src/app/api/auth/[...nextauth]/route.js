@@ -26,11 +26,11 @@ export const authOptions = {
                 console.log("Backend status:", res.status);
                 console.log("Backend response:", data);
 
-                if (res.ok && data.user) {
+                if (res.ok && data) {
                     return {
-                        id: data.user._id,
-                        email: data.user.email,
-                        name: data.user.name,
+                        id: data._id,
+                        email: data.email,
+                        name: data.name,
                         token: data.token, 
                         role: data.role,
                     };
