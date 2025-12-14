@@ -1,63 +1,52 @@
 import { toRGBA } from "@/app/functions/toRGBA.js";
-import { CircleX, User } from "lucide-react";
+import { CircleX, User, Mail, Briefcase, FolderOpen } from "lucide-react";
 
 const UserRegisteredCategories = ({ data }) => {
     return (
         <div className="w-full flex flex-col justify-center items-center rounded-xl bg-slate-10 p-4 shadow-xl gap-10">
-            <h1 className="text-4xl text-slate-600 mt-4 underline underline-lg">
+            {/* <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-slate-600 border border-xl p-8 rounded-xl shadow-xl">
                 USUARIOS REGISTRADOS Y NUM. CATEGORÍAS
-            </h1>
+            </h1> */}
             <div className="flex flex-wrap gap-2 justify-center items-center">
                 {data.map((user) => {
                     return (
-                        <div className="w-auto group bg-slate-10 rounded-2xl p-6 shadow-xl border border-gray-100 hover:shadow-xl hover:border-slate-300 transition-all duration-300 overflow-hidden cursor-pointer">
-                            <div className="flex items-start justify-between gap-6 mb-4 group-hover:scale-105 transition-all duration-300 ">
-                                <div className="flex items-center gap-4 text-slate-600">
-                                    <div
-                                        className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 border-2`}
-                                        style={{
-                                            backgroundColor: toRGBA(
-                                                "Blue",
-                                                0.25
-                                            ),
-                                            border: `2px solid ${toRGBA(
-                                                "Blue",
-                                                0.6
-                                            )}`,
-                                        }}
-                                    >
-                                        <User className="w-10 h-10" />
+                        <div className="w-[350px] group bg-white rounded-2xl p-3 shadow-xl border border-gray-100 hover:shadow-xl hover:border-slate-300 transition-all duration-300 overflow-hidden cursor-pointer">
+                            <div className="w-full flex flex-col items-start gap-4 text-slate-600">
+                                {/* Avatar + Badge - SIN wrapper extra */}
+                                <div className="w-full flex items-start justify-between mb-4">
+                                    {/* Avatar a la izquierda */}
+                                    <div className="flex flex-shrink-0 w-14 h-14 rounded-xl bg-amber-50 shadow-lg text-amber-600 items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
+                                        <User className="size-5" />
                                     </div>
-                                    <div>
-                                        <div className="flex flex-row gap-2">
-                                            <h3>Nombre: </h3>
-                                            <h3 className="text-gray-700">
-                                                {user.name}
-                                            </h3>
-                                        </div>
-                                        <div className="flex flex-row gap-2">
-                                            <p>Email: </p>
-                                            <p>{user.email}</p>
-                                        </div>
-                                        <div className="flex flex-row gap-2">
-                                            <p>Role: </p>
-                                            <p>{user.role}</p>
-                                        </div>
-                                        <div className="flex flex-row gap-2">
-                                            <p>Núm. Categorias: </p>
-                                            <p>{user.categories.length}</p>
-                                        </div>
-                                    </div>
+
+                                    {/* Badge a la derecha - SOLO si es admin */}
+                                    {user.role === "admin" && (
+                                        <span className="text-xs text-indigo-600 bg-indigo-50 px-2 py-1 rounded-full">
+                                            Admin
+                                        </span>
+                                    )}
                                 </div>
 
-                                {/* <button
-                                        id="button-delete"
-                                        type="button"
-                                        className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
-                                        // onClick={() => {handleButtonClick(category)}}
-                                    >
-                                        <CircleX className="w-6 h-6" />
-                                    </button> */}
+                                <div className="flex flex-row gap-2">
+                                    <p className="text-gray-700 font-semibold">
+                                        {user.name}
+                                    </p>
+                                </div>
+                                <div className="flex justify-center items-center flex-row gap-2">
+                                    <Mail className="w-4 h-4" />
+                                    <p>{user.email}</p>
+                                </div>
+                                <div className="flex justify-center items-center flex-row gap-2">
+                                    <Briefcase className="w-4 h-4" />
+                                    <p>
+                                        {user.role[0].toUpperCase() +
+                                            user.role.substring(1)}
+                                    </p>
+                                </div>
+                                <div className="flex justify-center items-center flex-row gap-2">
+                                    <FolderOpen className="w-4 h-4" />
+                                    <p>{user.categories.length}</p>
+                                </div>
                             </div>
                         </div>
                     );
