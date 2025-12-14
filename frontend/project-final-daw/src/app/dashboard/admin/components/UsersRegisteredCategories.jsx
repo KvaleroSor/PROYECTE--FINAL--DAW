@@ -16,7 +16,7 @@ const UserRegisteredCategories = ({ data }) => {
                                 <div className="w-full flex items-start justify-between mb-4">
                                     {/* Avatar a la izquierda */}
                                     <div className="flex flex-shrink-0 w-14 h-14 rounded-xl bg-amber-50 shadow-lg text-amber-600 items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300">
-                                        <User className="size-5" />
+                                        <User className="size-6" />
                                     </div>
 
                                     {/* Badge a la derecha - SOLO si es admin */}

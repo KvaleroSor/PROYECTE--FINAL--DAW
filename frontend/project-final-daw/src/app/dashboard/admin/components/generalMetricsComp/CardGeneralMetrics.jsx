@@ -43,7 +43,7 @@ const CardGeneralMetrics = ({ data, titel, icon }) => {
                     // border: `2px solid ${toRGBA("#10B981", 0.6)}`,
                 }}
             >
-                <Icono className="w-7 h-7 text-slate-600" />
+                <Icono className="size-6 text-[#10B981]" />
             </div>
             <h1 className="text-slate-600">{titel}</h1>
             {/* {ICON.name === 'UserRoundCheck' && ()} */}
