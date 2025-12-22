@@ -2,7 +2,7 @@
 
 import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
-import getUsersRole from "./../../../services/admin/getUsersRole.js";
+import getUsersRole from "../../../services/admin/getUsersRole.js";
 import GraficUsers from "./components/GraficUsers.jsx";
 import GraficUsersLines from "./components/LineChart.jsx";
 import GeneralMetrics from "./components/GeneralMetrics.jsx";

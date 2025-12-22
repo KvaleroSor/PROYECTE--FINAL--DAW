@@ -5,6 +5,10 @@ const categoriesSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    monthly_budget: {
+        type: Number,
+        required: true
+    },
     color: {
         type: String,
         required: false,

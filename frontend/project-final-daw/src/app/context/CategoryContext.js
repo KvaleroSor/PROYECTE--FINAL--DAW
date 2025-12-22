@@ -18,6 +18,7 @@ export const CategoriesProvider = ({ children }) => {
     const [isCategoryName, setIsCategoryName] = useState("");
     const [isCategoryColor, setIsCategoryColor] = useState("");
     const [isUpdatedPushed, setIsUpdatedPushed] = useState(false);
+    const [isFormOpen, setIsFormOpen] = useState(false);
 
     // --------------------------
     // DEVOLVER TODAS LAS CATEGORÍAS
@@ -137,6 +138,7 @@ export const CategoriesProvider = ({ children }) => {
                 isCategoryName,
                 isCategoryColor,
                 isUpdatedPushed,
+                isFormOpen,
                 setIsCategory,
                 setIsCategoryName,
                 setIsCategoryColor,
@@ -146,6 +148,7 @@ export const CategoriesProvider = ({ children }) => {
                 createCategory,
                 updatedCategory,
                 deleteCategory,
+                setIsFormOpen,
             }}
         >
             {children}

@@ -6,7 +6,7 @@ const router = Router();
 
 router.post("/", auth, async (req, res) => {
     try {
-        const { name, color, icon } = req.body;
+        const { name, monthly_budget, color, icon } = req.body;
         const userIdFromToken = req.user.userId; // Usar 'userId' del token decodificado
 
         console.log("🧟‍♂️ USER ID FROM TOKEN: ", userIdFromToken);
@@ -20,6 +20,7 @@ router.post("/", auth, async (req, res) => {
 
         const dataNewCategory = {
             name: name,
+            monthly_budget: monthly_budget,
             color: color,
             icon: icon,
             user_id: userIdFromToken // Tinguem que gastar el user_id del token

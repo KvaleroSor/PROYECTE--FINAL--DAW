@@ -1,9 +1,9 @@
 import { toRGBA } from "@/app/functions/toRGBA.js";
-import { ChartColumnStacked, UserStar, UserRoundCheck } from "lucide-react";
+import { FolderOpen, UserStar, UserRoundCheck } from "lucide-react";
 
 const CardGeneralMetrics = ({ data, titel, icon }) => {
     const availableIcons = [
-        { icon: ChartColumnStacked, name: "ChartColumnStacked" },
+        { icon: FolderOpen, name: "FolderOpen" },
         { icon: UserStar, name: "UserStar" },
         { icon: UserRoundCheck, name: "UserRoundCheck" },
     ];
@@ -17,7 +17,7 @@ const CardGeneralMetrics = ({ data, titel, icon }) => {
             console.log(valueDataToShow);
             break;
 
-        case "ChartColumnStacked":
+        case "FolderOpen":
             valueDataToShow = data.reduce(
                 (total, user) => total + user.categories.length,
                 0
@@ -37,7 +37,7 @@ const CardGeneralMetrics = ({ data, titel, icon }) => {
     return (
         <div className="flex flex-col justify-center items-start gap-4 w-[400px] group bg-slate-10 rounded-2xl p-6 shadow-xl border border-gray-100 hover:border-slate-300 transition-all duration-300 overflow-hidden cursor-pointer">
             <div
-                className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 border-2 mb-2`}
+                className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-all duration-300 border-2 mb-2`}
                 style={{
                     backgroundColor: toRGBA("#10B981", 0.25),
                     // border: `2px solid ${toRGBA("#10B981", 0.6)}`,

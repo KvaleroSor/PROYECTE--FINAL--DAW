@@ -15,7 +15,7 @@ const GeneralMetrics = ({ data }) => {
                 <CardGeneralMetrics
                     data={data}
                     titel={"TOTAL CATEGORIAS REGISTRADAS"}
-                    icon={"ChartColumnStacked"}
+                    icon={"FolderOpen"}
                 />
                 <CardGeneralMetrics
                     data={data}
