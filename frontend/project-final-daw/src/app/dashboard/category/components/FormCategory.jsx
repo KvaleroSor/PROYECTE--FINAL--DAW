@@ -15,7 +15,7 @@ import {
     X,
     Repeat,
     SquareX,
-    CircleX
+    CircleX,
 } from "lucide-react";
 
 const FormSpend = () => {
@@ -24,6 +24,7 @@ const FormSpend = () => {
         isCategory,
         isCategoryName,
         isCategoryColor,
+        isMonthlyBudget,
         setIsCategory,
         setIsCategoryName,
         setIsCategoryColor,
@@ -31,6 +32,7 @@ const FormSpend = () => {
         createCategory,
         updatedCategory,
         setIsFormOpen,
+        setIsMonthlyBudget,
     } = useCategories();
     const [isSelectedIcon, setIsSelectedIcon] = useState(null);
     const { data: session } = useSession();
@@ -81,6 +83,7 @@ const FormSpend = () => {
 
         const data = {
             name: isCategoryName,
+            monthly_budget: isMonthlyBudget,
             color: isCategoryColor,
             icon: isSelectedIcon,
             user_id: session?.user?.user_id,
@@ -180,26 +183,16 @@ const FormSpend = () => {
                         type="text"
                         placeholder="Presupuesto Mensual"
                         className="h-12 w-full bg-gray-50 border border-gray-200 focus:outline-none focus:bg-white focus:bg-white focus:border-slate-900 transition-colors rounded-lg p-2 focus:bg-slate-100 shadow-md"
-                        // onChange={(e) => {
-                        //     setIsCategoryColor(e.target.value || "");
-                        // }}
-                        // value={isCategoryColor}
+                        onChange={(e) => {
+                            setIsMonthlyBudget(e.target.value);
+                        }}
+                        value={isMonthlyBudget}
                     />
                 </div>
                 <div className="w-full flex flex-col justify-start gap-2">
-                    <label htmlFor="color">Color</label>
-                    {/* <input
-                        id="color"
-                        type="text"
-                        placeholder="Color Categoría"
-                        className="h-12 w-full bg-gray-50 border border-gray-200 focus:outline-none focus:bg-white focus:bg-white focus:border-slate-900 transition-colors rounded-lg p-2 focus:bg-slate-100 shadow-md"
-                        onChange={(e) => {
-                            setIsCategoryColor(e.target.value || "");
-                        }}
-                        value={isCategoryColor}
-                    /> */}
+                    <label htmlFor="color">Color</label>                    
                     <div className="flex flex-wrap gap-2">
-                        {availableColors.map((color) => {
+                        {availableColors.map((color) => {                            
                             return <CardColor key={color.id} color={color} />;
                         })}
                     </div>
