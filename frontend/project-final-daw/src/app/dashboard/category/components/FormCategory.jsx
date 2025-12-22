@@ -18,7 +18,7 @@ import {
     CircleX,
 } from "lucide-react";
 
-const FormSpend = () => {
+const FormCategory = () => {
     const {
         isUpdatedPushed,
         isCategory,
@@ -36,6 +36,16 @@ const FormSpend = () => {
     } = useCategories();
     const [isSelectedIcon, setIsSelectedIcon] = useState(null);
     const { data: session } = useSession();
+
+    const resetForm = () => {
+        setIsCategoryName("");
+        setIsMonthlyBudget(0);
+        setIsCategoryColor("");
+        setIsSelectedIcon(null);
+        setIsUpdatedPushed(false);
+        setIsCategory({});
+    };
+
     const availableIcons = [
         { icon: ShoppingCart, name: "ShoppingCart" },
         { icon: Home, name: "Home" },
@@ -67,6 +77,7 @@ const FormSpend = () => {
     useEffect(() => {
         if (isUpdatedPushed && isCategory) {
             setIsCategoryName(isCategory.name);
+            setIsMonthlyBudget(isCategory.monthly_budget);
             setIsCategoryColor(isCategory.color);
             setIsSelectedIcon(isCategory.icon);
         }
@@ -99,7 +110,6 @@ const FormSpend = () => {
 
         if (buttonPushed === "button-create") {
             try {
-                // console.log(data);
                 const res = await createCategory(data, session);
 
                 if (!res) {
@@ -108,6 +118,7 @@ const FormSpend = () => {
 
                 console.log(res);
                 resetForm();
+                setIsFormOpen(false);
             } catch (err) {
                 console.error(err);
             }
@@ -126,6 +137,7 @@ const FormSpend = () => {
                 console.log(res);
                 setIsUpdatedPushed(false);
                 resetForm();
+                setIsFormOpen(false);
             } catch (err) {
                 console.error(err);
             }
@@ -134,12 +146,7 @@ const FormSpend = () => {
 
     const handleCloseForm = () => {
         setIsFormOpen(false);
-    };
-
-    const resetForm = () => {
-        setIsCategoryName("");
-        setIsCategoryColor("");
-        setIsSelectedIcon(false);
+        resetForm();
     };
 
     return (
@@ -177,22 +184,22 @@ const FormSpend = () => {
                 </div>
 
                 <div className="w-full flex flex-col justify-start gap-2">
-                    <label htmlFor="color">Presupuesto Mensual</label>
+                    <label htmlFor="monthly_budget">Presupuesto Mensual</label>
                     <input
-                        id="color"
-                        type="text"
-                        placeholder="Presupuesto Mensual"
+                        id="monthly_budget"
+                        type="number"
+                        placeholder="0"
                         className="h-12 w-full bg-gray-50 border border-gray-200 focus:outline-none focus:bg-white focus:bg-white focus:border-slate-900 transition-colors rounded-lg p-2 focus:bg-slate-100 shadow-md"
                         onChange={(e) => {
                             setIsMonthlyBudget(e.target.value);
                         }}
-                        value={isMonthlyBudget}
+                        value={isMonthlyBudget || ""}
                     />
                 </div>
                 <div className="w-full flex flex-col justify-start gap-2">
-                    <label htmlFor="color">Color</label>                    
+                    <label htmlFor="color">Color</label>
                     <div className="flex flex-wrap gap-2">
-                        {availableColors.map((color) => {                            
+                        {availableColors.map((color) => {
                             return <CardColor key={color.id} color={color} />;
                         })}
                     </div>
@@ -233,26 +240,29 @@ const FormSpend = () => {
                     </div>
                 </div>
                 <div className="flex justify-center items-center w-full gap-3">
-                    <button
-                        id="button-create"
-                        type="submit"
-                        className="w-auto p-4 h-11 sm:h-12 flex justify-center items-center bg-white border-2 border-slate-300 hover:bg-slate-100 transition-all duration-300 rounded-xl group"
-                    >
-                        <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
-                        <span>Crear Categoría</span>
-                    </button>
-                    <button
-                        id="button-update"
-                        type="submit"
-                        className="w-auto p-4 h-11 sm:h-12 flex justify-center items-center bg-white border-2 border-slate-300 hover:bg-slate-100 transition-all duration-300 rounded-xl group"
-                    >
-                        <Repeat className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
-                        <span>Actualizar Categoría</span>
-                    </button>
+                    {!isUpdatedPushed ? (
+                        <button
+                            id="button-create"
+                            type="submit"
+                            className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-gradient-to-br from-indigo-100 to-purple-100 text-indigo-700 hover:from-indigo-200 to-purple-200"
+                        >
+                            <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
+                            <span>Crear Categoría</span>
+                        </button>
+                    ) : (
+                        <button
+                            id="button-update"
+                            type="submit"
+                            className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-gradient-to-br from-purple-100 to-indigo-100 text-indigo-700 hover:from-purple-200 to-indigo-200"
+                        >
+                            <Repeat className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
+                            <span>Actualizar Categoría</span>
+                        </button>
+                    )}
                 </div>
             </form>
         </>
     );
 };
 
-export default FormSpend;
+export default FormCategory;

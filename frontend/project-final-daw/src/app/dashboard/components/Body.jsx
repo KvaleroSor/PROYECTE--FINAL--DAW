@@ -1,7 +1,7 @@
 'use client';
 
 import { useSession } from "next-auth/react";
-import FormSpend from "../category/components/FormCategory.jsx";
+import FormCategory from "../category/components/FormCategory.jsx";
 import GridCategories from "../category/components/GridCategories.jsx";
 import CategoryByIdTemp from "../category/components/CategoryByIdTemp.jsx";
 import { useCategories } from "@/app/context/CategoryContext.js";
@@ -16,7 +16,7 @@ const Body = () => {
                 {isFormOpen && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
                         <div className="w-full max-w-xl max-h-xl rounded-xl bg-white p-6">
-                            <FormSpend />
+                            <FormCategory />
                         </div>
                     </div>
                 )}

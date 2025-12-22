@@ -55,6 +55,7 @@ export const CategoriesProvider = ({ children }) => {
         try {
             setIsLoading(true);
             const data = await getCategoryById(id, session);
+            console.log("DATA DESDE SERVER - ", data.data);    
             setIsCategory(data.data);
         } catch (err) {
             console.error(

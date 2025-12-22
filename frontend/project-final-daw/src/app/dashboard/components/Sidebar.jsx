@@ -40,7 +40,7 @@ const Sidebar = () => {
                     href="/dashboard"
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${
                         isActiveRoute("/dashboard")
-                            ? "bg-white text-slate-900 shadow-xl"
+                            ? "transition-all duration-300 group bg-gradient-to-br from-indigo-100 to-purple-100 text-indigo-700 hover:from-indigo-200 to-purple-200  shadow-xl"
                             : "text-slate-700 hover:text-slate-900"
                     }`}
                 >
@@ -55,7 +55,7 @@ const Sidebar = () => {
                     href="/dashboard/category"
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${
                         isActiveRoute("/dashboard/category")
-                            ? "bg-white text-slate-900 shadow-xl"
+                            ? "transition-all duration-300 group bg-gradient-to-br from-indigo-100 to-purple-100 text-indigo-700 hover:from-indigo-200 to-purple-200 shadow-xl"
                             : "text-slate-700 hover:text-slate-900"
                     }`}
                 >
@@ -70,7 +70,7 @@ const Sidebar = () => {
                     href="/dashboard/spend"
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${
                         isActiveRoute("/dashboard/spend")
-                            ? "bg-white text-slate-900 shadow-xl"
+                            ? "transition-all duration-300 group bg-gradient-to-br from-indigo-100 to-purple-100 text-indigo-700 hover:from-indigo-200 to-purple-200 shadow-xl"
                             : "text-slate-700 hover:text-slate-900"
                     }`}
                 >
@@ -85,7 +85,7 @@ const Sidebar = () => {
                     href="/dashboard/inversion"
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${
                         isActiveRoute("/dashboard/inversion")
-                            ? "bg-white text-slate-900 shadow-xl"
+                            ? "transition-all duration-300 group bg-gradient-to-br from-indigo-100 to-purple-100 text-indigo-700 hover:from-indigo-200 to-purple-200 shadow-xl"
                             : "text-slate-700 hover:text-slate-900"
                     }`}
                 >
@@ -100,7 +100,7 @@ const Sidebar = () => {
                     href="/dashboard/settings"
                     className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${
                         isActiveRoute("/dashboard/settings")
-                            ? "bg-white text-slate-900 shadow-xl"
+                            ? "transition-all duration-300 group bg-gradient-to-br from-indigo-100 to-purple-100 text-indigo-700 hover:from-indigo-200 to-purple-200 shadow-xl"
                             : "text-slate-700 hover:text-slate-900"
                     }`}
                 >

@@ -13,11 +13,12 @@ import {
     Icon,
     MoreVertical,
     CircleX,
+    SquareX,
 } from "lucide-react";
 import { toRGBA } from "@/app/functions/toRGBA.js";
 
 const Category = ({ category, session }) => {
-    const { setIsCategory, setIsUpdatedPushed, deleteCategory } =
+    const { setIsCategory, setIsUpdatedPushed, deleteCategory, setIsFormOpen } =
         useCategories();
     const { name, color, icon } = category;
 
@@ -35,7 +36,9 @@ const Category = ({ category, session }) => {
     const handleClick = async (e, cat) => {
         if (e.target.closest("button")?.id !== "button-delete") {
             setIsCategory(cat);
+            console.log("CATEGORÍA ", cat);
             setIsUpdatedPushed(true);
+            setIsFormOpen(true);
         } else {
             const res = await deleteCategory(cat._id, session);
             console.log(res);

@@ -9,6 +9,7 @@ const updateCategory = async (id, dataCategory, session) => {
             },
             body: JSON.stringify({
                 name: dataCategory.name,
+                monthly_budget: dataCategory.monthly_budget,
                 color: dataCategory.color,
                 icon: dataCategory.icon,
             }),
