@@ -20,7 +20,13 @@ import { toRGBA } from "@/app/functions/toRGBA.js";
 const Category = ({ category, session }) => {
     const { setIsCategory, setIsUpdatedPushed, deleteCategory, setIsFormOpen } =
         useCategories();
-    const { name, color, icon } = category;
+    const {
+        name,
+        monthly_budget,
+        total_acumulated = 0,
+        color,
+        icon,
+    } = category;
 
     const availableIcons = [
         { icon: ShoppingCart, name: "ShoppingCart" },
@@ -51,15 +57,13 @@ const Category = ({ category, session }) => {
     return (
         <>
             <div
-                className="w-[250px] group bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-xl hover:border-slate-300 transition-all duration-300 overflow-hidden cursor-pointer"
+                className="w-[500px] group bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-xl hover:border-slate-300 transition-all duration-300 overflow-hidden cursor-pointer"
                 onClick={(e) => {
                     handleClick(e, category);
                 }}
             >
-                {/* <div className="inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" /> */}
-
-                <div className="flex items-start justify-between mb-4 group-hover:scale-105 transition-all duration-300">
-                    <div className="flex items-center gap-4">
+                <div className="w-full flex items-start justify-between mb-4 group-hover:scale-105 transition-all duration-300 ">
+                    <div className="w-full flex flex-col justify-start  gap-4">
                         <div
                             className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 border-2`}
                             style={{
@@ -71,11 +75,16 @@ const Category = ({ category, session }) => {
                                 <Icono className="w-7 h-7 text-gray-700" />
                             )}
                         </div>
-                        <div>
-                            <h3 className="text-gray-700">{name}</h3>
-                            {/* <p className="text-sm text-gray-500">
-                                 transacciones
-                            </p> */}
+                        <div className="w-full text-gray-700">
+                            <h3>{name}</h3>
+                            <h3>{monthly_budget} %</h3>
+                            <div className="h-2.5 bg-indigo-50 rounded-full">
+                                <div
+                                    className="h-full bg-indigo-400 rounded-full"
+                                    style={{ width: `${monthly_budget}` }}
+                                ></div>
+                            </div>
+                            <h3>{total_acumulated} €</h3>
                         </div>
                     </div>
 

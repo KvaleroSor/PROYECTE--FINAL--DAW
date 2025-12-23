@@ -9,6 +9,16 @@ const categoriesSchema = new mongoose.Schema({
         type: Number,
         required: true
     },
+    category_type: {
+        type: String,
+        enum: ["fixedExpenses", "leisureExpenses", "investment", "savings"],
+        required: true,        
+    },
+    total_acumulated: {
+        type: Number,
+        required: false,
+        default: 0,
+    },
     color: {
         type: String,
         required: false,

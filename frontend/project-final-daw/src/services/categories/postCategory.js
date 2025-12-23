@@ -17,6 +17,7 @@ const postCategory = async (dataCategory, session) => {
             body: JSON.stringify({
                 name: dataCategory.name,
                 monthly_budget: dataCategory.monthly_budget,
+                total_acumulated: dataCategory.total_acumulated,
                 color: dataCategory.color,
                 icon: dataCategory.icon,
                 user_id: session?.user?.user_id,

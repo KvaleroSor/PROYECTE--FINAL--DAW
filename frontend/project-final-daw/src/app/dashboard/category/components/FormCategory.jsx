@@ -16,6 +16,11 @@ import {
     Repeat,
     SquareX,
     CircleX,
+    TrendingUp,
+    PiggyBank,
+    ReceiptEuro,
+    TicketsPlane,
+    Ban,
 } from "lucide-react";
 
 const FormCategory = () => {
@@ -239,25 +244,80 @@ const FormCategory = () => {
                         })}
                     </div>
                 </div>
+                <div className="w-full flex flex-col justify-start gap-2">
+                    <label>Tipo de Categoría</label>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 ">
+                        <button
+                            id="fixedExpenses"
+                            className="border-2 flex flex-start items-center p-5 rounded-xl gap-2 cursor-pointer"
+                        >
+                            <ReceiptEuro className="w-7 h-7" />
+                            Gasto Fijo
+                        </button>
+                        <button
+                            id="leisureExpenses"
+                            className="border-2 flex flex-start items-center p-5 rounded-xl gap-2 cursor-pointer"
+                        >
+                            <TicketsPlane className="w-7 h-7" />
+                            Gasto Ocio
+                        </button>
+                        <button
+                            id="investment"
+                            className="border-2 flex flex-start items-center p-5 rounded-xl gap-2 cursor-pointer"
+                        >
+                            <TrendingUp className="w-7 h-7" />
+                            Invesión
+                        </button>
+                        <button
+                            id="savings"
+                            className="border-2 flex flex-start items-center p-5 rounded-xl gap-2 cursor-pointer"
+                        >
+                            <PiggyBank className="w-7 h-7" />
+                            Ahorro
+                        </button>
+                    </div>
+                </div>
                 <div className="flex justify-center items-center w-full gap-3">
                     {!isUpdatedPushed ? (
-                        <button
-                            id="button-create"
-                            type="submit"
-                            className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-gradient-to-br from-indigo-100 to-purple-100 text-indigo-700 hover:from-indigo-200 to-purple-200"
-                        >
-                            <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
-                            <span>Crear Categoría</span>
-                        </button>
+                        <div className="flex flex-col w-full gap-2">
+                            <button
+                                id="button-create"
+                                type="submit"
+                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-gradient-to-br from-indigo-100 to-purple-100 text-indigo-700 hover:from-indigo-200 to-purple-200"
+                            >
+                                <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
+                                <span>Crear Categoría</span>
+                            </button>
+                            <button
+                                id="button-cancel"
+                                type="button"
+                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-100 border-slate-200 hover:bg-slate-300 hover:border-slate-900 text-slate-600"
+                                onClick={handleCloseForm}
+                            >
+                                <Ban  className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
+                                <span>Cancelar</span>
+                            </button>
+                        </div>
                     ) : (
-                        <button
-                            id="button-update"
-                            type="submit"
-                            className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-gradient-to-br from-purple-100 to-indigo-100 text-indigo-700 hover:from-purple-200 to-indigo-200"
-                        >
-                            <Repeat className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
-                            <span>Actualizar Categoría</span>
-                        </button>
+                        <div className="flex flex-col w-full gap-2">
+                            <button
+                                id="button-update"
+                                type="submit"
+                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-gradient-to-br from-purple-100 to-indigo-100 text-indigo-700 hover:from-purple-200 to-indigo-200"
+                            >
+                                <Repeat className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
+                                <span>Actualizar Categoría</span>
+                            </button>
+                            <button
+                                id="button-cancel"
+                                type="submit"
+                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-100 border-slate-200 hover:bg-slate-300 hover:border-slate-900 text-slate-600"
+                                onClick={handleCloseForm}
+                            >
+                                <Ban className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
+                                <span>Cancelar</span>
+                            </button>
+                        </div>
                     )}
                 </div>
             </form>
