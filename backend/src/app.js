@@ -33,10 +33,10 @@ import updateInversion from './api/routes_inversion/updateInversion.js';
 import deleteInversion from './api/routes_inversion/deleteInversion.js';
 
 //NOMINA
-import postNomina from './api/routes_nomina/postNomina.js';
-import getNomina from './api/routes_nomina/getNomina.js'
-import updateNomina from './api/routes_nomina/updateNomina.js';
-import deleteNomina from './api/routes_nomina/deleteNomina.js';
+// import postNomina from './api/routes_nomina/postNomina.js';
+// import getNomina from './api/routes_nomina/getNomina.js'
+// import updateNomina from './api/routes_nomina/updateNomina.js';
+// import deleteNomina from './api/routes_nomina/deleteNomina.js';
 
 //SPEND PERCENTAGE
 import postPercentageSpend from './api/routes_percentage_spends/postPercentageSpends.js';
