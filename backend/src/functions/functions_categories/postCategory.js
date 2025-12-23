@@ -6,7 +6,7 @@ const postCategory = async (newCategory) => {
         console.log("🔍 === DEBUGGING POSTCATEGORY FUNCTION ===");
         console.log("📋 FUNCTION RECEIVED:", newCategory);
         
-        const { name, monthly_budget, total_acumulated = 0, color = "Blue", icon = "Point blue", user_id } = newCategory;
+        const { name, monthly_budget, category_type, total_acumulated = 0, color = "Blue", icon = "Point blue", user_id } = newCategory;
         
         console.log("👤 USER ID EXTRACTED:", user_id);
         console.log("🔍 USER ID TYPE:", typeof user_id);
@@ -29,6 +29,7 @@ const postCategory = async (newCategory) => {
         const categoryData = {
             name: name,
             monthly_budget: monthly_budget,
+            category_type: category_type,
             total_acumulated: total_acumulated,
             color: color,
             icon: icon,

@@ -3,6 +3,7 @@ import { useSession } from "next-auth/react";
 import { useCategories } from "@/app/context/CategoryContext.js";
 import { useState, useEffect } from "react";
 import CardColor from "./CardColor.jsx";
+import ButtonTypeCategoryForm from "./ButtonTypeCategoryForm.js";
 import {
     Plus,
     ShoppingCart,
@@ -16,10 +17,10 @@ import {
     Repeat,
     SquareX,
     CircleX,
-    TrendingUp,
-    PiggyBank,
-    ReceiptEuro,
-    TicketsPlane,
+    // TrendingUp,
+    // PiggyBank,
+    // ReceiptEuro,
+    // TicketsPlane,
     Ban,
 } from "lucide-react";
 
@@ -30,6 +31,7 @@ const FormCategory = () => {
         isCategoryName,
         isCategoryColor,
         isMonthlyBudget,
+        isCategoryType,
         setIsCategory,
         setIsCategoryName,
         setIsCategoryColor,
@@ -38,9 +40,11 @@ const FormCategory = () => {
         updatedCategory,
         setIsFormOpen,
         setIsMonthlyBudget,
+        setIsCategoryType,
     } = useCategories();
     const [isSelectedIcon, setIsSelectedIcon] = useState(null);
     const { data: session } = useSession();
+    const [isActiveButtonCategory, setIsActiveButtonCategory] = useState(false);
 
     const resetForm = () => {
         setIsCategoryName("");
@@ -79,6 +83,8 @@ const FormCategory = () => {
         { id: "sky", colorRef: "#0EA5E9" },
     ];
 
+    const categoryType = ["Gasto Fijo", "Gasto Ocio", "Inversion", "Ahorro"];
+
     useEffect(() => {
         if (isUpdatedPushed && isCategory) {
             setIsCategoryName(isCategory.name);
@@ -97,9 +103,14 @@ const FormCategory = () => {
 
         const buttonPushed = e.nativeEvent.submitter.id;
 
+        /***********************************************
+         *         DATA QUE PASAMOS AL BACKEND         *
+         ***********************************************/
+
         const data = {
             name: isCategoryName,
             monthly_budget: isMonthlyBudget,
+            category_type: isCategoryType,
             color: isCategoryColor,
             icon: isSelectedIcon,
             user_id: session?.user?.user_id,
@@ -112,10 +123,14 @@ const FormCategory = () => {
             alert("Error: Usuario no logueado o sesión no válida");
             return;
         }
+        /***********************************************
+         *         DATA QUE PASAMOS AL BACKEND         *
+         ***********************************************/
 
         if (buttonPushed === "button-create") {
             try {
                 const res = await createCategory(data, session);
+                console.log("DATA CATEGORY TYPE", data.category_type);
 
                 if (!res) {
                     console.log(`Algo mal ha pasado`);
@@ -221,8 +236,8 @@ const FormCategory = () => {
                                     type="button"
                                     className={`w-[70px] h-[70px] aspect-square rounded-2xl border-2 transition-all duration-100 flex items-center justify-center group hover:scale-105 p-2 ${
                                         isActive
-                                            ? "border-slate-900 bg-green-300/25 shadow-md"
-                                            : "border-slate-300 hover:border-slate-900 bg-gray-100 hover:bg-white"
+                                            ? "bg-gradient-to-r from-indigo-400 to-cyan-400 text-slate-100 shadow-md"
+                                            : "border-slate-300 hover:border-cyan-500 bg-gray-100 hover:bg-gradient-to-r from-indigo-200 to-cyan-200"
                                     }`}
                                     onClick={() =>
                                         setIsSelectedIcon((prev) =>
@@ -233,11 +248,7 @@ const FormCategory = () => {
                                     }
                                 >
                                     <IconComponent
-                                        className={`w-7 h-7 transition-colors ${
-                                            isSelectedIcon
-                                                ? "text-slate-600"
-                                                : "text-slate-600"
-                                        }`}
+                                        className={`w-7 h-7 transition-colors`}
                                     />
                                 </button>
                             );
@@ -246,35 +257,16 @@ const FormCategory = () => {
                 </div>
                 <div className="w-full flex flex-col justify-start gap-2">
                     <label>Tipo de Categoría</label>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 ">
-                        <button
-                            id="fixedExpenses"
-                            className="border-2 flex flex-start items-center p-5 rounded-xl gap-2 cursor-pointer"
-                        >
-                            <ReceiptEuro className="w-7 h-7" />
-                            Gasto Fijo
-                        </button>
-                        <button
-                            id="leisureExpenses"
-                            className="border-2 flex flex-start items-center p-5 rounded-xl gap-2 cursor-pointer"
-                        >
-                            <TicketsPlane className="w-7 h-7" />
-                            Gasto Ocio
-                        </button>
-                        <button
-                            id="investment"
-                            className="border-2 flex flex-start items-center p-5 rounded-xl gap-2 cursor-pointer"
-                        >
-                            <TrendingUp className="w-7 h-7" />
-                            Invesión
-                        </button>
-                        <button
-                            id="savings"
-                            className="border-2 flex flex-start items-center p-5 rounded-xl gap-2 cursor-pointer"
-                        >
-                            <PiggyBank className="w-7 h-7" />
-                            Ahorro
-                        </button>
+                    <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        {categoryType.map((cat) => (
+                            <ButtonTypeCategoryForm
+                                key={cat}
+                                id={cat}
+                                button_type={cat}
+                                setIsCategoryType={setIsCategoryType}
+                                isCategoryType={isCategoryType}
+                            />
+                        ))}
                     </div>
                 </div>
                 <div className="flex justify-center items-center w-full gap-3">
@@ -294,7 +286,7 @@ const FormCategory = () => {
                                 className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-100 border-slate-200 hover:bg-slate-300 hover:border-slate-900 text-slate-600"
                                 onClick={handleCloseForm}
                             >
-                                <Ban  className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
+                                <Ban className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
                                 <span>Cancelar</span>
                             </button>
                         </div>

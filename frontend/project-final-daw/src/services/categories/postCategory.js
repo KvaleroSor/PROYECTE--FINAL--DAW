@@ -17,6 +17,7 @@ const postCategory = async (dataCategory, session) => {
             body: JSON.stringify({
                 name: dataCategory.name,
                 monthly_budget: dataCategory.monthly_budget,
+                category_type: dataCategory.category_type,
                 total_acumulated: dataCategory.total_acumulated,
                 color: dataCategory.color,
                 icon: dataCategory.icon,
@@ -28,8 +29,7 @@ const postCategory = async (dataCategory, session) => {
     console.log("📡 Response status:", res.status);
     console.log("📡 Response ok:", res.ok);
 
-    if (!res.ok) {
-        // Intentar obtener el mensaje de error del servidor
+    if (!res.ok) {       
         let errorMessage = `HTTP ${res.status} - ${res.statusText}`;
         
         try {

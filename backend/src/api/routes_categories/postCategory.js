@@ -6,7 +6,7 @@ const router = Router();
 
 router.post("/", auth, async (req, res) => {
     try {
-        const { name, monthly_budget, total_acumulated, color, icon } = req.body;
+        const { name, monthly_budget, category_type, total_acumulated, color, icon } = req.body;
         const userIdFromToken = req.user.userId; // Usar 'userId' del token decodificado
 
         console.log("🧟‍♂️ USER ID FROM TOKEN: ", userIdFromToken);
@@ -21,6 +21,7 @@ router.post("/", auth, async (req, res) => {
         const dataNewCategory = {
             name: name,
             monthly_budget: monthly_budget,
+            category_type: category_type,
             total_acumulated: total_acumulated,
             color: color,
             icon: icon,
