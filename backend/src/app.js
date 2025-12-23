@@ -94,10 +94,10 @@ app.use("/api/inversion", getInversion);
  * Routes for Nominas
  */
 
-app.use("/api/nomina", postNomina);
-app.use("/api/nomina", updateNomina);
-app.use("/api/nomina", deleteNomina);
-app.use("/api/nomina", getNomina);
+// app.use("/api/nomina", postNomina);
+// app.use("/api/nomina", updateNomina);
+// app.use("/api/nomina", deleteNomina);
+// app.use("/api/nomina", getNomina);
 
 /**
  * Routes for Spend Percentage
