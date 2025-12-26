@@ -15,10 +15,21 @@ const getSpends = async (userid, session) => {
         }
     );
 
+    console.log("📡 Response status:", res.status);
+    console.log("📡 Response ok:", res.ok);
+
     if (!res.ok) {
-        throw new Error(
-            "ERROR - NO SE HA PODIDO HACER FETCH PARA LISTAR LOS GASTOS"
-        );
+        let errorMessage = `HTTP ${res.status} - ${res.statusText}`;
+        
+        try {
+            const errorData = await res.json();
+            console.log("❌ ERROR DATA FROM SERVER:", errorData);
+            errorMessage += ` - ${errorData.mensaje || errorData.message || errorData.error || JSON.stringify(errorData)}`;
+        } catch (e) {
+            console.log("❌ No se pudo parsear el error del servidor");
+        }
+        
+        throw new Error(errorMessage);
     }
     return await res.json();
 };

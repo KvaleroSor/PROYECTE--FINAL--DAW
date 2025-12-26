@@ -1,4 +1,5 @@
 import Spend from "../../models/spends.js";
+import mongoose from "mongoose";
 
 const getSpend = async (user_id) => {
     try {
@@ -8,6 +9,8 @@ const getSpend = async (user_id) => {
         return resultGet;
     } catch (err) {
         console.log("❌ ERROR - THE SPEND COULD NOT BE FOUND | BBDD");
+        console.error(err);
+        throw err;
     }
 };
 
