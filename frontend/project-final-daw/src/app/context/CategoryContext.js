@@ -19,7 +19,7 @@ export const CategoriesProvider = ({ children }) => {
     const [isMonthlyBudget, setIsMonthlyBudget] = useState(0);
     const [isCategoryColor, setIsCategoryColor] = useState("");
     const [isUpdatedPushed, setIsUpdatedPushed] = useState(false);
-    const [isFormOpen, setIsFormOpen] = useState(false);
+    const [isFormCategoryOpen, setIsFormCategoryOpen] = useState(false);
     const [isCategoryType, setIsCategoryType] = useState(null);
 
     // --------------------------
@@ -141,7 +141,7 @@ export const CategoriesProvider = ({ children }) => {
                 isCategoryName,
                 isCategoryColor,
                 isUpdatedPushed,
-                isFormOpen,
+                isFormCategoryOpen,
                 isMonthlyBudget,
                 isCategoryType,
                 setIsCategory,
@@ -153,7 +153,7 @@ export const CategoriesProvider = ({ children }) => {
                 createCategory,
                 updatedCategory,
                 deleteCategory,
-                setIsFormOpen,
+                setIsFormCategoryOpen,
                 setIsMonthlyBudget,
                 setIsCategoryType
             }}

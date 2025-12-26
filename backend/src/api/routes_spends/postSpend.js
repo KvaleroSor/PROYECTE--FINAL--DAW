@@ -6,7 +6,7 @@ const router = Router();
 router.post("/", async (req, res) => {
     try {
         const reqSpend = req.body;
-        const { user_id, categories, description, amount, date } = reqSpend;
+        const { user_id, category_id, description, amount, date } = reqSpend;
 
         if(!user_id || categories.length === 0 || !description || !amount || !date ){
             console.log("❌ ERROR - SOME ELEMENT OF THE NEW SPEND IS EMPTY | SERVER");

@@ -5,18 +5,28 @@ import FormCategory from "../category/components/FormCategory.jsx";
 import GridCategories from "../category/components/GridCategories.jsx";
 import CategoryByIdTemp from "../category/components/CategoryByIdTemp.jsx";
 import { useCategories } from "@/app/context/CategoryContext.js";
+import { useSpends } from "@/app/context/SpendContext.js";
+import FormSpend from "../spend/components/FormSpend.jsx";
 
 
 const Body = () => {
-    const { isFormOpen } = useCategories();
+    const { isFormCategoryOpen } = useCategories();
+    const { isFormSpendOpen } = useSpends();
 
     return (
         <>
             <div className="h-full grid grid-rows-[auto_auto_auto] lg:grid-rows-[3fr_2fr_5fr] sm:grid-cols-1">
-                {isFormOpen && (
+                {isFormCategoryOpen && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
                         <div className="w-full max-w-xl max-h-xl rounded-xl bg-white p-6">
                             <FormCategory />
+                        </div>
+                    </div>
+                )}
+                {isFormSpendOpen && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+                        <div className="w-full max-w-xl max-h-xl rounded-xl bg-white p-6">
+                            <FormSpend />
                         </div>
                     </div>
                 )}

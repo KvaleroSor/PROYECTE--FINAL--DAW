@@ -3,7 +3,7 @@ import { useSession } from "next-auth/react";
 import { useCategories } from "@/app/context/CategoryContext.js";
 import { useState, useEffect } from "react";
 import CardColor from "./CardColor.jsx";
-import ButtonTypeCategoryForm from "./ButtonTypeCategoryForm.js";
+import ButtonTypeCategoryForm from "./ButtonTypeCategoryForm.jsx";
 import {
     Plus,
     ShoppingCart,
@@ -38,7 +38,7 @@ const FormCategory = () => {
         setIsUpdatedPushed,
         createCategory,
         updatedCategory,
-        setIsFormOpen,
+        setIsFormCategoryOpen,
         setIsMonthlyBudget,
         setIsCategoryType,
     } = useCategories();
@@ -138,7 +138,7 @@ const FormCategory = () => {
 
                 console.log(res);
                 resetForm();
-                setIsFormOpen(false);
+                setIsFormCategoryOpen(false);
             } catch (err) {
                 console.error(err);
             }
@@ -157,7 +157,7 @@ const FormCategory = () => {
                 console.log(res);
                 setIsUpdatedPushed(false);
                 resetForm();
-                setIsFormOpen(false);
+                setIsFormCategoryOpen(false);
             } catch (err) {
                 console.error(err);
             }
@@ -165,7 +165,7 @@ const FormCategory = () => {
     };
 
     const handleCloseForm = () => {
-        setIsFormOpen(false);
+        setIsFormCategoryOpen(false);
         resetForm();
     };
 
@@ -208,7 +208,7 @@ const FormCategory = () => {
                     <input
                         id="monthly_budget"
                         type="number"
-                        placeholder="0"
+                        placeholder="0.00 €"
                         className="h-12 w-full bg-gray-50 border border-gray-200 focus:outline-none focus:bg-white focus:bg-white focus:border-slate-900 transition-colors rounded-lg p-2 focus:bg-slate-100 shadow-md"
                         onChange={(e) => {
                             setIsMonthlyBudget(e.target.value);

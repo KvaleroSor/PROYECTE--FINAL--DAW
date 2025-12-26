@@ -6,13 +6,11 @@ const spendSchema = new mongoose.Schema({
         required: true,
         ref: "User",
     },
-    categories: [
-        {
-            type: mongoose.Schema.Types.ObjectId,
-            required: true,
-            ref: "Categories",
-        },
-    ],
+    category_id: {
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: "Categories",
+    },
     description: {
         type: String,
         required: true,

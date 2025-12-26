@@ -1,6 +1,6 @@
 const getUserData = async (userId, session) => {
     console.log("🚀 GET USER FINANCIAL DATA SERVICE");
-    console.log("👤 User ID:", userid);
+    console.log("👤 User ID:", userId);
     console.log("🔐 Session:", session);
     console.log("🔑 Access Token:", session?.accessToken);
 
