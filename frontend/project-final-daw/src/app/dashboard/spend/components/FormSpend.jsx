@@ -40,13 +40,15 @@ const FormSpend = () => {
         setIsData,
         setIsPaymentType,
         setIsUpdatedPushed,
+        //Crud
+        postNewSpend,
     } = useSpends();
     const { isCategories } = useCategories();
     const [isFormData, setIsFormData] = useState({});
     const { data: session } = useSession();
 
     const handleCloseForm = () => {
-        setIsFormSpendOpen(false);
+        resetForm();
     };
 
     console.log("🔍 SESSION COMPLETE FORM SPEND:", session);
@@ -55,15 +57,31 @@ const FormSpend = () => {
 
     const payment_type = ["Tarjeta", "Efectivo", "Transferencia"];
 
-    const handleSubmitSpend = (e) => {
+    const resetForm = () => {
+        setIsFormSpendOpen(false);
+        setIsCategoryId("");
+        setIsDescription("");
+        setIsAmount("");
+        setIsData(null);
+        setIsPaymentType("");
+    };
+
+    const handleSubmitSpend = async (e) => {
         e.preventDefault();
+
+        const categoryMatch = isCategories.find(
+            (cat) => cat.name === isCategoryId.split(" ")[0]
+        );
+        const buttonPushed = e.nativeEvent.submitter.id;
+        console.log(buttonPushed);
+
         /***********************************************
          *         DATA QUE PASAMOS AL BACKEND         *
          ***********************************************/
 
         const data = {
             user_id: session?.user?.user_id,
-            category_id: isCategoryId,
+            category_id: categoryMatch._id,
             description: isDescription,
             amount: isAmount,
             date: isData,
@@ -80,7 +98,31 @@ const FormSpend = () => {
         /***********************************************
          *         DATA QUE PASAMOS AL BACKEND         *
          ***********************************************/
-        setIsFormSpendOpen(false);
+
+        /***********************************************
+         *         POST DE LA DATA A LA BBDD           *
+         ***********************************************/
+
+        if(buttonPushed === 'button-create'){
+            try {
+                const res = await postNewSpend(data, session);                
+
+                if (!res) {
+                    console.log(`Algo mal ha pasado`);
+                }
+
+                console.log(res);
+                resetForm();                
+            } catch (err) {
+                console.error(err);
+            }
+        }
+
+        /***********************************************
+         *         POST DE LA DATA A LA BBDD           *
+         ***********************************************/
+
+        resetForm();
     };
 
     return (
