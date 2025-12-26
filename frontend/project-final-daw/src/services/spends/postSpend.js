@@ -1,6 +1,6 @@
 const postSpend = async (dataSpend, session) => {
     console.log("🚀 INICIANDO POST SPEND SERVICE");
-    console.log("📋 dataCategory recibida:", dataSpend);
+    console.log("📋 dataSpend recibida:", dataSpend);
     console.log("🔐 session recibida:", session);
     console.log("🧑🏽‍💻 SESSION USER - ", session?.user);
     console.log("🧑🏽‍💻 SESSION USER ID - ", session?.user?.user_id);
@@ -17,7 +17,7 @@ const postSpend = async (dataSpend, session) => {
             body: JSON.stringify({
                 category_id: dataSpend.category_id,
                 description: dataSpend.description,
-                amout: dataSpend.amout,
+                amount: dataSpend.amount,
                 date: dataSpend.date,
                 payment_type: dataSpend.payment_type,
                 user_id: session?.user?.user_id,

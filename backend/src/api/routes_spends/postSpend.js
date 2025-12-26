@@ -8,7 +8,7 @@ router.post("/", async (req, res) => {
         const reqSpend = req.body;
         const { user_id, category_id, description, amount, date } = reqSpend;
 
-        if(!user_id || categories.length === 0 || !description || !amount || !date ){
+        if(!user_id || !category_id || !description || !amount || !date ){
             console.log("❌ ERROR - SOME ELEMENT OF THE NEW SPEND IS EMPTY | SERVER");
             res.status(204).send();
         }
@@ -24,7 +24,7 @@ router.post("/", async (req, res) => {
         res.status(500).json({
             mensaje: `❌ ERROR - INTERNAL ERROR | SERVIDOR`,
 
-            error: err.mensage,
+            error: err.message,
         });
     }
 });
