@@ -17,7 +17,7 @@ const getSpends = async (userid, session) => {
 
     if (!res.ok) {
         throw new Error(
-            "ERROR - NO SE HA PODIDO HACER FETCH PARA LISTAR LAS CATEGORÍA"
+            "ERROR - NO SE HA PODIDO HACER FETCH PARA LISTAR LOS GASTOS"
         );
     }
     return await res.json();

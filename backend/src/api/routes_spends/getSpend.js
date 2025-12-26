@@ -3,7 +3,7 @@ import getSpend from './../../functions/functions_spends/getSpend.js';
 
 const router = Router();
 
-router.get("/user/user_id", async (req, res) => {
+router.get("/user/:user_id", async (req, res) => {
     try {
         const user_id = req.params.user_id;
         const resultGet = await getSpend(user_id);
@@ -19,7 +19,7 @@ router.get("/user/user_id", async (req, res) => {
     } catch (err) {
         res.status(500).json({
             mensaje: `❌ ERROR - INTERNAL ERROR | SERVER`,
-            error: err.mensage,
+            error: err.message,
         });
     }
 });

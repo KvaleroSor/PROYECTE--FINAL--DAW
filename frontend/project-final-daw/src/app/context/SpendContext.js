@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import postSpend from "./../../services/spends/postSpend.js";
 import getSpendById from "@/services/spends/getSpendById.js";
 import getSpends from "./../../services/spends/getSpends.js";
@@ -11,6 +12,7 @@ const SpendContext = createContext();
 
 export const SpendProvider = ({ children }) => {
     // Estados
+    const { data: session } = useSession();
     const [spends, setSpends] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -34,7 +36,7 @@ export const SpendProvider = ({ children }) => {
 
         try {
             setIsLoading(true);
-            const data = await getSpends(session.user.user_id, session);
+            const data = await getSpends(session?.user?.user_id, session);
             setIsSpends(data.data);
         } catch (err) {
             console.error(
@@ -54,7 +56,7 @@ export const SpendProvider = ({ children }) => {
             setIsSpend(data.data);
         } catch (err) {
             console.error(
-                "ERROR - NO SE PUEDE CARGAR LA CATEGORÍA | GLOBAL CONTEXT:",
+                "ERROR - NO SE PUEDE CARGAR EL GASTO | GLOBAL CONTEXT:",
                 err
             );
         } finally {
@@ -63,7 +65,7 @@ export const SpendProvider = ({ children }) => {
     };
 
     const postNewSpend = async (newSpend, session) => {
-        console.log("🚀 INICIANDO CREACIÓN DE CATEGORÍA - Context");
+        console.log("🚀 INICIANDO CREACIÓN DEL GASTO - Context");
         console.log("📋 Datos de categoría:", newSpend);
         console.log("🔐 Sesión en context:", session);
 
@@ -74,7 +76,7 @@ export const SpendProvider = ({ children }) => {
             return res;
         } catch (err) {
             console.error(
-                "ERROR - NO SE PUEDE CREAR LA CATEGORIA | GLOBAL CONTEXT:",
+                "ERROR - NO SE PUEDE CREAR EL GASTO | GLOBAL CONTEXT:",
                 err
             );
         }
@@ -91,7 +93,7 @@ export const SpendProvider = ({ children }) => {
             return res;
         } catch (err) {
             console.error(
-                "ERROR - NO SE PUEDE ACTUALIZAR LA CATEGORIA | GLOBAL CONTEXT:",
+                "ERROR - NO SE PUEDE ACTUALIZAR EL GASTO | GLOBAL CONTEXT:",
                 err
             );
         }
