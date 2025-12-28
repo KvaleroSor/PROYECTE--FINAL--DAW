@@ -5,12 +5,14 @@ const spendSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: "User",
-    },
+    },    
     category_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: "Categories",
     },
+    //Afegir per gaurdar el tipus de categoria, que va a permetremos
+    //conectar les categories amb els gastos a banda del id.
     description: {
         type: String,
         required: true,
