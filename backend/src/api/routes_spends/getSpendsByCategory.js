@@ -3,9 +3,9 @@ import getSpendsByCategory from "../../functions/functions_spends/getSpendsByCat
 
 const router = Router();
 
-router.get("/spends/category/:category_id", async (req, res) => {
+router.get("/category/:category_id", async (req, res) => {
     try {
-        const id = req.params.id;
+        const id = req.params.category_id;
         const resultGetId = await getSpendsByCategory(id);
 
         !resultGetId

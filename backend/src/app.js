@@ -71,7 +71,7 @@ app.use("/api/spends", updateSpend);
 app.use("/api/spends", deleteSpend);
 app.use("/api/spends", getSpend);
 app.use("/api/spends", getSpendById);
-app.use("api/spends", getSpendsByCagegory);
+app.use("/api/spends", getSpendsByCagegory);
 /**
  * Routes for categories 📋
  */
