@@ -3,6 +3,7 @@
 import { useSession } from "next-auth/react";
 import { createContext, useContext, useState, useEffect } from "react";
 import getUserData from "@/services/users/getUserData.js";
+import getSpendByCategory from '@/services/spends/getSpendByCategory.js';
 
 const FinancialContext = createContext();
 
@@ -21,6 +22,7 @@ export const FinancialProvider = ({ children }) => {
     const [isLeisureExpensesFromNomina, setIsLeisureExpensesFromNomina] = useState(0);
     const [isInvestmentFromNomina, setIsInvestmentFromNomina] = useState(0);
     const [isSavingFromNomina, setIsSavingFromNomina] = useState(0);    
+    
 
     const fetchFinancialData = async () => {
         if (!session?.user?.user_id) return;
@@ -71,17 +73,7 @@ export const FinancialProvider = ({ children }) => {
         setIsSavingFromNomina((isPercentageSettings.savings / 100) * isNomina);
     };
 
-    const calculateMonthlyBudgetCategory = (category_type, monthly_budget) => {
-        // console.log("GASTO FIJO", isFixedExpensesFromNomina);
-        // console.log("GASTO OCIO", (monthly_budget / 100) * isLeisureExpensesFromNomina);
-        // console.log("INVERSION", isInvestmentFromNomina);
-        // console.log("AHORRO", isSavingFromNomina);
-        // console.log("TIPO DE CATEGORIA", category_type);
-        // console.log(
-        //     "PORCENTAJE DE GASTO PARA LA CATEGORIA ESTE MES",
-        //     monthly_budget
-        // );
-
+    const calculateMonthlyBudgetCategory = (category_type, monthly_budget) => {        
         switch (category_type) {
             case "Gasto Fijo":
                 return Number((monthly_budget / 100) * isFixedExpensesFromNomina).toFixed(2);
@@ -94,6 +86,19 @@ export const FinancialProvider = ({ children }) => {
 
             case "Ahorro":
                 return Number((monthly_budget / 100) * isSavingFromNomina).toFixed(2);
+        }
+    };
+
+    const calculateMonthlyTotalAmountSpend = async (category) => {
+        try{
+            const res = await getSpendByCategory(category._id, session);
+            console.log("RESPONSE FETCH BY CATEGORY", res);
+            const total = res.data.reduce((acc, curr) => acc + curr.amount, 0);
+            console.log("TOTAL GASTOS",total);
+            return total;
+            
+        }catch(err){
+            console.error("ERROR - FALLO FETCH DESDE FINANCIAL SERVICES", err.message);            
         }
     };
 
@@ -123,6 +128,7 @@ export const FinancialProvider = ({ children }) => {
                 // Funciones de cálculo
                 calculatePercentageToPercentageSettings,
                 calculateMonthlyBudgetCategory,
+                calculateMonthlyTotalAmountSpend,
                 // Funciones de actualización
                 setIsNomina,
                 setIsPercentageSettings,

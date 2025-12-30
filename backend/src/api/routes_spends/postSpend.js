@@ -10,12 +10,12 @@ router.post("/", async (req, res) => {
 
         if(!user_id || !category_id || !description || !amount || !date ){
             console.log("❌ ERROR - SOME ELEMENT OF THE NEW SPEND IS EMPTY | SERVER");
-            res.status(204).send();
+            return res.status(204).send();
         }
 
         const resultNewSpend = await postSpend(reqSpend);
 
-        res.status(201).json({
+        return res.status(201).json({
             mensaje: "✅ - THE SPEND HAS BEEN CREATED",
             data_recived: reqSpend,
             new_spend: resultNewSpend,

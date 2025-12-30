@@ -32,8 +32,10 @@ const Category = ({ category, session }) => {
         isSavingFromNomina,
         calculatePercentageToPercentageSettings,
         calculateMonthlyBudgetCategory,
+        calculateMonthlyTotalAmountSpend,
     } = useFinancial();
     const [isTotalAmountToCategory, setIsTotalAmountToCategory] = useState(0);
+    const [isAmountSpendByCategory, setIsAmountSpendByCategory] = useState(0);
 
     const {
         name,
@@ -68,6 +70,7 @@ const Category = ({ category, session }) => {
                 calculateMonthlyBudgetCategory(category_type, monthly_budget)
             );
             calculatePercentageToPercentageSettings();
+            setIsAmountSpendByCategory(calculateMonthlyTotalAmountSpend(category));
         }
     }, [
         isFixedExpensesFromNomina,
@@ -143,7 +146,7 @@ const Category = ({ category, session }) => {
                             <div className="flex flex-row justify-start items-center gap-2">
                                 <h3>Total Acumulado</h3>
                                 <MoveRight className="w-4 h-4" />
-                                <h3>{total_acumulated} €</h3>
+                                <h3>{isAmountSpendByCategory} €</h3>
                             </div>
                             {category_type && colorTag && (
                                 <h3 className={`w-fit p-1 rounded-lg border ${colorTag.color} text-slate-500 mt-3`}>
