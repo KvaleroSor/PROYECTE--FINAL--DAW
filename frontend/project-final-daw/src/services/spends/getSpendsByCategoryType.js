@@ -1,6 +1,6 @@
-const getSpendsByCategory = async (category_id, session) => {
+const getSpendsByCategoryType = async (category_type, session) => {
     const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/spends/type/:category_type`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/spends/type/${category_type}`,
         {
             method: "GET",
             headers: {
@@ -35,4 +35,4 @@ const getSpendsByCategory = async (category_id, session) => {
     return await res.json();
 };
 
-export default getSpendsByCategory;
+export default getSpendsByCategoryType;
