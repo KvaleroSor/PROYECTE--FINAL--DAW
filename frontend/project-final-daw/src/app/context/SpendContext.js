@@ -38,6 +38,7 @@ export const SpendProvider = ({ children }) => {
             setIsLoading(true);
             const data = await getSpends(session?.user?.user_id, session);
             setIsSpends(data.data);
+            console.log("DATA DE LOS GASTOS", data);
         } catch (err) {
             console.error(
                 "ERROR - NO SE PUEDEN CARGAR LOS GASTOS | GLOBAL CONTEXT:",

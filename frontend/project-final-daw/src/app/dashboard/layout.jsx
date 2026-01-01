@@ -21,9 +21,9 @@ export default function DashboardLayout({ children }) {
     }, [status, router]);
 
     return (
-        <FinancialProvider>
-            <CategoriesProvider>
-                <SpendProvider>
+        <CategoriesProvider>
+            <SpendProvider>
+                <FinancialProvider>
                     <div className="min-h-screen w-full">
                         <div className="grid grid-cols-1 md:grid-cols-[240px_1fr]">
                             <Sidebar />
@@ -36,8 +36,8 @@ export default function DashboardLayout({ children }) {
                             </div>
                         </div>
                     </div>
-                </SpendProvider>
-            </CategoriesProvider>
-        </FinancialProvider>
+                </FinancialProvider>
+            </SpendProvider>
+        </CategoriesProvider>
     );
 }

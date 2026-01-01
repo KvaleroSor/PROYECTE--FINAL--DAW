@@ -21,8 +21,8 @@ import {
     SquareX,
     MoveRight,
 } from "lucide-react";
-import { toRGBA } from "@/app/functions/toRGBA.js";
-import { clsx } from "clsx";
+// import { toRGBA } from "@/app/functions/toRGBA.js";
+// import { clsx } from "clsx";
 
 const Category = ({ category, session }) => {
     const {
@@ -41,6 +41,7 @@ const Category = ({ category, session }) => {
         calculateMonthlyTotalAmountSpend,
         calculatePercentageBarCategory,
         calculateAvailableMoneyToSpend,
+        calculateTotalAmountSpendCategoryType,
     } = useFinancial();
     const { isSpends, isCategoryId, isAmount } = useSpends();
     const [isTotalAmountToCategory, setIsTotalAmountToCategory] = useState(0);
@@ -114,9 +115,7 @@ const Category = ({ category, session }) => {
                             amount,
                             monthly_budget
                         )
-                    );
-
-                    console.log(isAmountSpendByCategory);
+                    );               
                 }
             }
         };
@@ -173,10 +172,6 @@ const Category = ({ category, session }) => {
                         <div className="flex flex-row justify-between">
                             <div
                                 className={`w-12 h-13 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center shadow-lg transition-all duration-300 border-2 bg-slate-800`}
-                                // style={{
-                                //     backgroundColor: toRGBA(color, 0.25),
-                                //     border: `2px solid ${toRGBA(color, 0.6)}`,
-                                // }}
                             >
                                 {Icono && (
                                     <Icono className="w-7 h-7 text-slate-200" />
@@ -184,11 +179,7 @@ const Category = ({ category, session }) => {
                             </div>
                             <div className="flex justify-center items-center text-xs sm:text-sm rounded-3xl text-slate-500 m-3 p-1 px-3 bg-slate-100">
                                 {category_type && colorTag && (
-                                    <h3
-                                    // className={`w-fit p-1 rounded-lg border text-slate-500 mt-3`}
-                                    >
-                                        {category_type.toUpperCase()}
-                                    </h3>
+                                    <h3>{category_type.toUpperCase()}</h3>
                                 )}
                             </div>
                         </div>
@@ -231,12 +222,32 @@ const Category = ({ category, session }) => {
                                                 isValueBarToSpendCategory
                                             ).toFixed(2)}
                                         </h3>
-                                        <span>%</span>
+                                        <span className="ml-1">%</span>
                                         <span className="ml-2">usado</span>
                                     </div>
                                     <div className="flex flex-row justify-center gap-1">
-                                        {calculateAvailableMoneyToSpend(isTotalAmountToCategory, isAmountSpendByCategory)}
-                                        {/* <span>disponible</span> */}
+                                        {calculateAvailableMoneyToSpend(
+                                            isTotalAmountToCategory,
+                                            isAmountSpendByCategory
+                                        ) ? (
+                                            <span className="text-red-500 text-lg">
+                                                €{" "}
+                                                {Number(
+                                                    isTotalAmountToCategory -
+                                                        isAmountSpendByCategory
+                                                ).toFixed(2)}{" "}
+                                                excedido
+                                            </span>
+                                        ) : (
+                                            <span>
+                                                €{" "}
+                                                {Number(
+                                                    isTotalAmountToCategory -
+                                                        isAmountSpendByCategory
+                                                ).toFixed(2)}{" "}
+                                                disponible
+                                            </span>
+                                        )}                                        
                                     </div>
                                 </div>
                             </div>

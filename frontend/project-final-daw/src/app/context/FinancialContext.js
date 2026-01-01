@@ -4,11 +4,13 @@ import { useSession } from "next-auth/react";
 import { createContext, useContext, useState, useEffect } from "react";
 import getUserData from "@/services/users/getUserData.js";
 import getSpendByCategory from "@/services/spends/getSpendByCategory.js";
+// import { useCategories } from "@/app/context/CategoryContext.js";
 
 const FinancialContext = createContext();
 
 export const FinancialProvider = ({ children }) => {
     const { data: session } = useSession();
+    // const { isCategories } = useCategories();
     const [isNomina, setIsNomina] = useState(0);
     const [isPercentageSettings, setIsPercentageSettings] = useState({
         fixedExpenses: 0,
@@ -24,6 +26,9 @@ export const FinancialProvider = ({ children }) => {
         useState(0);
     const [isInvestmentFromNomina, setIsInvestmentFromNomina] = useState(0);
     const [isSavingFromNomina, setIsSavingFromNomina] = useState(0);
+    const [isTotalSpendFixedExpenses, setIsTotalSpendFixedExpenses] = useState(0);
+    const [isTotalSpendLeisureExpenses, setIsTotalSpendLeisureExpenses] = useState(0);
+    const [isTotalSpendInversionExpenses, setIsTotalSpendInversionExpenses] = useState(0);
 
     // ----------------------------------------------------------------------
     // FETCH DATA: Obtener datos iniciales del usuario
@@ -164,7 +169,7 @@ export const FinancialProvider = ({ children }) => {
 
         switch (category_type) {
             case "Gasto Fijo":
-                totalGroupBudget = isFixedExpensesFromNomina;
+                setIsTotalSpendFixedExpenses()
                 break;
             case "Gasto Ocio":
                 totalGroupBudget = isLeisureExpensesFromNomina;
@@ -188,15 +193,16 @@ export const FinancialProvider = ({ children }) => {
         return Number((isAmountSpendByCategory * 100) / categoryBudgetAmount);
     };
 
-    const calculateAvailableMoneyToSpend = (isTotalAmountToCategory, isAmountSpendByCategory) => {
+    const calculateAvailableMoneyToSpend = (
+        isTotalAmountToCategory,
+        isAmountSpendByCategory
+    ) => {
         const result = isTotalAmountToCategory - isAmountSpendByCategory;
 
-        if(result < 0) {
-            return <span className="text-red-500">€ {Number(result).toFixed(2)} excedido</span>;
-        }
-        
-        return <span>€ {Number(result).toFixed(2)} disponible</span>;
-    }
+        return result < 0;
+    };
+
+ 
 
     // ----------------------------------------------------------------------
     // ACTUALIZACIONES
@@ -236,7 +242,7 @@ export const FinancialProvider = ({ children }) => {
                 calculateMonthlyTotalAmountSpend,
                 evaluateTotalAmountSpendToTotalSpendCategory,
                 calculatePercentageBarCategory,
-                calculateAvailableMoneyToSpend,
+                calculateAvailableMoneyToSpend,                
                 // Funciones de actualización
                 setIsNomina,
                 setIsPercentageSettings,

@@ -19,6 +19,7 @@ import deleteSpend from './api/routes_spends/deleteSpend.js';
 import getSpend from './api/routes_spends/getSpend.js';
 import getSpendById from './api/routes_spends/getSpendById.js';
 import getSpendsByCagegory from './api/routes_spends/getSpendsByCategory.js';
+import getSpendsByCategoryType from './api/routes_spends/getSpendsByCategoryType.js';
 
 //CATEGORIES
 import postCategory from './api/routes_categories/postCategory.js';
@@ -72,6 +73,7 @@ app.use("/api/spends", deleteSpend);
 app.use("/api/spends", getSpend);
 app.use("/api/spends", getSpendById);
 app.use("/api/spends", getSpendsByCagegory);
+app.use("/api/spends", getSpendsByCategoryType);
 /**
  * Routes for categories 📋
  */
