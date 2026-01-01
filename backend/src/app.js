@@ -1,38 +1,38 @@
-import express from 'express';
-import cors from 'cors';
+import express from "express";
+import cors from "cors";
 
 //USERS
-import postUser from './api/routes_users/postNewUser.js';
-import postUserLogin from './api/routes_users/postUserLogin.js';
-import updateUser from './api/routes_users/updateUser.js';
-import deleteUser from './api/routes_users/deleteUser.js';
-import getUser from './api/routes_users/getUser.js';
-import getUserById from './api/routes_users/getUserById.js';
+import postUser from "./api/routes_users/postNewUser.js";
+import postUserLogin from "./api/routes_users/postUserLogin.js";
+import updateUser from "./api/routes_users/updateUser.js";
+import deleteUser from "./api/routes_users/deleteUser.js";
+import getUser from "./api/routes_users/getUser.js";
+import getUserById from "./api/routes_users/getUserById.js";
 
 //ADMINS
-import getUserRole from './api/routes_admin/getUserRole.js';
+import getUserRole from "./api/routes_admin/getUserRole.js";
 
 //SPENDS
-import postSpend from './api/routes_spends/postSpend.js';
-import updateSpend from './api/routes_spends/updateSpend.js';
-import deleteSpend from './api/routes_spends/deleteSpend.js';
-import getSpend from './api/routes_spends/getSpend.js';
-import getSpendById from './api/routes_spends/getSpendById.js';
-import getSpendsByCagegory from './api/routes_spends/getSpendsByCategory.js';
-import getSpendsByCategoryType from './api/routes_spends/getSpendsByCategoryType.js';
+import postSpend from "./api/routes_spends/postSpend.js";
+import updateSpend from "./api/routes_spends/updateSpend.js";
+import deleteSpend from "./api/routes_spends/deleteSpend.js";
+import getSpend from "./api/routes_spends/getSpend.js";
+import getSpendById from "./api/routes_spends/getSpendById.js";
+import getSpendsByCagegory from "./api/routes_spends/getSpendsByCategory.js";
+import getSpendsByCategoryType from "./api/routes_spends/getSpendsByCategoryType.js";
 
 //CATEGORIES
-import postCategory from './api/routes_categories/postCategory.js';
-import getCategory from './api/routes_categories/getCategory.js';
-import getCategoryById from './api/routes_categories/getCategoryById.js';
-import updateCategory from './api/routes_categories/updateCategory.js';
-import deleteCategory from './api/routes_categories/deleteCategory.js';
+import postCategory from "./api/routes_categories/postCategory.js";
+import getCategory from "./api/routes_categories/getCategory.js";
+import getCategoryById from "./api/routes_categories/getCategoryById.js";
+import updateCategory from "./api/routes_categories/updateCategory.js";
+import deleteCategory from "./api/routes_categories/deleteCategory.js";
 
 //INVERSION
-import postInversion from './api/routes_inversion/postInversion.js';
-import getInversion from './api/routes_inversion/getInversion.js';
-import updateInversion from './api/routes_inversion/updateInversion.js';
-import deleteInversion from './api/routes_inversion/deleteInversion.js';
+import postInversion from "./api/routes_inversion/postInversion.js";
+import getInversion from "./api/routes_inversion/getInversion.js";
+import updateInversion from "./api/routes_inversion/updateInversion.js";
+import deleteInversion from "./api/routes_inversion/deleteInversion.js";
 
 //NOMINA
 // import postNomina from './api/routes_nomina/postNomina.js';
@@ -41,10 +41,10 @@ import deleteInversion from './api/routes_inversion/deleteInversion.js';
 // import deleteNomina from './api/routes_nomina/deleteNomina.js';
 
 //SPEND PERCENTAGE
-import postPercentageSpend from './api/routes_percentage_spends/postPercentageSpends.js';
-import getPercentageSpend from './api/routes_percentage_spends/getPercentageSpend.js';
-import updatePercentageSpend from './api/routes_percentage_spends/updatePercentageSpend.js';
-import deletePercentageSpend from './api/routes_percentage_spends/deletePercentageSpend.js';
+import postPercentageSpend from "./api/routes_percentage_spends/postPercentageSpends.js";
+import getPercentageSpend from "./api/routes_percentage_spends/getPercentageSpend.js";
+import updatePercentageSpend from "./api/routes_percentage_spends/updatePercentageSpend.js";
+import deletePercentageSpend from "./api/routes_percentage_spends/deletePercentageSpend.js";
 //========================================================================================//
 
 const app = express();
@@ -60,7 +60,7 @@ app.use("/api/users", postUser);
 app.use("/api/users", postUserLogin);
 app.use("/api/users", updateUser);
 app.use("/api/users", deleteUser);
-app.use("/api/users", getUser); 
+app.use("/api/users", getUser);
 app.use("/api/users", getUserById);
 
 /**
@@ -71,9 +71,9 @@ app.use("/api/spends", postSpend);
 app.use("/api/spends", updateSpend);
 app.use("/api/spends", deleteSpend);
 app.use("/api/spends", getSpend);
-app.use("/api/spends", getSpendById);
 app.use("/api/spends", getSpendsByCagegory);
 app.use("/api/spends", getSpendsByCategoryType);
+app.use("/api/spends", getSpendById);
 /**
  * Routes for categories 📋
  */
@@ -113,12 +113,11 @@ app.use("/api/spendpercentage", deletePercentageSpend);
 
 /**
  * Routes for Admin
- * 
+ *
  * URL --> Per a que el admin puga vore tots els users que tinguen role "user".
- * 
+ *
  */
 
 app.use("/api/admin", getUserRole);
-
 
 export default app;

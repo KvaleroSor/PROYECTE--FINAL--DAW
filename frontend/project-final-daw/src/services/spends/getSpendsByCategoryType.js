@@ -1,6 +1,6 @@
 const getSpendsByCategory = async (category_id, session) => {
     const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/spends/category/`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/spends/type/:category_type`,
         {
             method: "GET",
             headers: {
