@@ -56,7 +56,7 @@ export const CategoriesProvider = ({ children }) => {
         try {
             setIsLoading(true);
             const data = await getCategoryById(id, session);
-            console.log("DATA DESDE SERVER - ", data.data);    
+            console.log("DATA DESDE SERVER - ", data.data);
             setIsCategory(data.data);
         } catch (err) {
             console.error(
@@ -130,8 +130,10 @@ export const CategoriesProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        fetchCategories();
-    }, []);
+        if (session?.user?.user_id) {
+            fetchCategories();
+        }
+    }, [session]);
 
     return (
         <CategoriesContext.Provider
@@ -155,7 +157,7 @@ export const CategoriesProvider = ({ children }) => {
                 deleteCategory,
                 setIsFormCategoryOpen,
                 setIsMonthlyBudget,
-                setIsCategoryType
+                setIsCategoryType,
             }}
         >
             {children}

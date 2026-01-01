@@ -67,15 +67,8 @@ const FormSpend = () => {
     };
 
     const handleSubmitSpend = async (e) => {
-        e.preventDefault();
+        e.preventDefault();     
 
-        console.log("CATEGORIAS GUARDADAS", isCategories);
-        console.log("CATEGORIAS GUARDADAS", isCategoryId);
-
-
-        const categoryMatch = isCategories.find(
-            (cat) => cat.name === isCategoryId.split(" ")[0]
-        );
         const buttonPushed = e.nativeEvent.submitter.id;
         console.log(buttonPushed);
 
@@ -85,7 +78,7 @@ const FormSpend = () => {
 
         const data = {
             user_id: session?.user?.user_id,
-            category_id: categoryMatch.category_id,
+            category_id: isCategoryId,
             description: isDescription,
             amount: isAmount,
             date: isData,
@@ -158,7 +151,7 @@ const FormSpend = () => {
                     >
                         <option value="">Selecciona una categoría</option>
                         {isCategories.map((cat) => (
-                            <option key={cat.id} value={cat.id}>
+                            <option key={cat._id} value={cat._id}>
                                 {`${cat.name} `}
                                 - Disponible: {`${cat.total_acumulated.toFixed(2)}`} € 
                                 - {`${cat.category_type}`}

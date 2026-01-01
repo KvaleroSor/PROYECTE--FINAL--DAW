@@ -113,6 +113,12 @@ export const SpendProvider = ({ children }) => {
         }
     };
 
+    useEffect(() => {
+        if (session?.user?.user_id) {
+            fetchSpends();
+        }
+    }, [session]);
+
     return (
         <SpendContext.Provider
             value={{
@@ -124,6 +130,7 @@ export const SpendProvider = ({ children }) => {
                 isData,
                 isPaymentType,
                 isUpdatedPushed,
+                isSpends,
                 // Setters
                 setIsFormSpendOpen,
                 setIsCategoryId,

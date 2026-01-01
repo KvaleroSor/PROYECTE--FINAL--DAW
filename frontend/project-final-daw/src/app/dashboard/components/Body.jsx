@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useSession } from "next-auth/react";
 import FormCategory from "../category/components/FormCategory.jsx";
@@ -8,14 +8,14 @@ import { useCategories } from "@/app/context/CategoryContext.js";
 import { useSpends } from "@/app/context/SpendContext.js";
 import FormSpend from "../spend/components/FormSpend.jsx";
 
-
 const Body = () => {
     const { isFormCategoryOpen } = useCategories();
     const { isFormSpendOpen } = useSpends();
 
     return (
         <>
-            <div className="h-full grid grid-rows-[auto_auto_auto] lg:grid-rows-[3fr_2fr_5fr] sm:grid-cols-1">
+            {/* <div className="h-full grid grid-rows-[auto_auto_auto] lg:grid-rows-[3fr_2fr_5fr] sm:grid-cols-1"> */}
+            <div className="h-full grid grid-rows-[auto_auto_auto]">
                 {isFormCategoryOpen && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
                         <div className="w-full max-w-xl max-h-xl rounded-xl bg-white p-6">
@@ -31,27 +31,20 @@ const Body = () => {
                     </div>
                 )}
                 <div className="w-full flex flex-col sm:flex-row">
-                    <div className="basis-[55%] border-2 rounded-xl m-3 flex flex-col justify-center items-center gap-5">
+                    <div className="h-auto basis-[55%] border-2 rounded-xl m-3 flex flex-col justify-center items-center gap-5 bg-white">
                         {/* <h1 className="text-3xl text-slate-700">CREAR CATEGORIA</h1> */}
                         {/* CAJA 1 */}
                         {/* <FormSpend /> */}
                     </div>
-                    <div className="basis-[45%] border-2 rounded-xl m-3 flex justify-center items-center">
+                    <div className="h-auto basis-[45%] border-2 rounded-xl m-3 flex justify-center items-center bg-white">
                         CAJA 2
                     </div>
                 </div>
-                <div className="border-2 rounded-xl m-3 flex justify-center items-center">
-                    <GridCategories />
+                <div className="border-2 rounded-xl m-3 flex justify-center items-center bg-white">
                     {/* CARRUSEL DE CATEGORIAS */}
                 </div>
-                <div className="w-full flex flex-col sm:flex-row">
-                    <div className="basis-[60%] border-2 rounded-xl m-3 flex justify-center items-center">
-                        {/* <CategoryByIdTemp /> */}
-                        {/* CAJA 3 */}
-                    </div>
-                    <div className="basis-[40%] w-full border-2 rounded-xl m-3 flex justify-center items-center">
-                        CAJA 4
-                    </div>
+                <div className="pt-4 border-2 rounded-xl m-2 sm:m-3 lg:m-4 bg-white">                    
+                    <GridCategories />
                 </div>
             </div>
         </>
