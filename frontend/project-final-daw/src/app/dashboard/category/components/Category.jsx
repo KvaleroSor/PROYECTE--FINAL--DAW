@@ -21,8 +21,6 @@ import {
     SquareX,
     MoveRight,
 } from "lucide-react";
-// import { toRGBA } from "@/app/functions/toRGBA.js";
-// import { clsx } from "clsx";
 
 const Category = ({ category, session }) => {
     const {
@@ -41,8 +39,9 @@ const Category = ({ category, session }) => {
         calculateMonthlyTotalAmountSpend,
         calculatePercentageBarCategory,
         calculateAvailableMoneyToSpend,
-        calculateTotalAmountSpendCategoryType,
+        calculateTotalSpendByCategoryType,
     } = useFinancial();
+    const { setIsFormSpendOpen } = useSpends();
     const { isSpends, isCategoryId, isAmount } = useSpends();
     const [isTotalAmountToCategory, setIsTotalAmountToCategory] = useState(0);
     const [isAmountSpendByCategory, setIsAmountSpendByCategory] = useState(0);
@@ -115,7 +114,7 @@ const Category = ({ category, session }) => {
                             amount,
                             monthly_budget
                         )
-                    );               
+                    );
                 }
             }
         };
@@ -147,10 +146,15 @@ const Category = ({ category, session }) => {
                 calculateMonthlyBudgetCategory(category_type, monthly_budget)
             );
             calculatePercentageToPercentageSettings();
+            calculateTotalSpendByCategoryType();
         } else {
             const res = await deleteCategory(cat._id, session);
             console.log(res);
         }
+    };
+
+    const handleClickAddSpend = () => {
+        setIsFormSpendOpen(true);
     };
 
     const iconCategory = availableIcons.find((i) => i.name === icon);
@@ -247,11 +251,34 @@ const Category = ({ category, session }) => {
                                                 ).toFixed(2)}{" "}
                                                 disponible
                                             </span>
-                                        )}                                        
+                                        )}
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div className="border-t border-slate-100 p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                    <div className="flex gap-2">
+                        <button
+                            className="flex-1 px-3 py-1.5 text-xs bg-slate-50 hover:bg-slate-100 text-slate-700 rounded-lg transition-colors"
+                            onClick={(e) => {
+                                e.stopPropagation(); 
+                                console.log("Ver detalles de", name);
+                            }}
+                        >
+                            Ver detalles
+                        </button>
+                        <button
+                            className="flex-1 px-3 py-1.5 text-xs bg-slate-900 hover:bg-slate-800 text-white rounded-lg transition-colors"
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                console.log("Añadir gasto a", name);
+                                handleClickAddSpend();
+                            }}
+                        >
+                            Añadir gasto
+                        </button>
                     </div>
                 </div>
             </div>

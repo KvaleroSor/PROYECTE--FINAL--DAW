@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { createContext, useContext, useState, useEffect } from "react";
 import getUserData from "@/services/users/getUserData.js";
 import getSpendByCategory from "@/services/spends/getSpendByCategory.js";
+import getSpendsByCategoryType from '@/services/spends/getSpendsByCategoryType.js';
 // import { useCategories } from "@/app/context/CategoryContext.js";
 
 const FinancialContext = createContext();
@@ -169,7 +170,7 @@ export const FinancialProvider = ({ children }) => {
 
         switch (category_type) {
             case "Gasto Fijo":
-                setIsTotalSpendFixedExpenses()
+                totalGroupBudget = isFixedExpensesFromNomina;
                 break;
             case "Gasto Ocio":
                 totalGroupBudget = isLeisureExpensesFromNomina;
@@ -202,7 +203,18 @@ export const FinancialProvider = ({ children }) => {
         return result < 0;
     };
 
- 
+    const calculateTotalSpendByCategoryType = async () => {
+        const resGastoFijo = await getSpendsByCategoryType("Gasto Fijo");
+        const resGastoOcio = await getSpendsByCategoryType("Gasto Ocio");
+        const resInversion = await getSpendsByCategoryType("Inversion");
+
+        console.log("GASTO FIJO", resGastoFijo);
+        console.log("GASTO OCIO", resGastoOcio);
+        console.log("INVERSION", resInversion);
+
+
+
+    };
 
     // ----------------------------------------------------------------------
     // ACTUALIZACIONES
@@ -242,7 +254,8 @@ export const FinancialProvider = ({ children }) => {
                 calculateMonthlyTotalAmountSpend,
                 evaluateTotalAmountSpendToTotalSpendCategory,
                 calculatePercentageBarCategory,
-                calculateAvailableMoneyToSpend,                
+                calculateAvailableMoneyToSpend,   
+                calculateTotalSpendByCategoryType,             
                 // Funciones de actualización
                 setIsNomina,
                 setIsPercentageSettings,
