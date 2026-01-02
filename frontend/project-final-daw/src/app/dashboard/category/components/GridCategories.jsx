@@ -1,6 +1,7 @@
 "use client";
 
 import { useCategories } from "@/app/context/CategoryContext.js";
+import { useSpends } from "@/app/context/SpendContext.js"; 
 import { useState, useEffect } from "react";
 import Category from "./Category.jsx";
 import { useSession } from "next-auth/react";
@@ -8,20 +9,40 @@ import { Search, Plus, Bell } from "lucide-react";
 
 const GridCategories = () => {
     const { data: session } = useSession();
-    const { isCategories, isLoading, setIsFormCategoryOpen } = useCategories();
+    const { isCategories, isLoading, setIsFormCategoryOpen, fetchCategories } = useCategories();
     const [isData, setIsData] = useState(null);
-
-    if (isLoading) {
-        return <p>Cargando categorías...</p>;
-    }
-
-    if (!isCategories || isCategories.length === 0) {
-        return <p>No hay categorías todavía.</p>;
-    }
+    const [isShowTotalSpend, setIsShowTotalSpend] = useState(0);
+    const [isShowTotalAvailable, setIsShowTotalAvailable] = useState(0);
+    const { isSpends } = useSpends(); 
 
     const handleClickButtonFormCategory = () => {
         setIsFormCategoryOpen(true);
     };
+
+    useEffect(() => {
+        if (session?.user?.user_id) {
+            fetchCategories();
+        }
+    }, [isSpends, session]); 
+
+    useEffect(() => {
+        if (isCategories && isCategories.length > 0) {
+            const totalBudget = isCategories.reduce(
+                (acc, cat) => acc + (cat.monthly_budget || 0),
+                0
+            );
+            setIsShowTotalAvailable(totalBudget);
+
+            const totalSpend = isCategories.reduce(
+                (acc, cat) => acc + (cat.total_acumulated || 0),
+                0
+            );
+            setIsShowTotalSpend(totalSpend);
+        } else {
+            setIsShowTotalAvailable(0);
+            setIsShowTotalSpend(0);
+        }
+    }, [isCategories]);
 
     return (
         <>
@@ -35,8 +56,13 @@ const GridCategories = () => {
                             Distribución del mes actual
                         </p>
                     </div>
-                    <div className="flex flex-row justify-center items-center gap-5"> 
-                        <h1>Precio</h1>
+                    <div className="flex flex-row justify-center items-center gap-5">
+                        <div className="flex flex-col">
+                            <h1 className="text-xl text-slate-800">
+                                € {Number(isShowTotalSpend).toFixed(2)}
+                            </h1>
+                            <h1>€ {Number(isShowTotalAvailable).toFixed(2)}</h1>
+                        </div>
                         <button
                             className="flex items-center gap-2 h-10 px-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl group bg-slate-800 text-slate-200 hover:from-slate-200 to-purple-200"
                             onClick={handleClickButtonFormCategory}
@@ -46,15 +72,26 @@ const GridCategories = () => {
                         </button>
                     </div>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
-                    {isCategories?.map((category) => (
-                        <Category
-                            key={category.id}
-                            category={category}
-                            session={session}
-                        />
+                {!isCategories ||
+                    isCategories.length === 0 ||
+                    (isLoading && (
+                        <>
+                            <div>
+                                <p>No hay categorías todavía.</p>;
+                            </div>
+                        </>
                     ))}
-                </div>
+                {isCategories && isCategories.length > 0 && (
+                    <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+                        {isCategories?.map((category) => (
+                            <Category
+                                key={category.id}
+                                category={category}
+                                session={session}
+                            />
+                        ))}
+                    </div>
+                )}
             </div>
         </>
     );

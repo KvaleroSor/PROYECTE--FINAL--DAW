@@ -35,24 +35,23 @@ const Category = ({ category, session }) => {
         isInvestmentFromNomina,
         isSavingFromNomina,
         calculatePercentageToPercentageSettings,
-        calculateMonthlyBudgetCategory,
+        calculateCategoryPercentage,
         calculateMonthlyTotalAmountSpend,
         calculatePercentageBarCategory,
         calculateAvailableMoneyToSpend,
-        calculateTotalSpendByCategoryType,
     } = useFinancial();
     const { setIsFormSpendOpen } = useSpends();
     const { isSpends, isCategoryId, isAmount } = useSpends();
-    const [isTotalAmountToCategory, setIsTotalAmountToCategory] = useState(0);
+    const [isCurrentPercentagePerCategory, setIsCurrentPercentagePerCategory] = useState(0);
     const [isAmountSpendByCategory, setIsAmountSpendByCategory] = useState(0);
-    const [isValueBarToSpendCategory, setIsValueBarToSpendCategory] =
-        useState(0);
+    // const [isValueBarToSpendCategory, setIsValueBarToSpendCategory] =
+    //     useState(0);
 
     const {
         name,
         monthly_budget,
         category_type,
-        total_acumulated = 0,
+        total_acumulated,
         color,
         icon,
     } = category;
@@ -95,26 +94,28 @@ const Category = ({ category, session }) => {
         let isMounted = true;
 
         const updateData = async () => {
-            if (category_type && monthly_budget) {
-                setIsTotalAmountToCategory(
-                    calculateMonthlyBudgetCategory(
-                        category_type,
-                        monthly_budget
+            if (monthly_budget) {
+                setIsCurrentPercentagePerCategory(
+                    calculateCategoryPercentage(
+                        monthly_budget, 
+                        total_acumulated
                     )
                 );
+                console.log("TOTAL ACUMULADO", isCurrentPercentagePerCategory);
                 calculatePercentageToPercentageSettings();
 
                 const amount = await calculateMonthlyTotalAmountSpend(category);
+                console.log("ESTÁ MONTADO", isMounted);
                 if (isMounted) {
                     setIsAmountSpendByCategory(amount);
 
-                    setIsValueBarToSpendCategory(
-                        calculatePercentageBarCategory(
-                            category_type,
-                            amount,
-                            monthly_budget
-                        )
-                    );
+                    // setIsValueBarToSpendCategory(
+                    //     calculatePercentageBarCategory(
+                    //         category_type,
+                    //         amount,
+                    //         monthly_budget
+                    //     )
+                    // );
                 }
             }
         };
@@ -129,7 +130,7 @@ const Category = ({ category, session }) => {
         isLeisureExpensesFromNomina,
         isInvestmentFromNomina,
         isSavingFromNomina,
-        calculateMonthlyBudgetCategory,
+        calculateCategoryPercentage,
         monthly_budget,
         category_type,
         category,
@@ -142,11 +143,10 @@ const Category = ({ category, session }) => {
             console.log("CATEGORÍA ", cat);
             setIsUpdatedPushed(true);
             setIsFormCategoryOpen(true);
-            setIsTotalAmountToCategory(
-                calculateMonthlyBudgetCategory(category_type, monthly_budget)
+            setIsCurrentPercentagePerCategory(
+                calculateCategoryPercentage(monthly_budget, total_acumulated)
             );
-            calculatePercentageToPercentageSettings();
-            calculateTotalSpendByCategoryType();
+            calculatePercentageToPercentageSettings();           
         } else {
             const res = await deleteCategory(cat._id, session);
             console.log(res);
@@ -191,7 +191,7 @@ const Category = ({ category, session }) => {
                             <h3 className="mb-2 text-xl">{name}</h3>
                             <div className="flex flex-row gap-2">
                                 <h1 className="text-2xl mb-4 text-slate-900">
-                                    € {isTotalAmountToCategory}
+                                    € {monthly_budget}
                                 </h1>
                                 <p className="text-slate-400">/mes</p>
                             </div>
@@ -201,7 +201,7 @@ const Category = ({ category, session }) => {
                             </div>
                             <div className="w-full flex flex-col justify-center items-start gap-3">
                                 <div className="w-full h-2.5 bg-indigo-50 rounded-full">
-                                    {isValueBarToSpendCategory > 100 ? (
+                                    {isCurrentPercentagePerCategory > 100 ? (
                                         <div
                                             // className="h-full bg-indigo-400 rounded-full"
                                             className="h-full bg-slate-800 rounded-full"
@@ -214,7 +214,7 @@ const Category = ({ category, session }) => {
                                             // className="h-full bg-indigo-400 rounded-full"
                                             className="h-full bg-slate-800 rounded-full"
                                             style={{
-                                                width: `${isValueBarToSpendCategory}%`,
+                                                width: `${isCurrentPercentagePerCategory}%`,
                                             }}
                                         ></div>
                                     )}
@@ -223,7 +223,7 @@ const Category = ({ category, session }) => {
                                     <div className="flex flex-row justify-center items-center">
                                         <h3>
                                             {Number(
-                                                isValueBarToSpendCategory
+                                                isCurrentPercentagePerCategory
                                             ).toFixed(2)}
                                         </h3>
                                         <span className="ml-1">%</span>
@@ -231,13 +231,13 @@ const Category = ({ category, session }) => {
                                     </div>
                                     <div className="flex flex-row justify-center gap-1">
                                         {calculateAvailableMoneyToSpend(
-                                            isTotalAmountToCategory,
+                                            monthly_budget,
                                             isAmountSpendByCategory
                                         ) ? (
                                             <span className="text-red-500 text-lg">
                                                 €{" "}
                                                 {Number(
-                                                    isTotalAmountToCategory -
+                                                    monthly_budget -
                                                         isAmountSpendByCategory
                                                 ).toFixed(2)}{" "}
                                                 excedido
@@ -246,7 +246,7 @@ const Category = ({ category, session }) => {
                                             <span>
                                                 €{" "}
                                                 {Number(
-                                                    isTotalAmountToCategory -
+                                                    monthly_budget -
                                                         isAmountSpendByCategory
                                                 ).toFixed(2)}{" "}
                                                 disponible

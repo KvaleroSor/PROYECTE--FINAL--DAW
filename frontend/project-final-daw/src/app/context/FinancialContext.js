@@ -4,14 +4,12 @@ import { useSession } from "next-auth/react";
 import { createContext, useContext, useState, useEffect } from "react";
 import getUserData from "@/services/users/getUserData.js";
 import getSpendByCategory from "@/services/spends/getSpendByCategory.js";
-import getSpendsByCategoryType from '@/services/spends/getSpendsByCategoryType.js';
-// import { useCategories } from "@/app/context/CategoryContext.js";
+// import getSpendsByCategoryType from "@/services/spends/getSpendsByCategoryType.js";
 
 const FinancialContext = createContext();
 
 export const FinancialProvider = ({ children }) => {
     const { data: session } = useSession();
-    // const { isCategories } = useCategories();
     const [isNomina, setIsNomina] = useState(0);
     const [isPercentageSettings, setIsPercentageSettings] = useState({
         fixedExpenses: 0,
@@ -27,9 +25,12 @@ export const FinancialProvider = ({ children }) => {
         useState(0);
     const [isInvestmentFromNomina, setIsInvestmentFromNomina] = useState(0);
     const [isSavingFromNomina, setIsSavingFromNomina] = useState(0);
-    const [isTotalSpendFixedExpenses, setIsTotalSpendFixedExpenses] = useState(0);
-    const [isTotalSpendLeisureExpenses, setIsTotalSpendLeisureExpenses] = useState(0);
-    const [isTotalSpendInversionExpenses, setIsTotalSpendInversionExpenses] = useState(0);
+    // const [isTotalSpendFixedExpenses, setIsTotalSpendFixedExpenses] =
+    //     useState(0);
+    // const [isTotalSpendLeisureExpenses, setIsTotalSpendLeisureExpenses] =
+    //     useState(0);
+    // const [isTotalSpendInversionExpenses, setIsTotalSpendInversionExpenses] =
+    //     useState(0);
 
     // ----------------------------------------------------------------------
     // FETCH DATA: Obtener datos iniciales del usuario
@@ -42,18 +43,13 @@ export const FinancialProvider = ({ children }) => {
     const fetchFinancialData = async () => {
         if (!session?.user?.user_id) return;
 
-        console.log("🔄 FETCH FINANCIAL DATA - Context");
-        console.log("👤 Session User ID:", session?.user?.user_id);
-
         const userId = session?.user?.user_id;
-        console.log(userId);
 
         try {
             setIsLoading(true);
 
             const userData = await getUserData(userId, session);
-            console.log("💰 User Financial Data:", userData);
-            console.log("USER DATA ON TRY CATCH", userData);
+
             if (userData.data) {
                 setIsNomina(userData.data.nomina || 0);
                 setIsPercentageSettings(
@@ -105,28 +101,14 @@ export const FinancialProvider = ({ children }) => {
      * @returns {string} El monto calculado formateado a 2 decimales.
      */
 
-    const calculateMonthlyBudgetCategory = (category_type, monthly_budget) => {
-        switch (category_type) {
-            case "Gasto Fijo":
-                return Number(
-                    (monthly_budget / 100) * isFixedExpensesFromNomina
-                ).toFixed(2);
-
-            case "Gasto Ocio":
-                return Number(
-                    (monthly_budget / 100) * isLeisureExpensesFromNomina
-                ).toFixed(2);
-
-            case "Inversion":
-                return Number(
-                    (monthly_budget / 100) * isInvestmentFromNomina
-                ).toFixed(2);
-
-            case "Ahorro":
-                return Number(
-                    (monthly_budget / 100) * isSavingFromNomina
-                ).toFixed(2);
-        }
+    const calculateCategoryPercentage = (
+        monthly_budget,
+        total_acumulated
+    ) => {
+        console.log("MONTHLY BUDGET", monthly_budget);
+        console.log("TOTAL ACUMULADO", total_acumulated);
+        console.log(Number((total_acumulated * 100) / monthly_budget).toFixed(2));
+        return Number((total_acumulated * 100) / monthly_budget).toFixed(2);
     };
 
     /**
@@ -138,9 +120,7 @@ export const FinancialProvider = ({ children }) => {
     const calculateMonthlyTotalAmountSpend = async (category) => {
         try {
             const res = await getSpendByCategory(category._id, session);
-            console.log("RESPONSE FETCH BY CATEGORY", res);
-            const total = res.data.reduce((acc, curr) => acc + curr.amount, 0);
-            console.log("TOTAL GASTOS", total);
+            const total = res.data.reduce((acc, curr) => acc + curr.amount, 0);           
             return Number(total).toFixed(2);
         } catch (err) {
             console.error(
@@ -203,19 +183,6 @@ export const FinancialProvider = ({ children }) => {
         return result < 0;
     };
 
-    const calculateTotalSpendByCategoryType = async () => {
-        const resGastoFijo = await getSpendsByCategoryType("Gasto Fijo");
-        const resGastoOcio = await getSpendsByCategoryType("Gasto Ocio");
-        const resInversion = await getSpendsByCategoryType("Inversion");
-
-        console.log("GASTO FIJO", resGastoFijo);
-        console.log("GASTO OCIO", resGastoOcio);
-        console.log("INVERSION", resInversion);
-
-
-
-    };
-
     // ----------------------------------------------------------------------
     // ACTUALIZACIONES
     // ----------------------------------------------------------------------
@@ -250,12 +217,11 @@ export const FinancialProvider = ({ children }) => {
 
                 // Funciones de cálculo
                 calculatePercentageToPercentageSettings,
-                calculateMonthlyBudgetCategory,
+                calculateCategoryPercentage,
                 calculateMonthlyTotalAmountSpend,
                 evaluateTotalAmountSpendToTotalSpendCategory,
                 calculatePercentageBarCategory,
-                calculateAvailableMoneyToSpend,   
-                calculateTotalSpendByCategoryType,             
+                calculateAvailableMoneyToSpend,
                 // Funciones de actualización
                 setIsNomina,
                 setIsPercentageSettings,

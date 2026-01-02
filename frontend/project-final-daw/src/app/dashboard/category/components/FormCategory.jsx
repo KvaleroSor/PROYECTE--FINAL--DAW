@@ -53,6 +53,7 @@ const FormCategory = () => {
         setIsSelectedIcon(null);
         setIsUpdatedPushed(false);
         setIsCategory({});
+        setIsCategoryType(null);
     };
 
     const availableIcons = [
@@ -91,6 +92,7 @@ const FormCategory = () => {
             setIsMonthlyBudget(isCategory.monthly_budget);
             setIsCategoryColor(isCategory.color);
             setIsSelectedIcon(isCategory.icon);
+            setIsCategoryType(isCategory.category_type);
         }
     }, [isUpdatedPushed, isCategory]);
 
@@ -216,14 +218,14 @@ const FormCategory = () => {
                         value={isMonthlyBudget || ""}
                     />
                 </div>
-                <div className="w-full flex flex-col justify-start gap-2">
+                {/* <div className="w-full flex flex-col justify-start gap-2">
                     <label htmlFor="color">Color</label>
                     <div className="flex flex-wrap gap-2">
                         {availableColors.map((color) => {
                             return <CardColor key={color.id} color={color} />;
                         })}
                     </div>
-                </div>
+                </div> */}
                 <div className="w-full flex flex-col gap-2 mt-5 mb-5">
                     <label htmlFor="icono">Icono</label>
                     <div className="flex flex-wrap gap-2">
@@ -236,8 +238,8 @@ const FormCategory = () => {
                                     type="button"
                                     className={`w-[70px] h-[70px] aspect-square rounded-2xl border-2 transition-all duration-100 flex items-center justify-center group hover:scale-105 p-2 ${
                                         isActive
-                                            ? "bg-gradient-to-r from-indigo-400 to-cyan-400 text-slate-100 shadow-md"
-                                            : "border-slate-300 hover:border-cyan-500 bg-gray-100 hover:bg-gradient-to-r from-indigo-200 to-cyan-200"
+                                            ? "bg-slate-800 text-slate-100 shadow-md"
+                                            : "border-slate-300 hover:border-slate-800 bg-gray-100 hover:bg-slate-300 hover:text-slate-800"
                                     }`}
                                     onClick={() =>
                                         setIsSelectedIcon((prev) =>
@@ -275,7 +277,7 @@ const FormCategory = () => {
                             <button
                                 id="button-create"
                                 type="submit"
-                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-gradient-to-br from-indigo-100 to-purple-100 text-indigo-700 hover:from-indigo-200 to-purple-200"
+                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 text-slate-100 hover:border-slate-100"
                             >
                                 <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
                                 <span>Crear Categoría</span>
@@ -295,7 +297,7 @@ const FormCategory = () => {
                             <button
                                 id="button-update"
                                 type="submit"
-                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-gradient-to-br from-purple-100 to-indigo-100 text-indigo-700 hover:from-purple-200 to-indigo-200"
+                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 text-slate-100 hover:border-slate-100"
                             >
                                 <Repeat className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
                                 <span>Actualizar Categoría</span>

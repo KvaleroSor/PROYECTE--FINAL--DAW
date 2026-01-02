@@ -27,7 +27,11 @@ export const CategoriesProvider = ({ children }) => {
     // --------------------------
 
     const fetchCategories = async () => {
-        if (!session?.user?.user_id) return;
+        if (!session?.user?.user_id || !session?.accessToken) return;        
+
+        console.log("🔄 FETCH CATEGORIES - Context");
+        console.log("👤 Session User ID:", session?.user?.user_id);
+
 
         console.log("🔄 FETCH CATEGORIES - Context");
         console.log("👤 Session User ID:", session?.user?.user_id);
@@ -130,7 +134,7 @@ export const CategoriesProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        if (session?.user?.user_id) {
+        if (session?.user?.user_id && session?.accessToken) {
             fetchCategories();
         }
     }, [session]);
