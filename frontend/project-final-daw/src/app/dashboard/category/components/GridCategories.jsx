@@ -58,10 +58,10 @@ const GridCategories = () => {
                     </div>
                     <div className="flex flex-row justify-center items-center gap-5">
                         <div className="flex flex-col">
-                            <h1 className="text-xl text-slate-800">
+                            <h1 className="text-2xl text-slate-900">
                                 € {Number(isShowTotalSpend).toFixed(2)}
                             </h1>
-                            <h1>€ {Number(isShowTotalAvailable).toFixed(2)}</h1>
+                            <h1 className="text-slate-500">de € {Number(isShowTotalAvailable).toFixed(2)}</h1>
                         </div>
                         <button
                             className="flex items-center gap-2 h-10 px-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl group bg-slate-800 text-slate-200 hover:from-slate-200 to-purple-200"

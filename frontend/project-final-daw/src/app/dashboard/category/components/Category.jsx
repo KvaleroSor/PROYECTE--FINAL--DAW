@@ -13,13 +13,6 @@ import {
     Heart,
     Smartphone,
     Palette,
-    X,
-    Repeat,
-    Icon,
-    MoreVertical,
-    CircleX,
-    SquareX,
-    MoveRight,
 } from "lucide-react";
 
 const Category = ({ category, session }) => {
@@ -40,14 +33,14 @@ const Category = ({ category, session }) => {
         calculatePercentageBarCategory,
         calculateAvailableMoneyToSpend,
     } = useFinancial();
-    const { setIsFormSpendOpen } = useSpends();
+    const { setIsFormSpendOpen, setIsCategoryId } = useSpends();
     const { isSpends, isCategoryId, isAmount } = useSpends();
-    const [isCurrentPercentagePerCategory, setIsCurrentPercentagePerCategory] = useState(0);
+    const [isCurrentPercentagePerCategory, setIsCurrentPercentagePerCategory] =
+        useState(0);
     const [isAmountSpendByCategory, setIsAmountSpendByCategory] = useState(0);
-    // const [isValueBarToSpendCategory, setIsValueBarToSpendCategory] =
-    //     useState(0);
 
     const {
+        _id,
         name,
         monthly_budget,
         category_type,
@@ -67,29 +60,6 @@ const Category = ({ category, session }) => {
         { icon: Plus, name: "Plus" },
     ];
 
-    const availableColorsTagCategories = [
-        {
-            color: "border-indigo-400 bg-gradient-to-r from-indigo-200 to-cyan-200",
-            name_category: "Gasto Fijo",
-            name: "Snowflake",
-        },
-        {
-            color: "border-teal-400 bg-gradient-to-r from-teal-100 to-teal-300",
-            name_category: "Gasto Ocio",
-            name: "Northern Lights",
-        },
-        {
-            color: "border-pink-300 bg-gradient-to-r from-violet-200 to-pink-200",
-            name_category: "Inversion",
-            name: "Powder",
-        },
-        {
-            color: "border-orange-300 bg-gradient-to-r from-rose-100 to-orange-200",
-            name_category: "Ahorro",
-            name: "Holly",
-        },
-    ];
-
     useEffect(() => {
         let isMounted = true;
 
@@ -97,7 +67,7 @@ const Category = ({ category, session }) => {
             if (monthly_budget) {
                 setIsCurrentPercentagePerCategory(
                     calculateCategoryPercentage(
-                        monthly_budget, 
+                        monthly_budget,
                         total_acumulated
                     )
                 );
@@ -108,14 +78,6 @@ const Category = ({ category, session }) => {
                 console.log("ESTÁ MONTADO", isMounted);
                 if (isMounted) {
                     setIsAmountSpendByCategory(amount);
-
-                    // setIsValueBarToSpendCategory(
-                    //     calculatePercentageBarCategory(
-                    //         category_type,
-                    //         amount,
-                    //         monthly_budget
-                    //     )
-                    // );
                 }
             }
         };
@@ -146,7 +108,7 @@ const Category = ({ category, session }) => {
             setIsCurrentPercentagePerCategory(
                 calculateCategoryPercentage(monthly_budget, total_acumulated)
             );
-            calculatePercentageToPercentageSettings();           
+            calculatePercentageToPercentageSettings();
         } else {
             const res = await deleteCategory(cat._id, session);
             console.log(res);
@@ -157,10 +119,19 @@ const Category = ({ category, session }) => {
         setIsFormSpendOpen(true);
     };
 
+    const handleClickRemoveCategory = async () => {
+        try {
+            await deleteCategory(category._id, session);
+        } catch (err) {
+            console.error(err);
+            return;
+        }
+    };
+
     const iconCategory = availableIcons.find((i) => i.name === icon);
-    const colorTag = availableColorsTagCategories.find(
-        (avColor) => avColor.name_category === category_type
-    );
+    // const colorTag = availableColorsTagCategories.find(
+    //     (avColor) => avColor.name_category === category_type
+    // );
     const Icono = iconCategory.icon;
 
     return (
@@ -182,7 +153,7 @@ const Category = ({ category, session }) => {
                                 )}
                             </div>
                             <div className="flex justify-center items-center text-xs sm:text-sm rounded-3xl text-slate-500 m-3 p-1 px-3 bg-slate-100">
-                                {category_type && colorTag && (
+                                {category_type && (
                                     <h3>{category_type.toUpperCase()}</h3>
                                 )}
                             </div>
@@ -261,20 +232,22 @@ const Category = ({ category, session }) => {
                 <div className="border-t border-slate-100 p-3 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
                     <div className="flex gap-2">
                         <button
-                            className="flex-1 px-3 py-1.5 text-xs bg-slate-50 hover:bg-slate-100 text-slate-700 rounded-lg transition-colors"
+                            className="flex-1 px-3 py-1.5 text-md bg-slate-50 hover:bg-red-100 text-slate-700 hover:text-red-500 rounded-lg transition-colors"
                             onClick={(e) => {
-                                e.stopPropagation(); 
+                                e.stopPropagation();
                                 console.log("Ver detalles de", name);
+                                handleClickRemoveCategory();
                             }}
                         >
-                            Ver detalles
+                            Eliminar Categoria
                         </button>
                         <button
-                            className="flex-1 px-3 py-1.5 text-xs bg-slate-900 hover:bg-slate-800 text-white rounded-lg transition-colors"
+                            className="flex-1 px-3 py-1.5 text-md bg-slate-900 hover:bg-slate-800 text-white rounded-lg transition-colors"
                             onClick={(e) => {
                                 e.stopPropagation();
                                 console.log("Añadir gasto a", name);
                                 handleClickAddSpend();
+                                setIsCategoryId(_id);
                             }}
                         >
                             Añadir gasto

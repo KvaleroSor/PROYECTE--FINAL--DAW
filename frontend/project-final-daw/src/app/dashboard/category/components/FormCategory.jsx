@@ -66,25 +66,8 @@ const FormCategory = () => {
         { icon: Palette, name: "Palette" },
         { icon: Plus, name: "Plus" },
     ];
-    const availableColors = [
-        { id: "indigo", colorRef: "#6366F1" },
-        { id: "violet", colorRef: "#7C3AED" },
-        { id: "purple", colorRef: "#8B5CF6" },
-        { id: "fuchsia", colorRef: "#D946EF" },
-        { id: "pink", colorRef: "#EC4899" },
-        { id: "rose", colorRef: "#F43F5E" },
-        { id: "red", colorRef: "#EF4444" }, // Corregido
-        { id: "orange", colorRef: "#F97316" },
-        { id: "amber", colorRef: "#F59E0B" },
-        { id: "yellow", colorRef: "#EAB308" },
-        { id: "lime", colorRef: "#84CC16" },
-        { id: "emerald", colorRef: "#10B981" },
-        { id: "teal", colorRef: "#14B8A6" },
-        { id: "cyan", colorRef: "#06B6D4" },
-        { id: "sky", colorRef: "#0EA5E9" },
-    ];
 
-    const categoryType = ["Gasto Fijo", "Gasto Ocio", "Inversion", "Ahorro"];
+    const categoryType = ["Gasto Fijo", "Gasto Ocio", "Inversion", "Imprevistos"];
 
     useEffect(() => {
         if (isUpdatedPushed && isCategory) {
@@ -217,15 +200,7 @@ const FormCategory = () => {
                         }}
                         value={isMonthlyBudget || ""}
                     />
-                </div>
-                {/* <div className="w-full flex flex-col justify-start gap-2">
-                    <label htmlFor="color">Color</label>
-                    <div className="flex flex-wrap gap-2">
-                        {availableColors.map((color) => {
-                            return <CardColor key={color.id} color={color} />;
-                        })}
-                    </div>
-                </div> */}
+                </div>               
                 <div className="w-full flex flex-col gap-2 mt-5 mb-5">
                     <label htmlFor="icono">Icono</label>
                     <div className="flex flex-wrap gap-2">

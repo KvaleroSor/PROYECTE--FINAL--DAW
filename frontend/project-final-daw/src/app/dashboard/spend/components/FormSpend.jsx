@@ -66,8 +66,14 @@ const FormSpend = () => {
         setIsPaymentType("");
     };
 
+    const findNameCategory = () => {
+        const category = isCategories.find((cat) => cat._id === isCategoryId);
+        console.log(category.name);
+        return category.name;
+    };
+
     const handleSubmitSpend = async (e) => {
-        e.preventDefault();     
+        e.preventDefault();
 
         const buttonPushed = e.nativeEvent.submitter.id;
         console.log(buttonPushed);
@@ -100,16 +106,16 @@ const FormSpend = () => {
          *         POST DE LA DATA A LA BBDD           *
          ***********************************************/
 
-        if(buttonPushed === 'button-create'){
+        if (buttonPushed === "button-create") {
             try {
-                const res = await postNewSpend(data, session);                
+                const res = await postNewSpend(data, session);
 
                 if (!res) {
                     console.log(`Algo mal ha pasado`);
                 }
 
                 console.log(res);
-                resetForm();                
+                resetForm();
             } catch (err) {
                 console.error(err);
             }
@@ -130,7 +136,7 @@ const FormSpend = () => {
                     handleSubmitSpend(e);
                 }}
             >
-                <div className="w-full flex flex-row justify-between mb-8 gap-2">
+                <div className="w-full flex flex-row justify-between mb-3 gap-2">
                     <div className="flex flex-col justify-start">
                         <h1 className="text-2xl">Crear Nuevo Gasto</h1>
                         <p>Añade un nuevo gasto a la lista</p>
@@ -142,22 +148,11 @@ const FormSpend = () => {
                         />
                     </div>
                 </div>
-                <div className="w-full flex flex-col justify-start gap-2">
-                    <label htmlFor="category">Categoria</label>
-                    <select
-                        value={isCategoryId}
-                        onChange={(e) => setIsCategoryId(e.target.value)}
-                        className="w-full px-4 py-3 border-2 rounded-xl ..."
-                    >
-                        <option value="">Selecciona una categoría</option>
-                        {isCategories.map((cat) => (
-                            <option key={cat._id} value={cat._id}>
-                                {`${cat.name} `}
-                                - Disponible: {`${cat.total_acumulated.toFixed(2)}`} € 
-                                - {`${cat.category_type}`}
-                            </option>
-                        ))}
-                    </select>
+
+                <div className="w-full flex flex-row justify-start items-center gap-2">
+                    <p className="text-2xl text-slate-800">
+                        {findNameCategory()}
+                    </p>
                 </div>
                 <div className="w-full flex flex-col justify-start gap-2">
                     <label htmlFor="description">Descripción</label>
@@ -217,7 +212,7 @@ const FormSpend = () => {
                             <button
                                 id="button-create"
                                 type="submit"
-                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-gradient-to-br from-indigo-100 to-purple-100 text-indigo-700 hover:from-indigo-200 to-purple-200"
+                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 text-slate-100 hover:border-slate-100"
                             >
                                 <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
                                 <span>Crear Gasto</span>
@@ -237,7 +232,7 @@ const FormSpend = () => {
                             <button
                                 id="button-update"
                                 type="submit"
-                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-gradient-to-br from-purple-100 to-indigo-100 text-indigo-700 hover:from-purple-200 to-indigo-200"
+                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 text-slate-100 hover:border-slate-100"
                             >
                                 <Repeat className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
                                 <span>Actualizar Gasto</span>

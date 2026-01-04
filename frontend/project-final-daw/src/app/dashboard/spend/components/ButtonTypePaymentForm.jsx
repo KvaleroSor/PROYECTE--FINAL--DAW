@@ -20,8 +20,8 @@ const ButtonTypePaymentForm = ({
             id={button_type}
             className={`border-2 flex flex-start items-center p-5 rounded-xl gap-2 cursor-pointer ${
                 isPaymentType === button_type
-                    ? "bg-gradient-to-r from-indigo-400 to-cyan-400 text-slate-100 shadow-md"
-                    : "border-slate-300 hover:border-cyan-500 bg-gray-100 hover:bg-gradient-to-r from-indigo-200 to-cyan-200"
+                    ? "bg-slate-800 text-slate-100 shadow-md"
+                    : "border-slate-300 hover:border-slate-800 bg-gray-100 hover:bg-slate-300 hover:text-slate-800"
             }`}
             onClick={(e) => {
                 if (isPaymentType === e.target.closest("button").id) {

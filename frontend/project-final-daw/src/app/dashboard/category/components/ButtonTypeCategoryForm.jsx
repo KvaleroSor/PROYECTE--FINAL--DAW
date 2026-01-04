@@ -1,4 +1,4 @@
-import { TrendingUp, PiggyBank, ReceiptEuro, TicketsPlane } from "lucide-react";
+import { TrendingUp, TriangleAlert, ReceiptEuro, TicketsPlane } from "lucide-react";
 
 const ButtonTypeCategoryForm = ({
     button_type,
@@ -9,7 +9,7 @@ const ButtonTypeCategoryForm = ({
         { icon: ReceiptEuro, name: "Gasto Fijo" },
         { icon: TicketsPlane, name: "Gasto Ocio" },
         { icon: TrendingUp, name: "Inversion" },
-        { icon: PiggyBank, name: "Ahorro" },
+        { icon: TriangleAlert, name: "Imprevistos" },
     ];
 
     const Icon = availableIcons.find((icon) => icon.name === button_type);

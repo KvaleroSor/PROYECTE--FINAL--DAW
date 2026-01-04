@@ -11,7 +11,7 @@ const categoriesSchema = new mongoose.Schema({
     },
     category_type: {
         type: String,
-        enum: ["Gasto Fijo", "Gasto Ocio", "Inversion", "Ahorro"],
+        enum: ["Gasto Fijo", "Gasto Ocio", "Inversion", "Ahorro", "Imprevistos"],
         required: true,        
     },
     total_acumulated: {
