@@ -4,7 +4,7 @@ import auth from './../../middleware/auth.js';
 
 const router = Router();
 
-router.get("/user/:user_id", auth, async (req, res) => {
+router.get("/", auth, async (req, res) => {
     try {
         const user_id = req.user?.userId;
         console.log("📋 GET CATEGORIES - User ID from token:", user_id);
