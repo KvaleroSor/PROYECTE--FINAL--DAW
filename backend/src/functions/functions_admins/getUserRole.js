@@ -2,8 +2,6 @@ import User from "../../models/users.js";
 
 const getUserAdmin = async () => {
     try {
-        // const resultGet = await User.find({ role: "user" });
-
         const resultAgregate = await User.aggregate([
             {
                 $lookup: {

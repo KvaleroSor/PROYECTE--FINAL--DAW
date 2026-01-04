@@ -6,8 +6,9 @@ const router = Router();
 
 router.delete("/:id", auth, async (req, res) => {
     try {
-        const id = req.params.id;
-        const result = await deleteCategory(id);
+        const id = req.params.id;    
+        const user_id = req.user?.userId;    
+        const result = await deleteCategory(id, user_id);
 
         !result
             ? res.status(404).json({

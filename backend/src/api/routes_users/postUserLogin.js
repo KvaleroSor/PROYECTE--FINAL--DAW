@@ -7,13 +7,9 @@ const router = Router();
 
 router.post("/login", async (req, res) => {
     try {
-        console.log("🔐 LOGIN ATTEMPT:", req.body.email);
-        console.log("🔑 JWT_SECRET EXISTS:", !!process.env.JWT_SECRET);
+        const { email, password } = req.body; 
 
-        const { email, password } = req.body;
-        console.log("📧 EMAIL RECEIVED:", email);
-        console.log("🔒 PASSWORD RECEIVED LENGTH:", password ? password.length : 0);
-        
+        //Consultem en la BBDD que l´usuari "EXISTISCA".
         const user = await postUserLogin(email);
 
         //Validem el usuari que tinguem nosaltres guardat en la BBDD, que ens haja tornat algo.
@@ -24,17 +20,11 @@ router.post("/login", async (req, res) => {
             });
         }
 
-        console.log("👤 USER FOUND:", user.email);
-        console.log("🔑 PASSWORD HASH IN DB EXISTS:", !!user.password_hash);
-        console.log("🔑 PASSWORD HASH LENGTH:", user.password_hash ? user.password_hash.length : 0);
-
         //Validem el password una vegada hem encontrat l´usuari
         const isValid = await verifyPassword(user.password_hash, password);
-        console.log("✅ PASSWORD VALID:", isValid);
 
         //Creem el token
-        if (!process.env.JWT_SECRET) {
-            console.log("❌ JWT_SECRET IS MISSING!");
+        if (!process.env.JWT_SECRET) {        
             throw new Error("JWT_SECRET not configured");
         }
 
@@ -64,7 +54,7 @@ router.post("/login", async (req, res) => {
         console.error("💥 LOGIN ERROR:", err.message);
         res.status(500).json({
             mensaje: `❌ ERROR - INTERNAL ERROR | SERVER`,
-            error: err.message, // Corregido: era err.mensage
+            error: err.message, 
         });
     }
 });

@@ -4,14 +4,11 @@ import auth from './../../middleware/auth.js';
 
 const router = Router();
 
+//Passem amb el middleware "Auth" el token d´autenticació de l´usuari que está verificat.
 router.post("/", auth, async (req, res) => {
     try {
         const { name, monthly_budget, category_type, total_acumulated, color, icon } = req.body;
-        const userIdFromToken = req.user.userId; // Usar 'userId' del token decodificado
-
-        console.log("🧟‍♂️ USER ID FROM TOKEN: ", userIdFromToken);
-        console.log("📝 DATA RECEIVED:", req.body);
-        console.log("🎛️ HEADERS:", req.headers.authorization);
+        const userIdFromToken = req.user.userId; // Gastar el userId del token decodificat.
 
         if (!userIdFromToken) {
             console.log("❌ ERROR - YOU DON´T HAVE PERMISSIONS | SERVER");

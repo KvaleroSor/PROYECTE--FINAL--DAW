@@ -1,8 +1,8 @@
 import Category from "../../models/categories.js";
 
-const deleteCategory = async (id) => {
+const deleteCategory = async (id, user_id) => {
     try{    
-        const resultDelete = await Category.findByIdAndDelete(id);
+        const resultDelete = await Category.findByIdAndDelete({_id: id, user_id: user_id});
         
         return resultDelete;
     }catch(err){
