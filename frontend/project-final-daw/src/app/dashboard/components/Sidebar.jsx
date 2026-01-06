@@ -12,7 +12,8 @@ import {
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { BalanceLogoAlt } from "./../../../components/BalanceLogoAlt.jsx";
+// import { BalanceLogoAlt } from "./../../../components/BalanceLogoAlt.jsx";
+import { BalanceLogoCircle } from './../../../components/BalanceLogoCircle.jsx';
 
 const Sidebar = () => {
     const { data: session, status } = useSession();
@@ -35,8 +36,8 @@ const Sidebar = () => {
                         className="text-slate-300 flex justify-start ml-2 mb-8"
                     >
                         <div className="flex items-center gap-3">
-                            <BalanceLogoAlt className="w-8 h-8" />
-                            <span className="text-2xl">numoes.com</span>
+                            <BalanceLogoCircle className="w-10 h-10" />
+                            <span className="text-2xl">numoes.app</span>
                             {/* <span>{session.user.name.split(" ")[0]}</span> */}
                         </div>
                     </Link>

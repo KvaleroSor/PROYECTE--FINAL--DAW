@@ -33,8 +33,15 @@ const Category = ({ category, session }) => {
         calculatePercentageBarCategory,
         calculateAvailableMoneyToSpend,
     } = useFinancial();
-    const { setIsFormSpendOpen, setIsCategoryId } = useSpends();
-    const { isSpends, isCategoryId, isAmount } = useSpends();
+    const {
+        isSpends,
+        isCategoryId,
+        isAmount,
+        setIsFormSpendOpen,
+        setIsCategoryId,
+        setIsCategoryType,
+    } = useSpends();
+
     const [isCurrentPercentagePerCategory, setIsCurrentPercentagePerCategory] =
         useState(0);
     const [isAmountSpendByCategory, setIsAmountSpendByCategory] = useState(0);
@@ -79,6 +86,7 @@ const Category = ({ category, session }) => {
                 if (isMounted) {
                     setIsAmountSpendByCategory(amount);
                 }
+                setIsCategoryType(category_type);
             }
         };
 
@@ -110,8 +118,12 @@ const Category = ({ category, session }) => {
             );
             calculatePercentageToPercentageSettings();
         } else {
-            const res = await deleteCategory(cat._id, session);
-            console.log(res);
+            try {
+                const res = await deleteCategory(cat._id, session);                
+            } catch (err) {
+                console.error(err);
+                return;
+            }
         }
     };
 
@@ -129,15 +141,12 @@ const Category = ({ category, session }) => {
     };
 
     const iconCategory = availableIcons.find((i) => i.name === icon);
-    // const colorTag = availableColorsTagCategories.find(
-    //     (avColor) => avColor.name_category === category_type
-    // );
     const Icono = iconCategory.icon;
 
     return (
         <>
             <div
-                className="group w-full bg-white rounded-2xl p-6 shadow-sm border border-gray-100 hover:shadow-xl hover:border-slate-300 transition-all duration-300 overflow-hidden cursor-pointer"
+                className="group w-full bg-white rounded-2xl p-6 shadow-xl border border-gray-100 hover:shadow-xl hover:border-slate-300 transition-all duration-300 overflow-hidden cursor-pointer"
                 onClick={(e) => {
                     handleClick(e, category);
                 }}

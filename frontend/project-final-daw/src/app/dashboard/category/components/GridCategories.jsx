@@ -1,7 +1,8 @@
 "use client";
 
 import { useCategories } from "@/app/context/CategoryContext.js";
-import { useSpends } from "@/app/context/SpendContext.js"; 
+import { useSpends } from "@/app/context/SpendContext.js";
+import { useFinancial } from "@/app/context/FinancialContext.js";
 import { useState, useEffect } from "react";
 import Category from "./Category.jsx";
 import { useSession } from "next-auth/react";
@@ -9,11 +10,17 @@ import { Search, Plus, Bell } from "lucide-react";
 
 const GridCategories = () => {
     const { data: session } = useSession();
-    const { isCategories, isLoading, setIsFormCategoryOpen, fetchCategories } = useCategories();
+    const { isCategories, isLoading, setIsFormCategoryOpen, fetchCategories } =
+        useCategories();
+    const { isTotalAmountToSpendFixedAndLeisure } = useFinancial();
     const [isData, setIsData] = useState(null);
     const [isShowTotalSpend, setIsShowTotalSpend] = useState(0);
     const [isShowTotalAvailable, setIsShowTotalAvailable] = useState(0);
-    const { isSpends } = useSpends(); 
+    const { isSpends } = useSpends();
+
+    const evaluateTotalAmountToSpend = () => {
+        return isShowTotalSpend > isTotalAmountToSpendFixedAndLeisure;
+    };
 
     const handleClickButtonFormCategory = () => {
         setIsFormCategoryOpen(true);
@@ -23,7 +30,7 @@ const GridCategories = () => {
         if (session?.user?.user_id) {
             fetchCategories();
         }
-    }, [isSpends, session]); 
+    }, [isSpends, session]);
 
     useEffect(() => {
         if (isCategories && isCategories.length > 0) {
@@ -61,7 +68,21 @@ const GridCategories = () => {
                             <h1 className="text-2xl text-slate-900">
                                 € {Number(isShowTotalSpend).toFixed(2)}
                             </h1>
-                            <h1 className="text-slate-500">de € {Number(isShowTotalAvailable).toFixed(2)}</h1>
+                            {evaluateTotalAmountToSpend() !== false ? (
+                                <h1 className="text-red-500">
+                                    de €{" "}
+                                    {Number(
+                                        isTotalAmountToSpendFixedAndLeisure
+                                    ).toFixed(2)}
+                                </h1>
+                            ) : (
+                                <h1 className="text-slate-500">
+                                    de €{" "}
+                                    {Number(
+                                        isTotalAmountToSpendFixedAndLeisure
+                                    ).toFixed(2)}
+                                </h1>
+                            )}
                         </div>
                         <button
                             className="flex items-center gap-2 h-10 px-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl group bg-slate-800 text-slate-200 hover:from-slate-200 to-purple-200"

@@ -42,6 +42,8 @@ const FormCategory = () => {
         setIsMonthlyBudget,
         setIsCategoryType,
     } = useCategories();
+
+    
     const [isSelectedIcon, setIsSelectedIcon] = useState(null);
     const { data: session } = useSession();
     const [isActiveButtonCategory, setIsActiveButtonCategory] = useState(false);

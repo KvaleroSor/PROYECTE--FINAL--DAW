@@ -91,7 +91,7 @@ const LandingPage = () => {
                 <div className="max-w-lg w-full border border-slate-200 p-10 rounded-xl shadow-2xl">
                     <div className="mb-10">
                         <h1 className="text-6xl mb-2 text-gray-800 pb-2 font-light">
-                            Balance.app
+                            Numoes.app
                         </h1>
                         <p className="text-xl text-gray-600">
                             Ingresa tus credenciales para acceder a tu cuenta

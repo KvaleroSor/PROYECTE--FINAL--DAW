@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { useSpends } from "@/app/context/SpendContext.js";
 import { useCategories } from "@/app/context/CategoryContext.js";
+import { useFinancial } from "@/app/context/FinancialContext.js";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import ButtonTypePaymentForm from "./ButtonTypePaymentForm.jsx";
@@ -42,7 +43,9 @@ const FormSpend = () => {
         setIsUpdatedPushed,
         //Crud
         postNewSpend,
+        isCategoryType,        
     } = useSpends();
+    const { calculateAmountSavingWithImprevistos } = useFinancial();
     const { isCategories } = useCategories();
     const [isFormData, setIsFormData] = useState({});
     const { data: session } = useSession();
@@ -126,6 +129,7 @@ const FormSpend = () => {
          ***********************************************/
 
         resetForm();
+        calculateAmountSavingWithImprevistos(isCategoryType, isAmount);
     };
 
     return (

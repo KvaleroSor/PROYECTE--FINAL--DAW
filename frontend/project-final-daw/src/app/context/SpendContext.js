@@ -25,6 +25,7 @@ export const SpendProvider = ({ children }) => {
     const [isData, setIsData] = useState(null);
     const [isPaymentType, setIsPaymentType] = useState("");
     const [isUpdatedPushed, setIsUpdatedPushed] = useState(false);
+    const [isCategoryType, setIsCategoryType] = useState(null);
 
     const fetchSpends = async () => {
         if (!session?.user?.user_id) return;
@@ -132,6 +133,7 @@ export const SpendProvider = ({ children }) => {
                 isPaymentType,
                 isUpdatedPushed,
                 isSpends,
+                isCategoryType,
                 // Setters
                 setIsFormSpendOpen,
                 setIsCategoryId,
@@ -140,6 +142,7 @@ export const SpendProvider = ({ children }) => {
                 setIsData,
                 setIsPaymentType,
                 setIsUpdatedPushed,
+                setIsCategoryType,
                 // Funciones CRUD
                 fetchSpends,
                 fetchSpendById,
