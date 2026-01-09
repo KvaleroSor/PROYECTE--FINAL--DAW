@@ -1,6 +1,7 @@
 "use client";
 import { useSession } from "next-auth/react";
 import { useCategories } from "@/app/context/CategoryContext.js";
+import { useFinancial } from "@/app/context/FinancialContext.js";
 import { useState, useEffect } from "react";
 import CardColor from "./CardColor.jsx";
 import ButtonTypeCategoryForm from "./ButtonTypeCategoryForm.jsx";
@@ -43,10 +44,18 @@ const FormCategory = () => {
         setIsCategoryType,
     } = useCategories();
 
-    
+    const {
+        isTotalAmountToSpendFixedAndLeisure,
+        isTotalSumCategoriesFixedLeisure,
+        setIsTotalSumCategoriesFixedLeisure,
+        amountMaxToSpendFixedLeisure,
+    } = useFinancial();
     const [isSelectedIcon, setIsSelectedIcon] = useState(null);
     const { data: session } = useSession();
     const [isActiveButtonCategory, setIsActiveButtonCategory] = useState(false);
+    const [isMonthlyBudgetWrong, setIsMonthlyBudgetWrong] = useState(false);
+    const [isAmountToShowErrorMessage, setIsAmountToShowErrorMessage] =
+        useState(0);
 
     const resetForm = () => {
         setIsCategoryName("");
@@ -69,7 +78,12 @@ const FormCategory = () => {
         { icon: Plus, name: "Plus" },
     ];
 
-    const categoryType = ["Gasto Fijo", "Gasto Ocio", "Inversion", "Imprevistos"];
+    const categoryType = [
+        "Gasto Fijo",
+        "Gasto Ocio",
+        "Inversion",
+        "Imprevistos",
+    ];
 
     useEffect(() => {
         if (isUpdatedPushed && isCategory) {
@@ -80,6 +94,37 @@ const FormCategory = () => {
             setIsCategoryType(isCategory.category_type);
         }
     }, [isUpdatedPushed, isCategory]);
+
+    useEffect(() => {
+        if (isCategoryType || isMonthlyBudget) {
+            handleCalculateMonthlyBudgetExceded();
+        }
+    }, [isCategoryType]);
+
+    const handleCalculateMonthlyBudgetExceded = () => {
+        if (
+            isCategoryType !== "Gasto Fijo" &&
+            isCategoryType !== "Gasto Ocio"
+        ) {
+            setIsMonthlyBudgetWrong(false);
+            return false;
+        }
+
+        const nuevoTotal =
+            isTotalSumCategoriesFixedLeisure + Number(isMonthlyBudget);
+
+        if (nuevoTotal > isTotalAmountToSpendFixedAndLeisure) {
+            setIsMonthlyBudgetWrong(true);
+            setIsAmountToShowErrorMessage(
+                amountMaxToSpendFixedLeisure(
+                    isTotalSumCategoriesFixedLeisure,
+                    isTotalAmountToSpendFixedAndLeisure
+                )
+            );
+        } else {
+            setIsMonthlyBudgetWrong(false);
+        }
+    };
 
     const handleSubmitCategory = async (e) => {
         e.preventDefault();
@@ -116,6 +161,10 @@ const FormCategory = () => {
 
         if (buttonPushed === "button-create") {
             try {
+                if (isMonthlyBudgetWrong) {
+                    return;
+                }
+
                 const res = await createCategory(data, session);
                 console.log("DATA CATEGORY TYPE", data.category_type);
 
@@ -202,7 +251,21 @@ const FormCategory = () => {
                         }}
                         value={isMonthlyBudget || ""}
                     />
-                </div>               
+                </div>
+                {isMonthlyBudgetWrong && (
+                    <div className="w-full flex flex-col justify-center items-center border-2 border-red-200 rounded-xl p-3 bg-red-100 text-red-500 shadow-xl shadow-red-200/20">
+                        <h1>PARTIDA DE GASTO EXCEDIENDO EL LÍMITE</h1>
+                        {/* <p>Crear categoría de tipo "Imprevistos"</p>
+                        <p>Descontará la cantidad del ahorro</p> */}
+                        <div className="flex flex-row gap-2">
+                            <p>Cantidad Máxima </p>
+                            <h1 className="text-xl">
+                                {"€ "}
+                                {isAmountToShowErrorMessage}
+                            </h1>
+                        </div>
+                    </div>
+                )}
                 <div className="w-full flex flex-col gap-2 mt-5 mb-5">
                     <label htmlFor="icono">Icono</label>
                     <div className="flex flex-wrap gap-2">
@@ -253,11 +316,29 @@ const FormCategory = () => {
                         <div className="flex flex-col w-full gap-2">
                             <button
                                 id="button-create"
-                                type="submit"
+                                type={
+                                    isMonthlyBudgetWrong ? "button" : "submit"
+                                }
                                 className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 text-slate-100 hover:border-slate-100"
+                                onClick={
+                                    isMonthlyBudgetWrong
+                                        ? handleCloseForm
+                                        : undefined
+                                }
                             >
-                                <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
-                                <span>Crear Categoría</span>
+                                {isMonthlyBudgetWrong ? (
+                                    <>
+                                        <X className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
+                                        <span>Cerrar</span>
+                                    </>
+                                ) : (
+                                    <>
+                                        <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
+                                        <span>Crear Categoría</span>
+                                    </>
+                                )}
+                                {/* <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
+                                <span>Crear Categoría</span> */}
                             </button>
                             <button
                                 id="button-cancel"

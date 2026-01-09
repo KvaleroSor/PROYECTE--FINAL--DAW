@@ -1,7 +1,7 @@
 "use client";
 
 import { useSession } from "next-auth/react";
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useMemo } from "react";
 import getCategories from "@/services/categories/getCategories.js";
 import getCategoryById from "@/services/categories/getCategoryById.js";
 import postCategory from "@/services/categories/postCategory.js";
@@ -47,6 +47,7 @@ export const CategoriesProvider = ({ children }) => {
                 "ERROR - NO SE PUEDEN CARGAR LAS CATEGORIAS | GLOBAL CONTEXT:",
                 err
             );
+            setIsCategories([]);
         } finally {
             setIsLoading(false);
         }
@@ -139,10 +140,12 @@ export const CategoriesProvider = ({ children }) => {
         }
     }, [session]);
 
+    const memorizedCategories = useMemo(() => isCategories, [isCategories]);
+
     return (
         <CategoriesContext.Provider
             value={{
-                isCategories,
+                isCategories: memorizedCategories,
                 isCategory,
                 isCategoryName,
                 isCategoryColor,

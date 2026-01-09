@@ -28,7 +28,7 @@ export const FinancialProvider = ({ children }) => {
         isTotalAmountToSpendFixedAndLeisure,
         setIsTotalAmountToSpendFixedAndLeisure,
     ] = useState(0);
-    const [isAmountLookingImprevistos, setIsAmountLookingImprevistos] = useState(0);
+    const [ isTotalSumCategoriesFixedLeisure, setIsTotalSumCategoriesFixedLeisure] = useState(0);
 
     // ----------------------------------------------------------------------
     // FETCH DATA: Obtener datos iniciales del usuario
@@ -101,7 +101,7 @@ export const FinancialProvider = ({ children }) => {
             isPercentageSettings.fixedExpenses +
             isPercentageSettings.leisureExpenses;
         const totalToSpendFixedAndSpendLeisure =
-            (totalPercentage * isNomina) / 100;
+            (totalPercentage * isNomina) / 100;       
 
         setIsTotalAmountToSpendFixedAndLeisure(
             totalToSpendFixedAndSpendLeisure
@@ -115,12 +115,7 @@ export const FinancialProvider = ({ children }) => {
      * @returns {string} El monto calculado formateado a 2 decimales.
      */
 
-    const calculateCategoryPercentage = (monthly_budget, total_acumulated) => {
-        console.log("MONTHLY BUDGET", monthly_budget);
-        console.log("TOTAL ACUMULADO", total_acumulated);
-        console.log(
-            Number((total_acumulated * 100) / monthly_budget).toFixed(2)
-        );
+    const calculateCategoryPercentage = (monthly_budget, total_acumulated) => {        
         return Number((total_acumulated * 100) / monthly_budget).toFixed(2);
     };
 
@@ -196,18 +191,9 @@ export const FinancialProvider = ({ children }) => {
         return result < 0;
     };
 
-    const calculateAmountSavingWithImprevistos = (
-        category_type,
-        total_acumulated
-    ) => {
-        if (category_type === "Imprevistos") {
-            setIsAmountLookingImprevistos(
-                isSavingFromNomina - total_acumulated
-            );
-        }
-
-        console.log("VALOR DE AHORRO NÓMINA BAJANDO", isSavingFromNomina);
-    };
+    const amountMaxToSpendFixedLeisure = (acumulate, total) => {
+        return Number(total - acumulate).toFixed(2);
+    }
 
     // ----------------------------------------------------------------------
     // ACTUALIZACIONES
@@ -241,7 +227,7 @@ export const FinancialProvider = ({ children }) => {
                 isInvestmentFromNomina,
                 isSavingFromNomina,
                 isTotalAmountToSpendFixedAndLeisure,
-                isAmountLookingImprevistos,
+                isTotalSumCategoriesFixedLeisure,
 
                 // Funciones de cálculo
                 calculatePercentageToPercentageSettings,
@@ -250,7 +236,7 @@ export const FinancialProvider = ({ children }) => {
                 evaluateTotalAmountSpendToTotalSpendCategory,
                 calculatePercentageBarCategory,
                 calculateAvailableMoneyToSpend,
-                calculateAmountSavingWithImprevistos,
+                amountMaxToSpendFixedLeisure,
 
                 // Funciones de actualización
                 setIsNomina,
@@ -262,6 +248,7 @@ export const FinancialProvider = ({ children }) => {
                 setIsLeisureExpensesFromNomina,
                 setIsInvestmentFromNomina,
                 setIsSavingFromNomina,
+                setIsTotalSumCategoriesFixedLeisure,
             }}
         >
             {children}

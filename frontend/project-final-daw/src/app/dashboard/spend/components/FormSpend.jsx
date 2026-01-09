@@ -45,7 +45,6 @@ const FormSpend = () => {
         postNewSpend,
         isCategoryType,        
     } = useSpends();
-    const { calculateAmountSavingWithImprevistos } = useFinancial();
     const { isCategories } = useCategories();
     const [isFormData, setIsFormData] = useState({});
     const { data: session } = useSession();
@@ -128,8 +127,7 @@ const FormSpend = () => {
          *         POST DE LA DATA A LA BBDD           *
          ***********************************************/
 
-        resetForm();
-        calculateAmountSavingWithImprevistos(isCategoryType, isAmount);
+        resetForm();        
     };
 
     return (

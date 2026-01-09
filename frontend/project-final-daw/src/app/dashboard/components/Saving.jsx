@@ -1,8 +1,37 @@
+"use client";
+
 import { PiggyBank } from "lucide-react";
 import { useFinancial } from "@/app/context/FinancialContext.js";
+import { useSpends } from "@/app/context/SpendContext.js";
+import { useCategories } from "@/app/context/CategoryContext.js";
+import { useState, useEffect } from "react";
+import { trackSynchronousPlatformIOAccessInDev } from "next/dist/server/app-render/dynamic-rendering";
 
 const Saving = () => {
-    const { isSavingFromNomina, isAmountLookingImprevistos } = useFinancial();
+    const { isSpends } = useSpends();
+    const { isCategories } = useCategories();
+    const { isSavingFromNomina } = useFinancial();
+    const [isTotalSumSpendImprevistos, setIsTotalSumSpendImprevistos] =
+        useState(0);
+
+    useEffect(() => {        
+        const isCategoriesId = isCategories
+            .filter((cat) => cat.category_type === "Imprevistos")
+            .map((category) => category._id);
+
+        const spendsByIds = isSpends.filter((spend) =>
+            isCategoriesId.includes(spend.category_id)
+        );
+
+        const sumaTotal = spendsByIds
+            .map((spend) => spend.amount)
+            .reduce((acc, current) => acc + current, 0);
+
+        sumaTotal >= isSavingFromNomina
+            ? setIsTotalSumSpendImprevistos(sumaTotal - isSavingFromNomina)
+            : setIsTotalSumSpendImprevistos(isSavingFromNomina - sumaTotal);        
+        
+    }, [isSpends, isCategories, isSavingFromNomina]);
 
     return (
         <>
@@ -19,16 +48,15 @@ const Saving = () => {
                             </h3>
                         </div>
                     </div>
-                    <div className="mr-5">
-                        {isAmountLookingImprevistos === 0 ? (
+                    <div className="mr-5">                       
+                        {isTotalSumSpendImprevistos === 0 ? (
                             <h1 className="text-2xl text-slate-900">
-                                €{" "}
-                                {Number(isSavingFromNomina).toFixed(2)}
+                                € {Number(isSavingFromNomina).toFixed(2)}
                             </h1>
                         ) : (
                             <h1 className="text-2xl text-slate-900">
                                 €{" "}
-                                {Number(isAmountLookingImprevistos).toFixed(2)}
+                                {Number(isTotalSumSpendImprevistos).toFixed(2)}
                             </h1>
                         )}
                     </div>

@@ -28,7 +28,7 @@ export const SpendProvider = ({ children }) => {
     const [isCategoryType, setIsCategoryType] = useState(null);
 
     const fetchSpends = async () => {
-        if (!session?.user?.user_id) return;
+        if (!session?.user?.user_id || !session?.accessToken) return;
 
         console.log("🔄 FETCH SPEND - Context");
         console.log("👤 Session User ID:", session?.user?.user_id);
@@ -45,6 +45,7 @@ export const SpendProvider = ({ children }) => {
                 "ERROR - NO SE PUEDEN CARGAR LOS GASTOS | GLOBAL CONTEXT:",
                 err
             );
+            setIsSpends([]);
         } finally {
             setIsLoading(false);
         }
