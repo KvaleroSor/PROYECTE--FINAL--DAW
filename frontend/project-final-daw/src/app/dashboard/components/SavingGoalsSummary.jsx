@@ -60,7 +60,7 @@ const SavingGoalsSummary = () => {
             {/* Header */}
             <div className="flex flex-row justify-between items-center mb-4">
                 <div className="flex items-center gap-2">
-                    <Target className="w-6 h-6 text-blue-600" />
+                    <Target className="w-6 h-6 text-slate-700" />
                     <div>
                         <h2 className="text-xl font-semibold text-slate-900">Metas Destacadas</h2>
                         <p className="text-xs text-slate-500">Tus principales objetivos</p>
@@ -79,28 +79,28 @@ const SavingGoalsSummary = () => {
                     return (
                         <div
                             key={goal._id}
-                            className={`border-l-4 ${priorityColors[goal.priority]} bg-white rounded-lg p-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer`}
+                            className={`border-l-4 ${priorityColors[goal.priority]} bg-white border border-slate-200 rounded-lg p-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer`}
                             onClick={() => router.push('/dashboard/saving')}
                         >
                             <div className="flex justify-between items-start mb-2">
-                                <h4 className="font-semibold text-gray-800 text-sm">
+                                <h4 className="font-semibold text-slate-900 text-sm">
                                     {goal.goal_name}
                                 </h4>
-                                <span className="text-xs font-bold text-blue-600">
+                                <span className="text-xs font-bold text-slate-700">
                                     {progress.toFixed(0)}%
                                 </span>
                             </div>
 
                             {/* Barra de progreso */}
-                            <div className="w-full bg-gray-200 rounded-full h-2 mb-2">
+                            <div className="w-full bg-slate-200 rounded-full h-2 mb-2">
                                 <div
-                                    className="bg-gradient-to-r from-blue-500 to-blue-600 h-2 rounded-full transition-all duration-500"
+                                    className="bg-slate-700 h-2 rounded-full transition-all duration-500"
                                     style={{ width: `${progress}%` }}
                                 />
                             </div>
 
                             {/* Información */}
-                            <div className="flex justify-between items-center text-xs text-gray-600">
+                            <div className="flex justify-between items-center text-xs text-slate-600">
                                 <span>
                                     €{goal.current_amount.toFixed(0)} / €{goal.target_amount.toFixed(0)}
                                 </span>
@@ -121,7 +121,7 @@ const SavingGoalsSummary = () => {
                 {savingGoals.length > 3 && (
                     <button
                         onClick={() => router.push('/dashboard/saving')}
-                        className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-white border-2 border-slate-300 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors text-sm font-medium"
+                        className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-white border-2 border-slate-200 text-slate-700 rounded-lg hover:bg-slate-50 transition-colors text-sm font-medium"
                     >
                         Ver Todas
                         <ArrowRight className="w-4 h-4" />
@@ -129,7 +129,7 @@ const SavingGoalsSummary = () => {
                 )}
                 <button
                     onClick={() => setIsFormSavingOpen(true)}
-                    className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm font-medium"
+                    className="w-full flex items-center justify-center gap-2 px-4 py-2 bg-slate-800 text-white rounded-lg hover:bg-slate-900 transition-colors text-sm font-medium"
                 >
                     <Plus className="w-4 h-4" />
                     Nueva Meta

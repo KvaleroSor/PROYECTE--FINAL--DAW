@@ -124,10 +124,10 @@ const FormSavingGoal = () => {
             {/* Header */}
             <div className="w-full flex flex-row justify-between mb-3 gap-2">
                 <div className="flex flex-col justify-start">
-                    <h1 className="text-2xl font-semibold">
+                    <h1 className="text-2xl font-semibold text-slate-900">
                         {selectedGoal ? "Editar Meta de Ahorro" : "Crear Meta de Ahorro"}
                     </h1>
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-slate-600">
                         {selectedGoal
                             ? "Actualiza tu meta de ahorro"
                             : "Define una nueva meta de ahorro"}
@@ -135,19 +135,19 @@ const FormSavingGoal = () => {
                 </div>
                 <div>
                     <X
-                        className="w-8 h-8 transition-all duration-300 hover:rotate-90 cursor-pointer text-gray-600 hover:text-gray-900"
+                        className="w-8 h-8 transition-all duration-300 hover:rotate-90 cursor-pointer text-slate-600 hover:text-slate-900"
                         onClick={handleCloseForm}
                     />
                 </div>
             </div>
 
             {/* Información de presupuesto disponible */}
-            <div className="w-full bg-blue-50 border border-blue-200 rounded-lg p-4 mb-2">
+            <div className="w-full bg-slate-50 border border-slate-200 rounded-lg p-4 mb-2">
                 <div className="flex items-center gap-2 mb-2">
-                    <Wallet className="w-5 h-5 text-blue-600" />
-                    <p className="font-semibold text-blue-900">Presupuesto de Ahorro</p>
+                    <Wallet className="w-5 h-5 text-slate-700" />
+                    <p className="font-semibold text-slate-900">Presupuesto de Ahorro</p>
                 </div>
-                <div className="space-y-1 text-sm text-blue-800">
+                <div className="space-y-1 text-sm text-slate-800">
                     <p>Total mensual: <span className="font-bold">{isSavingFromNomina?.toFixed(2) || 0}€</span></p>
                     <p>Disponible: <span className="font-bold text-green-600">{unallocatedPercentage.toFixed(1)}%</span></p>
                 </div>
@@ -171,7 +171,7 @@ const FormSavingGoal = () => {
 
             {/* Nombre de la meta */}
             <div className="w-full flex flex-col gap-2">
-                <label className="flex items-center gap-2 font-medium">
+                <label className="flex items-center gap-2 font-medium text-slate-900">
                     <Target className="w-4 h-4" />
                     Nombre de la Meta *
                 </label>
@@ -180,27 +180,27 @@ const FormSavingGoal = () => {
                     value={isGoalName}
                     onChange={(e) => setIsGoalName(e.target.value)}
                     placeholder="Ej: Viaje a Japón, Fondo emergencia..."
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
                     required
                 />
             </div>
 
             {/* Descripción (opcional) */}
             <div className="w-full flex flex-col gap-2">
-                <label className="font-medium">Descripción (opcional)</label>
+                <label className="font-medium text-slate-900">Descripción (opcional)</label>
                 <textarea
                     value={isDescription}
                     onChange={(e) => setIsDescription(e.target.value)}
                     placeholder="Describe tu meta de ahorro..."
                     rows="2"
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
+                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent resize-none"
                 />
             </div>
 
             {/* Monto objetivo y actual */}
             <div className="w-full grid grid-cols-2 gap-4">
                 <div className="flex flex-col gap-2">
-                    <label className="flex items-center gap-2 font-medium">
+                    <label className="flex items-center gap-2 font-medium text-slate-900">
                         <TrendingUp className="w-4 h-4" />
                         Monto Objetivo *
                     </label>
@@ -211,13 +211,13 @@ const FormSavingGoal = () => {
                         placeholder="3000"
                         min="0"
                         step="0.01"
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
                         required
                     />
                 </div>
 
                 <div className="flex flex-col gap-2">
-                    <label className="flex items-center gap-2 font-medium">
+                    <label className="flex items-center gap-2 font-medium text-slate-900">
                         <Wallet className="w-4 h-4" />
                         Monto Actual
                     </label>
@@ -228,14 +228,14 @@ const FormSavingGoal = () => {
                         placeholder="0"
                         min="0"
                         step="0.01"
-                        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
                     />
                 </div>
             </div>
 
             {/* Porcentaje de asignación */}
             <div className="w-full flex flex-col gap-2">
-                <label className="flex items-center gap-2 font-medium">
+                <label className="flex items-center gap-2 font-medium text-slate-900">
                     <Percent className="w-4 h-4" />
                     Porcentaje de Asignación * (Disponible: {unallocatedPercentage.toFixed(1)}%)
                 </label>
@@ -248,13 +248,13 @@ const FormSavingGoal = () => {
                         min="0"
                         max="100"
                         step="0.1"
-                        className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        className="flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
                         required
                     />
-                    <span className="text-gray-600">%</span>
+                    <span className="text-slate-600">%</span>
                 </div>
                 {isPercentageAllocation > 0 && (
-                    <p className="text-sm text-blue-600">
+                    <p className="text-sm text-green-600">
                         💰 Contribución mensual: <span className="font-bold">{monthlyContribution.toFixed(2)}€</span>
                     </p>
                 )}
@@ -262,7 +262,7 @@ const FormSavingGoal = () => {
 
             {/* Fecha límite */}
             <div className="w-full flex flex-col gap-2">
-                <label className="flex items-center gap-2 font-medium">
+                <label className="flex items-center gap-2 font-medium text-slate-900">
                     <Calendar className="w-4 h-4" />
                     Fecha Límite (opcional)
                 </label>
@@ -270,23 +270,23 @@ const FormSavingGoal = () => {
                     type="date"
                     value={isDeadline}
                     onChange={(e) => setIsDeadline(e.target.value)}
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
                 />
             </div>
 
             {/* Prioridad */}
             <div className="w-full flex flex-col gap-2">
-                <label className="font-medium">Prioridad</label>
+                <label className="font-medium text-slate-900">Prioridad</label>
                 <div className="flex gap-3">
                     {priorities.map((priority) => (
                         <button
                             key={priority.value}
                             type="button"
                             onClick={() => setIsPriority(priority.value)}
-                            className={`flex-1 px-4 py-2 rounded-lg border-2 transition-all duration-200 ${
+                            className={`border-2 flex flex-1 justify-center items-center p-5 rounded-xl gap-2 cursor-pointer ${
                                 isPriority === priority.value
-                                    ? `${priority.color} text-white border-transparent`
-                                    : "bg-white border-gray-300 text-gray-700 hover:border-gray-400"
+                                    ? "bg-slate-800 text-slate-100 shadow-md"
+                                    : "border-slate-300 hover:border-slate-800 bg-gray-100 hover:bg-slate-300 hover:text-slate-800"
                             }`}
                         >
                             {priority.label}
@@ -296,19 +296,21 @@ const FormSavingGoal = () => {
             </div>
 
             {/* Botones de acción */}
-            <div className="w-full flex gap-3 mt-4">
+            <div className="w-full flex flex-col gap-2 mt-4">
+                <button
+                    type="submit"
+                    className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 text-slate-100 hover:border-slate-100"
+                >
+                    <Target className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
+                    <span>{selectedGoal ? "Actualizar Meta" : "Crear Meta"}</span>
+                </button>
                 <button
                     type="button"
                     onClick={handleCloseForm}
-                    className="flex-1 px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300 transition-colors duration-200 font-medium"
+                    className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-100 border-slate-200 hover:bg-slate-300 hover:border-slate-900 text-slate-600"
                 >
-                    Cancelar
-                </button>
-                <button
-                    type="submit"
-                    className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium"
-                >
-                    {selectedGoal ? "Actualizar Meta" : "Crear Meta"}
+                    <X className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
+                    <span>Cancelar</span>
                 </button>
             </div>
         </form>

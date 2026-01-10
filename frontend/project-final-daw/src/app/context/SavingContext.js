@@ -8,6 +8,7 @@ import getSavingById from "@/services/savings/getSavingById.js";
 import postSaving from "@/services/savings/postSaving.js";
 import updateSaving from "@/services/savings/updateSaving.js";
 import deleteSaving from "@/services/savings/deleteSaving.js";
+import processMonthlyContributions from "@/services/savings/processMonthlyContributions.js";
 
 const SavingContext = createContext();
 
@@ -198,12 +199,92 @@ export const SavingProvider = ({ children }) => {
         setError(null);
     };
 
+    // Verificar si es un nuevo mes y procesar contribuciones automáticamente
+    const checkAndProcessMonthlyContributions = async () => {
+        if (!session?.user?.user_id || !isSavingFromNomina) return;
+
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth();
+        const currentYear = currentDate.getFullYear();
+
+        // Obtener la última fecha de procesamiento desde localStorage
+        const lastProcessedKey = `lastProcessed_${session.user.user_id}`;
+        const lastProcessed = localStorage.getItem(lastProcessedKey);
+
+        if (lastProcessed) {
+            const lastDate = new Date(lastProcessed);
+            const lastMonth = lastDate.getMonth();
+            const lastYear = lastDate.getFullYear();
+
+            // Si estamos en el mismo mes, no hacer nada
+            if (currentMonth === lastMonth && currentYear === lastYear) {
+                return;
+            }
+        }
+
+        // Es un nuevo mes, procesar contribuciones
+        try {
+            console.log("📅 Nuevo mes detectado, procesando contribuciones...");
+            await processMonthlyContributions(
+                session.user.user_id,
+                isSavingFromNomina,
+                session
+            );
+            
+            // Actualizar la fecha de último procesamiento
+            localStorage.setItem(lastProcessedKey, currentDate.toISOString());
+            
+            // Recargar las metas actualizadas
+            await fetchSavings();
+            
+            console.log("✅ Contribuciones mensuales procesadas automáticamente");
+        } catch (err) {
+            console.error("❌ Error al procesar contribuciones mensuales:", err);
+        }
+    };
+
+    // Procesar contribución manual (botón)
+    const manualProcessContributions = async () => {
+        if (!session?.user?.user_id || !isSavingFromNomina) {
+            setError("No se puede procesar: datos insuficientes");
+            return;
+        }
+
+        try {
+            setIsLoading(true);
+            await processMonthlyContributions(
+                session.user.user_id,
+                isSavingFromNomina,
+                session
+            );
+            
+            // Actualizar la fecha de último procesamiento
+            const lastProcessedKey = `lastProcessed_${session.user.user_id}`;
+            localStorage.setItem(lastProcessedKey, new Date().toISOString());
+            
+            await fetchSavings();
+            console.log("✅ Contribuciones procesadas manualmente");
+        } catch (err) {
+            console.error("❌ Error al procesar contribuciones:", err);
+            setError(err.message);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     // Cargar savings al iniciar sesión
     useEffect(() => {
         if (session?.user?.user_id) {
             fetchSavings();
         }
     }, [session?.user?.user_id]);
+
+    // Verificar y procesar contribuciones automáticamente cuando cambia isSavingFromNomina
+    useEffect(() => {
+        if (session?.user?.user_id && isSavingFromNomina) {
+            checkAndProcessMonthlyContributions();
+        }
+    }, [session?.user?.user_id, isSavingFromNomina]);
 
     return (
         <SavingContext.Provider

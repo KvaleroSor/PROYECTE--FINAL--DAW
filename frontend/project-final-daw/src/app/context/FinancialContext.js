@@ -214,6 +214,13 @@ export const FinancialProvider = ({ children }) => {
         fetchFinancialData();
     }, [session]);
 
+    // Recalcular montos cuando cambian la nómina o los porcentajes
+    useEffect(() => {
+        if (isNomina > 0 && isPercentageSettings) {
+            calculatePercentageToPercentageSettings();
+        }
+    }, [isNomina, isPercentageSettings]);
+
     return (
         <FinancialContext.Provider
             value={{

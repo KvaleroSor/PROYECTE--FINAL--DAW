@@ -74,16 +74,16 @@ const Saving = () => {
             </div>
 
             {/* Resumen de ahorro disponible */}
-            <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 mb-4">
+            <div className="bg-slate-50 border border-slate-200 rounded-lg p-4 mb-4">
                 <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-blue-900">Presupuesto Total</span>
-                    <span className="text-lg font-bold text-blue-900">
+                    <span className="text-sm font-medium text-slate-700">Presupuesto Total</span>
+                    <span className="text-lg font-bold text-slate-900">
                         €{Number(isSavingFromNomina).toFixed(2)}
                     </span>
                 </div>
                 <div className="flex justify-between items-center text-sm">
-                    <span className="text-blue-700">Gastos Imprevistos</span>
-                    <span className="font-semibold text-blue-700">
+                    <span className="text-slate-600">Gastos Imprevistos</span>
+                    <span className="font-semibold text-red-600">
                         -€{isTotalSumSpendImprevistos.toFixed(2)}
                     </span>
                 </div>
@@ -92,29 +92,29 @@ const Saving = () => {
             {/* Estadísticas de metas */}
             {savingGoals.length > 0 ? (
                 <div className="space-y-3 mb-4">
-                    <div className="bg-gradient-to-r from-green-50 to-green-100 border border-green-200 rounded-lg p-4">
+                    <div className="bg-white border border-slate-200 rounded-lg p-4">
                         <div className="flex items-center justify-between mb-2">
                             <div className="flex items-center gap-2">
-                                <TrendingUp className="w-4 h-4 text-green-700" />
-                                <span className="text-sm font-medium text-green-900">Metas Activas</span>
+                                <TrendingUp className="w-4 h-4 text-slate-700" />
+                                <span className="text-sm font-medium text-slate-900">Metas Activas</span>
                             </div>
-                            <span className="text-2xl font-bold text-green-700">{activeGoals.length}</span>
+                            <span className="text-2xl font-bold text-slate-900">{activeGoals.length}</span>
                         </div>
-                        <div className="text-xs text-green-700">
+                        <div className="text-xs text-slate-600">
                             {totalAllocatedPercentage.toFixed(1)}% del presupuesto asignado
                         </div>
                     </div>
 
-                    <div className="bg-gradient-to-r from-purple-50 to-purple-100 border border-purple-200 rounded-lg p-4">
+                    <div className="bg-white border border-slate-200 rounded-lg p-4">
                         <div className="flex items-center justify-between">
                             <div>
-                                <p className="text-xs text-purple-700 mb-1">Progreso Total</p>
-                                <p className="text-lg font-bold text-purple-900">
-                                    €{totalSaved.toFixed(2)} <span className="text-sm font-normal">de</span> €{totalTarget.toFixed(2)}
+                                <p className="text-xs text-slate-600 mb-1">Progreso Total</p>
+                                <p className="text-lg font-bold text-slate-900">
+                                    €{totalSaved.toFixed(2)} <span className="text-sm font-normal text-slate-500">de</span> €{totalTarget.toFixed(2)}
                                 </p>
                             </div>
                             <div className="text-right">
-                                <p className="text-2xl font-bold text-purple-700">
+                                <p className="text-2xl font-bold text-slate-700">
                                     {totalTarget > 0 ? ((totalSaved / totalTarget) * 100).toFixed(1) : 0}%
                                 </p>
                             </div>

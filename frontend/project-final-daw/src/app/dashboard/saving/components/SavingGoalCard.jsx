@@ -22,9 +22,9 @@ const SavingGoalCard = ({ goal }) => {
     );
 
     const priorityColors = {
-        high: "border-red-500 bg-red-50",
-        medium: "border-yellow-500 bg-yellow-50",
-        low: "border-green-500 bg-green-50",
+        high: "border-red-500 bg-white",
+        medium: "border-yellow-500 bg-white",
+        low: "border-green-500 bg-white",
     };
 
     const priorityLabels = {
@@ -34,9 +34,9 @@ const SavingGoalCard = ({ goal }) => {
     };
 
     const statusColors = {
-        active: "bg-blue-100 text-blue-800",
+        active: "bg-slate-100 text-slate-800",
         completed: "bg-green-100 text-green-800",
-        paused: "bg-gray-100 text-gray-800",
+        paused: "bg-slate-200 text-slate-600",
     };
 
     const statusLabels = {
@@ -80,11 +80,11 @@ const SavingGoalCard = ({ goal }) => {
             <div className="flex justify-between items-start mb-3">
                 <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                        <Target className="w-5 h-5 text-blue-600" />
-                        <h3 className="text-lg font-bold text-gray-800">{goal.goal_name}</h3>
+                        <Target className="w-5 h-5 text-slate-700" />
+                        <h3 className="text-lg font-bold text-slate-900">{goal.goal_name}</h3>
                     </div>
                     {goal.description && (
-                        <p className="text-sm text-gray-600 mt-1">{goal.description}</p>
+                        <p className="text-sm text-slate-600 mt-1">{goal.description}</p>
                     )}
                 </div>
 
@@ -92,7 +92,7 @@ const SavingGoalCard = ({ goal }) => {
                 <div className="flex gap-2">
                     <button
                         onClick={handleEdit}
-                        className="p-2 text-blue-600 hover:bg-blue-100 rounded-lg transition-colors"
+                        className="p-2 text-slate-600 hover:bg-slate-100 rounded-lg transition-colors"
                         title="Editar"
                     >
                         <Edit className="w-4 h-4" />
@@ -116,7 +116,7 @@ const SavingGoalCard = ({ goal }) => {
                 >
                     {statusLabels[goal.status]}
                 </span>
-                <span className="px-3 py-1 rounded-full text-xs font-medium bg-gray-100 text-gray-700">
+                <span className="px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700">
                     Prioridad: {priorityLabels[goal.priority]}
                 </span>
             </div>
@@ -124,21 +124,21 @@ const SavingGoalCard = ({ goal }) => {
             {/* Montos */}
             <div className="mb-4">
                 <div className="flex justify-between text-sm mb-2">
-                    <span className="text-gray-600">Progreso</span>
-                    <span className="font-bold text-gray-800">
+                    <span className="text-slate-600">Progreso</span>
+                    <span className="font-bold text-slate-900">
                         {goal.current_amount.toFixed(2)}€ / {goal.target_amount.toFixed(2)}€
                     </span>
                 </div>
 
                 {/* Barra de progreso */}
-                <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
+                <div className="w-full bg-slate-200 rounded-full h-3 overflow-hidden">
                     <div
-                        className="bg-gradient-to-r from-blue-500 to-blue-600 h-full rounded-full transition-all duration-500"
+                        className="bg-slate-700 h-full rounded-full transition-all duration-500"
                         style={{ width: `${progress}%` }}
                     />
                 </div>
 
-                <div className="flex justify-between text-xs text-gray-500 mt-1">
+                <div className="flex justify-between text-xs text-slate-500 mt-1">
                     <span>{progress.toFixed(1)}% completado</span>
                     <span>{(goal.target_amount - goal.current_amount).toFixed(2)}€ restantes</span>
                 </div>
@@ -147,40 +147,40 @@ const SavingGoalCard = ({ goal }) => {
             {/* Información adicional */}
             <div className="space-y-2 text-sm">
                 <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-gray-600">
+                    <div className="flex items-center gap-2 text-slate-600">
                         <TrendingUp className="w-4 h-4" />
                         <span>Contribución mensual:</span>
                     </div>
-                    <span className="font-bold text-blue-600">
+                    <span className="font-bold text-green-600">
                         {monthlyContribution.toFixed(2)}€
                     </span>
                 </div>
 
                 <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-2 text-gray-600">
+                    <div className="flex items-center gap-2 text-slate-600">
                         <span>Asignación:</span>
                     </div>
-                    <span className="font-bold text-gray-700">
+                    <span className="font-bold text-slate-700">
                         {goal.percentage_allocation.toFixed(1)}%
                     </span>
                 </div>
 
                 {monthsRemaining !== Infinity && monthsRemaining > 0 && (
                     <div className="flex items-center justify-between">
-                        <span className="text-gray-600">Tiempo estimado:</span>
-                        <span className="font-bold text-gray-700">
+                        <span className="text-slate-600">Tiempo estimado:</span>
+                        <span className="font-bold text-slate-700">
                             {monthsRemaining} {monthsRemaining === 1 ? "mes" : "meses"}
                         </span>
                     </div>
                 )}
 
                 {goal.deadline && (
-                    <div className="flex items-center justify-between pt-2 border-t border-gray-200">
-                        <div className="flex items-center gap-2 text-gray-600">
+                    <div className="flex items-center justify-between pt-2 border-t border-slate-200">
+                        <div className="flex items-center gap-2 text-slate-600">
                             <Calendar className="w-4 h-4" />
                             <span>Fecha límite:</span>
                         </div>
-                        <span className="font-medium text-gray-700">{formatDate(goal.deadline)}</span>
+                        <span className="font-medium text-slate-700">{formatDate(goal.deadline)}</span>
                     </div>
                 )}
             </div>

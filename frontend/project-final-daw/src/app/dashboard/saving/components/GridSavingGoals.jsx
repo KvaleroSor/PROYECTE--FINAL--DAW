@@ -3,6 +3,7 @@
 import { useSaving } from "@/app/context/SavingContext.js";
 import { useFinancial } from "@/app/context/FinancialContext.js";
 import SavingGoalCard from "./SavingGoalCard.jsx";
+import MonthlyContributionStatus from "./MonthlyContributionStatus.jsx";
 import { Plus, Target, Wallet, TrendingUp, AlertCircle } from "lucide-react";
 
 const GridSavingGoals = () => {
@@ -37,39 +38,42 @@ const GridSavingGoals = () => {
             {/* Resumen general */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                 {/* Tarjeta de resumen total */}
-                <div className="bg-gradient-to-br from-blue-500 to-blue-600 text-white rounded-lg p-5 shadow-md">
+                <div className="bg-white border-2 border-slate-200 rounded-lg p-5 shadow-sm">
                     <div className="flex items-center gap-2 mb-2">
-                        <Target className="w-5 h-5" />
-                        <p className="text-sm font-medium opacity-90">Progreso Total</p>
+                        <Target className="w-5 h-5 text-slate-700" />
+                        <p className="text-sm font-medium text-slate-600">Progreso Total</p>
                     </div>
-                    <p className="text-3xl font-bold mb-1">{overallProgress.toFixed(1)}%</p>
-                    <p className="text-sm opacity-90">
+                    <p className="text-3xl font-bold text-slate-900 mb-1">{overallProgress.toFixed(1)}%</p>
+                    <p className="text-sm text-slate-500">
                         {totalSaved.toFixed(2)}€ de {totalTarget.toFixed(2)}€
                     </p>
                 </div>
 
                 {/* Tarjeta de metas activas */}
-                <div className="bg-gradient-to-br from-green-500 to-green-600 text-white rounded-lg p-5 shadow-md">
+                <div className="bg-white border-2 border-slate-200 rounded-lg p-5 shadow-sm">
                     <div className="flex items-center gap-2 mb-2">
-                        <TrendingUp className="w-5 h-5" />
-                        <p className="text-sm font-medium opacity-90">Metas Activas</p>
+                        <TrendingUp className="w-5 h-5 text-slate-700" />
+                        <p className="text-sm font-medium text-slate-600">Metas Activas</p>
                     </div>
-                    <p className="text-3xl font-bold mb-1">{activeGoals.length}</p>
-                    <p className="text-sm opacity-90">
+                    <p className="text-3xl font-bold text-slate-900 mb-1">{activeGoals.length}</p>
+                    <p className="text-sm text-slate-500">
                         {completedGoals.length} completadas
                     </p>
                 </div>
 
                 {/* Tarjeta de presupuesto disponible */}
-                <div className="bg-gradient-to-br from-purple-500 to-purple-600 text-white rounded-lg p-5 shadow-md">
+                <div className="bg-white border-2 border-slate-200 rounded-lg p-5 shadow-sm">
                     <div className="flex items-center gap-2 mb-2">
-                        <Wallet className="w-5 h-5" />
-                        <p className="text-sm font-medium opacity-90">Presupuesto Disponible</p>
+                        <Wallet className="w-5 h-5 text-slate-700" />
+                        <p className="text-sm font-medium text-slate-600">Presupuesto Disponible</p>
                     </div>
-                    <p className="text-3xl font-bold mb-1">{unallocatedPercentage.toFixed(1)}%</p>
-                    <p className="text-sm opacity-90">{unallocatedAmount.toFixed(2)}€/mes</p>
+                    <p className="text-3xl font-bold text-slate-900 mb-1">{unallocatedPercentage.toFixed(1)}%</p>
+                    <p className="text-sm text-slate-500">{unallocatedAmount.toFixed(2)}€/mes</p>
                 </div>
             </div>
+
+            {/* Estado de contribuciones mensuales */}
+            <MonthlyContributionStatus />
 
             {/* Botón para crear nueva meta */}
             <div className="mb-6">

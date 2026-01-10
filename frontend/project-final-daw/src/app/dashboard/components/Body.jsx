@@ -10,7 +10,8 @@ import { useSaving } from "@/app/context/SavingContext.js";
 import FormSpend from "../spend/components/FormSpend.jsx";
 import FormSavingGoal from "../saving/components/FormSavingGoal.jsx";
 import Saving from "./Saving.jsx";
-import SavingGoalsSummary from "./SavingGoalsSummary.jsx";
+import InvestmentSummary from "./InvestmentSummary.jsx";
+import SavingsProgressDashboard from "./SavingsProgressDashboard.jsx";
 
 const Body = () => {
     const { isFormCategoryOpen } = useCategories();
@@ -47,11 +48,11 @@ const Body = () => {
                         <Saving />
                     </div>
                     <div className="h-auto basis-[45%] border-2 rounded-xl m-3 flex justify-center items-center bg-white">
-                        <SavingGoalsSummary />
+                        <InvestmentSummary />
                     </div>
                 </div>
-                <div className="border-2 rounded-xl m-3 flex justify-center items-center bg-white">
-                    {/* CARRUSEL DE CATEGORIAS */}
+                <div className="border-2 rounded-xl m-3 bg-white">
+                    <SavingsProgressDashboard />
                 </div>
                 <div className="pt-4 border-2 rounded-xl m-2 sm:m-3 lg:m-4 bg-white">
                     <GridCategories />
