@@ -45,6 +45,13 @@ import postPercentageSpend from "./api/routes_percentage_spends/postPercentageSp
 import getPercentageSpend from "./api/routes_percentage_spends/getPercentageSpend.js";
 import updatePercentageSpend from "./api/routes_percentage_spends/updatePercentageSpend.js";
 import deletePercentageSpend from "./api/routes_percentage_spends/deletePercentageSpend.js";
+
+//SAVINGS
+import postSaving from "./api/routes_savings/postSaving.js";
+import getSavings from "./api/routes_savings/getSavings.js";
+import getSavingById from "./api/routes_savings/getSavingById.js";
+import updateSaving from "./api/routes_savings/updateSaving.js";
+import deleteSaving from "./api/routes_savings/deleteSaving.js";
 //========================================================================================//
 
 const app = express();
@@ -110,6 +117,16 @@ app.use("/api/spendpercentage", postPercentageSpend);
 app.use("/api/spendpercentage", getPercentageSpend);
 app.use("/api/spendpercentage", updatePercentageSpend);
 app.use("/api/spendpercentage", deletePercentageSpend);
+
+/**
+ * Routes for savings 💰🎯
+ */
+
+app.use("/api/savings", postSaving);
+app.use("/api/savings", getSavings);
+app.use("/api/savings", getSavingById);
+app.use("/api/savings", updateSaving);
+app.use("/api/savings", deleteSaving);
 
 /**
  * Routes for Admin

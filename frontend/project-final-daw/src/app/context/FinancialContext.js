@@ -227,7 +227,7 @@ export const FinancialProvider = ({ children }) => {
                 isInvestmentFromNomina,
                 isSavingFromNomina,
                 isTotalAmountToSpendFixedAndLeisure,
-                isTotalSumCategoriesFixedLeisure,
+                isTotalSumCategoriesFixedLeisure,                
 
                 // Funciones de cálculo
                 calculatePercentageToPercentageSettings,
@@ -248,7 +248,7 @@ export const FinancialProvider = ({ children }) => {
                 setIsLeisureExpensesFromNomina,
                 setIsInvestmentFromNomina,
                 setIsSavingFromNomina,
-                setIsTotalSumCategoriesFixedLeisure,
+                setIsTotalSumCategoriesFixedLeisure,                
             }}
         >
             {children}

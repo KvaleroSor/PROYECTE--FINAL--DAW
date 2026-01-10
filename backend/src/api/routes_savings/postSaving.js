@@ -1,0 +1,33 @@
+import { Router } from "express";
+import postSaving from './../../functions/functions_savings/postSaving.js';
+
+const router = Router();
+
+router.post("/", async (req, res) => {
+    try {
+        const reqSaving = req.body;
+
+        console.log("➡️ DATA RECEIVED IN SERVER:", reqSaving);
+
+        if (!reqSaving.user_id || !reqSaving.goal_name || !reqSaving.target_amount || !reqSaving.percentage_allocation) {
+            return res.status(400).json({
+                mensaje: "❌ ERROR - MISSING REQUIRED FIELDS | SERVER"
+            });
+        }
+
+        const resultNewSaving = await postSaving(reqSaving);
+
+        res.status(201).json({
+            mensaje: "✅ - THE SAVING GOAL HAS BEEN CREATED",
+            data_received: reqSaving,
+            data_created: resultNewSaving
+        });
+    } catch (err) {
+        res.status(500).json({
+            mensaje: `❌ ERROR - INTERNAL ERROR | SERVER`,
+            error: err.message,
+        });
+    }
+});
+
+export default router;

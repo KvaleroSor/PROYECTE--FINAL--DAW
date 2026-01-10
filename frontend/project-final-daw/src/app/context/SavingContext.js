@@ -1,0 +1,269 @@
+"use client";
+
+import { createContext, useContext, useState, useEffect } from "react";
+import { useSession } from "next-auth/react";
+import { useFinancial } from "./FinancialContext.js";
+import getSavings from "@/services/savings/getSavings.js";
+import getSavingById from "@/services/savings/getSavingById.js";
+import postSaving from "@/services/savings/postSaving.js";
+import updateSaving from "@/services/savings/updateSaving.js";
+import deleteSaving from "@/services/savings/deleteSaving.js";
+
+const SavingContext = createContext();
+
+export const SavingProvider = ({ children }) => {
+    const { data: session } = useSession();
+    const { isSavingFromNomina } = useFinancial();
+
+    // Estados principales
+    const [savingGoals, setSavingGoals] = useState([]);
+    const [isFormSavingOpen, setIsFormSavingOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const [selectedGoal, setSelectedGoal] = useState(null);
+    const [error, setError] = useState(null);
+
+    // Estados del formulario
+    const [isGoalName, setIsGoalName] = useState("");
+    const [isDescription, setIsDescription] = useState("");
+    const [isTargetAmount, setIsTargetAmount] = useState("");
+    const [isCurrentAmount, setIsCurrentAmount] = useState(0);
+    const [isPercentageAllocation, setIsPercentageAllocation] = useState("");
+    const [isDeadline, setIsDeadline] = useState("");
+    const [isPriority, setIsPriority] = useState("medium");
+    const [isStatus, setIsStatus] = useState("active");
+
+    // Calcular cuánto % queda sin asignar
+    const calculateUnallocatedPercentage = () => {
+        const totalAllocated = savingGoals.reduce(
+            (sum, goal) => sum + (goal.percentage_allocation || 0),
+            0
+        );
+        return 100 - totalAllocated;
+    };
+
+    // Calcular el monto mensual por meta según el porcentaje
+    const calculateMonthlyContribution = (percentage_allocation) => {
+        if (!isSavingFromNomina || !percentage_allocation) return 0;
+        return (percentage_allocation / 100) * isSavingFromNomina;
+    };
+
+    // Calcular progreso de una meta
+    const calculateProgress = (current, target) => {
+        if (!target || target === 0) return 0;
+        return Math.min((current / target) * 100, 100);
+    };
+
+    // Calcular meses restantes para completar meta
+    const calculateMonthsRemaining = (current, target, monthlyContribution) => {
+        if (!monthlyContribution || monthlyContribution === 0) return Infinity;
+        const remaining = target - current;
+        if (remaining <= 0) return 0;
+        return Math.ceil(remaining / monthlyContribution);
+    };
+
+    // CRUD Operations
+
+    const fetchSavings = async () => {
+        if (!session?.user?.user_id || !session?.accessToken) return;
+
+        console.log("🔄 FETCH SAVINGS - Context");
+        console.log("👤 Session User ID:", session?.user?.user_id);
+        console.log("🔑 Session Access Token:", session?.accessToken);
+
+        try {
+            setIsLoading(true);
+            setError(null);
+            const data = await getSavings(session?.user?.user_id, session);
+            setSavingGoals(data.data || []);
+            console.log("✅ Savings cargados:", data.data);
+        } catch (err) {
+            console.error("❌ ERROR - NO SE PUEDEN CARGAR LOS SAVINGS | CONTEXT:", err);
+            setError(err.message);
+            setSavingGoals([]);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const fetchSavingById = async (id) => {
+        try {
+            setIsLoading(true);
+            const data = await getSavingById(id, session);
+            console.log("✅ Saving by ID:", data.data);
+            setSelectedGoal(data.data);
+            return data.data;
+        } catch (err) {
+            console.error("❌ ERROR - NO SE PUEDE CARGAR EL SAVING | CONTEXT:", err);
+            setError(err.message);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const createSavingGoal = async (newGoal) => {
+        console.log("🚀 INICIANDO CREACIÓN DEL SAVING GOAL - Context");
+        console.log("📋 Datos del saving:", newGoal);
+
+        // Validar que no exceda el porcentaje disponible
+        const unallocated = calculateUnallocatedPercentage();
+        if (newGoal.percentage_allocation > unallocated) {
+            const errorMsg = `Solo tienes ${unallocated}% disponible para asignar`;
+            console.error("❌", errorMsg);
+            setError(errorMsg);
+            throw new Error(errorMsg);
+        }
+
+        try {
+            const savingData = {
+                user_id: session?.user?.user_id,
+                ...newGoal,
+            };
+
+            const res = await postSaving(savingData, session);
+            console.log("✅ SAVING GOAL CREADO EXITOSAMENTE:", res);
+            await fetchSavings();
+            resetForm();
+            return res;
+        } catch (err) {
+            console.error("❌ ERROR al crear saving goal | CONTEXT:", err);
+            setError(err.message);
+            throw err;
+        }
+    };
+
+    const updateSavingGoal = async (id, updateData) => {
+        console.log("🔄 ACTUALIZANDO SAVING GOAL - Context");
+        console.log("ID:", id);
+        console.log("Data:", updateData);
+
+        try {
+            const res = await updateSaving(id, updateData, session);
+            console.log("✅ SAVING GOAL ACTUALIZADO:", res);
+            await fetchSavings();
+            return res;
+        } catch (err) {
+            console.error("❌ ERROR al actualizar saving goal | CONTEXT:", err);
+            setError(err.message);
+            throw err;
+        }
+    };
+
+    const deleteSavingGoal = async (id) => {
+        console.log("🗑️ ELIMINANDO SAVING GOAL - Context");
+        console.log("ID:", id);
+
+        try {
+            const res = await deleteSaving(id, session);
+            console.log("✅ SAVING GOAL ELIMINADO:", res);
+            await fetchSavings();
+            return res;
+        } catch (err) {
+            console.error("❌ ERROR al eliminar saving goal | CONTEXT:", err);
+            setError(err.message);
+            throw err;
+        }
+    };
+
+    // Actualizar solo el monto actual (para depósitos)
+    const addContribution = async (id, amount) => {
+        try {
+            const goal = savingGoals.find((g) => g._id === id);
+            if (!goal) throw new Error("Meta no encontrada");
+
+            const newCurrentAmount = goal.current_amount + amount;
+            const newStatus =
+                newCurrentAmount >= goal.target_amount ? "completed" : goal.status;
+
+            await updateSavingGoal(id, {
+                current_amount: newCurrentAmount,
+                status: newStatus,
+            });
+        } catch (err) {
+            console.error("❌ ERROR al agregar contribución:", err);
+            throw err;
+        }
+    };
+
+    // Resetear formulario
+    const resetForm = () => {
+        setIsGoalName("");
+        setIsDescription("");
+        setIsTargetAmount("");
+        setIsCurrentAmount(0);
+        setIsPercentageAllocation("");
+        setIsDeadline("");
+        setIsPriority("medium");
+        setIsStatus("active");
+        setSelectedGoal(null);
+        setError(null);
+    };
+
+    // Cargar savings al iniciar sesión
+    useEffect(() => {
+        if (session?.user?.user_id) {
+            fetchSavings();
+        }
+    }, [session?.user?.user_id]);
+
+    return (
+        <SavingContext.Provider
+            value={{
+                // Estados
+                savingGoals,
+                isFormSavingOpen,
+                isLoading,
+                selectedGoal,
+                error,
+                isSavingFromNomina,
+
+                // Estados del formulario
+                isGoalName,
+                isDescription,
+                isTargetAmount,
+                isCurrentAmount,
+                isPercentageAllocation,
+                isDeadline,
+                isPriority,
+                isStatus,
+
+                // Setters
+                setIsFormSavingOpen,
+                setSelectedGoal,
+                setError,
+                setIsGoalName,
+                setIsDescription,
+                setIsTargetAmount,
+                setIsCurrentAmount,
+                setIsPercentageAllocation,
+                setIsDeadline,
+                setIsPriority,
+                setIsStatus,
+
+                // Funciones CRUD
+                fetchSavings,
+                fetchSavingById,
+                createSavingGoal,
+                updateSavingGoal,
+                deleteSavingGoal,
+                addContribution,
+                resetForm,
+
+                // Funciones de cálculo
+                calculateUnallocatedPercentage,
+                calculateMonthlyContribution,
+                calculateProgress,
+                calculateMonthsRemaining,
+            }}
+        >
+            {children}
+        </SavingContext.Provider>
+    );
+};
+
+export const useSaving = () => {
+    const context = useContext(SavingContext);
+    if (!context) {
+        throw new Error("useSaving must be used within a SavingProvider");
+    }
+    return context;
+};

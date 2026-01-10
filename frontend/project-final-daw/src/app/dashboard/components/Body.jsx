@@ -6,12 +6,16 @@ import GridCategories from "../category/components/GridCategories.jsx";
 import CategoryByIdTemp from "../category/components/CategoryByIdTemp.jsx";
 import { useCategories } from "@/app/context/CategoryContext.js";
 import { useSpends } from "@/app/context/SpendContext.js";
+import { useSaving } from "@/app/context/SavingContext.js";
 import FormSpend from "../spend/components/FormSpend.jsx";
+import FormSavingGoal from "../saving/components/FormSavingGoal.jsx";
 import Saving from "./Saving.jsx";
+import SavingGoalsSummary from "./SavingGoalsSummary.jsx";
 
 const Body = () => {
     const { isFormCategoryOpen } = useCategories();
     const { isFormSpendOpen } = useSpends();
+    const { isFormSavingOpen } = useSaving();
 
     return (
         <>
@@ -31,11 +35,20 @@ const Body = () => {
                         </div>
                     </div>
                 )}
+                {isFormSavingOpen && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+                        <div className="w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-xl bg-white p-6">
+                            <FormSavingGoal />
+                        </div>
+                    </div>
+                )}
                 <div className="w-full flex flex-col sm:flex-row">
                     <div className="h-auto basis-[55%] border-2 rounded-xl m-3 flex flex-col justify-center items-center gap-5 bg-white">
                         <Saving />
                     </div>
-                    <div className="h-auto basis-[45%] border-2 rounded-xl m-3 flex justify-center items-center bg-white"></div>
+                    <div className="h-auto basis-[45%] border-2 rounded-xl m-3 flex justify-center items-center bg-white">
+                        <SavingGoalsSummary />
+                    </div>
                 </div>
                 <div className="border-2 rounded-xl m-3 flex justify-center items-center bg-white">
                     {/* CARRUSEL DE CATEGORIAS */}

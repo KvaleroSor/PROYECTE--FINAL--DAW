@@ -29,6 +29,7 @@ const FormCategory = () => {
     const {
         isUpdatedPushed,
         isCategory,
+        isCategories,
         isCategoryName,
         isCategoryColor,
         isMonthlyBudget,
@@ -49,11 +50,16 @@ const FormCategory = () => {
         isTotalSumCategoriesFixedLeisure,
         setIsTotalSumCategoriesFixedLeisure,
         amountMaxToSpendFixedLeisure,
+        isSavingFromNomina,
     } = useFinancial();
     const [isSelectedIcon, setIsSelectedIcon] = useState(null);
     const { data: session } = useSession();
     const [isActiveButtonCategory, setIsActiveButtonCategory] = useState(false);
     const [isMonthlyBudgetWrong, setIsMonthlyBudgetWrong] = useState(false);
+    const [
+        isMonthlyBudgetImprevistosWrong,
+        setIsMonthlyBudgetImprevistosWrong,
+    ] = useState(false);
     const [isAmountToShowErrorMessage, setIsAmountToShowErrorMessage] =
         useState(0);
 
@@ -78,12 +84,7 @@ const FormCategory = () => {
         { icon: Plus, name: "Plus" },
     ];
 
-    const categoryType = [
-        "Gasto Fijo",
-        "Gasto Ocio",
-        "Inversion",
-        "Imprevistos",
-    ];
+    const categoryType = ["Gasto Fijo", "Gasto Ocio", "Imprevistos"];
 
     useEffect(() => {
         if (isUpdatedPushed && isCategory) {
@@ -98,10 +99,19 @@ const FormCategory = () => {
     useEffect(() => {
         if (isCategoryType || isMonthlyBudget) {
             handleCalculateMonthlyBudgetExceded();
+            handleCalculateMonthlyBudgetImprevistosExceded();
         }
-    }, [isCategoryType]);
+    }, [isCategoryType, isMonthlyBudget]);
 
     const handleCalculateMonthlyBudgetExceded = () => {
+        const totalSumMonthlyBudget = isCategories
+            .filter(
+                (cat) =>
+                    cat.category_type === "Gasto Fijo" ||
+                    cat.category_type === "Gasto Ocio"
+            )
+            .reduce((acc, current) => acc + current.monthly_budget, 0);
+
         if (
             isCategoryType !== "Gasto Fijo" &&
             isCategoryType !== "Gasto Ocio"
@@ -112,17 +122,37 @@ const FormCategory = () => {
 
         const nuevoTotal =
             isTotalSumCategoriesFixedLeisure + Number(isMonthlyBudget);
+        const nuevoTotalMonthlyBudget =
+            totalSumMonthlyBudget + Number(isMonthlyBudget);
 
-        if (nuevoTotal > isTotalAmountToSpendFixedAndLeisure) {
+        if (
+            nuevoTotal > isTotalAmountToSpendFixedAndLeisure ||
+            nuevoTotalMonthlyBudget > isTotalAmountToSpendFixedAndLeisure
+        ) {
             setIsMonthlyBudgetWrong(true);
             setIsAmountToShowErrorMessage(
                 amountMaxToSpendFixedLeisure(
-                    isTotalSumCategoriesFixedLeisure,
+                    totalSumMonthlyBudget,
                     isTotalAmountToSpendFixedAndLeisure
                 )
             );
         } else {
             setIsMonthlyBudgetWrong(false);
+        }
+    };
+
+    const handleCalculateMonthlyBudgetImprevistosExceded = () => {
+        if (isCategoryType !== "Imprevistos") {
+            setIsMonthlyBudgetImprevistosWrong(false);
+            return false;
+        }
+
+        if (isSavingFromNomina < isMonthlyBudget) {
+            setIsMonthlyBudgetImprevistosWrong(true);
+            return true;
+        } else {
+            setIsMonthlyBudgetImprevistosWrong(false);
+            return false;
         }
     };
 
@@ -266,6 +296,20 @@ const FormCategory = () => {
                         </div>
                     </div>
                 )}
+                {isMonthlyBudgetImprevistosWrong && (
+                    <div className="w-full flex flex-col justify-center items-center border-2 border-red-200 rounded-xl p-3 bg-red-100 text-red-500 shadow-xl shadow-red-200/20">
+                        <h1>PARTIDA DE GASTO EXCEDIENDO EL LÍMITE</h1>
+                        {/* <p>Crear categoría de tipo "Imprevistos"</p>
+                        <p>Descontará la cantidad del ahorro</p> */}
+                        <div className="flex flex-row gap-2">
+                            <p>Cantidad Máxima </p>
+                            <h1 className="text-xl">
+                                {"€ "}
+                                {Number(isSavingFromNomina).toFixed(2)}
+                            </h1>
+                        </div>
+                    </div>
+                )}
                 <div className="w-full flex flex-col gap-2 mt-5 mb-5">
                     <label htmlFor="icono">Icono</label>
                     <div className="flex flex-wrap gap-2">
@@ -299,7 +343,7 @@ const FormCategory = () => {
                 </div>
                 <div className="w-full flex flex-col justify-start gap-2">
                     <label>Tipo de Categoría</label>
-                    <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-2">
                         {categoryType.map((cat) => (
                             <ButtonTypeCategoryForm
                                 key={cat}
@@ -317,7 +361,10 @@ const FormCategory = () => {
                             <button
                                 id="button-create"
                                 type={
-                                    isMonthlyBudgetWrong ? "button" : "submit"
+                                    isMonthlyBudgetWrong ||
+                                    isMonthlyBudgetImprevistosWrong
+                                        ? "button"
+                                        : "submit"
                                 }
                                 className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 text-slate-100 hover:border-slate-100"
                                 onClick={
@@ -326,7 +373,8 @@ const FormCategory = () => {
                                         : undefined
                                 }
                             >
-                                {isMonthlyBudgetWrong ? (
+                                {isMonthlyBudgetWrong ||
+                                isMonthlyBudgetImprevistosWrong ? (
                                     <>
                                         <X className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
                                         <span>Cerrar</span>
