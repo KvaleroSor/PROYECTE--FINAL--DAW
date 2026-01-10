@@ -5,7 +5,7 @@ const postSaving = async (newSaving, session) => {
 
     try {
         const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/savings`,
+            `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/savings`,
             {
                 method: "POST",
                 headers: {

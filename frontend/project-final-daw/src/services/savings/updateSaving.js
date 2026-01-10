@@ -5,7 +5,7 @@ const updateSaving = async (id, updateData, session) => {
 
     try {
         const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/savings/${id}`,
+            `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/savings/${id}`,
             {
                 method: "PUT",
                 headers: {

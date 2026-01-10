@@ -4,7 +4,7 @@ const getSavingById = async (id, session) => {
 
     try {
         const response = await fetch(
-            `${process.env.NEXT_PUBLIC_API_URL}/savings/goal/${id}`,
+            `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/savings/goal/${id}`,
             {
                 method: "GET",
                 headers: {
