@@ -123,10 +123,10 @@ app.use("/api/spendpercentage", deletePercentageSpend);
  */
 
 app.use("/api/savings", postSaving);
-app.use("/api/savings", getSavings);
-app.use("/api/savings", getSavingById);
 app.use("/api/savings", updateSaving);
 app.use("/api/savings", deleteSaving);
+app.use("/api/savings", getSavingById);
+app.use("/api/savings", getSavings);
 
 /**
  * Routes for Admin
