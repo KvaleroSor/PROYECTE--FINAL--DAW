@@ -3,6 +3,8 @@
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useSaving } from "@/app/context/SavingContext.js";
+import { useSpends } from "@/app/context/SpendContext.js";
+import { useCategories } from "@/app/context/CategoryContext.js";
 import {
     Target,
     Wallet,
@@ -15,6 +17,8 @@ import {
 
 const FormSavingGoal = () => {
     const { data: session } = useSession();
+    const { isSpends } = useSpends();
+    const { isCategories } = useCategories();
     const {
         // Estados
         savingGoals,
@@ -48,9 +52,30 @@ const FormSavingGoal = () => {
 
     const [isError, setIsError] = useState("");
     const [isSuccess, setIsSuccess] = useState(false);
+    const [gastoImprevistos, setGastoImprevistos] = useState(0);
+    const [netSaving, setNetSaving] = useState(0);
 
     const unallocatedPercentage = calculateUnallocatedPercentage();
     const monthlyContribution = calculateMonthlyContribution(isPercentageAllocation);
+
+    // Calcular gastos imprevistos y ahorro neto
+    useEffect(() => {
+        const isCategoriesId = isCategories
+            .filter((cat) => cat.category_type === "Imprevistos")
+            .map((category) => category._id);
+
+        const spendsByIds = isSpends.filter((spend) =>
+            isCategoriesId.includes(spend.category_id)
+        );
+
+        const sumaTotal = spendsByIds
+            .map((spend) => spend.amount)
+            .reduce((acc, current) => acc + current, 0);
+
+        setGastoImprevistos(sumaTotal);
+        const calculatedNetSaving = isSavingFromNomina - sumaTotal;
+        setNetSaving(calculatedNetSaving);
+    }, [isSpends, isCategories, isSavingFromNomina]);
 
     const priorities = [
         { value: "high", label: "Alta", color: "bg-red-500" },
@@ -143,13 +168,31 @@ const FormSavingGoal = () => {
 
             {/* Información de presupuesto disponible */}
             <div className="w-full bg-slate-50 border border-slate-200 rounded-lg p-4 mb-2">
-                <div className="flex items-center gap-2 mb-2">
+                <div className="flex items-center gap-2 mb-3">
                     <Wallet className="w-5 h-5 text-slate-700" />
                     <p className="font-semibold text-slate-900">Presupuesto de Ahorro</p>
                 </div>
-                <div className="space-y-1 text-sm text-slate-800">
-                    <p>Total mensual: <span className="font-bold">{isSavingFromNomina?.toFixed(2) || 0}€</span></p>
-                    <p>Disponible: <span className="font-bold text-green-600">{unallocatedPercentage.toFixed(1)}%</span></p>
+                <div className="space-y-2 text-sm">
+                    <div className="flex justify-between items-center">
+                        <span className="text-slate-700">Total mensual:</span>
+                        <span className="font-bold text-slate-900">€{isSavingFromNomina?.toFixed(2) || 0}</span>
+                    </div>
+                    {gastoImprevistos > 0 && (
+                        <div className="flex justify-between items-center">
+                            <span className="text-slate-700">Gastos imprevistos:</span>
+                            <span className="font-semibold text-red-600">-€{gastoImprevistos.toFixed(2)}</span>
+                        </div>
+                    )}
+                    <div className="flex justify-between items-center pt-2 border-t border-slate-300">
+                        <span className="text-slate-700 font-medium">Disponible real:</span>
+                        <span className={`font-bold text-lg ${netSaving >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                            €{netSaving.toFixed(2)}
+                        </span>
+                    </div>
+                    <div className="flex justify-between items-center">
+                        <span className="text-slate-700">Sin asignar:</span>
+                        <span className="font-bold text-green-700">{unallocatedPercentage.toFixed(1)}%</span>
+                    </div>
                 </div>
             </div>
 

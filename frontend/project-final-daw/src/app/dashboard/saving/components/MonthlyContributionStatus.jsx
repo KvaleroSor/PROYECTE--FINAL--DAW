@@ -38,6 +38,7 @@ const MonthlyContributionStatus = () => {
         });
     };
 
+    //💡 REVISAR LA FORMA DE MOSTRAR PARA LA CONFIRMACIÓN ❌
     const handleManualProcess = async () => {
         if (window.confirm("¿Estás seguro de procesar las contribuciones manualmente? Esto agregará el monto mensual a todas tus metas activas.")) {
             await manualProcessContributions();

@@ -12,14 +12,18 @@ const CategoriesContext = createContext();
 
 export const CategoriesProvider = ({ children }) => {
     const { data: session } = useSession();
+    
+    // Estados principales
     const [isCategories, setIsCategories] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
     const [isCategory, setIsCategory] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
+    const [isFormCategoryOpen, setIsFormCategoryOpen] = useState(false);
+    const [isUpdatedPushed, setIsUpdatedPushed] = useState(false);
+    
+    // Estados del formulario
     const [isCategoryName, setIsCategoryName] = useState("");
     const [isMonthlyBudget, setIsMonthlyBudget] = useState(0);
     const [isCategoryColor, setIsCategoryColor] = useState("");
-    const [isUpdatedPushed, setIsUpdatedPushed] = useState(false);
-    const [isFormCategoryOpen, setIsFormCategoryOpen] = useState(false);
     const [isCategoryType, setIsCategoryType] = useState(null);
 
     // --------------------------
@@ -145,26 +149,34 @@ export const CategoriesProvider = ({ children }) => {
     return (
         <CategoriesContext.Provider
             value={{
+                // Estados principales
                 isCategories: memorizedCategories,
                 isCategory,
+                isLoading,
+                isFormCategoryOpen,
+                isUpdatedPushed,
+
+                // Estados del formulario
                 isCategoryName,
                 isCategoryColor,
-                isUpdatedPushed,
-                isFormCategoryOpen,
                 isMonthlyBudget,
                 isCategoryType,
+
+                // Setters
                 setIsCategory,
+                setIsFormCategoryOpen,
+                setIsUpdatedPushed,
                 setIsCategoryName,
                 setIsCategoryColor,
-                setIsUpdatedPushed,
+                setIsMonthlyBudget,
+                setIsCategoryType,
+
+                // Funciones CRUD
                 fetchCategories,
                 fetchCategoryById,
                 createCategory,
                 updatedCategory,
                 deleteCategory,
-                setIsFormCategoryOpen,
-                setIsMonthlyBudget,
-                setIsCategoryType,
             }}
         >
             {children}
@@ -172,4 +184,10 @@ export const CategoriesProvider = ({ children }) => {
     );
 };
 
-export const useCategories = () => useContext(CategoriesContext);
+export const useCategories = () => {
+    const context = useContext(CategoriesContext);
+    if (!context) {
+        throw new Error("useCategories must be used within a CategoriesProvider");
+    }
+    return context;
+};

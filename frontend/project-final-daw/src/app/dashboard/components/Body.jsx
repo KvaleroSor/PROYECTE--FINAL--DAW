@@ -10,8 +10,8 @@ import { useSaving } from "@/app/context/SavingContext.js";
 import FormSpend from "../spend/components/FormSpend.jsx";
 import FormSavingGoal from "../saving/components/FormSavingGoal.jsx";
 import Saving from "./Saving.jsx";
-import InvestmentSummary from "./InvestmentSummary.jsx";
 import SavingsProgressDashboard from "./SavingsProgressDashboard.jsx";
+import CardsMainCategories from "./CardsMainCategories.jsx";
 
 const Body = () => {
     const { isFormCategoryOpen } = useCategories();
@@ -43,13 +43,11 @@ const Body = () => {
                         </div>
                     </div>
                 )}
-                <div className="w-full flex flex-col sm:flex-row">
-                    <div className="h-auto basis-[55%] border-2 rounded-xl m-3 flex flex-col justify-center items-center gap-5 bg-white">
-                        <Saving />
-                    </div>
-                    <div className="h-auto basis-[45%] border-2 rounded-xl m-3 flex justify-center items-center bg-white">
-                        <InvestmentSummary />
-                    </div>
+                <div className="w-full h-auto m-3 flex flex-col justify-center items-center gap-5">
+                    <CardsMainCategories />
+                </div>
+                <div className="w-full h-auto border-2 rounded-xl m-3 flex flex-col justify-center items-center gap-5 bg-white">
+                    <Saving />
                 </div>
                 <div className="border-2 rounded-xl m-3 bg-white">
                     <SavingsProgressDashboard />

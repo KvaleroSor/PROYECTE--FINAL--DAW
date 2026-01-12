@@ -28,7 +28,7 @@ const Sidebar = () => {
     };
 
     return (
-        <aside className="w-full h-screen sm:w-60 font-light mt-2">
+        <aside className="w-full h-auto sm:w-60 font-light mt-2">
             <nav className="w-full h-full bg-slate-800 border-2 shadow-md hover:shadow-xl rounded-2xl p-3 flex flex-col justify-between ">
                 <div className="text-slate-300">
                     <Link

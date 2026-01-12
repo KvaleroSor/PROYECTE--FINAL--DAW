@@ -11,20 +11,22 @@ import removeSpends from "@/services/spends/removeSpends.js";
 const SpendContext = createContext();
 
 export const SpendProvider = ({ children }) => {
-    // Estados
     const { data: session } = useSession();
-    const [spends, setSpends] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState(null);
+    
+    // Estados principales
     const [isSpends, setIsSpends] = useState([]);
     const [isSpend, setIsSpend] = useState({});
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState(null);
     const [isFormSpendOpen, setIsFormSpendOpen] = useState(false);
+    const [isUpdatedPushed, setIsUpdatedPushed] = useState(false);
+    
+    // Estados del formulario
     const [isCategoryId, setIsCategoryId] = useState("");
     const [isDescription, setIsDescription] = useState("");
     const [isAmount, setIsAmount] = useState("");
     const [isData, setIsData] = useState(null);
     const [isPaymentType, setIsPaymentType] = useState("");
-    const [isUpdatedPushed, setIsUpdatedPushed] = useState(false);
     const [isCategoryType, setIsCategoryType] = useState(null);
 
     const fetchSpends = async () => {
@@ -125,32 +127,38 @@ export const SpendProvider = ({ children }) => {
     return (
         <SpendContext.Provider
             value={{
-                // Estados
+                // Estados principales
+                isSpends,
+                isSpend,
+                isLoading,
+                error,
                 isFormSpendOpen,
+                isUpdatedPushed,
+
+                // Estados del formulario
                 isCategoryId,
                 isDescription,
                 isAmount,
                 isData,
                 isPaymentType,
-                isUpdatedPushed,
-                isSpends,
                 isCategoryType,
+
                 // Setters
                 setIsFormSpendOpen,
+                setIsUpdatedPushed,
                 setIsCategoryId,
                 setIsDescription,
                 setIsAmount,
                 setIsData,
                 setIsPaymentType,
-                setIsUpdatedPushed,
                 setIsCategoryType,
+
                 // Funciones CRUD
                 fetchSpends,
                 fetchSpendById,
                 postNewSpend,
                 updatedSpend,
                 deleteSpend,
-                // Funciones de utilidad
             }}
         >
             {children}

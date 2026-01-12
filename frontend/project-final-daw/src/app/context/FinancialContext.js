@@ -9,6 +9,8 @@ const FinancialContext = createContext();
 
 export const FinancialProvider = ({ children }) => {
     const { data: session } = useSession();
+    
+    // Estados principales
     const [isNomina, setIsNomina] = useState(0);
     const [isPercentageSettings, setIsPercentageSettings] = useState({
         fixedExpenses: 0,
@@ -18,17 +20,14 @@ export const FinancialProvider = ({ children }) => {
     });
     const [additionalIncome, setAdditionalIncome] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    const [isFixedExpensesFromNomina, setIsFixedExpensesFromNomina] =
-        useState(0);
-    const [isLeisureExpensesFromNomina, setIsLeisureExpensesFromNomina] =
-        useState(0);
+    
+    // Estados calculados
+    const [isFixedExpensesFromNomina, setIsFixedExpensesFromNomina] = useState(0);
+    const [isLeisureExpensesFromNomina, setIsLeisureExpensesFromNomina] = useState(0);
     const [isInvestmentFromNomina, setIsInvestmentFromNomina] = useState(0);
     const [isSavingFromNomina, setIsSavingFromNomina] = useState(0);
-    const [
-        isTotalAmountToSpendFixedAndLeisure,
-        setIsTotalAmountToSpendFixedAndLeisure,
-    ] = useState(0);
-    const [ isTotalSumCategoriesFixedLeisure, setIsTotalSumCategoriesFixedLeisure] = useState(0);
+    const [isTotalAmountToSpendFixedAndLeisure, setIsTotalAmountToSpendFixedAndLeisure] = useState(0);
+    const [isTotalSumCategoriesFixedLeisure, setIsTotalSumCategoriesFixedLeisure] = useState(0);
 
     // ----------------------------------------------------------------------
     // FETCH DATA: Obtener datos iniciales del usuario
@@ -224,7 +223,7 @@ export const FinancialProvider = ({ children }) => {
     return (
         <FinancialContext.Provider
             value={{
-                // Estados
+                // Estados principales
                 isNomina,
                 isPercentageSettings,
                 additionalIncome,
@@ -236,6 +235,20 @@ export const FinancialProvider = ({ children }) => {
                 isTotalAmountToSpendFixedAndLeisure,
                 isTotalSumCategoriesFixedLeisure,                
 
+                // Setters
+                setIsNomina,
+                setIsPercentageSettings,
+                setAdditionalIncome,
+                setIsFixedExpensesFromNomina,
+                setIsLeisureExpensesFromNomina,
+                setIsInvestmentFromNomina,
+                setIsSavingFromNomina,
+                setIsTotalSumCategoriesFixedLeisure,
+
+                // Funciones CRUD
+                fetchFinancialData,
+                updateNomina,
+
                 // Funciones de cálculo
                 calculatePercentageToPercentageSettings,
                 calculateCategoryPercentage,
@@ -244,18 +257,6 @@ export const FinancialProvider = ({ children }) => {
                 calculatePercentageBarCategory,
                 calculateAvailableMoneyToSpend,
                 amountMaxToSpendFixedLeisure,
-
-                // Funciones de actualización
-                setIsNomina,
-                setIsPercentageSettings,
-                setAdditionalIncome,
-                updateNomina,
-                fetchFinancialData,
-                setIsFixedExpensesFromNomina,
-                setIsLeisureExpensesFromNomina,
-                setIsInvestmentFromNomina,
-                setIsSavingFromNomina,
-                setIsTotalSumCategoriesFixedLeisure,                
             }}
         >
             {children}
@@ -263,4 +264,10 @@ export const FinancialProvider = ({ children }) => {
     );
 };
 
-export const useFinancial = () => useContext(FinancialContext);
+export const useFinancial = () => {
+    const context = useContext(FinancialContext);
+    if (!context) {
+        throw new Error("useFinancial must be used within a FinancialProvider");
+    }
+    return context;
+};
