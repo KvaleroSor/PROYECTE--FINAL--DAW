@@ -33,15 +33,6 @@ export const CategoriesProvider = ({ children }) => {
     const fetchCategories = async () => {
         if (!session?.user?.user_id || !session?.accessToken) return;        
 
-        console.log("🔄 FETCH CATEGORIES - Context");
-        console.log("👤 Session User ID:", session?.user?.user_id);
-
-
-        console.log("🔄 FETCH CATEGORIES - Context");
-        console.log("👤 Session User ID:", session?.user?.user_id);
-        console.log("🔑 Session Access Token:", session?.accessToken);
-        console.log("👨🏽‍💼 Role del usuario:", session?.role);
-
         try {
             setIsLoading(true);
             const data = await getCategories(session.user.user_id, session);
