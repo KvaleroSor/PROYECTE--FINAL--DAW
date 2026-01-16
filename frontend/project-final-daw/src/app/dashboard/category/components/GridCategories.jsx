@@ -65,18 +65,18 @@ const GridCategories = () => {
                     </div>
                     <div className="flex flex-row justify-center items-center gap-5">
                         <div className="flex flex-col">
-                            <h1 className="text-2xl text-slate-900">
+                            <h1 className="text-4xl text-slate-900">
                                 € {Number(isShowTotalSpend).toFixed(2)}
                             </h1>
                             {evaluateTotalAmountToSpend() !== false ? (
-                                <h1 className="text-red-500">
+                                <h1 className="text-red-500 text-md">
                                     de €{" "}
                                     {Number(
                                         isTotalAmountToSpendFixedAndLeisure
                                     ).toFixed(2)}
                                 </h1>
                             ) : (
-                                <h1 className="text-slate-500">
+                                <h1 className="text-slate-500 text-md">
                                     de €{" "}
                                     {Number(
                                         isTotalAmountToSpendFixedAndLeisure

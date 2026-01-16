@@ -1,7 +1,44 @@
 import SavingGoal from './../../models/savings.js';
+import Spend from './../../models/spends.js';
+import Category from './../../models/categories.js';
 
 const processMonthlyContributions = async (user_id, savingFromNomina) => {
     try {
+        // Calcular gastos imprevistos del mes actual
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth();
+        const currentYear = currentDate.getFullYear();
+        
+        // Obtener categorías de tipo "Imprevistos"
+        const imprevistosCategories = await Category.find({
+            user_id,
+            category_type: "Imprevistos"
+        });
+        
+        const imprevistosCategoryIds = imprevistosCategories.map(cat => cat._id);
+        
+        // Obtener gastos de imprevistos del mes actual
+        const startOfMonth = new Date(currentYear, currentMonth, 1);
+        const endOfMonth = new Date(currentYear, currentMonth + 1, 0, 23, 59, 59);
+        
+        const imprevistosSpends = await Spend.find({
+            user_id,
+            category_id: { $in: imprevistosCategoryIds },
+            date: { $gte: startOfMonth, $lte: endOfMonth }
+        });
+        
+        const totalImprevistos = imprevistosSpends.reduce(
+            (sum, spend) => sum + spend.amount,
+            0
+        );
+        
+        // Calcular ahorro neto (restando imprevistos)
+        const netSaving = Math.max(0, savingFromNomina - totalImprevistos);
+        
+        console.log(`💰 Ahorro bruto: €${savingFromNomina}`);
+        console.log(`⚠️  Imprevistos: €${totalImprevistos}`);
+        console.log(`✅ Ahorro neto: €${netSaving}`);
+        
         // Obtener todas las metas activas del usuario
         const activeGoals = await SavingGoal.find({ 
             user_id, 
@@ -11,8 +48,8 @@ const processMonthlyContributions = async (user_id, savingFromNomina) => {
         const updates = [];
 
         for (const goal of activeGoals) {
-            // Calcular la contribución mensual
-            const monthlyContribution = (goal.percentage_allocation / 100) * savingFromNomina;
+            // Calcular la contribución mensual USANDO AHORRO NETO (después de imprevistos)
+            const monthlyContribution = (goal.percentage_allocation / 100) * netSaving;
             
             // Actualizar el monto actual
             const newCurrentAmount = goal.current_amount + monthlyContribution;
@@ -20,12 +57,22 @@ const processMonthlyContributions = async (user_id, savingFromNomina) => {
             // Si alcanza el objetivo, marcar como completada
             const newStatus = newCurrentAmount >= goal.target_amount ? 'completed' : 'active';
             
-            // Actualizar la meta
+            // Crear registro de contribución histórica
+            const newContribution = {
+                date: currentDate,
+                amount: monthlyContribution,
+                month: currentMonth,
+                year: currentYear
+            };
+            
+            // Actualizar la meta con historial
             const updated = await SavingGoal.findByIdAndUpdate(
                 goal._id,
                 {
                     current_amount: Math.min(newCurrentAmount, goal.target_amount),
                     status: newStatus,
+                    total_contributed: (goal.total_contributed || 0) + monthlyContribution,
+                    $push: { monthly_contributions_history: newContribution },
                     updated_at: new Date()
                 },
                 { new: true }

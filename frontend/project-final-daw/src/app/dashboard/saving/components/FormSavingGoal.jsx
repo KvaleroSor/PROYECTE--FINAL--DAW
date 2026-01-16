@@ -160,7 +160,7 @@ const FormSavingGoal = () => {
                 </div>
                 <div>
                     <X
-                        className="w-8 h-8 transition-all duration-300 hover:rotate-90 cursor-pointer text-slate-600 hover:text-slate-900"
+                        className="w-15 h-15 transition-all duration-300 hover:rotate-90 cursor-pointer text-slate-600 hover:text-slate-900"
                         onClick={handleCloseForm}
                     />
                 </div>

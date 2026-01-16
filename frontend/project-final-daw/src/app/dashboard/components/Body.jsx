@@ -12,6 +12,7 @@ import FormSavingGoal from "../saving/components/FormSavingGoal.jsx";
 import Saving from "./Saving.jsx";
 import SavingsProgressDashboard from "./SavingsProgressDashboard.jsx";
 import CardsMainCategories from "./CardsMainCategories.jsx";
+import GridSpends from "../spend/components/GridSpends.jsx";
 
 const Body = () => {
     const { isFormCategoryOpen } = useCategories();
@@ -43,15 +44,19 @@ const Body = () => {
                         </div>
                     </div>
                 )}
-                <div className="w-full h-auto m-3 flex flex-col justify-center items-center gap-5">
+                <div className="flex flex-col justify-center items-center gap-5 m-2 sm:m-3 lg:m-4">
                     <CardsMainCategories />
                 </div>
-                <div className="w-full h-auto border-2 rounded-xl m-3 flex flex-col justify-center items-center gap-5 bg-white">
-                    <Saving />
+                <div className="w-full flex flex-row gap-2">
+                    <div className="w-[70%] border-2 rounded-xl flex flex-col justify-center items-center gap-5 bg-white m-2 sm:m-3 lg:m-4">
+                        {/* <Saving /> */}
+                        <GridSpends />
+                    </div>
+                    <div className="w-[30%] border-2 rounded-xl flex flex-col justify-center items-center gap-5 bg-white m-2 sm:m-3 lg:m-4">
+                        Repartición de la nómina en gráfico
+                    </div>
                 </div>
-                <div className="border-2 rounded-xl m-3 bg-white">
-                    <SavingsProgressDashboard />
-                </div>
+                {/*   */}
                 <div className="pt-4 border-2 rounded-xl m-2 sm:m-3 lg:m-4 bg-white">
                     <GridCategories />
                 </div>

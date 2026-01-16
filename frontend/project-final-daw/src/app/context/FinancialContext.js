@@ -8,8 +8,8 @@ import getSpendByCategory from "@/services/spends/getSpendByCategory.js";
 const FinancialContext = createContext();
 
 export const FinancialProvider = ({ children }) => {
-    const { data: session } = useSession();
-    
+    const { data: session, status } = useSession();
+
     // Estados principales
     const [isNomina, setIsNomina] = useState(0);
     const [isPercentageSettings, setIsPercentageSettings] = useState({
@@ -20,12 +20,13 @@ export const FinancialProvider = ({ children }) => {
     });
     const [additionalIncome, setAdditionalIncome] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
-    
+
     // Estados calculados
     const [isFixedExpensesFromNomina, setIsFixedExpensesFromNomina] = useState(0);
     const [isLeisureExpensesFromNomina, setIsLeisureExpensesFromNomina] = useState(0);
     const [isInvestmentFromNomina, setIsInvestmentFromNomina] = useState(0);
     const [isSavingFromNomina, setIsSavingFromNomina] = useState(0);
+    const [isSavingNetFromNomina, setIsSavingNetFromNomina] = useState(0);
     const [isTotalAmountToSpendFixedAndLeisure, setIsTotalAmountToSpendFixedAndLeisure] = useState(0);
     const [isTotalSumCategoriesFixedLeisure, setIsTotalSumCategoriesFixedLeisure] = useState(0);
 
@@ -100,7 +101,7 @@ export const FinancialProvider = ({ children }) => {
             isPercentageSettings.fixedExpenses +
             isPercentageSettings.leisureExpenses;
         const totalToSpendFixedAndSpendLeisure =
-            (totalPercentage * isNomina) / 100;       
+            (totalPercentage * isNomina) / 100;
 
         setIsTotalAmountToSpendFixedAndLeisure(
             totalToSpendFixedAndSpendLeisure
@@ -114,7 +115,7 @@ export const FinancialProvider = ({ children }) => {
      * @returns {string} El monto calculado formateado a 2 decimales.
      */
 
-    const calculateCategoryPercentage = (monthly_budget, total_acumulated) => {        
+    const calculateCategoryPercentage = (monthly_budget, total_acumulated) => {
         return Number((total_acumulated * 100) / monthly_budget).toFixed(2);
     };
 
@@ -192,7 +193,7 @@ export const FinancialProvider = ({ children }) => {
 
     const amountMaxToSpendFixedLeisure = (acumulate, total) => {
         return Number(total - acumulate).toFixed(2);
-    }
+    };
 
     // ----------------------------------------------------------------------
     // ACTUALIZACIONES
@@ -210,8 +211,14 @@ export const FinancialProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        fetchFinancialData();
-    }, [session]);
+        if (
+            status === "authenticated" &&
+            session?.user?.user_id &&
+            session?.accessToken
+        ) {
+            fetchFinancialData();
+        }
+    }, [session, status]);
 
     // Recalcular montos cuando cambian la nómina o los porcentajes
     useEffect(() => {
@@ -233,7 +240,7 @@ export const FinancialProvider = ({ children }) => {
                 isInvestmentFromNomina,
                 isSavingFromNomina,
                 isTotalAmountToSpendFixedAndLeisure,
-                isTotalSumCategoriesFixedLeisure,                
+                isTotalSumCategoriesFixedLeisure,
 
                 // Setters
                 setIsNomina,

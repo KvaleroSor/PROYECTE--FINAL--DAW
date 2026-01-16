@@ -11,7 +11,7 @@ import removeSpends from "@/services/spends/removeSpends.js";
 const SpendContext = createContext();
 
 export const SpendProvider = ({ children }) => {
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
     
     // Estados principales
     const [isSpends, setIsSpends] = useState([]);
@@ -29,13 +29,10 @@ export const SpendProvider = ({ children }) => {
     const [isPaymentType, setIsPaymentType] = useState("");
     const [isCategoryType, setIsCategoryType] = useState(null);
 
-    const fetchSpends = async () => {
-        if (!session?.user?.user_id || !session?.accessToken) return;
+    
 
-        console.log("🔄 FETCH SPEND - Context");
-        console.log("👤 Session User ID:", session?.user?.user_id);
-        console.log("🔑 Session Access Token:", session?.accessToken);
-        console.log("👨🏽‍💼 Role del usuario:", session?.role);
+    const fetchSpends = async () => {
+        if (!session?.user?.user_id || !session?.accessToken) return;        
 
         try {
             setIsLoading(true);
@@ -70,10 +67,6 @@ export const SpendProvider = ({ children }) => {
     };
 
     const postNewSpend = async (newSpend, session) => {
-        console.log("🚀 INICIANDO CREACIÓN DEL GASTO - Context");
-        console.log("📋 Datos de categoría:", newSpend);
-        console.log("🔐 Sesión en context:", session);
-
         try {
             const res = await postSpend(newSpend, session);
             console.log("✅ GASTO CREADO EXITOSAMENTE:", res);
@@ -119,10 +112,10 @@ export const SpendProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        if (session?.user?.user_id) {
+        if (status === "authenticated" && session?.user?.user_id && session?.accessToken) {
             fetchSpends();
         }
-    }, [session]);
+    }, [session, status]);
 
     return (
         <SpendContext.Provider

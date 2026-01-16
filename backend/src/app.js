@@ -53,6 +53,7 @@ import getSavingById from "./api/routes_savings/getSavingById.js";
 import updateSaving from "./api/routes_savings/updateSaving.js";
 import deleteSaving from "./api/routes_savings/deleteSaving.js";
 import processMonthlyContributions from "./api/routes_savings/processMonthlyContributions.js";
+import getContributionHistory from "./api/routes_savings/getContributionHistory.js";
 //========================================================================================//
 
 const app = express();
@@ -129,6 +130,7 @@ app.use("/api/savings", deleteSaving);
 app.use("/api/savings", getSavingById);
 app.use("/api/savings", getSavings);
 app.use("/api/savings", processMonthlyContributions);
+app.use("/api/savings", getContributionHistory);
 
 /**
  * Routes for Admin

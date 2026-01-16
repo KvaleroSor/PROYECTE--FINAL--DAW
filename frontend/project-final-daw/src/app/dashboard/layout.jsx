@@ -10,6 +10,7 @@ import { CategoriesProvider } from "@/app/context/CategoryContext.js";
 import { SpendProvider } from "@/app/context/SpendContext.js";
 import { FinancialProvider } from "@/app/context/FinancialContext.js";
 import { SavingProvider } from "@/app/context/SavingContext.js";
+import { InversionProvider } from "@/app/context/InversionContext.js";
 
 export default function DashboardLayout({ children }) {
     const router = useRouter();
@@ -26,18 +27,19 @@ export default function DashboardLayout({ children }) {
             <SpendProvider>
                 <FinancialProvider>
                     <SavingProvider>
-                        <div className="min-h-screen w-full">
-                            <div className="grid grid-cols-1 md:grid-cols-[240px_1fr]">
-                                <Sidebar />
-
-                                <div className="grid grid-rows-[80px_auto]">
-                                    <Header />
-                                    <main className="w-full h-full">
-                                        {children}
-                                    </main>
+                        <InversionProvider>
+                            <div className="min-h-screen w-full">
+                                <div className="flex">
+                                    <Sidebar />
+                                    <div className="flex-1 flex flex-col">
+                                        <Header />
+                                        <main className="flex-1">
+                                            {children}
+                                        </main>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </InversionProvider>
                     </SavingProvider>
                 </FinancialProvider>
             </SpendProvider>

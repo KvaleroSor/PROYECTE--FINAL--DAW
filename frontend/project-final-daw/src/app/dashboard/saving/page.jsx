@@ -3,6 +3,7 @@
 import { useSaving } from "@/app/context/SavingContext.js";
 import GridSavingGoals from "./components/GridSavingGoals.jsx";
 import FormSavingGoal from "./components/FormSavingGoal.jsx";
+import ContributionHistoryChart from "./components/ContributionHistoryChart.jsx";
 
 const SavingGoalsPage = () => {
     const { isFormSavingOpen } = useSaving();
@@ -31,6 +32,11 @@ const SavingGoalsPage = () => {
 
                 {/* Grid de metas */}
                 <GridSavingGoals />
+
+                {/* Historial de contribuciones */}
+                <div className="mt-8">
+                    <ContributionHistoryChart />
+                </div>
             </div>
         </div>
     );

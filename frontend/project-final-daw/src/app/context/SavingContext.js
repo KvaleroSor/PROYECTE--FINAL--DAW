@@ -3,21 +3,26 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useFinancial } from "./FinancialContext.js";
+import { useSavingsRealTime } from "@/app/hooks/saving/useSavingsRealTime.js";
 import getSavings from "@/services/savings/getSavings.js";
 import getSavingById from "@/services/savings/getSavingById.js";
 import postSaving from "@/services/savings/postSaving.js";
 import updateSaving from "@/services/savings/updateSaving.js";
 import deleteSaving from "@/services/savings/deleteSaving.js";
 import processMonthlyContributions from "@/services/savings/processMonthlyContributions.js";
+import getContributionHistory from "@/services/savings/getContributionHistory.js";
 
 const SavingContext = createContext();
 
 export const SavingProvider = ({ children }) => {
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
     const { isSavingFromNomina } = useFinancial();
 
     // Estados principales
     const [savingGoals, setSavingGoals] = useState([]);
+    const [isContributionHistory, setIsContributionHistory] = useState([]);
+    const [isTotalContributedAllTime, setIsTotalContributedAllTime] = useState(0);
+    const [isTotalSavingsAccumulated, setIsTotalSavingsAccumulated] = useState(0);
     const [isFormSavingOpen, setIsFormSavingOpen] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [selectedGoal, setSelectedGoal] = useState(null);
@@ -32,6 +37,11 @@ export const SavingProvider = ({ children }) => {
     const [isDeadline, setIsDeadline] = useState("");
     const [isPriority, setIsPriority] = useState("medium");
     const [isStatus, setIsStatus] = useState("active");
+
+    // Hooks personalizados
+     const { isTotalSavingsRealTime } = useSavingsRealTime(isTotalContributedAllTime);
+
+    
 
     // Calcular cuánto % queda sin asignar
     const calculateUnallocatedPercentage = () => {
@@ -76,13 +86,47 @@ export const SavingProvider = ({ children }) => {
             setError(null);
             const data = await getSavings(session?.user?.user_id, session);
             setSavingGoals(data.data || []);
+            
+            // Calcular el total contribuido de todas las metas
+            const totalContributed = (data.data || []).reduce(
+                (sum, goal) => sum + (Number(goal.total_contributed) || 0),
+                0
+            );
+            setIsTotalContributedAllTime(totalContributed);
+            
             console.log("✅ Savings cargados:", data.data);
+            console.log("💰 Total contribuido histórico:", totalContributed);
         } catch (err) {
             console.error("❌ ERROR - NO SE PUEDEN CARGAR LOS SAVINGS | CONTEXT:", err);
             setError(err.message);
             setSavingGoals([]);
         } finally {
             setIsLoading(false);
+        }
+    };
+
+    const fetchContributionHistory = async () => {
+        if (!session?.user?.user_id || !session?.accessToken) return;
+
+        try {
+            console.log("📊 Obteniendo historial de contribuciones...");
+            const data = await getContributionHistory(session?.user?.user_id, session);
+            setIsContributionHistory(data.history || []);
+            
+            // Calcular ahorro total acumulado desde el historial
+            const totalAccumulated = (data.history || []).reduce(
+                (sum, entry) => sum + (Number(entry.totalAmount) || 0),
+                0
+            );
+            setIsTotalSavingsAccumulated(totalAccumulated);
+            
+            console.log("✅ Historial cargado:", data);
+            console.log("💰 Ahorro total acumulado:", totalAccumulated);
+            return data;
+        } catch (err) {
+            console.error("❌ ERROR - NO SE PUEDE CARGAR EL HISTORIAL | CONTEXT:", err);
+            setError(err.message);
+            return null;
         }
     };
 
@@ -274,10 +318,11 @@ export const SavingProvider = ({ children }) => {
 
     // Cargar savings al iniciar sesión
     useEffect(() => {
-        if (session?.user?.user_id) {
+        if (status === "authenticated" && session?.user?.user_id && session?.accessToken) {
             fetchSavings();
+            fetchContributionHistory(); // Cargar historial para calcular ahorro total
         }
-    }, [session?.user?.user_id]);
+    }, [session, status]);
 
     // Verificar y procesar contribuciones automáticamente cuando cambia isSavingFromNomina
     useEffect(() => {
@@ -291,6 +336,10 @@ export const SavingProvider = ({ children }) => {
             value={{
                 // Estados
                 savingGoals,
+                isContributionHistory,
+                isTotalContributedAllTime,
+                isTotalSavingsAccumulated,
+                isTotalSavingsRealTime,
                 isFormSavingOpen,
                 isLoading,
                 selectedGoal,
@@ -323,6 +372,7 @@ export const SavingProvider = ({ children }) => {
                 // Funciones CRUD
                 fetchSavings,
                 fetchSavingById,
+                fetchContributionHistory,
                 createSavingGoal,
                 updateSavingGoal,
                 deleteSavingGoal,

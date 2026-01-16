@@ -11,7 +11,7 @@ import removeCategory from "@/services/categories/removeCategory.js";
 const CategoriesContext = createContext();
 
 export const CategoriesProvider = ({ children }) => {
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
     
     // Estados principales
     const [isCategories, setIsCategories] = useState([]);
@@ -130,10 +130,10 @@ export const CategoriesProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        if (session?.user?.user_id && session?.accessToken) {
+        if (status === "authenticated" && session?.user?.user_id && session?.accessToken) {
             fetchCategories();
         }
-    }, [session]);
+    }, [session, status]);
 
     const memorizedCategories = useMemo(() => isCategories, [isCategories]);
 

@@ -18,14 +18,14 @@ const FormLogin = () => {
     const [isLoginMode, setIsLoginMode] = useState(true);
     // const [budgetPreset, setBudgetPreset] = useState("");
 
-    const { data: session } = useSession();
+    const { data: session, status } = useSession();
     const router = useRouter();
 
     useEffect(() => {
-        if (session) {
+        if (status === "authenticated" && session) {
             router.push("/dashboard");
         }
-    }, [session]);
+    }, [session, status]);
 
     const handleCleanUpValuesForm = () => {
         setIsName("");
@@ -67,25 +67,26 @@ const FormLogin = () => {
                 return;
             }
 
-            try{
-                const response = await fetch('/api/auth/register', {
-                    method: 'POST',
+            try {
+                const response = await fetch("/api/auth/register", {
+                    method: "POST",
                     headers: {
-                        'Content-Type': 'application/json',
+                        "Content-Type": "application/json",
                     },
-                    body: JSON.stringify(dataNewUser)
+                    body: JSON.stringify(dataNewUser),
                 });
 
                 const result = await response.json();
 
-                if(response.ok){
-                    console.log('✅ - USER CREATED SUCCESFULLY: ', result);
-                    setIsLoginMode(true);                    
-                }else{
-                    setIsError(`❌ ERROR - USER COULDN´T BEEN CREATED | ${result.mensaje}`);
+                if (response.ok) {
+                    console.log("✅ - USER CREATED SUCCESFULLY: ", result);
+                    setIsLoginMode(true);
+                } else {
+                    setIsError(
+                        `❌ ERROR - USER COULDN´T BEEN CREATED | ${result.mensaje}`
+                    );
                 }
-
-            }catch(error){
+            } catch (error) {
                 console.error("❌ ERROR - CONNECTION ERROR");
                 setIsError(`❌ ERROR - CONNECTION ERROR`);
             }
@@ -94,14 +95,13 @@ const FormLogin = () => {
 
             console.log("🧾 EMAIL QUE LLEGA AL LOGIN: ", isEmail);
             console.log("🔏 PASSWORD QUE LLEGA AL LOGIN: ", isPassword);
-            
+
             const res = await signIn("credentials", {
                 email: isEmail,
                 password: isPassword,
                 redirect: false,
             });
             console.log(res);
-            
 
             if (res.error) {
                 setIsError("❌ | CREDENCIALES INCORRECTAS");

@@ -2,11 +2,13 @@
 
 import { useSaving } from "@/app/context/SavingContext.js";
 import { useFinancial } from "@/app/context/FinancialContext.js";
-import { TrendingUp, Target, Calendar, ArrowUp, ArrowDown, Minus } from "lucide-react";
+import { TrendingUp, Target, Calendar, ArrowUp, ArrowDown, Minus, History } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const SavingsProgressDashboard = () => {
     const { savingGoals, calculateProgress } = useSaving();
     const { isSavingFromNomina } = useFinancial();
+    const router = useRouter();
 
     // Calcular estadísticas
     const activeGoals = savingGoals.filter(goal => goal.status === 'active');
@@ -45,18 +47,29 @@ const SavingsProgressDashboard = () => {
                     </div>
                 </div>
                 
-                {/* Indicador de tendencia */}
-                <div className={`flex items-center gap-2 px-3 py-2 rounded-lg ${
-                    trend === 'up' ? 'bg-green-50 text-green-700' :
-                    trend === 'stable' ? 'bg-yellow-50 text-yellow-700' :
-                    'bg-red-50 text-red-700'
-                }`}>
-                    {trend === 'up' && <ArrowUp className="w-4 h-4" />}
-                    {trend === 'stable' && <Minus className="w-4 h-4" />}
-                    {trend === 'down' && <ArrowDown className="w-4 h-4" />}
-                    <span className="text-sm font-medium">
-                        {trend === 'up' ? 'Excelente' : trend === 'stable' ? 'En camino' : 'Necesita impulso'}
-                    </span>
+                <div className="flex items-center gap-3">
+                    {/* Indicador de tendencia */}
+                    <div className={`flex items-center gap-2 px-3 py-2 rounded-lg ${
+                        trend === 'up' ? 'bg-green-50 text-green-700' :
+                        trend === 'stable' ? 'bg-yellow-50 text-yellow-700' :
+                        'bg-red-50 text-red-700'
+                    }`}>
+                        {trend === 'up' && <ArrowUp className="w-4 h-4" />}
+                        {trend === 'stable' && <Minus className="w-4 h-4" />}
+                        {trend === 'down' && <ArrowDown className="w-4 h-4" />}
+                        <span className="text-sm font-medium">
+                            {trend === 'up' ? 'Excelente' : trend === 'stable' ? 'En camino' : 'Necesita impulso'}
+                        </span>
+                    </div>
+
+                    {/* Botón para ver historial */}
+                    <button
+                        onClick={() => router.push('/dashboard/saving')}
+                        className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors shadow-sm"
+                    >
+                        <History className="w-4 h-4" />
+                        <span className="text-sm font-medium">Ver Historial</span>
+                    </button>
                 </div>
             </div>
 
@@ -80,7 +93,7 @@ const SavingsProgressDashboard = () => {
                         </div>
                         <div className="mb-3">
                             <div className="flex justify-between items-baseline mb-2">
-                                <span className="text-3xl font-bold text-slate-900">
+                                <span className="text-4xl text-slate-900">
                                     {totalProgress.toFixed(1)}%
                                 </span>
                                 <span className="text-sm text-slate-500">
@@ -106,7 +119,7 @@ const SavingsProgressDashboard = () => {
                             <h3 className="font-semibold text-slate-900">Este Mes</h3>
                         </div>
                         <div className="mb-3">
-                            <p className="text-3xl font-bold text-slate-900">
+                            <p className="text-4xl text-slate-900">
                                 €{totalMonthlyContribution.toFixed(2)}
                             </p>
                             <p className="text-sm text-slate-500 mt-1">Contribución total</p>

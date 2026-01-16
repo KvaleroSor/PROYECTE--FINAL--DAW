@@ -43,6 +43,28 @@ const savingGoal = new mongoose.Schema({
         enum: ["active", "completed", "paused"],
         default: "active"
     },
+    monthly_contributions_history: [{
+        date: {
+            type: Date,
+            default: Date.now
+        },
+        amount: {
+            type: Number,
+            required: true
+        },
+        month: {
+            type: Number,
+            required: true
+        },
+        year: {
+            type: Number,
+            required: true
+        }
+    }],
+    total_contributed: {
+        type: Number,
+        default: 0
+    },
     created_at: {
         type: Date,
         default: Date.now

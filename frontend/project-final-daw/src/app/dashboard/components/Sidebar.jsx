@@ -8,6 +8,7 @@ import {
     Settings,
     House,
     ChevronRight,
+    PiggyBank
 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
@@ -28,8 +29,8 @@ const Sidebar = () => {
     };
 
     return (
-        <aside className="w-full h-auto sm:w-60 font-light mt-2">
-            <nav className="w-full h-full bg-slate-800 border-2 shadow-md hover:shadow-xl rounded-2xl p-3 flex flex-col justify-between ">
+        <aside className="hidden md:block w-60 h-auto sticky top-0 p-2">
+            <nav className="w-full h-full bg-slate-800 border-2 shadow-md hover:shadow-xl rounded-2xl p-3 flex flex-col justify-between overflow-y-auto">
                 <div className="text-slate-300">
                     <Link
                         href="/dashboard"
@@ -66,6 +67,20 @@ const Sidebar = () => {
                         <ChartBarStacked className="w-4 h-4 sm:w-5 sm:h-5 stroke-current" />
                         <span>Categorias</span>
                         {isActiveRoute("/dashboard/category") && (
+                            <ChevronRight className="w-4 h-4 ml-auto" />
+                        )}
+                    </Link>
+                    <Link
+                        href="/dashboard/saving"
+                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${
+                            isActiveRoute("/dashboard/saving")
+                                ? "transition-all duration-300 group bg-slate-200 text-slate-800 hover:bg-slate-200 shadow-xl"
+                                : "text-slate-300 hover:text-slate-300"
+                        }`}
+                    >
+                        <PiggyBank className="w-4 h-4 sm:w-5 sm:h-5 stroke-current" />
+                        <span>Ahorro</span>
+                        {isActiveRoute("/dashboard/saving") && (
                             <ChevronRight className="w-4 h-4 ml-auto" />
                         )}
                     </Link>

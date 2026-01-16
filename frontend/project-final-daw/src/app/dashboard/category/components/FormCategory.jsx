@@ -2,6 +2,7 @@
 import { useSession } from "next-auth/react";
 import { useCategories } from "@/app/context/CategoryContext.js";
 import { useFinancial } from "@/app/context/FinancialContext.js";
+import { useSaving } from "@/app/context/SavingContext.js";
 import { useState, useEffect } from "react";
 import CardColor from "./CardColor.jsx";
 import ButtonTypeCategoryForm from "./ButtonTypeCategoryForm.jsx";
@@ -52,6 +53,8 @@ const FormCategory = () => {
         amountMaxToSpendFixedLeisure,
         isSavingFromNomina,
     } = useFinancial();
+
+    const { isTotalSavingsRealTime } = useSaving();
     const [isSelectedIcon, setIsSelectedIcon] = useState(null);
     const { data: session } = useSession();
     const [isActiveButtonCategory, setIsActiveButtonCategory] = useState(false);
@@ -158,10 +161,6 @@ const FormCategory = () => {
 
     const handleSubmitCategory = async (e) => {
         e.preventDefault();
-
-        console.log("🔍 SESSION COMPLETE:", session);
-        console.log("🔍 SESSION USER:", session?.user);
-        console.log("🔍 USER ID:", session?.user?.user_id);
 
         const buttonPushed = e.nativeEvent.submitter.id;
 
@@ -368,7 +367,8 @@ const FormCategory = () => {
                                 }
                                 className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 text-slate-100 hover:border-slate-100"
                                 onClick={
-                                    isMonthlyBudgetWrong
+                                    isMonthlyBudgetWrong ||
+                                    isMonthlyBudgetImprevistosWrong
                                         ? handleCloseForm
                                         : undefined
                                 }
