@@ -1,9 +1,10 @@
 import { Router } from "express";
 import getSavingById from './../../functions/functions_savings/getSavingById.js';
+import auth from './../../middleware/auth.js';
 
 const router = Router();
 
-router.get("/goal/:id", async (req, res) => {
+router.get("/goal/:id", auth, async (req, res) => {
     try {
         const { id } = req.params;
         const resultGet = await getSavingById(id);

@@ -1,9 +1,10 @@
 import { Router } from "express";
 import updateSpendPercentage from './../../functions/functions_percentage_spends/updatePercentageSpend.js';
+import auth from './../../middleware/auth.js';
 
 const router = Router();
 
-router.put("/:id", async (req, res) => {
+router.put("/:id", auth, async (req, res) => {
     try {
         const id = req.params.id;
         const data = req.body;

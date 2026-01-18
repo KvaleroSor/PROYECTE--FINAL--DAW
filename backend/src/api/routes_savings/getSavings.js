@@ -1,11 +1,22 @@
 import { Router } from "express";
 import getSavings from './../../functions/functions_savings/getSavings.js';
+import auth from './../../middleware/auth.js';
 
 const router = Router();
 
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
     try {
+        console.log("👤 req.user:", req.user);
         const user_id = req.user?.userId;
+        console.log("🆔 user_id extracted:", user_id);
+        
+        if (!user_id) {
+            console.log("❌ ERROR - USER_ID IS UNDEFINED");
+            return res.status(401).json({
+                mensaje: "❌ ERROR - USER NOT AUTHENTICATED",
+            });
+        }
+        
         const resultGet = await getSavings(user_id);
 
         !resultGet

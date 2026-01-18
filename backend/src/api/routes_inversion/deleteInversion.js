@@ -1,9 +1,10 @@
 import { Router } from "express";
 import deleteInversion from "../../functions/functions_inversion/deleteInversion.js";
+import auth from "../../middleware/auth.js";
 
 const router = Router();
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
     try {
         const id = req.params.id;
         const result = await deleteInversion(id);

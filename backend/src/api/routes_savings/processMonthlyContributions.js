@@ -1,9 +1,10 @@
 import { Router } from "express";
 import processMonthlyContributions from "../../functions/functions_savings/processMonthlyContributions.js";
+import auth from "../../middleware/auth.js";
 
 const router = Router();
 
-router.post("/process-monthly", async (req, res) => {
+router.post("/process-monthly", auth, async (req, res) => {
     try {
         const user_id = req.user?.userId;
         const { savingFromNomina } = req.body;

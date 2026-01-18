@@ -1,9 +1,10 @@
 import { Router } from "express";
 import getSpendPercentage from "../../functions/functions_percentage_spends/getPercentageSpend.js";
+import auth from "../../middleware/auth.js";
 
 const router = Router();
 
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
     try {
         // const user_id = req.params.user_id;
         const resultGet = await getSpendPercentage();

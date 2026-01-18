@@ -1,9 +1,10 @@
 import { Router } from "express";
 import getInversion from './../../functions/functions_inversion/getInversion.js';
+import auth from './../../middleware/auth.js';
 
 const router = Router();
 
-router.get("/", async (req, res) => {
+router.get("/", auth, async (req, res) => {
     try {
         const user_id = req.user?.userId;
         const resultGet = await getInversion(user_id);

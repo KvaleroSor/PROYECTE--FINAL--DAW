@@ -1,9 +1,10 @@
 import { Router } from "express";
 import postSaving from './../../functions/functions_savings/postSaving.js';
+import auth from './../../middleware/auth.js';
 
 const router = Router();
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
     try {
         const user_id = req.user?.userId;
         const reqSaving = { ...req.body, user_id };

@@ -1,9 +1,10 @@
 import { Router } from "express";
 import postSpendPercentage from "./../../functions/functions_percentage_spends/postPercentageSpend.js";
+import auth from "./../../middleware/auth.js";
 
 const router = Router();
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
     try {
         const user_id = req.user?.userId;
         const reqSpendPercentage = { ...req.body, user_id };

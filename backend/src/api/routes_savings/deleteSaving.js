@@ -1,9 +1,10 @@
 import { Router } from "express";
 import deleteSaving from "../../functions/functions_savings/deleteSaving.js";
+import auth from "../../middleware/auth.js";
 
 const router = Router();
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
     try {
         const { id } = req.params;
         const result = await deleteSaving(id);

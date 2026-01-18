@@ -1,9 +1,20 @@
 import SavingGoal from './../../models/savings.js';
+import mongoose from "mongoose";
 
 const getContributionHistory = async (user_id) => {
     try {
+        if (!user_id) {
+            throw new Error("user_id is required");
+        }
+        
+        if (!mongoose.Types.ObjectId.isValid(user_id)) {
+            throw new Error(`Invalid user_id format: ${user_id}`);
+        }
+        
+        const userObjectId = new mongoose.Types.ObjectId(user_id);
+        
         // Obtener todas las metas del usuario con su historial
-        const goals = await SavingGoal.find({ user_id })
+        const goals = await SavingGoal.find({ user_id: userObjectId })
             .select('goal_name monthly_contributions_history total_contributed')
             .sort({ created_at: -1 });
 

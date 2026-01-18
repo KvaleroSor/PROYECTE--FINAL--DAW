@@ -1,9 +1,10 @@
 import express from "express";
 import getContributionHistory from "../../functions/functions_savings/getContributionHistory.js";
+import auth from "../../middleware/auth.js";
 
 const router = express.Router();
 
-router.get("/contribution-history", async (req, res) => {
+router.get("/contribution-history", auth, async (req, res) => {
     try {
         const user_id = req.user?.userId;
 
