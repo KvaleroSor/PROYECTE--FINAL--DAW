@@ -3,9 +3,9 @@ import processMonthlyContributions from "../../functions/functions_savings/proce
 
 const router = Router();
 
-router.post("/process-monthly/:user_id", async (req, res) => {
+router.post("/process-monthly", async (req, res) => {
     try {
-        const { user_id } = req.params;
+        const user_id = req.user?.userId;
         const { savingFromNomina } = req.body;
 
         if (!savingFromNomina) {

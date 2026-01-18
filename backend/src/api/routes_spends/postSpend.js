@@ -1,12 +1,24 @@
 import { Router } from 'express';
 import postSpend from './../../functions/functions_spends/postSpend.js';
+import auth from './../../middleware/auth.js';
 
 const router = Router();
 
-router.post("/", async (req, res) => {
+router.post("/", auth, async (req, res) => {
     try {
-        const reqSpend = req.body;
-        const { user_id, category_id, description, amount, date } = reqSpend;
+        console.log("👤 req.user:", req.user);
+        const user_id = req.user?.userId;
+        console.log("🆔 user_id extracted:", user_id);
+        
+        if (!user_id) {
+            console.log("❌ ERROR - USER_ID IS UNDEFINED");
+            return res.status(401).json({
+                mensaje: "❌ ERROR - USER NOT AUTHENTICATED",
+            });
+        }
+        
+        const reqSpend = { ...req.body, user_id };
+        const { category_id, description, amount, date } = req.body;
 
         if(!user_id || !category_id || !description || !amount || !date ){
             console.log("❌ ERROR - SOME ELEMENT OF THE NEW SPEND IS EMPTY | SERVER");

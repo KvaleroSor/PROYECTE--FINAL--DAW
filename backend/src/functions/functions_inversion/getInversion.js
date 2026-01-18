@@ -1,8 +1,9 @@
 import Inversion from './../../models/inversion.js';
 
-const getInversion = async () => {
+const getInversion = async (userId) => {
     try {        
-        const resultGet = await Inversion.find({});
+        const userObjectId = new mongoose.Types.ObjectId(userId);
+        const resultGet = await Inversion.find({user_id: userObjectId});
 
         return resultGet;
     } catch (err) {

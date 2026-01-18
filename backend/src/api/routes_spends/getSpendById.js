@@ -1,9 +1,10 @@
 import { Router } from "express";
 import getSpendById from "../../functions/functions_spends/getSpendById.js";
+import auth from './../../middleware/auth.js';
 
 const router = Router();
 
-router.get("/:id", async (req, res) => {
+router.get("/:id", auth, async (req, res) => {
     try {
         const id = req.params.id;        
         const resultGetId = await getSpendById(id);

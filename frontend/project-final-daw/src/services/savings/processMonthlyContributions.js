@@ -1,11 +1,10 @@
-const processMonthlyContributions = async (user_id, savingFromNomina, session) => {
+const processMonthlyContributions = async (savingFromNomina, session) => {
     console.log("💰 PROCESSING MONTHLY CONTRIBUTIONS - Service");
-    console.log("User ID:", user_id);
     console.log("Saving from Nomina:", savingFromNomina);
 
     try {
         const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/savings/process-monthly/${user_id}`,
+            `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/savings/process-monthly`,
             {
                 method: "POST",
                 headers: {

@@ -5,8 +5,9 @@ const router = Router();
 
 router.post("/", async (req, res) => {
     try {
-        const reqSpendPercentage = req.body;
-        const { user_id, spend, leisureSpend, saving, inversion } = req.body;
+        const user_id = req.user?.userId;
+        const reqSpendPercentage = { ...req.body, user_id };
+        const { spend, leisureSpend, saving, inversion } = req.body;
         const TOTAL = spend + leisureSpend + saving + inversion;
 
         if (!user_id || !spend || !leisureSpend || !saving || !inversion) {

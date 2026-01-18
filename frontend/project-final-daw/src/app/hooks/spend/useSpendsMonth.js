@@ -6,14 +6,14 @@ export const useSpendsMonth = () => {
 
     const isSpendsOfMonth = useMemo(() => {
         if (!isSpends || isSpends.length === 0) {
-            return null;
+            return [];
         }
 
         const currentDate = new Date();
         const currentMonth = currentDate.getMonth();
         const currentYear = currentDate.getFullYear();
 
-        const totalSpendMonth = (isSpends || []).filter((spend) => {
+        const totalSpendMonth = isSpends.filter((spend) => {
             const spendDate = new Date(spend.date);
        
             return (
@@ -22,7 +22,9 @@ export const useSpendsMonth = () => {
             );
         });
 
-        return totalSpendMonth;
+        console.log("🚀 IS SPENDS OF MONTH:", totalSpendMonth);        
+
+        return totalSpendMonth;        
 
     }, [isSpends]);
 

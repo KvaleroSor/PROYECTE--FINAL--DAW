@@ -1,7 +1,4 @@
 const deleteInversion = async (id, session) => {
-    console.log("🗑️ DELETE INVERSION - Service");
-    console.log("ID:", id);
-
     try {
         const response = await fetch(
             `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/inversion/${id}`,

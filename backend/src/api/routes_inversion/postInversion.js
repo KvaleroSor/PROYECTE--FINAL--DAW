@@ -5,8 +5,9 @@ const router = Router();
 
 router.post("/", async (req, res) => {
     try {
-        const reqInversion = req.body;
-        const { user_id, type, amount } = req.body;
+        const user_id = req.user?.userId;
+        const reqInversion = { ...req.body, user_id };
+        const { type, amount } = req.body;
 
         if(!user_id || !type || !amount){
             console.log("❌ ERROR - SOME ELEMENT OF THE NEW SPEND IS EMPTY | SERVER");

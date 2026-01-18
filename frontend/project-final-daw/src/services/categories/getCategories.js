@@ -1,8 +1,4 @@
 const getCategories = async (userid, session) => {
-    console.log("🚀 GET CATEGORIES SERVICE");
-    console.log("👤 User ID:", userid);
-    console.log("🔐 Session:", session);
-    console.log("🔑 Access Token:", session?.accessToken);
     try {
         const res = await fetch(
             `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/categories`,

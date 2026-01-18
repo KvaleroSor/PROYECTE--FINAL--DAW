@@ -1,9 +1,10 @@
 import { Router } from "express";
 import getSpendsByCategoryType from "../../functions/functions_spends/getSpendsByCategoryType.js";
+import auth from './../../middleware/auth.js';
 
 const router = Router();
 
-router.get("/type/:category_type", async (req, res) => {
+router.get("/type/:category_type", auth, async (req, res) => {
     try {
         const category_type = req.params.category_type;
         const resultGetId = await getSpendsByCategoryType(category_type);

@@ -40,7 +40,7 @@ export const InversionProvider = ({ children }) => {
         try {
             setIsLoading(true);
             setError(null);
-            const data = await getInversions(session?.user?.user_id, session);
+            const data = await getInversions(session);
             setIsInversions(data.data || []);
             console.log("✅ Inversiones cargadas:", data.data);
         } catch (err) {
@@ -58,7 +58,6 @@ export const InversionProvider = ({ children }) => {
 
         try {
             const inversionData = {
-                user_id: session?.user?.user_id,
                 ...newInversion,
             };
 

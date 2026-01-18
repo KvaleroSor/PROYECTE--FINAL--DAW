@@ -32,11 +32,13 @@ export const SpendProvider = ({ children }) => {
     
 
     const fetchSpends = async () => {
-        if (!session?.user?.user_id || !session?.accessToken) return;        
+        if (!session?.accessToken) return;   
+        
+        const userId = session?.user?.user_id;
 
         try {
             setIsLoading(true);
-            const data = await getSpends(session?.user?.user_id, session);
+            const data = await getSpends(userId, session);
             setIsSpends(data.data);
             console.log("DATA DE LOS GASTOS", data);
         } catch (err) {
@@ -44,7 +46,7 @@ export const SpendProvider = ({ children }) => {
                 "ERROR - NO SE PUEDEN CARGAR LOS GASTOS | GLOBAL CONTEXT:",
                 err
             );
-            setIsSpends([]);
+            setIsSpends([]);                       
         } finally {
             setIsLoading(false);
         }
@@ -55,7 +57,7 @@ export const SpendProvider = ({ children }) => {
             setIsLoading(true);
             const data = await getSpendById(id, session);
             console.log("DATA DESDE SERVER - ", data.data);
-            setIsSpend(data.data);
+            setIsSpend(data.data);            
         } catch (err) {
             console.error(
                 "ERROR - NO SE PUEDE CARGAR EL GASTO | GLOBAL CONTEXT:",
@@ -112,7 +114,7 @@ export const SpendProvider = ({ children }) => {
     };
 
     useEffect(() => {
-        if (status === "authenticated" && session?.user?.user_id && session?.accessToken) {
+        if (status === "authenticated" && session?.accessToken) {
             fetchSpends();
         }
     }, [session, status]);

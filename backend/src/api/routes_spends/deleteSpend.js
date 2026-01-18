@@ -1,9 +1,10 @@
 import { Router } from "express";
 import deleteSpend from "../../functions/functions_spends/deleteSpend.js";
+import auth from './../../middleware/auth.js';
 
 const router = Router();
 
-router.delete("/:id", async (req, res) => {
+router.delete("/:id", auth, async (req, res) => {
     try {
         const id = req.params.id;
         const result = await deleteSpend(id);

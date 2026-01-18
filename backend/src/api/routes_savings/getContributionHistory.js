@@ -3,9 +3,9 @@ import getContributionHistory from "../../functions/functions_savings/getContrib
 
 const router = express.Router();
 
-router.get("/contribution-history/:user_id", async (req, res) => {
+router.get("/contribution-history", async (req, res) => {
     try {
-        const { user_id } = req.params;
+        const user_id = req.user?.userId;
 
         if (!user_id) {
             return res.status(400).json({

@@ -3,7 +3,6 @@ const postSpend = async (dataSpend, session) => {
     console.log("📋 dataSpend recibida:", dataSpend);
     console.log("🔐 session recibida:", session);
     console.log("🧑🏽‍💻 SESSION USER - ", session?.user);
-    console.log("🧑🏽‍💻 SESSION USER ID - ", session?.user?.user_id);
     console.log("🔑 ACCESS TOKEN - ", session?.accessToken);
     
     const res = await fetch(
@@ -20,7 +19,6 @@ const postSpend = async (dataSpend, session) => {
                 amount: dataSpend.amount,
                 date: dataSpend.date,
                 payment_type: dataSpend.payment_type,
-                user_id: session?.user?.user_id,
             }),
         }
     );

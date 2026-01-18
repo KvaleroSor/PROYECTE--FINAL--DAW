@@ -5,11 +5,12 @@ const router = Router();
 
 router.post("/", async (req, res) => {
     try {
-        const reqSaving = req.body;
+        const user_id = req.user?.userId;
+        const reqSaving = { ...req.body, user_id };
 
         console.log("➡️ DATA RECEIVED IN SERVER:", reqSaving);
 
-        if (!reqSaving.user_id || !reqSaving.goal_name || !reqSaving.target_amount || !reqSaving.percentage_allocation) {
+        if (!user_id || !reqSaving.goal_name || !reqSaving.target_amount || !reqSaving.percentage_allocation) {
             return res.status(400).json({
                 mensaje: "❌ ERROR - MISSING REQUIRED FIELDS | SERVER"
             });

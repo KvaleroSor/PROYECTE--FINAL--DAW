@@ -15,15 +15,18 @@ import {
     Heart,
     Smartphone,
     Palette,
-    X,
-    Repeat,
-    SquareX,
-    CircleX,
+    Wifi,
+    Coffee,
+    Zap,
     // TrendingUp,
     // PiggyBank,
     // ReceiptEuro,
     // TicketsPlane,
+    X,
     Ban,
+    Calendar,
+    CreditCard,
+    TriangleAlert
 } from "lucide-react";
 
 const FormCategory = () => {
@@ -84,7 +87,15 @@ const FormCategory = () => {
         { icon: Heart, name: "Heart" },
         { icon: Smartphone, name: "Smartphone" },
         { icon: Palette, name: "Palette" },
-        { icon: Plus, name: "Plus" },
+        // { icon: Plus, name: "Plus" },
+        { icon: Wifi, name: "Wifi"},
+        { icon: Coffee, name: "Coffe"},
+        { icon: Zap, name: "Zap"},
+        // { icon: Ban, name: "Ban"},
+        { icon: Calendar, name: "Calendar"},
+        { icon: CreditCard, name: "CreditCard"},
+        { icon: TriangleAlert, name: "TriangleAlert"},
+
     ];
 
     const categoryType = ["Gasto Fijo", "Gasto Ocio", "Imprevistos"];

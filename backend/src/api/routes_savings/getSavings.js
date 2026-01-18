@@ -3,9 +3,9 @@ import getSavings from './../../functions/functions_savings/getSavings.js';
 
 const router = Router();
 
-router.get("/:user_id", async (req, res) => {
+router.get("/", async (req, res) => {
     try {
-        const { user_id } = req.params;
+        const user_id = req.user?.userId;
         const resultGet = await getSavings(user_id);
 
         !resultGet

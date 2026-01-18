@@ -5,8 +5,8 @@ const router = Router();
 
 router.get("/", async (req, res) => {
     try {
-        // const user_id = req.params.user_id;
-        const resultGet = await getInversion();
+        const user_id = req.user?.userId;
+        const resultGet = await getInversion(user_id);
 
         !resultGet
             ? res.status(404).json({

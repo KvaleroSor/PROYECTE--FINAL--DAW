@@ -1,11 +1,10 @@
-const getInversions = async (user_id, session) => {
+const getInversions = async (session) => {
     console.log("🔍 GET INVERSIONS - Service");
-    console.log("User ID:", user_id);
     console.log("Session Token:", session?.accessToken);
 
     try {
         const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/inversion/${user_id}`,
+            `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/inversion/`,
             {
                 method: "GET",
                 headers: {

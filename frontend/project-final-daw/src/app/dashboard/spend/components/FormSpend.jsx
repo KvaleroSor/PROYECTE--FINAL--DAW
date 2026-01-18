@@ -173,7 +173,6 @@ const FormSpend = () => {
          ***********************************************/
 
         const data = {
-            user_id: session?.user?.user_id,
             category_id: isCategoryId,
             description: isDescription,
             amount: isAmount,
@@ -183,11 +182,6 @@ const FormSpend = () => {
 
         console.log("📤 DATA TO SEND:", data);
 
-        if (!data.user_id) {
-            console.error("❌ ERROR: No user_id disponible");
-            alert("Error: Usuario no logueado o sesión no válida");
-            return;
-        }
         /***********************************************
          *         DATA QUE PASAMOS AL BACKEND         *
          ***********************************************/

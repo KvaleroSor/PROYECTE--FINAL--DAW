@@ -1,11 +1,10 @@
 const getSavings = async (user_id, session) => {
     console.log("🔍 GET SAVINGS - Service");
-    console.log("User ID:", user_id);
     console.log("Session Token:", session?.accessToken);
 
     try {
         const response = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/savings/${user_id}`,
+            `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/savings`,
             {
                 method: "GET",
                 headers: {

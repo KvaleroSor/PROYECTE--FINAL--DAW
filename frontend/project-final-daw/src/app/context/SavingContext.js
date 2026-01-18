@@ -77,6 +77,8 @@ export const SavingProvider = ({ children }) => {
     const fetchSavings = async () => {
         if (!session?.user?.user_id || !session?.accessToken) return;
 
+        const user_id = session?.user?.user_id;
+
         console.log("🔄 FETCH SAVINGS - Context");
         console.log("👤 Session User ID:", session?.user?.user_id);
         console.log("🔑 Session Access Token:", session?.accessToken);
@@ -84,7 +86,7 @@ export const SavingProvider = ({ children }) => {
         try {
             setIsLoading(true);
             setError(null);
-            const data = await getSavings(session?.user?.user_id, session);
+            const data = await getSavings(user_id, session);
             setSavingGoals(data.data || []);
             
             // Calcular el total contribuido de todas las metas
@@ -110,7 +112,7 @@ export const SavingProvider = ({ children }) => {
 
         try {
             console.log("📊 Obteniendo historial de contribuciones...");
-            const data = await getContributionHistory(session?.user?.user_id, session);
+            const data = await getContributionHistory(session);
             setIsContributionHistory(data.history || []);
             
             // Calcular ahorro total acumulado desde el historial
@@ -160,7 +162,6 @@ export const SavingProvider = ({ children }) => {
 
         try {
             const savingData = {
-                user_id: session?.user?.user_id,
                 ...newGoal,
             };
 
@@ -270,7 +271,6 @@ export const SavingProvider = ({ children }) => {
         try {
             console.log("📅 Nuevo mes detectado, procesando contribuciones...");
             await processMonthlyContributions(
-                session.user.user_id,
                 isSavingFromNomina,
                 session
             );
@@ -297,7 +297,6 @@ export const SavingProvider = ({ children }) => {
         try {
             setIsLoading(true);
             await processMonthlyContributions(
-                session.user.user_id,
                 isSavingFromNomina,
                 session
             );

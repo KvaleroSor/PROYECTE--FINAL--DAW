@@ -1,11 +1,10 @@
-const getSpends = async (userid, session) => {
+const getSpends = async (userId,session) => {
     console.log("🚀 GET SPENDS SERVICE");
-    console.log("👤 User ID:", userid);
     console.log("🔐 Session:", session);
     console.log("🔑 Access Token:", session?.accessToken);
     
     const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/spends/user/${userid}`,
+        `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/spends/user`,
         {
             method: "GET",
             headers: {

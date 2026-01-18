@@ -1,7 +1,7 @@
-const getContributionHistory = async (user_id, session) => {
+const getContributionHistory = async (session) => {
     try {
         const response = await fetch(
-            `http://localhost:5002/api/savings/contribution-history/${user_id}`,
+            `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/savings/contribution-history`,
             {
                 method: "GET",
                 headers: {

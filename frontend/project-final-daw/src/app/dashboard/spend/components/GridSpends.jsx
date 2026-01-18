@@ -1,10 +1,12 @@
 import { useSession } from "next-auth/react";
 import Spend from "./Spend.jsx";
 import { useSpendsMonth } from "@/app/hooks/spend/useSpendsMonth.js";
+import { useSpends } from "@/app/context/SpendContext.js";
 
 const GridSpends = () => {
     const { data: session } = useSession();
     const { isSpendsOfMonth } = useSpendsMonth();
+    const { isLoading, isSpends } = useSpends();
 
     return (
         <>
@@ -18,12 +20,26 @@ const GridSpends = () => {
                             Listado de los gastos del mes
                         </p>
                     </div>
-                    {!isSpendsOfMonth || isSpendsOfMonth.length === 0 ? (
-                        <div>
-                            <p>No hay gastos todavía.</p>
+                    
+                    {isLoading ? (
+                        <div className="text-slate-500 flex items-center gap-2">
+                            <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-slate-900"></div>
+                            <p>Cargando gastos...</p>
+                        </div>
+                    ) : !isSpendsOfMonth || isSpendsOfMonth.length === 0 ? (
+                        <div className="text-slate-500 bg-slate-50 p-4 rounded-lg border border-slate-200">
+                            <p className="font-medium mb-2">No hay gastos registrados para este mes todavía.</p>
+                            {isSpends && isSpends.length > 0 && (
+                                <p className="text-sm text-slate-400">
+                                    Tienes {isSpends.length} {isSpends.length === 1 ? 'gasto' : 'gastos'} en total, pero ninguno de este mes.
+                                </p>
+                            )}
                         </div>
                     ) : (
                         <>
+                            <div className="text-sm text-slate-600 mb-2">
+                                <span className="font-semibold">{isSpendsOfMonth.length}</span> {isSpendsOfMonth.length === 1 ? 'gasto registrado' : 'gastos registrados'}
+                            </div>
                             {isSpendsOfMonth.map((spend) => (
                                 <Spend
                                     key={spend._id}
