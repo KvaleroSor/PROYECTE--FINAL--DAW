@@ -39,7 +39,7 @@ const Spend = ({ spend, session}) => {
 
     return (
         <>
-            <div className="bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-all cursor-pointer group overflow-hidden"
+            <div className="bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-all cursor-pointer group overflow-hidden flex-shrink-0"
             onClick={handleClick}
             >
                 <div className="flex">

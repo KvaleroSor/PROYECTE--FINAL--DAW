@@ -20,11 +20,12 @@ const CardsMainCategories = () => {
 
     useEffect(() => {
         if (isSpends && isSpends.length > 0) {
-            const totalSpendAmount = isSpends.reduce(
-                (acc, current) => acc + current.amount,
-                0
-            );
-            setIsTotalSpends(totalSpendAmount);
+            const totalSpendsAmountMonth = isSpends.filter((spend) => {
+                const spendDate = new Date(spend.date);
+                return spendDate.getMonth() === new Date().getMonth() && spendDate.getFullYear() === new Date().getFullYear();
+            }).reduce((acc, current) => acc + current.amount, 0);
+
+            setIsTotalSpends(totalSpendsAmountMonth);
         }
     }, [isSpends]);
 
@@ -86,7 +87,7 @@ const CardsMainCategories = () => {
                         </h1>
                         <p className="text-slate-500">Inversión</p>
                     </div>
-                </div>                
+                </div>
             </div>
         </>
     );

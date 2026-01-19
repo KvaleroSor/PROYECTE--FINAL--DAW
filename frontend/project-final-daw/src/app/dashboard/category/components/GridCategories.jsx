@@ -40,11 +40,12 @@ const GridCategories = () => {
             );
             setIsShowTotalAvailable(totalBudget);
 
-            const totalSpend = isCategories.reduce(
-                (acc, cat) => acc + (cat.total_acumulated || 0),
-                0
-            );
-            setIsShowTotalSpend(totalSpend);
+            const totalSpendsAmountMonth = isSpends.filter((spend) => {
+                const spendDate = new Date(spend.date);
+                return spendDate.getMonth() === new Date().getMonth() && spendDate.getFullYear() === new Date().getFullYear();
+            }).reduce((acc, current) => acc + current.amount, 0);
+
+            setIsShowTotalSpend(totalSpendsAmountMonth);
         } else {
             setIsShowTotalAvailable(0);
             setIsShowTotalSpend(0);

@@ -10,8 +10,8 @@ const GridSpends = () => {
 
     return (
         <>
-            <div className="w-full h-full flex flex-col gap-2 p-4">
-                <div className="mb-5 flex flex-col justify-between gap-3">
+            <div className="w-full flex flex-col gap-2 p-4">
+                <div className="mb-5 flex flex-col  gap-3">
                     <div className="flex flex-col items-start">
                         <h1 className="text-slate-900 text-xl">
                             Gastos del mes
@@ -20,7 +20,7 @@ const GridSpends = () => {
                             Listado de los gastos del mes
                         </p>
                     </div>
-                    
+
                     {isLoading ? (
                         <div className="text-slate-500 flex items-center gap-2">
                             <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-slate-900"></div>
@@ -40,13 +40,16 @@ const GridSpends = () => {
                             <div className="text-sm text-slate-600 mb-2">
                                 <span className="font-semibold">{isSpendsOfMonth.length}</span> {isSpendsOfMonth.length === 1 ? 'gasto registrado' : 'gastos registrados'}
                             </div>
-                            {isSpendsOfMonth.map((spend) => (
-                                <Spend
-                                    key={spend._id}
-                                    spend={spend}
-                                    session={session}
-                                />
-                            ))}
+                            <div className="max-h-[610px] overflow-y-auto flex flex-col gap-3 scrollbar-hide">
+                                {isSpendsOfMonth.map((spend) => (
+                                    <Spend
+                                        key={spend._id}
+                                        spend={spend}
+                                        session={session}
+                                    />
+                                ))}
+                            </div>
+
                         </>
                     )}
                 </div>
