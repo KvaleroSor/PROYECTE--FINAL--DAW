@@ -27,7 +27,7 @@ const GraphicPercentatgeSpend = () => {
                         <div className="w-5 h-5 rounded-full bg-slate-100 /">
                         </div>
                         <div className="w-full flex flex-row justify-between items-center gap-4">
-                            <p className="border-slate-900">Para el Gasto Fijo</p>
+                            <p className="border-slate-900">Gasto Fijo</p>
                             <div className="flex flex-row justify-center items-center gap-4">
                                 <p>{fixedPercentage} %</p>
                                 <p>€ {Number(isFixedExpensesFromNomina).toFixed(2)}</p>
@@ -38,7 +38,7 @@ const GraphicPercentatgeSpend = () => {
                         <div className="w-5 h-5 flex flex-row justify-center items-center  rounded-full bg-slate-200">
                         </div>
                         <div className="w-full flex flex-row justify-between items-center gap-4">
-                            <p className="border-slate-900 pr-4">Para el Gasto Ocio</p>
+                            <p className="border-slate-900 pr-4">Gasto Ocio</p>
                             <div className="flex flex-row justify-center items-center gap-4">
                                 <p>{leisurePercentage} %</p>
                                 <p>€ {Number(isLeisureExpensesFromNomina).toFixed(2)}</p>
@@ -49,7 +49,7 @@ const GraphicPercentatgeSpend = () => {
                         <div className="w-5 h-5 flex flex-row justify-center items-center  rounded-full bg-slate-300">
                         </div>
                         <div className="w-full flex flex-row justify-between items-center gap-4">
-                            <p className="border-slate-900 pr-4">Para el Inversión</p>
+                            <p className="border-slate-900 pr-4">Inversión</p>
                             <div className="flex flex-row justify-center items-center gap-4">
                                 <p>{investmentPercentage} %</p>
                                 <p>€ {Number(isInvestmentFromNomina).toFixed(2)}</p>
@@ -60,7 +60,7 @@ const GraphicPercentatgeSpend = () => {
                         <div className="w-5 h-5 flex flex-row justify-center items-center  rounded-full bg-slate-500">
                         </div>
                         <div className="w-full flex flex-row justify-between items-center gap-4">
-                            <p className="border-slate-900 pr-4">Para los Ahorro</p>
+                            <p className="border-slate-900 pr-4">Ahorro</p>
                             <div className="flex flex-row justify-center items-center gap-4">
                                 <p>{savingsPercentage} %</p>
                                 <p>€ {Number(isSavingFromNomina).toFixed(2)}</p>
@@ -71,7 +71,7 @@ const GraphicPercentatgeSpend = () => {
                         <div className="w-5 h-5 flex flex-row justify-center items-center  rounded-full bg-slate-500">
                         </div>
                         <div className="w-full flex flex-row justify-between items-center gap-4">
-                            <p className="border-slate-900 pr-4">Para los Imprevistos</p>
+                            <p className="border-slate-900 pr-4">Imprevistos</p>
                             <div className="flex flex-row justify-center items-center gap-4">
                                 <p>{isTotalImprevistosPercentatge} %</p>
                                 <p>€ {Number(isTotalImprevistos).toFixed(2)}</p>
