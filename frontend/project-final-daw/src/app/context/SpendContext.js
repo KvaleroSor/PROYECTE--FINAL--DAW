@@ -28,6 +28,7 @@ export const SpendProvider = ({ children }) => {
     const [isData, setIsData] = useState(null);
     const [isPaymentType, setIsPaymentType] = useState("");
     const [isCategoryType, setIsCategoryType] = useState(null);
+    const [isSpendDate, setIsSpendDate] = useState(null);
 
     
 
@@ -137,6 +138,7 @@ export const SpendProvider = ({ children }) => {
                 isData,
                 isPaymentType,
                 isCategoryType,
+                isSpendDate,
 
                 // Setters
                 setIsFormSpendOpen,
@@ -147,6 +149,7 @@ export const SpendProvider = ({ children }) => {
                 setIsData,
                 setIsPaymentType,
                 setIsCategoryType,
+                setIsSpendDate,
 
                 // Funciones CRUD
                 fetchSpends,

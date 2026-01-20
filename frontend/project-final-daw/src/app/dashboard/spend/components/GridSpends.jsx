@@ -40,7 +40,7 @@ const GridSpends = () => {
                             <div className="text-sm text-slate-600 mb-2">
                                 <span className="font-semibold">{isSpendsOfMonth.length}</span> {isSpendsOfMonth.length === 1 ? 'gasto registrado' : 'gastos registrados'}
                             </div>
-                            <div className="max-h-[610px] overflow-y-auto flex flex-col gap-3 scrollbar-hide">
+                            <div className="max-h-[610px] overflow-y-auto flex flex-col gap-3 no-scrollbar">
                                 {isSpendsOfMonth.map((spend) => (
                                     <Spend
                                         key={spend._id}

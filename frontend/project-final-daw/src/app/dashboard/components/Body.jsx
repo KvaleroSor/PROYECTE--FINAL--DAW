@@ -9,10 +9,11 @@ import { useSpends } from "@/app/context/SpendContext.js";
 import { useSaving } from "@/app/context/SavingContext.js";
 import FormSpend from "../spend/components/FormSpend.jsx";
 import FormSavingGoal from "../saving/components/FormSavingGoal.jsx";
-import Saving from "./Saving.jsx";
-import SavingsProgressDashboard from "./SavingsProgressDashboard.jsx";
+// import Saving from "./Saving.jsx";
+// import SavingsProgressDashboard from "./SavingsProgressDashboard.jsx";
 import CardsMainCategories from "./CardsMainCategories.jsx";
 import GridSpends from "../spend/components/GridSpends.jsx";
+import GraphicPercentatgeSpend from "./GraphicPercentatgeSpend.jsx";
 
 const Body = () => {
     const { isFormCategoryOpen } = useCategories();
@@ -48,12 +49,13 @@ const Body = () => {
                     <CardsMainCategories />
                 </div>
                 <div className="w-full flex flex-row gap-2">
-                    <div className="w-[70%] border-2 rounded-xl flex flex-col justify-center items-center gap-5 bg-white m-2 sm:m-3 lg:m-4">
+                    <div className="w-[70%] border-2 rounded-xl flex flex-col justify-start items-start gap-5 bg-white m-2 sm:m-3 lg:m-4">
                         {/* <Saving /> */}
                         <GridSpends />
                     </div>
-                    <div className="w-[30%] border-2 rounded-xl flex flex-col justify-center items-center gap-5 bg-white m-2 sm:m-3 lg:m-4">
-                        Repartición de la nómina en gráfico
+                    <div className="w-[30%] border-2 rounded-xl bg-white m-2 sm:m-3 lg:m-4">
+                        {/* Repartición de la nómina en gráfico */}
+                        <GraphicPercentatgeSpend />
                     </div>
                 </div>
                 {/*   */}

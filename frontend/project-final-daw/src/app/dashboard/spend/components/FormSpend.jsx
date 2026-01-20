@@ -30,19 +30,19 @@ const FormSpend = () => {
         //Estado
         isCategoryId,
         isDescription,
-        isAmount,
-        isData,
+        isAmount,        
         isPaymentType,
         isUpdatedPushed,
+        isSpendDate,
         //Setters
         setIsFormSpendOpen,
         setIsCategoryId,
         setIsDescription,
-        setIsAmount,
-        setIsData,
+        setIsAmount,        
         setIsPaymentType,
         setIsUpdatedPushed,
         setIsCategoryType,
+        setIsSpendDate,
         //Crud
         postNewSpend,
         isCategoryType,
@@ -153,7 +153,7 @@ const FormSpend = () => {
         setIsCategoryId("");
         setIsDescription("");
         setIsAmount("");
-        setIsData(null);
+        setIsSpendDate(null);
         setIsPaymentType("");
     };
 
@@ -176,7 +176,7 @@ const FormSpend = () => {
             category_id: isCategoryId,
             description: isDescription,
             amount: isAmount,
-            date: isData,
+            date: isSpendDate,
             payment_type: isPaymentType,
         };
 
@@ -301,9 +301,9 @@ const FormSpend = () => {
                         type="date"
                         className="h-12 w-full bg-gray-50 border border-gray-200 focus:outline-none focus:bg-white focus:bg-white focus:border-slate-900 transition-colors rounded-lg p-2 focus:bg-slate-100 shadow-md"
                         onChange={(e) => {
-                            setIsData(e.target.value);
+                            setIsSpendDate(e.target.value);
                         }}
-                        value={isData || ""}
+                        value={isSpendDate || ""}
                     />
                 </div>
                 <div className="w-full flex flex-col justify-start gap-2">

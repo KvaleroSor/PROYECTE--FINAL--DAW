@@ -26,7 +26,8 @@ import {
     Ban,
     Calendar,
     CreditCard,
-    TriangleAlert
+    TriangleAlert,
+    Repeat
 } from "lucide-react";
 
 const FormCategory = () => {

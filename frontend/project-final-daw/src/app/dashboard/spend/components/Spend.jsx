@@ -16,41 +16,62 @@ import {
     TriangleAlert,
 } from "lucide-react";
 import { useIconSpendCategory } from "@/app/hooks/spend/useIconSpendCategory.js";
+import { useSpends } from "@/app/context/SpendContext.js";
 
-const Spend = ({ spend, session}) => {
-    // CREAR HOOK PARA DEVOLVER EL ICONO DE CADA CATEGORÍA --> Pasando category_id al hook
-    // CREAR HOOK PARA DEVOLVER EL NOMBRE DE LA CATEGORÍA --> Pasando category_id al hook
+const Spend = ({ spend, session }) => {
+    const {
+        //Estado
+        isCategoryId,
+        isDescription,
+        isAmount,        
+        isPaymentType,
+        isUpdatedPushed,
+        isSpendDate,
+        //Setters
+        setIsFormSpendOpen,
+        setIsCategoryId,
+        setIsDescription,
+        setIsAmount,        
+        setIsPaymentType,
+        setIsUpdatedPushed,
+        setIsCategoryType,
+        setIsSpendDate,
+        //Crud
+        postNewSpend,
+        isCategoryType,
+    } = useSpends();
     const { isIconSpendCategory, isCategoryName } = useIconSpendCategory(spend.category_id);
-
-    const sideLineColors = [
-        "bg-slate-800",
-        "bg-slate-600",
-        "bg-slate-500",
-        "bg-slate-400",
-        "bg-emerald-600",
-    ];
-
-    const sideLineColor = sideLineColors[1 % sideLineColors.length];
     const Icon = isIconSpendCategory;
 
-    const handleClick = () => {
-        console.log("ICON", Icon);
-    }
+    const handleClickUpdate = () => {
+        setIsFormSpendOpen(true);
+        setIsCategoryId(spend.category_id);
+        setIsDescription(spend.description);
+        setIsAmount(spend.amount);        
+        setIsPaymentType(spend.payment_type);
+        setIsUpdatedPushed(true);
+        setIsSpendDate(new Date(spend.date).toISOString().split('T')[0]);
+
+        console.log("IS SPEND DATE", (new Date(spend.date).toISOString().split('T')[0]));
+        console.log("IS SPEND DATE", new Date(isSpendDate));
+    };
 
     return (
         <>
             <div className="bg-white rounded-xl shadow-sm border border-slate-200 hover:shadow-md transition-all cursor-pointer group overflow-hidden flex-shrink-0"
-            onClick={handleClick}
+            onClick={handleClickUpdate}
             >
                 <div className="flex">
                     {/* Línea de color lateral */}
-                    <div className={`w-1.5 ${sideLineColor}`}></div>
+                    <div className="w-1.5 bg-slate-800"></div>
 
                     {/* Contenido */}
                     <div className="flex-1 p-5">
                         <div className="flex items-start justify-between mb-3">
                             <div className="flex items-center gap-3">
-                                <Icon className={`w-6 h-6`} />
+                                <div className="border-r border-slate-500 pr-2">
+                                    <Icon className="w-8 h-8" />
+                                </div>
                                 <div>
                                     <p className="text-lg font-medium text-slate-900">
                                         {spend.description}
@@ -62,7 +83,7 @@ const Spend = ({ spend, session}) => {
                             </div>
                             <p className="text-2xl text-slate-900 font-medium">
                                 € {spend.amount.toFixed(2)}
-                                
+
                             </p>
                         </div>
 

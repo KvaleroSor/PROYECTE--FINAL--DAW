@@ -20,7 +20,7 @@ export const useSpendsMonth = () => {
                 spendDate.getMonth() === currentMonth &&
                 spendDate.getFullYear() === currentYear
             );
-        });
+        }).sort((a, b) => new Date(b.date) - new Date(a.date));
 
         console.log("🚀 IS SPENDS OF MONTH:", totalSpendMonth);        
 
