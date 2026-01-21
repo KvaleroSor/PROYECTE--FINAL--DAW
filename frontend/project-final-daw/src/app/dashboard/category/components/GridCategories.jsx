@@ -64,7 +64,7 @@ const GridCategories = () => {
                             Distribución del mes actual
                         </p>
                     </div>
-                    <div className="flex flex-row justify-center items-center gap-5">
+                    <div className="flex flex-row justify-center items-center gap-10">
                         <div className="flex flex-col">
                             <h1 className="text-4xl text-slate-900 dark:text-slate-100">
                                 € {Number(isShowTotalSpend).toFixed(2)}
@@ -86,7 +86,7 @@ const GridCategories = () => {
                             )}
                         </div>
                         <button
-                            className="flex items-center gap-2 h-10 px-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl group bg-slate-800 dark:bg-slate-600 text-slate-200 hover:bg-slate-700 dark:hover:bg-slate-500"
+                            className="flex items-center gap-2 h-10 px-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl group bg-blue-200 dark:bg-blue-400 text-slate-900 dark:text-slate-100 hover:bg-blue-300 dark:hover:bg-blue-500"
                             onClick={handleClickButtonFormCategory}
                         >
                             <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />

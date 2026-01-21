@@ -35,8 +35,8 @@ const CardsMainCategories = () => {
                 <div className="bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-300">
                     <div className="flex flex-col gap-2">
                         <div className="flex flex-row justify-between items-center">
-                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
-                                <Wallet className="w-6 h-6 text-white" />
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-200 dark:bg-green-800 rounded-lg flex items-center justify-center">
+                                <Wallet className="w-6 h-6 text-slate-700 dark:text-slate-300" />
                             </div>
                             <h1 className="text-slate-500 dark:text-slate-400">AHORRO</h1>
                         </div>
