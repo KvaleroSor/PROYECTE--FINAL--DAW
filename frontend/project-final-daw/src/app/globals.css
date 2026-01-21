@@ -2,9 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Aquí luego podrás poner tus estilos globales adicionales */
 body {
-  @apply bg-background-slate text-black;
+  @apply bg-background-slate dark:bg-slate-900 text-black dark:text-slate-100 transition-colors duration-300;
 }
 
 .no-scrollbar::-webkit-scrollbar {

@@ -89,14 +89,13 @@ const FormCategory = () => {
         { icon: Smartphone, name: "Smartphone" },
         { icon: Palette, name: "Palette" },
         // { icon: Plus, name: "Plus" },
-        { icon: Wifi, name: "Wifi"},
-        { icon: Coffee, name: "Coffe"},
-        { icon: Zap, name: "Zap"},
+        { icon: Wifi, name: "Wifi" },
+        { icon: Coffee, name: "Coffe" },
+        { icon: Zap, name: "Zap" },
         // { icon: Ban, name: "Ban"},
-        { icon: Calendar, name: "Calendar"},
-        { icon: CreditCard, name: "CreditCard"},
-        { icon: TriangleAlert, name: "TriangleAlert"},
-
+        { icon: Calendar, name: "Calendar" },
+        { icon: CreditCard, name: "CreditCard" },
+        { icon: TriangleAlert, name: "TriangleAlert" },
     ];
 
     const categoryType = ["Gasto Fijo", "Gasto Ocio", "Imprevistos"];
@@ -249,30 +248,30 @@ const FormCategory = () => {
     return (
         <>
             <form
-                className="w-full flex flex-col justify-start items-center gap-3 text-slate-700"
+                className="w-full flex flex-col justify-start items-center gap-3 text-slate-700 dark:text-slate-300"
                 onSubmit={(e) => {
                     handleSubmitCategory(e);
                 }}
             >
                 <div className="w-full flex flex-row justify-between mb-8 gap-2">
                     <div className="flex flex-col justify-start">
-                        <h1 className="text-2xl">Crear Nueva Categoría</h1>
-                        <p>Personaliza tu categoría de gastos</p>
+                        <h1 className="text-2xl text-slate-900 dark:text-slate-100">Crear Nueva Categoría</h1>
+                        <p className="text-slate-600 dark:text-slate-400">Personaliza tu categoría de gastos</p>
                     </div>
                     <div className="">
                         <X
-                            className="w-15 h-15 transition-all duration-300 hover:rotate-90 cursor-pointer"
+                            className="w-15 h-15 transition-all duration-300 hover:rotate-90 cursor-pointer text-slate-700 dark:text-slate-300"
                             onClick={handleCloseForm}
                         />
                     </div>
                 </div>
                 <div className="w-full flex flex-col justify-start gap-2">
-                    <label htmlFor="name">Nombre</label>
+                    <label htmlFor="name" className="text-slate-700 dark:text-slate-300">Nombre</label>
                     <input
                         id="name"
                         type="text"
                         placeholder="Nombre Categoría"
-                        className="h-12 w-full bg-gray-50 border border-gray-200 focus:outline-none focus:bg-white focus:bg-white focus:border-slate-900 transition-colors rounded-lg p-2 focus:bg-slate-100 shadow-md"
+                        className="h-12 w-full bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
                         onChange={(e) => {
                             setIsCategoryName(e.target.value || "");
                         }}
@@ -281,12 +280,12 @@ const FormCategory = () => {
                 </div>
 
                 <div className="w-full flex flex-col justify-start gap-2">
-                    <label htmlFor="monthly_budget">Presupuesto Mensual</label>
+                    <label htmlFor="monthly_budget" className="text-slate-700 dark:text-slate-300">Presupuesto Mensual</label>
                     <input
                         id="monthly_budget"
                         type="number"
                         placeholder="0.00 €"
-                        className="h-12 w-full bg-gray-50 border border-gray-200 focus:outline-none focus:bg-white focus:bg-white focus:border-slate-900 transition-colors rounded-lg p-2 focus:bg-slate-100 shadow-md"
+                        className="h-12 w-full bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
                         onChange={(e) => {
                             setIsMonthlyBudget(e.target.value);
                         }}
@@ -294,10 +293,8 @@ const FormCategory = () => {
                     />
                 </div>
                 {isMonthlyBudgetWrong && (
-                    <div className="w-full flex flex-col justify-center items-center border-2 border-red-200 rounded-xl p-3 bg-red-100 text-red-500 shadow-xl shadow-red-200/20">
+                    <div className="w-full flex flex-col justify-center items-center border-2 border-red-200 dark:border-red-800 rounded-xl p-3 bg-red-100 dark:bg-red-900/30 text-red-500 dark:text-red-400 shadow-xl shadow-red-200/20 dark:shadow-red-900/20">
                         <h1>PARTIDA DE GASTO EXCEDIENDO EL LÍMITE</h1>
-                        {/* <p>Crear categoría de tipo "Imprevistos"</p>
-                        <p>Descontará la cantidad del ahorro</p> */}
                         <div className="flex flex-row gap-2">
                             <p>Cantidad Máxima </p>
                             <h1 className="text-xl">
@@ -308,10 +305,8 @@ const FormCategory = () => {
                     </div>
                 )}
                 {isMonthlyBudgetImprevistosWrong && (
-                    <div className="w-full flex flex-col justify-center items-center border-2 border-red-200 rounded-xl p-3 bg-red-100 text-red-500 shadow-xl shadow-red-200/20">
+                    <div className="w-full flex flex-col justify-center items-center border-2 border-red-200 dark:border-red-800 rounded-xl p-3 bg-red-100 dark:bg-red-900/30 text-red-500 dark:text-red-400 shadow-xl shadow-red-200/20 dark:shadow-red-900/20">
                         <h1>PARTIDA DE GASTO EXCEDIENDO EL LÍMITE</h1>
-                        {/* <p>Crear categoría de tipo "Imprevistos"</p>
-                        <p>Descontará la cantidad del ahorro</p> */}
                         <div className="flex flex-row gap-2">
                             <p>Cantidad Máxima </p>
                             <h1 className="text-xl">
@@ -322,7 +317,7 @@ const FormCategory = () => {
                     </div>
                 )}
                 <div className="w-full flex flex-col gap-2 mt-5 mb-5">
-                    <label htmlFor="icono">Icono</label>
+                    <label htmlFor="icono" className="text-slate-700 dark:text-slate-300">Icono</label>
                     <div className="flex flex-wrap gap-2">
                         {availableIcons.map((icon) => {
                             const IconComponent = icon.icon;
@@ -331,11 +326,10 @@ const FormCategory = () => {
                                 <button
                                     key={icon.name}
                                     type="button"
-                                    className={`w-[70px] h-[70px] aspect-square rounded-2xl border-2 transition-all duration-100 flex items-center justify-center group hover:scale-105 p-2 ${
-                                        isActive
-                                            ? "bg-slate-800 text-slate-100 shadow-md"
-                                            : "border-slate-300 hover:border-slate-800 bg-gray-100 hover:bg-slate-300 hover:text-slate-800"
-                                    }`}
+                                    className={`w-[70px] h-[70px] aspect-square rounded-2xl border-2 transition-all duration-100 flex items-center justify-center group hover:scale-105 p-2 ${isActive
+                                        ? "bg-slate-800 dark:bg-slate-600 text-slate-100 shadow-md"
+                                        : "border-slate-300 dark:border-slate-600 hover:border-slate-800 dark:hover:border-slate-400 bg-gray-100 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200"
+                                        }`}
                                     onClick={() =>
                                         setIsSelectedIcon((prev) =>
                                             prev === icon.name
@@ -353,7 +347,7 @@ const FormCategory = () => {
                     </div>
                 </div>
                 <div className="w-full flex flex-col justify-start gap-2">
-                    <label>Tipo de Categoría</label>
+                    <label className="text-slate-700 dark:text-slate-300">Tipo de Categoría</label>
                     <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-2">
                         {categoryType.map((cat) => (
                             <ButtonTypeCategoryForm
@@ -373,20 +367,20 @@ const FormCategory = () => {
                                 id="button-create"
                                 type={
                                     isMonthlyBudgetWrong ||
-                                    isMonthlyBudgetImprevistosWrong
+                                        isMonthlyBudgetImprevistosWrong
                                         ? "button"
                                         : "submit"
                                 }
-                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 text-slate-100 hover:border-slate-100"
+                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 dark:bg-slate-600 text-slate-100 hover:border-slate-100 dark:hover:border-slate-100"
                                 onClick={
                                     isMonthlyBudgetWrong ||
-                                    isMonthlyBudgetImprevistosWrong
+                                        isMonthlyBudgetImprevistosWrong
                                         ? handleCloseForm
                                         : undefined
                                 }
                             >
                                 {isMonthlyBudgetWrong ||
-                                isMonthlyBudgetImprevistosWrong ? (
+                                    isMonthlyBudgetImprevistosWrong ? (
                                     <>
                                         <X className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
                                         <span>Cerrar</span>
@@ -397,13 +391,11 @@ const FormCategory = () => {
                                         <span>Crear Categoría</span>
                                     </>
                                 )}
-                                {/* <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
-                                <span>Crear Categoría</span> */}
                             </button>
                             <button
                                 id="button-cancel"
                                 type="button"
-                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-100 border-slate-200 hover:bg-slate-300 hover:border-slate-900 text-slate-600"
+                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-100 dark:bg-slate-700 border-slate-200 dark:border-slate-600 hover:bg-slate-300 dark:hover:bg-slate-600 hover:border-slate-900 dark:hover:border-slate-400 text-slate-600 dark:text-slate-300"
                                 onClick={handleCloseForm}
                             >
                                 <Ban className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
@@ -415,7 +407,7 @@ const FormCategory = () => {
                             <button
                                 id="button-update"
                                 type="submit"
-                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 text-slate-100 hover:border-slate-100"
+                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 dark:bg-slate-600 text-slate-100 hover:border-slate-100 dark:hover:border-slate-100"
                             >
                                 <Repeat className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
                                 <span>Actualizar Categoría</span>
@@ -423,7 +415,7 @@ const FormCategory = () => {
                             <button
                                 id="button-cancel"
                                 type="submit"
-                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-100 border-slate-200 hover:bg-slate-300 hover:border-slate-900 text-slate-600"
+                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-100 dark:bg-slate-700 border-slate-200 dark:border-slate-600 hover:bg-slate-300 dark:hover:bg-slate-600 hover:border-slate-900 dark:hover:border-slate-400 text-slate-600 dark:text-slate-300"
                                 onClick={handleCloseForm}
                             >
                                 <Ban className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />

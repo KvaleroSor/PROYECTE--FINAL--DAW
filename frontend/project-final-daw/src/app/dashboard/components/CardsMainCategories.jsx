@@ -32,60 +32,60 @@ const CardsMainCategories = () => {
     return (
         <>
             <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-4 gap-4 w-full">
-                <div className="bg-white rounded-xl p-5 shadow-sm border border-slate-200 hover:shadow-md hover:border-slate-300 transition-shadow">
+                <div className="bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-300">
                     <div className="flex flex-col gap-2">
                         <div className="flex flex-row justify-between items-center">
-                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 rounded-lg flex items-center justify-center">
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
                                 <Wallet className="w-6 h-6 text-white" />
                             </div>
-                            <h1 className="text-slate-500">AHORRO</h1>
+                            <h1 className="text-slate-500 dark:text-slate-400">AHORRO</h1>
                         </div>
-                        <h1 className="text-4xl text-slate-900 mb-1">
+                        <h1 className="text-4xl text-slate-900 dark:text-slate-100 mb-1">
                             € {Number(isTotalSavingsRealTime).toFixed(2)}
                         </h1>
-                        <p className="text-slate-500">Total ahorrado</p>
+                        <p className="text-slate-500 dark:text-slate-400">Total ahorrado</p>
                     </div>
                 </div>
-                <div className="bg-white rounded-xl p-5 shadow-sm border border-slate-200 hover:shadow-md hover:border-slate-300 transition-shadow">
+                <div className="bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-300">
                     <div className="flex flex-col gap-2">
                         <div className="flex flex-row justify-between items-center">
-                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 rounded-lg flex items-center justify-center">
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
                                 <TrendingDown className="w-6 h-6 text-white" />
                             </div>
-                            <h1 className="text-slate-500">GASTADO</h1>
+                            <h1 className="text-slate-500 dark:text-slate-400">GASTADO</h1>
                         </div>
-                        <h1 className="text-4xl text-slate-900 mb-1">
+                        <h1 className="text-4xl text-slate-900 dark:text-slate-100 mb-1">
                             € {Number(isTotalSpends).toFixed(2)}
                         </h1>
-                        <p className="text-slate-500">Gastado del mes</p>
+                        <p className="text-slate-500 dark:text-slate-400">Gastado del mes</p>
                     </div>
                 </div>
-                <div className="bg-white rounded-xl p-5 shadow-sm border border-slate-200 hover:shadow-md hover:border-slate-300 transition-shadow">
+                <div className="bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-300">
                     <div className="flex flex-col gap-2">
                         <div className="flex flex-row justify-between items-center">
-                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 rounded-lg flex items-center justify-center">
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
                                 <Landmark className="w-6 h-6 text-white" />
                             </div>
-                            <h1 className="text-slate-500">DISPONIBLE</h1>
+                            <h1 className="text-slate-500 dark:text-slate-400">DISPONIBLE</h1>
                         </div>
-                        <h1 className="text-4xl text-slate-900 mb-1">
+                        <h1 className="text-4xl text-slate-900 dark:text-slate-100 mb-1">
                             € {Number(isAvailableFixedAndLeisure).toFixed(2)}
                         </h1>
-                        <p className="text-slate-500">Gasto Fijo/Ocio</p>
+                        <p className="text-slate-500 dark:text-slate-400">Gasto Fijo/Ocio</p>
                     </div>
                 </div>
-                <div className="bg-white rounded-xl p-5 shadow-sm border border-slate-200 hover:shadow-md hover:border-slate-300 transition-shadow">
+                <div className="bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-300">
                     <div className="flex flex-col gap-2">
                         <div className="flex flex-row justify-between items-center">
-                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 rounded-lg flex items-center justify-center">
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
                                 <TrendingUp className="w-6 h-6 text-white" />
                             </div>
-                            <h1 className="text-slate-500">DISPONIBLE</h1>
+                            <h1 className="text-slate-500 dark:text-slate-400">DISPONIBLE</h1>
                         </div>
-                        <h1 className="text-4xl text-slate-900 mb-1">
+                        <h1 className="text-4xl text-slate-900 dark:text-slate-100 mb-1">
                             € {Number(isTotalInversionRealTime).toFixed(2)}
                         </h1>
-                        <p className="text-slate-500">Inversión</p>
+                        <p className="text-slate-500 dark:text-slate-400">Inversión</p>
                     </div>
                 </div>
             </div>

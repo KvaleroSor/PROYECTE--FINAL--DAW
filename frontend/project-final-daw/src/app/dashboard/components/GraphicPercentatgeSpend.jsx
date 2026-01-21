@@ -12,67 +12,67 @@ const GraphicPercentatgeSpend = () => {
         <>
             <div className="flex flex-col gap-4 p-4">
                 <div className="w-full h-full flex flex-col justify-start items-start mb-10">
-                    <h1 className="text-slate-900 text-xl">Gráfico de los Porcentajes</h1>
-                    <p className="text-slate-500">Repartición de la nómina en gráfico</p>
+                    <h1 className="text-slate-900 dark:text-slate-100 text-xl">Gráfico de los Porcentajes</h1>
+                    <p className="text-slate-500 dark:text-slate-400">Repartición de la nómina en gráfico</p>
                 </div>
                 <div className="flex flex-row justify-center items-center mb-10 mx-6">
-                    <div className="flex justify-center items-center rounded-l-xl w-full h-20 p-3 bg-slate-100 text-slate-800"><span>{fixedPercentage} %</span></div>
-                    <div className="flex justify-center items-center w-full h-20 p-3 bg-slate-200 text-slate-700"><span>{leisurePercentage} %</span></div>
-                    <div className="flex justify-center items-center w-full h-20 p-3 bg-slate-300 text-slate-600"><span>{investmentPercentage} %</span></div>
-                    <div className="flex justify-center items-center w-full h-20 p-3 bg-slate-400 text-slate-200"><span>{savingsPercentage} %</span></div>
-                    <div className="flex justify-center items-center rounded-r-xl w-full h-20 p-3 bg-slate-500 text-slate-100"><span>{isTotalImprevistosPercentatge} %</span></div>
+                    <div className="flex justify-center items-center rounded-l-xl w-full h-20 p-3 bg-slate-300 dark:bg-slate-600 text-slate-800 dark:text-slate-100"><span>{fixedPercentage} %</span></div>
+                    <div className="flex justify-center items-center w-full h-20 p-3 bg-blue-200 dark:bg-blue-800 text-slate-800 dark:text-slate-100"><span>{leisurePercentage} %</span></div>
+                    <div className="flex justify-center items-center w-full h-20 p-3 bg-teal-200 dark:bg-teal-800 text-slate-800 dark:text-slate-100"><span>{investmentPercentage} %</span></div>
+                    <div className="flex justify-center items-center w-full h-20 p-3 bg-green-200 dark:bg-green-800 text-slate-800 dark:text-slate-100"><span>{savingsPercentage} %</span></div>
+                    <div className="flex justify-center items-center rounded-r-xl w-full h-20 p-3 bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-100"><span>{isTotalImprevistosPercentatge} %</span></div>
                 </div>
                 <div className="flex flex-col justify-start items-start gap-10 mx-6 mb-10">
                     <div className="w-full flex flex-row justify-center items-center gap-4">
-                        <div className="w-5 h-5 rounded-full bg-slate-100 /">
+                        <div className="w-5 h-5 rounded-full bg-slate-300 dark:bg-slate-600">
                         </div>
                         <div className="w-full flex flex-row justify-between items-center gap-4">
-                            <p className="border-slate-900">Gasto Fijo</p>
-                            <div className="flex flex-row justify-center items-center gap-4">
+                            <p className="text-slate-900 dark:text-slate-100">Gasto Fijo</p>
+                            <div className="flex flex-row justify-center items-center gap-4 text-slate-700 dark:text-slate-300">
                                 <p>{fixedPercentage} %</p>
                                 <p>€ {Number(isFixedExpensesFromNomina).toFixed(2)}</p>
                             </div>
                         </div>
                     </div>
                     <div className="w-full flex flex-row justify-center items-center gap-4">
-                        <div className="w-5 h-5 flex flex-row justify-center items-center  rounded-full bg-slate-200">
+                        <div className="w-5 h-5 flex flex-row justify-center items-center rounded-full bg-blue-200 dark:bg-blue-800">
                         </div>
                         <div className="w-full flex flex-row justify-between items-center gap-4">
-                            <p className="border-slate-900 pr-4">Gasto Ocio</p>
-                            <div className="flex flex-row justify-center items-center gap-4">
+                            <p className="text-slate-900 dark:text-slate-100 pr-4">Gasto Ocio</p>
+                            <div className="flex flex-row justify-center items-center gap-4 text-slate-700 dark:text-slate-300">
                                 <p>{leisurePercentage} %</p>
                                 <p>€ {Number(isLeisureExpensesFromNomina).toFixed(2)}</p>
                             </div>
                         </div>
                     </div>
                     <div className="w-full flex flex-row justify-center items-center gap-4">
-                        <div className="w-5 h-5 flex flex-row justify-center items-center  rounded-full bg-slate-300">
+                        <div className="w-5 h-5 flex flex-row justify-center items-center rounded-full bg-teal-200 dark:bg-teal-800">
                         </div>
                         <div className="w-full flex flex-row justify-between items-center gap-4">
-                            <p className="border-slate-900 pr-4">Inversión</p>
-                            <div className="flex flex-row justify-center items-center gap-4">
+                            <p className="text-slate-900 dark:text-slate-100 pr-4">Inversión</p>
+                            <div className="flex flex-row justify-center items-center gap-4 text-slate-700 dark:text-slate-300">
                                 <p>{investmentPercentage} %</p>
                                 <p>€ {Number(isInvestmentFromNomina).toFixed(2)}</p>
                             </div>
                         </div>
                     </div>
                     <div className="w-full flex flex-row justify-center items-center gap-4">
-                        <div className="w-5 h-5 flex flex-row justify-center items-center  rounded-full bg-slate-500">
+                        <div className="w-5 h-5 flex flex-row justify-center items-center rounded-full bg-green-200 dark:bg-green-800">
                         </div>
                         <div className="w-full flex flex-row justify-between items-center gap-4">
-                            <p className="border-slate-900 pr-4">Ahorro</p>
-                            <div className="flex flex-row justify-center items-center gap-4">
+                            <p className="text-slate-900 dark:text-slate-100 pr-4">Ahorro</p>
+                            <div className="flex flex-row justify-center items-center gap-4 text-slate-700 dark:text-slate-300">
                                 <p>{savingsPercentage} %</p>
                                 <p>€ {Number(isSavingFromNomina).toFixed(2)}</p>
                             </div>
                         </div>
                     </div>
                     <div className="w-full flex flex-row justify-center items-center gap-4">
-                        <div className="w-5 h-5 flex flex-row justify-center items-center  rounded-full bg-slate-500">
+                        <div className="w-5 h-5 flex flex-row justify-center items-center rounded-full bg-slate-200 dark:bg-slate-700">
                         </div>
                         <div className="w-full flex flex-row justify-between items-center gap-4">
-                            <p className="border-slate-900 pr-4">Imprevistos</p>
-                            <div className="flex flex-row justify-center items-center gap-4">
+                            <p className="text-slate-900 dark:text-slate-100 pr-4">Imprevistos</p>
+                            <div className="flex flex-row justify-center items-center gap-4 text-slate-700 dark:text-slate-300">
                                 <p>{isTotalImprevistosPercentatge} %</p>
                                 <p>€ {Number(isTotalImprevistos).toFixed(2)}</p>
                             </div>
@@ -80,13 +80,11 @@ const GraphicPercentatgeSpend = () => {
                     </div>
                 </div>
                 <div className="flex flex-row justify-start items-center gap-4">
-                    <h1 className="text-slate-500">Nómina mensual</h1>
-                    <p className="text-slate-900 text-2xl">€{Number(isNomina).toFixed(2)}</p>
+                    <h1 className="text-slate-500 dark:text-slate-400">Nómina mensual</h1>
+                    <p className="text-slate-900 dark:text-slate-100 text-2xl">€{Number(isNomina).toFixed(2)}</p>
                 </div>
-
             </div>
         </>
-
     );
 };
 

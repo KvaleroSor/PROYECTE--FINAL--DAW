@@ -57,27 +57,27 @@ const GridCategories = () => {
             <div className="p-4 sm:p-6">
                 <div className="mb-5 flex flex-row justify-between">
                     <div className="flex flex-col items-start">
-                        <h1 className="text-slate-900 text-xl">
+                        <h1 className="text-slate-900 dark:text-slate-100 text-xl">
                             Categoria de Gastos
                         </h1>
-                        <p className="text-slate-500">
+                        <p className="text-slate-500 dark:text-slate-400">
                             Distribución del mes actual
                         </p>
                     </div>
                     <div className="flex flex-row justify-center items-center gap-5">
                         <div className="flex flex-col">
-                            <h1 className="text-4xl text-slate-900">
+                            <h1 className="text-4xl text-slate-900 dark:text-slate-100">
                                 € {Number(isShowTotalSpend).toFixed(2)}
                             </h1>
                             {evaluateTotalAmountToSpend() !== false ? (
-                                <h1 className="text-red-500 text-md">
+                                <h1 className="text-red-500 dark:text-red-400 text-md">
                                     de €{" "}
                                     {Number(
                                         isTotalAmountToSpendFixedAndLeisure
                                     ).toFixed(2)}
                                 </h1>
                             ) : (
-                                <h1 className="text-slate-500 text-md">
+                                <h1 className="text-slate-500 dark:text-slate-400 text-md">
                                     de €{" "}
                                     {Number(
                                         isTotalAmountToSpendFixedAndLeisure
@@ -86,7 +86,7 @@ const GridCategories = () => {
                             )}
                         </div>
                         <button
-                            className="flex items-center gap-2 h-10 px-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl group bg-slate-800 text-slate-200 hover:from-slate-200 to-purple-200"
+                            className="flex items-center gap-2 h-10 px-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl group bg-slate-800 dark:bg-slate-600 text-slate-200 hover:bg-slate-700 dark:hover:bg-slate-500"
                             onClick={handleClickButtonFormCategory}
                         >
                             <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
@@ -99,7 +99,7 @@ const GridCategories = () => {
                     (isLoading && (
                         <>
                             <div>
-                                <p>No hay categorías todavía.</p>;
+                                <p className="text-slate-600 dark:text-slate-400">No hay categorías todavía.</p>
                             </div>
                         </>
                     ))}

@@ -30,11 +30,11 @@ const Sidebar = () => {
 
     return (
         <aside className="hidden md:block w-60 h-auto sticky top-0 p-2">
-            <nav className="w-full h-full bg-slate-800 border-2 shadow-md hover:shadow-xl rounded-2xl p-3 flex flex-col justify-between overflow-y-auto">
+            <nav className="w-full h-full bg-slate-800 dark:border-2 dark:border-slate-700 shadow-md hover:shadow-xl rounded-2xl p-3 flex flex-col justify-between overflow-y-auto">
                 <div className="text-slate-300">
                     <Link
                         href="/dashboard"
-                        className="text-slate-300 flex justify-start ml-2 mb-8"
+                        className="text-slate-300 dark:text-slate-100 flex justify-start ml-2 mb-8"
                     >
                         <div className="flex items-center gap-3">
                             <BalanceLogoCircle className="w-10 h-10" />
@@ -44,11 +44,10 @@ const Sidebar = () => {
                     </Link>
                     <Link
                         href="/dashboard"
-                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${
-                            isActiveRoute("/dashboard")
-                                ? "transition-all duration-300 group bg-slate-200 text-slate-800 hover:bg-slate-200 shadow-xl"
-                                : "text-slate-300 hover:text-slate-300"
-                        }`}
+                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${isActiveRoute("/dashboard")
+                            ? "transition-all duration-300 group bg-slate-200 text-slate-800 hover:bg-slate-200 shadow-xl"
+                            : "text-slate-300 hover:text-slate-300"
+                            }`}
                     >
                         <House className="w-4 h-4 sm:w-5 sm:h-5 stroke-current" />
                         <span>Inicio</span>
@@ -58,11 +57,10 @@ const Sidebar = () => {
                     </Link>
                     <Link
                         href="/dashboard/category"
-                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${
-                            isActiveRoute("/dashboard/category")
-                                ? "transition-all duration-300 group bg-slate-200 text-slate-800 hover:bg-slate-200 shadow-xl"
-                                : "text-slate-300 hover:text-slate-300"
-                        }`}
+                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${isActiveRoute("/dashboard/category")
+                            ? "transition-all duration-300 group bg-slate-200 text-slate-800 hover:bg-slate-200 shadow-xl"
+                            : "text-slate-300 hover:text-slate-300"
+                            }`}
                     >
                         <ChartBarStacked className="w-4 h-4 sm:w-5 sm:h-5 stroke-current" />
                         <span>Categorias</span>
@@ -72,11 +70,10 @@ const Sidebar = () => {
                     </Link>
                     <Link
                         href="/dashboard/saving"
-                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${
-                            isActiveRoute("/dashboard/saving")
-                                ? "transition-all duration-300 group bg-slate-200 text-slate-800 hover:bg-slate-200 shadow-xl"
-                                : "text-slate-300 hover:text-slate-300"
-                        }`}
+                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${isActiveRoute("/dashboard/saving")
+                            ? "transition-all duration-300 group bg-slate-200 text-slate-800 hover:bg-slate-200 shadow-xl"
+                            : "text-slate-300 hover:text-slate-300"
+                            }`}
                     >
                         <PiggyBank className="w-4 h-4 sm:w-5 sm:h-5 stroke-current" />
                         <span>Ahorro</span>
@@ -86,11 +83,10 @@ const Sidebar = () => {
                     </Link>
                     <Link
                         href="/dashboard/spend"
-                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${
-                            isActiveRoute("/dashboard/spend")
-                                ? "transition-all duration-300 group bg-slate-200 text-slate-800 hover:bg-slate-200 shadow-xl"
-                                : "text-slate-300 hover:text-slate-300"
-                        }`}
+                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${isActiveRoute("/dashboard/spend")
+                            ? "transition-all duration-300 group bg-slate-200 text-slate-800 hover:bg-slate-200 shadow-xl"
+                            : "text-slate-300 hover:text-slate-300"
+                            }`}
                     >
                         <HandCoins className="w-4 h-4 sm:w-5 sm:h-5 stroke-current" />
                         <span>Gasto</span>
@@ -100,11 +96,10 @@ const Sidebar = () => {
                     </Link>
                     <Link
                         href="/dashboard/inversion"
-                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${
-                            isActiveRoute("/dashboard/inversion")
-                                ? "transition-all duration-300 group bg-slate-200 text-slate-800 hover:bg-slate-200 shadow-xl"
-                                : "text-slate-300 hover:text-slate-300"
-                        }`}
+                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${isActiveRoute("/dashboard/inversion")
+                            ? "transition-all duration-300 group bg-slate-200 text-slate-800 hover:bg-slate-200 shadow-xl"
+                            : "text-slate-300 hover:text-slate-300"
+                            }`}
                     >
                         <ChartColumnIncreasing className="w-4 h-4 sm:w-5 sm:h-5 stroke-current" />
                         <span>Invesión</span>
@@ -114,11 +109,10 @@ const Sidebar = () => {
                     </Link>
                     <Link
                         href="/dashboard/settings"
-                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${
-                            isActiveRoute("/dashboard/settings")
-                                ? "transition-all duration-300 group bg-slate-200 text-slate-800 hover:bg-slate-200 shadow-xl"
-                                : "text-slate-300 hover:text-slate-300"
-                        }`}
+                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${isActiveRoute("/dashboard/settings")
+                            ? "transition-all duration-300 group bg-slate-200 text-slate-800 hover:bg-slate-200 shadow-xl"
+                            : "text-slate-300 hover:text-slate-300"
+                            }`}
                     >
                         <Settings className="w-4 h-4 sm:w-5 sm:h-5 stroke-current" />
                         <span>Configuración</span>

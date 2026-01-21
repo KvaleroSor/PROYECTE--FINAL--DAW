@@ -19,11 +19,10 @@ const ButtonTypeCategoryForm = ({
             type="button"
             key={button_type}
             id={button_type}
-            className={`border-2 flex flex-start items-center p-5 rounded-xl gap-2 cursor-pointer ${
-                isCategoryType === button_type
-                    ? "bg-slate-800 text-slate-100 shadow-md"
-                    : "border-slate-300 hover:border-slate-800 bg-gray-100 hover:bg-slate-300 hover:text-slate-800"
-            }`}
+            className={`border-2 flex flex-start items-center p-5 rounded-xl gap-2 cursor-pointer transition-colors ${isCategoryType === button_type
+                    ? "bg-slate-800 dark:bg-slate-600 text-slate-100 shadow-md"
+                    : "border-slate-300 dark:border-slate-600 hover:border-slate-800 dark:hover:border-slate-400 bg-gray-100 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200"
+                }`}
             onClick={(e) => {
                 if (isCategoryType === e.target.closest("button").id) {
                     setIsCategoryType(null);

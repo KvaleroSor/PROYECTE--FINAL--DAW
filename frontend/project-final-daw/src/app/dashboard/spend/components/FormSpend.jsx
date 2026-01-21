@@ -30,7 +30,7 @@ const FormSpend = () => {
         //Estado
         isCategoryId,
         isDescription,
-        isAmount,        
+        isAmount,
         isPaymentType,
         isUpdatedPushed,
         isSpendDate,
@@ -38,7 +38,7 @@ const FormSpend = () => {
         setIsFormSpendOpen,
         setIsCategoryId,
         setIsDescription,
-        setIsAmount,        
+        setIsAmount,
         setIsPaymentType,
         setIsUpdatedPushed,
         setIsCategoryType,
@@ -56,7 +56,7 @@ const FormSpend = () => {
         amountMaxToSpendFixedLeisure,
         isSavingFromNomina,
     } = useFinancial();
-    const { isSpends } = useSpends(); 
+    const { isSpends } = useSpends();
     const [isMonthlyBudgetWrong, setIsMonthlyBudgetWrong] = useState(false);
     const [
         isMonthlyBudgetImprevistosWrong,
@@ -215,36 +215,36 @@ const FormSpend = () => {
     return (
         <>
             <form
-                className="w-full flex flex-col justify-start items-center gap-3 text-slate-700"
+                className="w-full flex flex-col justify-start items-center gap-3 text-slate-700 dark:text-slate-300"
                 onSubmit={(e) => {
                     handleSubmitSpend(e);
                 }}
             >
                 <div className="w-full flex flex-row justify-between mb-3 gap-2">
                     <div className="flex flex-col justify-start">
-                        <h1 className="text-2xl">Crear Nuevo Gasto</h1>
-                        <p>Añade un nuevo gasto a la lista</p>
+                        <h1 className="text-2xl text-slate-900 dark:text-slate-100">Crear Nuevo Gasto</h1>
+                        <p className="text-slate-600 dark:text-slate-400">Añade un nuevo gasto a la lista</p>
                     </div>
                     <div className="">
                         <X
-                            className="w-15 h-15 transition-all duration-300 hover:rotate-90 cursor-pointer"
+                            className="w-15 h-15 transition-all duration-300 hover:rotate-90 cursor-pointer text-slate-700 dark:text-slate-300"
                             onClick={handleCloseForm}
                         />
                     </div>
                 </div>
 
                 <div className="w-full flex flex-row justify-start items-center gap-2">
-                    <p className="text-2xl text-slate-800">
+                    <p className="text-2xl text-slate-800 dark:text-slate-100">
                         {findNameCategory()}
                     </p>
                 </div>
                 <div className="w-full flex flex-col justify-start gap-2">
-                    <label htmlFor="description">Descripción</label>
+                    <label htmlFor="description" className="text-slate-700 dark:text-slate-300">Descripción</label>
                     <input
                         id="description"
                         type="text"
                         placeholder="Escribe una breve descripción"
-                        className="h-12 w-full bg-gray-50 border border-gray-200 focus:outline-none focus:bg-white focus:bg-white focus:border-slate-900 transition-colors rounded-lg p-2 focus:bg-slate-100 shadow-md"
+                        className="h-12 w-full bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
                         onChange={(e) => {
                             setIsDescription(e.target.value || "");
                         }}
@@ -252,12 +252,12 @@ const FormSpend = () => {
                     />
                 </div>
                 <div className="w-full flex flex-col justify-start gap-2">
-                    <label htmlFor="amount">Cantidad del Gasto</label>
+                    <label htmlFor="amount" className="text-slate-700 dark:text-slate-300">Cantidad del Gasto</label>
                     <input
                         id="amount"
                         type="number"
                         placeholder="0.00 €"
-                        className="h-12 w-full bg-gray-50 border border-gray-200 focus:outline-none focus:bg-white focus:bg-white focus:border-slate-900 transition-colors rounded-lg p-2 focus:bg-slate-100 shadow-md"
+                        className="h-12 w-full bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
                         onChange={(e) => {
                             setIsAmount(e.target.value);
                         }}
@@ -265,10 +265,8 @@ const FormSpend = () => {
                     />
                 </div>
                 {isMonthlyBudgetWrong && (
-                    <div className="w-full flex flex-col justify-center items-center border-2 border-red-200 rounded-xl p-3 bg-red-100 text-red-500 shadow-xl shadow-red-200/20">
+                    <div className="w-full flex flex-col justify-center items-center border-2 border-red-200 dark:border-red-800 rounded-xl p-3 bg-red-100 dark:bg-red-900/30 text-red-500 dark:text-red-400 shadow-xl shadow-red-200/20 dark:shadow-red-900/20">
                         <h1 className="">GASTO EXCEDIENDO EL LÍMITE</h1>
-                        {/* <p>Crear categoría de tipo "Imprevistos"</p>
-                        <p>Descontará la cantidad del ahorro</p> */}
                         <div className="flex flex-row gap-2">
                             <p>Cantidad Máxima </p>
                             <h1 className="text-xl font-semibold">
@@ -279,12 +277,10 @@ const FormSpend = () => {
                     </div>
                 )}
                 {isMonthlyBudgetImprevistosWrong && (
-                    <div className="w-full flex flex-col justify-center items-center border-2 border-red-200 rounded-xl p-3 bg-red-100 text-red-500 shadow-xl shadow-red-200/20">
+                    <div className="w-full flex flex-col justify-center items-center border-2 border-red-200 dark:border-red-800 rounded-xl p-3 bg-red-100 dark:bg-red-900/30 text-red-500 dark:text-red-400 shadow-xl shadow-red-200/20 dark:shadow-red-900/20">
                         <h1 className="font-bold">
                             GASTO EXCEDIENDO EL LÍMITE
                         </h1>
-                        {/* <p>Crear categoría de tipo "Imprevistos"</p>
-                        <p>Descontará la cantidad del ahorro</p> */}
                         <div className="flex flex-row gap-2">
                             <p>Cantidad Máxima </p>
                             <h1 className="text-xl">
@@ -295,11 +291,11 @@ const FormSpend = () => {
                     </div>
                 )}
                 <div className="w-full flex flex-col justify-start gap-2">
-                    <label htmlFor="date">Fecha del Gasto</label>
+                    <label htmlFor="date" className="text-slate-700 dark:text-slate-300">Fecha del Gasto</label>
                     <input
                         id="date"
                         type="date"
-                        className="h-12 w-full bg-gray-50 border border-gray-200 focus:outline-none focus:bg-white focus:bg-white focus:border-slate-900 transition-colors rounded-lg p-2 focus:bg-slate-100 shadow-md"
+                        className="h-12 w-full bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-100"
                         onChange={(e) => {
                             setIsSpendDate(e.target.value);
                         }}
@@ -307,7 +303,7 @@ const FormSpend = () => {
                     />
                 </div>
                 <div className="w-full flex flex-col justify-start gap-2">
-                    <label>Tipo de Categoría</label>
+                    <label className="text-slate-700 dark:text-slate-300">Tipo de Pago</label>
                     <div className="w-fit flex flex-wrap gap-2">
                         {payment_type.map((cat) => (
                             <ButtonTypePaymentForm
@@ -327,20 +323,20 @@ const FormSpend = () => {
                                 id="button-create"
                                 type={
                                     isMonthlyBudgetWrong ||
-                                    isMonthlyBudgetImprevistosWrong
+                                        isMonthlyBudgetImprevistosWrong
                                         ? "button"
                                         : "submit"
                                 }
-                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 text-slate-100 hover:border-slate-100"
+                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 dark:bg-slate-600 text-slate-100 hover:border-slate-100 dark:hover:border-slate-400"
                                 onClick={
                                     isMonthlyBudgetWrong ||
-                                    isMonthlyBudgetImprevistosWrong
+                                        isMonthlyBudgetImprevistosWrong
                                         ? handleCloseForm
                                         : undefined
                                 }
                             >
                                 {isMonthlyBudgetWrong ||
-                                isMonthlyBudgetImprevistosWrong ? (
+                                    isMonthlyBudgetImprevistosWrong ? (
                                     <>
                                         <X className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
                                         <span>Cerrar</span>
@@ -351,13 +347,11 @@ const FormSpend = () => {
                                         <span>Crear Gasto</span>
                                     </>
                                 )}
-                                {/* <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
-                                                    <span>Crear Categoría</span> */}
                             </button>
                             <button
                                 id="button-cancel"
                                 type="button"
-                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-100 border-slate-200 hover:bg-slate-300 hover:border-slate-900 text-slate-600"
+                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-100 dark:bg-slate-700 border-slate-200 dark:border-slate-600 hover:bg-slate-300 dark:hover:bg-slate-600 hover:border-slate-900 dark:hover:border-slate-400 text-slate-600 dark:text-slate-300"
                                 onClick={handleCloseForm}
                             >
                                 <Ban className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
@@ -369,7 +363,7 @@ const FormSpend = () => {
                             <button
                                 id="button-update"
                                 type="submit"
-                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 text-slate-100 hover:border-slate-100"
+                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 dark:bg-slate-600 text-slate-100 hover:border-slate-100 dark:hover:border-slate-400"
                             >
                                 <Repeat className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
                                 <span>Actualizar Gasto</span>
@@ -377,7 +371,7 @@ const FormSpend = () => {
                             <button
                                 id="button-cancel"
                                 type="submit"
-                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-100 border-slate-200 hover:bg-slate-300 hover:border-slate-900 text-slate-600"
+                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-100 dark:bg-slate-700 border-slate-200 dark:border-slate-600 hover:bg-slate-300 dark:hover:bg-slate-600 hover:border-slate-900 dark:hover:border-slate-400 text-slate-600 dark:text-slate-300"
                                 onClick={handleCloseForm}
                             >
                                 <Ban className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />

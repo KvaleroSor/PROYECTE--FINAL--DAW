@@ -143,16 +143,16 @@ const FormSavingGoal = () => {
 
     return (
         <form
-            className="w-full flex flex-col justify-start items-center gap-3 text-slate-700"
+            className="w-full flex flex-col justify-start items-center gap-3 text-slate-700 dark:text-slate-300"
             onSubmit={handleSubmit}
         >
             {/* Header */}
             <div className="w-full flex flex-row justify-between mb-3 gap-2">
                 <div className="flex flex-col justify-start">
-                    <h1 className="text-2xl font-semibold text-slate-900">
+                    <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
                         {selectedGoal ? "Editar Meta de Ahorro" : "Crear Meta de Ahorro"}
                     </h1>
-                    <p className="text-sm text-slate-600">
+                    <p className="text-sm text-slate-600 dark:text-slate-400">
                         {selectedGoal
                             ? "Actualiza tu meta de ahorro"
                             : "Define una nueva meta de ahorro"}
@@ -160,53 +160,53 @@ const FormSavingGoal = () => {
                 </div>
                 <div>
                     <X
-                        className="w-15 h-15 transition-all duration-300 hover:rotate-90 cursor-pointer text-slate-600 hover:text-slate-900"
+                        className="w-15 h-15 transition-all duration-300 hover:rotate-90 cursor-pointer text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100"
                         onClick={handleCloseForm}
                     />
                 </div>
             </div>
 
             {/* Información de presupuesto disponible */}
-            <div className="w-full bg-slate-50 border border-slate-200 rounded-lg p-4 mb-2">
+            <div className="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg p-4 mb-2">
                 <div className="flex items-center gap-2 mb-3">
-                    <Wallet className="w-5 h-5 text-slate-700" />
-                    <p className="font-semibold text-slate-900">Presupuesto de Ahorro</p>
+                    <Wallet className="w-5 h-5 text-slate-700 dark:text-slate-300" />
+                    <p className="font-semibold text-slate-900 dark:text-slate-100">Presupuesto de Ahorro</p>
                 </div>
                 <div className="space-y-2 text-sm">
                     <div className="flex justify-between items-center">
-                        <span className="text-slate-700">Total mensual:</span>
-                        <span className="font-bold text-slate-900">€{isSavingFromNomina?.toFixed(2) || 0}</span>
+                        <span className="text-slate-700 dark:text-slate-300">Total mensual:</span>
+                        <span className="font-bold text-slate-900 dark:text-slate-100">€{isSavingFromNomina?.toFixed(2) || 0}</span>
                     </div>
                     {gastoImprevistos > 0 && (
                         <div className="flex justify-between items-center">
-                            <span className="text-slate-700">Gastos imprevistos:</span>
-                            <span className="font-semibold text-red-600">-€{gastoImprevistos.toFixed(2)}</span>
+                            <span className="text-slate-700 dark:text-slate-300">Gastos imprevistos:</span>
+                            <span className="font-semibold text-red-600 dark:text-red-400">-€{gastoImprevistos.toFixed(2)}</span>
                         </div>
                     )}
-                    <div className="flex justify-between items-center pt-2 border-t border-slate-300">
-                        <span className="text-slate-700 font-medium">Disponible real:</span>
-                        <span className={`font-bold text-lg ${netSaving >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                    <div className="flex justify-between items-center pt-2 border-t border-slate-300 dark:border-slate-600">
+                        <span className="text-slate-700 dark:text-slate-300 font-medium">Disponible real:</span>
+                        <span className={`font-bold text-lg ${netSaving >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
                             €{netSaving.toFixed(2)}
                         </span>
                     </div>
                     <div className="flex justify-between items-center">
-                        <span className="text-slate-700">Sin asignar:</span>
-                        <span className="font-bold text-green-700">{unallocatedPercentage.toFixed(1)}%</span>
+                        <span className="text-slate-700 dark:text-slate-300">Sin asignar:</span>
+                        <span className="font-bold text-green-700 dark:text-green-400">{unallocatedPercentage.toFixed(1)}%</span>
                     </div>
                 </div>
             </div>
 
             {/* Alertas */}
             {isError && (
-                <div className="w-full bg-red-50 border border-red-200 rounded-lg p-3 flex items-center gap-2">
-                    <AlertCircle className="w-5 h-5 text-red-600" />
-                    <p className="text-sm text-red-800">{isError}</p>
+                <div className="w-full bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-3 flex items-center gap-2">
+                    <AlertCircle className="w-5 h-5 text-red-600 dark:text-red-400" />
+                    <p className="text-sm text-red-800 dark:text-red-300">{isError}</p>
                 </div>
             )}
 
             {isSuccess && (
-                <div className="w-full bg-green-50 border border-green-200 rounded-lg p-3">
-                    <p className="text-sm text-green-800 text-center">
+                <div className="w-full bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3">
+                    <p className="text-sm text-green-800 dark:text-green-300 text-center">
                         ✅ Meta guardada exitosamente
                     </p>
                 </div>
@@ -214,7 +214,7 @@ const FormSavingGoal = () => {
 
             {/* Nombre de la meta */}
             <div className="w-full flex flex-col gap-2">
-                <label className="flex items-center gap-2 font-medium text-slate-900">
+                <label className="flex items-center gap-2 font-medium text-slate-900 dark:text-slate-100">
                     <Target className="w-4 h-4" />
                     Nombre de la Meta *
                 </label>
@@ -223,27 +223,27 @@ const FormSavingGoal = () => {
                     value={isGoalName}
                     onChange={(e) => setIsGoalName(e.target.value)}
                     placeholder="Ej: Viaje a Japón, Fondo emergencia..."
-                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
                     required
                 />
             </div>
 
             {/* Descripción (opcional) */}
             <div className="w-full flex flex-col gap-2">
-                <label className="font-medium text-slate-900">Descripción (opcional)</label>
+                <label className="font-medium text-slate-900 dark:text-slate-100">Descripción (opcional)</label>
                 <textarea
                     value={isDescription}
                     onChange={(e) => setIsDescription(e.target.value)}
                     placeholder="Describe tu meta de ahorro..."
                     rows="2"
-                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent resize-none"
+                    className="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent resize-none bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
                 />
             </div>
 
             {/* Monto objetivo y actual */}
             <div className="w-full grid grid-cols-2 gap-4">
                 <div className="flex flex-col gap-2">
-                    <label className="flex items-center gap-2 font-medium text-slate-900">
+                    <label className="flex items-center gap-2 font-medium text-slate-900 dark:text-slate-100">
                         <TrendingUp className="w-4 h-4" />
                         Monto Objetivo *
                     </label>
@@ -254,13 +254,13 @@ const FormSavingGoal = () => {
                         placeholder="3000"
                         min="0"
                         step="0.01"
-                        className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
+                        className="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100"
                         required
                     />
                 </div>
 
                 <div className="flex flex-col gap-2">
-                    <label className="flex items-center gap-2 font-medium text-slate-900">
+                    <label className="flex items-center gap-2 font-medium text-slate-900 dark:text-slate-100">
                         <Wallet className="w-4 h-4" />
                         Monto Actual
                     </label>
@@ -271,14 +271,14 @@ const FormSavingGoal = () => {
                         placeholder="0"
                         min="0"
                         step="0.01"
-                        className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
+                        className="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100"
                     />
                 </div>
             </div>
 
             {/* Porcentaje de asignación */}
             <div className="w-full flex flex-col gap-2">
-                <label className="flex items-center gap-2 font-medium text-slate-900">
+                <label className="flex items-center gap-2 font-medium text-slate-900 dark:text-slate-100">
                     <Percent className="w-4 h-4" />
                     Porcentaje de Asignación * (Disponible: {unallocatedPercentage.toFixed(1)}%)
                 </label>
@@ -291,13 +291,13 @@ const FormSavingGoal = () => {
                         min="0"
                         max="100"
                         step="0.1"
-                        className="flex-1 px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
+                        className="flex-1 px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100"
                         required
                     />
-                    <span className="text-slate-600">%</span>
+                    <span className="text-slate-600 dark:text-slate-400">%</span>
                 </div>
                 {isPercentageAllocation > 0 && (
-                    <p className="text-sm text-green-600">
+                    <p className="text-sm text-green-600 dark:text-green-400">
                         💰 Contribución mensual: <span className="font-bold">{monthlyContribution.toFixed(2)}€</span>
                     </p>
                 )}
@@ -305,7 +305,7 @@ const FormSavingGoal = () => {
 
             {/* Fecha límite */}
             <div className="w-full flex flex-col gap-2">
-                <label className="flex items-center gap-2 font-medium text-slate-900">
+                <label className="flex items-center gap-2 font-medium text-slate-900 dark:text-slate-100">
                     <Calendar className="w-4 h-4" />
                     Fecha Límite (opcional)
                 </label>
@@ -313,24 +313,23 @@ const FormSavingGoal = () => {
                     type="date"
                     value={isDeadline}
                     onChange={(e) => setIsDeadline(e.target.value)}
-                    className="w-full px-4 py-2 border border-slate-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent"
+                    className="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100"
                 />
             </div>
 
             {/* Prioridad */}
             <div className="w-full flex flex-col gap-2">
-                <label className="font-medium text-slate-900">Prioridad</label>
+                <label className="font-medium text-slate-900 dark:text-slate-100">Prioridad</label>
                 <div className="flex gap-3">
                     {priorities.map((priority) => (
                         <button
                             key={priority.value}
                             type="button"
                             onClick={() => setIsPriority(priority.value)}
-                            className={`border-2 flex flex-1 justify-center items-center p-5 rounded-xl gap-2 cursor-pointer ${
-                                isPriority === priority.value
-                                    ? "bg-slate-800 text-slate-100 shadow-md"
-                                    : "border-slate-300 hover:border-slate-800 bg-gray-100 hover:bg-slate-300 hover:text-slate-800"
-                            }`}
+                            className={`border-2 flex flex-1 justify-center items-center p-5 rounded-xl gap-2 cursor-pointer transition-colors ${isPriority === priority.value
+                                    ? "bg-slate-800 dark:bg-slate-600 text-slate-100 shadow-md"
+                                    : "border-slate-300 dark:border-slate-600 hover:border-slate-800 dark:hover:border-slate-400 bg-gray-100 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200"
+                                }`}
                         >
                             {priority.label}
                         </button>
@@ -342,7 +341,7 @@ const FormSavingGoal = () => {
             <div className="w-full flex flex-col gap-2 mt-4">
                 <button
                     type="submit"
-                    className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 text-slate-100 hover:border-slate-100"
+                    className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 dark:bg-slate-600 text-slate-100 hover:border-slate-100 dark:hover:border-slate-400"
                 >
                     <Target className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
                     <span>{selectedGoal ? "Actualizar Meta" : "Crear Meta"}</span>
@@ -350,7 +349,7 @@ const FormSavingGoal = () => {
                 <button
                     type="button"
                     onClick={handleCloseForm}
-                    className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-100 border-slate-200 hover:bg-slate-300 hover:border-slate-900 text-slate-600"
+                    className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-100 dark:bg-slate-700 border-slate-200 dark:border-slate-600 hover:bg-slate-300 dark:hover:bg-slate-600 hover:border-slate-900 dark:hover:border-slate-400 text-slate-600 dark:text-slate-300"
                 >
                     <X className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
                     <span>Cancelar</span>

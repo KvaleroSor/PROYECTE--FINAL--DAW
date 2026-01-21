@@ -26,14 +26,14 @@ const Body = () => {
             <div className="h-full grid grid-rows-[auto_auto_auto]">
                 {isFormCategoryOpen && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-                        <div className="w-full max-w-xl max-h-xl rounded-xl bg-white p-6">
+                        <div className="w-full max-w-xl max-h-xl rounded-xl bg-white dark:bg-slate-800 dark:border-2 dark:border-slate-700 p-6">
                             <FormCategory />
                         </div>
                     </div>
                 )}
                 {isFormSpendOpen && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-                        <div className="w-full max-w-xl max-h-xl rounded-xl bg-white p-6">
+                        <div className="w-full max-w-xl max-h-xl rounded-xl bg-white dark:bg-slate-800 dark:border-2 dark:border-slate-700 p-6">
                             <FormSpend />
                         </div>
                     </div>
@@ -49,17 +49,17 @@ const Body = () => {
                     <CardsMainCategories />
                 </div>
                 <div className="w-full flex flex-row gap-2">
-                    <div className="w-[70%] border-2 rounded-xl flex flex-col justify-start items-start gap-5 bg-white m-2 sm:m-3 lg:m-4">
+                    <div className="w-[70%]  border-2 rounded-xl flex flex-col justify-start items-start gap-5 bg-white dark:bg-slate-800 dark:border-2 dark:border-slate-700 rounded-xl m-2 sm:m-3 lg:m-4">
                         {/* <Saving /> */}
                         <GridSpends />
                     </div>
-                    <div className="w-[30%] border-2 rounded-xl bg-white m-2 sm:m-3 lg:m-4">
+                    <div className="w-[30%] border-2 rounded-xl bg-white dark:bg-slate-800 dark:border-2 dark:border-slate-700 m-2 sm:m-3 lg:m-4">
                         {/* Repartición de la nómina en gráfico */}
                         <GraphicPercentatgeSpend />
                     </div>
                 </div>
                 {/*   */}
-                <div className="pt-4 border-2 rounded-xl m-2 sm:m-3 lg:m-4 bg-white">
+                <div className="pt-4 border-2 rounded-xl m-2 sm:m-3 lg:m-4 bg-white dark:bg-slate-800 dark:border-2 dark:border-slate-700">
                     <GridCategories />
                 </div>
             </div>

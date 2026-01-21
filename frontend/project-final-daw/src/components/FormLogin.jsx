@@ -114,47 +114,47 @@ const FormLogin = () => {
     return (
         <form className="space-y-5 sm:space-y-6" onSubmit={handleSubmit}>
             <div className="space-y-2">
-                <label htmlFor="email" className="text-gray-700 text-xl">
+                <label htmlFor="email" className="text-gray-700 dark:text-slate-300 text-xl">
                     Correo Electrónico
                 </label>
                 <div className="relative">
-                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-700" />
+                    <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-700 dark:text-slate-400" />
                     <input
                         id="email"
                         type="email"
                         placeholder="emial@email.com"
                         value={isEmail}
                         onChange={(e) => setIsEmail(e.target.value)}
-                        className="w-full pl-11 h-11 sm:h-12 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-slate-900 focus:ring-0 transition-colors text-base outline-none focus:outline-none"
+                        className="w-full pl-11 h-11 sm:h-12 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-xl focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 focus:ring-0 transition-colors text-base outline-none focus:outline-none text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
                         required
                     />
                 </div>
             </div>
             <div className="space-y-2">
-                <label htmlFor="password" className="text-gray-700 text-xl">
+                <label htmlFor="password" className="text-gray-700 dark:text-slate-300 text-xl">
                     Contraseña
                 </label>
 
                 <div className="relative">
-                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-700" />
+                    <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-700 dark:text-slate-400" />
                     <input
                         id="password"
                         type={isShowPassword ? "text" : "password"}
                         placeholder="••••••••"
                         value={isPassword}
                         onChange={(e) => setIsPassword(e.target.value)}
-                        className="w-full pl-11 pr-11 h-11 sm:h-12 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-slate-900 transition-colors text-base outline-none focus:outline-none"
+                        className="w-full pl-11 pr-11 h-11 sm:h-12 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-xl focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors text-base outline-none focus:outline-none text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
                         required
                     />
                     <button
                         type="button"
                         onClick={() => setIsShowPassword(!isShowPassword)}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-slate-500 hover:text-gray-600 dark:hover:text-slate-300 transition-colors"
                     >
                         {isShowPassword ? (
-                            <EyeOff className="w-5 h-5 text-gray-700" />
+                            <EyeOff className="w-5 h-5 text-gray-700 dark:text-slate-400" />
                         ) : (
-                            <Eye className="w-5 h-5 text-gray-700" />
+                            <Eye className="w-5 h-5 text-gray-700 dark:text-slate-400" />
                         )}
                     </button>
                 </div>
@@ -165,13 +165,13 @@ const FormLogin = () => {
                     <div className="space-y-2">
                         <label
                             htmlFor="passwordConfirm"
-                            className="text-gray-700 text-xl"
+                            className="text-gray-700 dark:text-slate-300 text-xl"
                         >
                             Confirmación Contraseña
                         </label>
 
                         <div className="relative">
-                            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-700" />
+                            <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-700 dark:text-slate-400" />
                             <input
                                 id="passwordConfirm"
                                 type={isShowPassword ? "text" : "password"}
@@ -180,7 +180,7 @@ const FormLogin = () => {
                                 onChange={(e) =>
                                     setIsPasswordConfirm(e.target.value)
                                 }
-                                className="w-full pl-11 pr-11 h-11 sm:h-12 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-slate-900 transition-colors text-base outline-none focus:outline-none"
+                                className="w-full pl-11 pr-11 h-11 sm:h-12 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-xl focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors text-base outline-none focus:outline-none text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
                                 required
                             />
                             <button
@@ -188,29 +188,29 @@ const FormLogin = () => {
                                 onClick={() =>
                                     setIsShowPassword(!isShowPassword)
                                 }
-                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-slate-500 hover:text-gray-600 dark:hover:text-slate-300 transition-colors"
                             >
                                 {isShowPassword ? (
-                                    <EyeOff className="w-5 h-5 text-gray-700" />
+                                    <EyeOff className="w-5 h-5 text-gray-700 dark:text-slate-400" />
                                 ) : (
-                                    <Eye className="w-5 h-5 text-gray-700" />
+                                    <Eye className="w-5 h-5 text-gray-700 dark:text-slate-400" />
                                 )}
                             </button>
                         </div>
                     </div>
                     <div className="space-y-2">
-                        <label htmlFor="name" className="text-gray-700 text-xl">
+                        <label htmlFor="name" className="text-gray-700 dark:text-slate-300 text-xl">
                             Nombre completo
                         </label>
                         <div className="relative">
-                            <SquareUser className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-700" />
+                            <SquareUser className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-700 dark:text-slate-400" />
                             <input
                                 id="name"
                                 type="text"
                                 placeholder="Balance.app"
                                 value={isName}
                                 onChange={(e) => setIsName(e.target.value)}
-                                className="w-full pl-11 h-11 sm:h-12 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-slate-900 transition-colors text-base outline-none focus:outline-none"
+                                className="w-full pl-11 h-11 sm:h-12 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-xl focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors text-base outline-none focus:outline-none text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
                                 required
                             />
                         </div>
@@ -218,19 +218,19 @@ const FormLogin = () => {
                     <div className="space-y-2">
                         <label
                             htmlFor="nomina"
-                            className="text-gray-700 text-xl"
+                            className="text-gray-700 dark:text-slate-300 text-xl"
                         >
                             Nómina
                         </label>
                         <div className="relative">
-                            <Euro className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-700" />
+                            <Euro className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-700 dark:text-slate-400" />
                             <input
                                 id="nomina"
                                 type="text"
                                 placeholder="2500.00€"
                                 value={isNomina}
                                 onChange={(e) => setIsNomina(e.target.value)}
-                                className="w-full pl-11 h-11 sm:h-12 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:border-slate-900 transition-colors text-base outline-none focus:outline-none"
+                                className="w-full pl-11 h-11 sm:h-12 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-xl focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors text-base outline-none focus:outline-none text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
                                 required
                             />
                         </div>
@@ -239,7 +239,7 @@ const FormLogin = () => {
                     <div className="space-y-2">
                         <label
                             htmlFor="percentageSelector"
-                            className="text-gray-700 text-xl"
+                            className="text-gray-700 dark:text-slate-300 text-xl"
                         >
                             Perfil de presupuesto
                         </label>
@@ -251,7 +251,7 @@ const FormLogin = () => {
                                 }}
                             />
                         </div>
-                        <p className="text-md text-gray-500 mt-2">
+                        <p className="text-md text-gray-500 dark:text-slate-400 mt-2">
                             Podrás personalizar estos valores después en tu
                             dashboard
                         </p>
@@ -261,7 +261,7 @@ const FormLogin = () => {
             {!isLoginMode ? (
                 <button
                     type="button"
-                    className="underline underline-offset-4 transition-shadow duration-200 hover:shadow-xl"
+                    className="underline underline-offset-4 transition-shadow duration-200 hover:shadow-xl text-slate-700 dark:text-slate-300"
                     onClick={() => {
                         setIsLoginMode(true);
                     }}
@@ -271,7 +271,7 @@ const FormLogin = () => {
             ) : (
                 <button
                     type="button"
-                    className="underline underline-offset-4 transition-shadow duration-200 hover:shadow-xl"
+                    className="underline underline-offset-4 transition-shadow duration-200 hover:shadow-xl text-slate-700 dark:text-slate-300"
                     onClick={() => {
                         setIsLoginMode(false);
                     }}
@@ -279,7 +279,7 @@ const FormLogin = () => {
                     <span>Ir a Crear Sesión</span>
                 </button>
             )}
-            {isError && <p style={{ color: "red" }}>{isError}</p>}
+            {isError && <p className="text-red-500 dark:text-red-400">{isError}</p>}
             <div className="flex flex-col justify-center items-center gap-4 mt-8 pt-4">
                 {isLoginMode ? (
                     <ButtonLogin
