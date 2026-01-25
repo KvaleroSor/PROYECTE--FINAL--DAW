@@ -19,6 +19,7 @@ export const FinancialProvider = ({ children }) => {
         investment: 0,
         savings: 0,
     });
+    const [isAhorroGeneral, setIsAhorroGeneral] = useState(0);
     const [additionalIncome, setAdditionalIncome] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [isFormModifyPercentageOpen, setIsFormModifyPercentageOpen] = useState(false);
@@ -62,6 +63,7 @@ export const FinancialProvider = ({ children }) => {
                         savings: 0,
                     }
                 );
+                setIsAhorroGeneral(userData.data.ahorroGeneral || 0);
             }
         } catch (err) {
             console.error("ERROR - No se pueden cargar los datos financieros:", err);
@@ -248,6 +250,7 @@ export const FinancialProvider = ({ children }) => {
                 // Estados principales
                 isNomina,
                 isPercentageSettings,
+                isAhorroGeneral,
                 additionalIncome,
                 isLoading,
                 isFixedExpensesFromNomina,

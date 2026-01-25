@@ -32,14 +32,12 @@ export default function DashboardLayout({ children }) {
                     <SavingProvider>
                         <InversionProvider>
                             <div className="min-h-screen w-full">
-                                <div className="flex">
-                                    <Sidebar />
-                                    <div className="flex-1 flex flex-col">
-                                        <Header />
-                                        <main className="flex-1">
-                                            {children}
-                                        </main>
-                                    </div>
+                                <Sidebar />
+                                <div className="md:ml-60 flex-1 flex flex-col">
+                                    <Header />
+                                    <main className="flex-1">
+                                        {children}
+                                    </main>
                                 </div>
                             </div>
                         </InversionProvider>

@@ -32,7 +32,7 @@ const Sidebar = () => {
     };
 
     return (
-        <aside className="hidden md:block w-60 h-auto sticky top-0 p-2">
+        <aside className="hidden md:block w-60 h-screen fixed top-0 left-0 p-2 z-40">
             <nav className="w-full h-full bg-slate-800 dark:border-2 dark:border-slate-700 shadow-md hover:shadow-xl rounded-2xl p-3 flex flex-col justify-between overflow-y-auto">
                 <div className="text-slate-300">
                     <Link

@@ -19,7 +19,7 @@ const CardsMainCategories = () => {
     const { isAvailableFixedAndLeisure } = useLeisureFixedSpendTotalAvailable();
     const { isTotalInversionRealTime } = useInversionRealTime();
 
-    //Estados del componente
+    // Estados del componente
     const [isTotalSpends, setIsTotalSpends] = useState(0);
 
     useEffect(() => {

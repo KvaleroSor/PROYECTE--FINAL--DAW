@@ -7,7 +7,9 @@ const router = Router();
 router.delete("/:id", auth, async (req, res) => {
     try {
         const { id } = req.params;
-        const result = await deleteSaving(id);
+        const userId = req.user.userId; // Obtener userId del token
+        
+        const result = await deleteSaving(id, userId);
 
         !result
             ? res.status(404).json({

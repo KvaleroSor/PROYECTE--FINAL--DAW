@@ -65,6 +65,10 @@ const userSchema = new mongoose.Schema({
         type: String,     
         enum: ["user", "admin"],   
         default: "user"
+    },
+    ahorroGeneral: {
+        type: Number,
+        default: 0,
     }
 });
 

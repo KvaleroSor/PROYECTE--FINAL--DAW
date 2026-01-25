@@ -58,6 +58,7 @@ const FormModifyPercentage = () => {
             try {
                 updateNomina(isNomina);
                 setIsNominaUpdated(false);
+                setIsFormModifyPercentageOpen(false);
             } catch (err) {
                 console.error("ERROR - NO SE PUEDE ACTUALIZAR LA NÓMINA DEL USUARIO:", err);
             }

@@ -4,7 +4,7 @@ import { useCategories } from "@/app/context/CategoryContext";
 import { useSpends } from "@/app/context/SpendContext";
 
 export const useSavingsRealTime = (isTotalContributedAllTime = 0) => {
-    const { isSavingFromNomina } = useFinancial();
+    const { isSavingFromNomina, isAhorroGeneral } = useFinancial();
     const { isCategories } = useCategories();
     const { isSpends } = useSpends();
 
@@ -41,13 +41,11 @@ export const useSavingsRealTime = (isTotalContributedAllTime = 0) => {
             (isSavingFromNomina || 0) - totalImprevistos
         );
 
-        console.log("AHORRO NETO MENSUAL", ahorroNetoMesActual);
-
-        // 5. Total ahorrado = historial acumulado + ahorro neto del mes actual
-        const totalAhorrado = (isTotalContributedAllTime || 0) + ahorroNetoMesActual;
+        // 5. Total ahorrado = ahorroGeneral (metas eliminadas) + contribuciones metas activas + ahorro neto mes
+        const totalAhorrado = (isAhorroGeneral || 0) + (isTotalContributedAllTime || 0) + ahorroNetoMesActual;
 
         return Number(totalAhorrado).toFixed(2);
-    }, [isTotalContributedAllTime, isSavingFromNomina, isSpends, isCategories]);
+    }, [isTotalContributedAllTime, isSavingFromNomina, isSpends, isCategories, isAhorroGeneral]);
 
     const isTotalImprevistosPercentatge = useMemo(() => {
         // 1. Obtener categorías de tipo "Imprevistos"
