@@ -210,7 +210,15 @@ export const FinancialProvider = ({ children }) => {
         try {
             setIsLoading(true);
 
-            const res = await updateUserProfile({ percentageSpend: newPercentage }, session);
+            const res = await updateUserProfile(
+                {
+                    percentageSpend: {
+                        ...newPercentage,
+                        namePercentageSpend: "Custom",
+                    },
+                },
+                session
+            );
 
             if (res) {
                 setIsPercentageSettings(newPercentage);

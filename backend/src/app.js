@@ -65,11 +65,10 @@ app.use(cors());
 /**
  * Routes for users 🧑🏽‍💻👩🏽‍💻
  */
-
 app.use("/api/users", postUser);
 app.use("/api/users", postUserLogin);
 app.use("/api/users", updateUser);
-app.use("/api/users/profile", updateUserProfile); // PUT /api/users/profile - usa userId del token
+app.use("/api/users/profile", updateUserProfile);
 app.use("/api/users", deleteUser);
 app.use("/api/users", getUser);
 app.use("/api/users", getUserById);
@@ -77,7 +76,6 @@ app.use("/api/users", getUserById);
 /**
  * Routes for spends 💰
  */
-
 app.use("/api/spends", postSpend);
 app.use("/api/spends", updateSpend);
 app.use("/api/spends", deleteSpend);
@@ -85,10 +83,10 @@ app.use("/api/spends", getSpend);
 app.use("/api/spends", getSpendsByCagegory);
 app.use("/api/spends", getSpendsByCategoryType);
 app.use("/api/spends", getSpendById);
+
 /**
  * Routes for categories 📋
  */
-
 app.use("/api/categories", postCategory);
 app.use("/api/categories", updateCategory);
 app.use("/api/categories", deleteCategory);
@@ -98,7 +96,6 @@ app.use("/api/categories", getCategoryById);
 /**
  * Routes for inversions 📋
  */
-
 app.use("/api/inversion", postInversion);
 app.use("/api/inversion", updateInversion);
 app.use("/api/inversion", deleteInversion);
@@ -107,7 +104,6 @@ app.use("/api/inversion", getInversion);
 /**
  * Routes for Nominas
  */
-
 // app.use("/api/nomina", postNomina);
 // app.use("/api/nomina", updateNomina);
 // app.use("/api/nomina", deleteNomina);
@@ -116,7 +112,6 @@ app.use("/api/inversion", getInversion);
 /**
  * Routes for Spend Percentage
  */
-
 app.use("/api/spendpercentage", postPercentageSpend);
 app.use("/api/spendpercentage", getPercentageSpend);
 app.use("/api/spendpercentage", updatePercentageSpend);
@@ -125,7 +120,6 @@ app.use("/api/spendpercentage", deletePercentageSpend);
 /**
  * Routes for savings 💰🎯
  */
-
 app.use("/api/savings", postSaving);
 app.use("/api/savings", updateSaving);
 app.use("/api/savings", deleteSaving);
