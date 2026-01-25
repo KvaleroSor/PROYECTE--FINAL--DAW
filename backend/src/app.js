@@ -67,8 +67,8 @@ app.use(cors());
  */
 app.use("/api/users", postUser);
 app.use("/api/users", postUserLogin);
-app.use("/api/users", updateUser);
 app.use("/api/users/profile", updateUserProfile);
+app.use("/api/users", updateUser);
 app.use("/api/users", deleteUser);
 app.use("/api/users", getUser);
 app.use("/api/users", getUserById);
