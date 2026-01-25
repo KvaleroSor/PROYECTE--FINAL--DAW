@@ -5,6 +5,7 @@ import cors from "cors";
 import postUser from "./api/routes_users/postNewUser.js";
 import postUserLogin from "./api/routes_users/postUserLogin.js";
 import updateUser from "./api/routes_users/updateUser.js";
+import updateUserProfile from "./api/routes_users/updateUserProfile.js";
 import deleteUser from "./api/routes_users/deleteUser.js";
 import getUser from "./api/routes_users/getUser.js";
 import getUserById from "./api/routes_users/getUserById.js";
@@ -68,6 +69,7 @@ app.use(cors());
 app.use("/api/users", postUser);
 app.use("/api/users", postUserLogin);
 app.use("/api/users", updateUser);
+app.use("/api/users/profile", updateUserProfile); // PUT /api/users/profile - usa userId del token
 app.use("/api/users", deleteUser);
 app.use("/api/users", getUser);
 app.use("/api/users", getUserById);

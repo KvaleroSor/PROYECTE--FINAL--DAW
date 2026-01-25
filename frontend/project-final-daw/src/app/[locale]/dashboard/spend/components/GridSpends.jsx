@@ -1,9 +1,13 @@
+"use client";
+
 import { useSession } from "next-auth/react";
 import Spend from "./Spend.jsx";
 import { useSpendsMonth } from "@/app/hooks/spend/useSpendsMonth.js";
 import { useSpends } from "@/app/context/SpendContext.js";
+import { useTranslations } from "next-intl";
 
 const GridSpends = () => {
+    const t = useTranslations("expenses");
     const { data: session } = useSession();
     const { isSpendsOfMonth } = useSpendsMonth();
     const { isLoading, isSpends } = useSpends();
@@ -13,32 +17,32 @@ const GridSpends = () => {
             <div className="w-full flex flex-col gap-2 p-4">
                 <div className="mb-5 flex flex-col  gap-3">
                     <div className="flex flex-col items-start">
-                        <h1 className="text-slate-900 text-xl">
-                            Gastos del mes
+                        <h1 className="text-slate-900 dark:text-slate-100 text-xl">
+                            {t("monthlyExpenses")}
                         </h1>
-                        <p className="text-slate-500">
-                            Listado de los gastos del mes
+                        <p className="text-slate-500 dark:text-slate-400">
+                            {t("monthlyExpensesList")}
                         </p>
                     </div>
 
                     {isLoading ? (
                         <div className="text-slate-500 flex items-center gap-2">
                             <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-slate-900"></div>
-                            <p>Cargando gastos...</p>
+                            <p>{t("loading")}</p>
                         </div>
                     ) : !isSpendsOfMonth || isSpendsOfMonth.length === 0 ? (
-                        <div className="text-slate-500 bg-slate-50 p-4 rounded-lg border border-slate-200">
-                            <p className="font-medium mb-2">No hay gastos registrados para este mes todavía.</p>
+                        <div className="text-slate-500 bg-slate-50 dark:bg-slate-700 p-4 rounded-lg border border-slate-200 dark:border-slate-600">
+                            <p className="font-medium mb-2">{t("noExpensesThisMonth")}</p>
                             {isSpends && isSpends.length > 0 && (
                                 <p className="text-sm text-slate-400">
-                                    Tienes {isSpends.length} {isSpends.length === 1 ? 'gasto' : 'gastos'} en total, pero ninguno de este mes.
+                                    {t("totalExpensesInfo", { count: isSpends.length })}
                                 </p>
                             )}
                         </div>
                     ) : (
                         <>
-                            <div className="text-sm text-slate-600 mb-2">
-                                <span className="font-semibold">{isSpendsOfMonth.length}</span> {isSpendsOfMonth.length === 1 ? 'gasto registrado' : 'gastos registrados'}
+                            <div className="text-sm text-slate-600 dark:text-slate-400 mb-2">
+                                <span className="font-semibold">{isSpendsOfMonth.length}</span> {t("expensesRegistered")}
                             </div>
                             <div className="max-h-[610px] overflow-y-auto flex flex-col gap-3 no-scrollbar">
                                 {isSpendsOfMonth.map((spend) => (

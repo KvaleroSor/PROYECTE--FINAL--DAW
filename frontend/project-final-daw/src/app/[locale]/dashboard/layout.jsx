@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { useLocale } from "next-intl";
 
 import Sidebar from "./components/Sidebar.jsx";
 import Header from "./components/Header.jsx";
@@ -15,12 +16,14 @@ import { InversionProvider } from "@/app/context/InversionContext.js";
 export default function DashboardLayout({ children }) {
     const router = useRouter();
     const { data: session, status } = useSession();
+    const locale = useLocale();
 
     useEffect(() => {
         if (status === "unauthenticated") {
-            router.push("/");
+            // Redirigir a la landing con el locale actual
+            router.push(locale === "es" ? "/" : `/${locale}`);
         }
-    }, [status, router]);
+    }, [status, router, locale]);
 
     return (
         <CategoriesProvider>

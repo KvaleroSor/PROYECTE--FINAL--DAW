@@ -11,14 +11,17 @@ import {
     PiggyBank
 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-// import { BalanceLogoAlt } from "./../../../components/BalanceLogoAlt.jsx";
-import { BalanceLogoCircle } from './../../../components/BalanceLogoCircle.jsx';
+import { useTranslations } from "next-intl";
+import { Link, usePathname } from "@/i18n/navigation";
+// import { BalanceLogoAlt } from "@/components/BalanceLogoAlt.jsx";
+import { BalanceLogoCircle } from "@/components/BalanceLogoCircle.jsx";
 
 const Sidebar = () => {
     const { data: session, status } = useSession();
+    const t = useTranslations("navigation");
+    const tAuth = useTranslations("auth");
     const pathname = usePathname();
+    // Ahora pathname ya no incluye el locale, así que la comparación funciona directamente
     const isActiveRoute = (route) => pathname === route;
 
     if (status === "loading") return null;
@@ -50,7 +53,7 @@ const Sidebar = () => {
                             }`}
                     >
                         <House className="w-4 h-4 sm:w-5 sm:h-5 stroke-current" />
-                        <span>Inicio</span>
+                        <span>{t("dashboard")}</span>
                         {isActiveRoute("/dashboard") && (
                             <ChevronRight className="w-4 h-4 ml-auto" />
                         )}
@@ -63,7 +66,7 @@ const Sidebar = () => {
                             }`}
                     >
                         <ChartBarStacked className="w-4 h-4 sm:w-5 sm:h-5 stroke-current" />
-                        <span>Categorias</span>
+                        <span>{t("categories")}</span>
                         {isActiveRoute("/dashboard/category") && (
                             <ChevronRight className="w-4 h-4 ml-auto" />
                         )}
@@ -76,7 +79,7 @@ const Sidebar = () => {
                             }`}
                     >
                         <PiggyBank className="w-4 h-4 sm:w-5 sm:h-5 stroke-current" />
-                        <span>Ahorro</span>
+                        <span>{t("savings")}</span>
                         {isActiveRoute("/dashboard/saving") && (
                             <ChevronRight className="w-4 h-4 ml-auto" />
                         )}
@@ -89,7 +92,7 @@ const Sidebar = () => {
                             }`}
                     >
                         <HandCoins className="w-4 h-4 sm:w-5 sm:h-5 stroke-current" />
-                        <span>Gasto</span>
+                        <span>{t("expenses")}</span>
                         {isActiveRoute("/dashboard/spend") && (
                             <ChevronRight className="w-4 h-4 ml-auto" />
                         )}
@@ -102,7 +105,7 @@ const Sidebar = () => {
                             }`}
                     >
                         <ChartColumnIncreasing className="w-4 h-4 sm:w-5 sm:h-5 stroke-current" />
-                        <span>Invesión</span>
+                        <span>{t("investments")}</span>
                         {isActiveRoute("/dashboard/inversion") && (
                             <ChevronRight className="w-4 h-4 ml-auto" />
                         )}
@@ -115,7 +118,7 @@ const Sidebar = () => {
                             }`}
                     >
                         <Settings className="w-4 h-4 sm:w-5 sm:h-5 stroke-current" />
-                        <span>Configuración</span>
+                        <span>{t("settings")}</span>
                         {isActiveRoute("/dashboard/settings") && (
                             <ChevronRight className="w-4 h-4 ml-auto" />
                         )}
@@ -128,7 +131,7 @@ const Sidebar = () => {
                     onClick={handleSignOut}
                 >
                     <DoorOpen className="w-4 h-4 sm:w-5 sm:h-5 stroke-current" />
-                    Cerrar Sesión
+                    {tAuth("logout")}
                 </button>
             </nav>
         </aside>

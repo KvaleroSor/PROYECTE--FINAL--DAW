@@ -7,8 +7,10 @@ import { useState, useEffect } from "react";
 import Category from "./Category.jsx";
 import { useSession } from "next-auth/react";
 import { Search, Plus, Bell } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const GridCategories = () => {
+    const t = useTranslations("categories");
     const { data: session } = useSession();
     const { isCategories, isLoading, setIsFormCategoryOpen, fetchCategories } =
         useCategories();
@@ -58,10 +60,10 @@ const GridCategories = () => {
                 <div className="mb-5 flex flex-row justify-between">
                     <div className="flex flex-col items-start">
                         <h1 className="text-slate-900 dark:text-slate-100 text-xl">
-                            Categoria de Gastos
+                            {t("title")}
                         </h1>
                         <p className="text-slate-500 dark:text-slate-400">
-                            Distribución del mes actual
+                            {t("monthlyDistribution")}
                         </p>
                     </div>
                     <div className="flex flex-row justify-center items-center gap-10">
@@ -71,14 +73,14 @@ const GridCategories = () => {
                             </h1>
                             {evaluateTotalAmountToSpend() !== false ? (
                                 <h1 className="text-red-500 dark:text-red-400 text-md">
-                                    de €{" "}
+                                    {t("of")} €{" "}
                                     {Number(
                                         isTotalAmountToSpendFixedAndLeisure
                                     ).toFixed(2)}
                                 </h1>
                             ) : (
                                 <h1 className="text-slate-500 dark:text-slate-400 text-md">
-                                    de €{" "}
+                                    {t("of")} €{" "}
                                     {Number(
                                         isTotalAmountToSpendFixedAndLeisure
                                     ).toFixed(2)}
@@ -86,11 +88,11 @@ const GridCategories = () => {
                             )}
                         </div>
                         <button
-                            className="flex items-center gap-2 h-10 px-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl group bg-blue-200 dark:bg-blue-400 text-slate-900 dark:text-slate-100 hover:bg-blue-300 dark:hover:bg-blue-500"
+                            className="flex items-center gap-2 h-10 px-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl group bg-slate-800 dark:bg-slate-400 text-slate-100 dark:text-slate-100 dark:hover:border-slate-100 dark:hover:bg-slate-500"
                             onClick={handleClickButtonFormCategory}
                         >
                             <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
-                            <span>Crear Categoria</span>
+                            <span>{t("addCategory")}</span>
                         </button>
                     </div>
                 </div>
@@ -99,7 +101,7 @@ const GridCategories = () => {
                     (isLoading && (
                         <>
                             <div>
-                                <p className="text-slate-600 dark:text-slate-400">No hay categorías todavía.</p>
+                                <p className="text-slate-600 dark:text-slate-400">{t("noCategories")}</p>
                             </div>
                         </>
                     ))}

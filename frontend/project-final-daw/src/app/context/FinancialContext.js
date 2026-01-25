@@ -4,6 +4,8 @@ import { useSession } from "next-auth/react";
 import { createContext, useContext, useState, useEffect } from "react";
 import getUserData from "@/services/users/getUserData.js";
 import getSpendByCategory from "@/services/spends/getSpendByCategory.js";
+import updateUserProfile from "@/services/users/updateUserProfile.js";
+import updateUser from "@/services/users/updateUser";
 
 const FinancialContext = createContext();
 
@@ -20,6 +22,7 @@ export const FinancialProvider = ({ children }) => {
     });
     const [additionalIncome, setAdditionalIncome] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [isFormModifyPercentageOpen, setIsFormModifyPercentageOpen] = useState(false);
 
     // Estados calculados
     const [isFixedExpensesFromNomina, setIsFixedExpensesFromNomina] = useState(0);
@@ -27,7 +30,8 @@ export const FinancialProvider = ({ children }) => {
     const [isInvestmentFromNomina, setIsInvestmentFromNomina] = useState(0);
     const [isSavingFromNomina, setIsSavingFromNomina] = useState(0);
     const [isSavingNetFromNomina, setIsSavingNetFromNomina] = useState(0);
-    const [isTotalAmountToSpendFixedAndLeisure, setIsTotalAmountToSpendFixedAndLeisure] = useState(0);
+    const [isTotalAmountToSpendFixedAndLeisure, setIsTotalAmountToSpendFixedAndLeisure] =
+        useState(0);
     const [isTotalSumCategoriesFixedLeisure, setIsTotalSumCategoriesFixedLeisure] = useState(0);
 
     // ----------------------------------------------------------------------
@@ -61,10 +65,7 @@ export const FinancialProvider = ({ children }) => {
                 );
             }
         } catch (err) {
-            console.error(
-                "ERROR - No se pueden cargar los datos financieros:",
-                err
-            );
+            console.error("ERROR - No se pueden cargar los datos financieros:", err);
         } finally {
             setIsLoading(false);
         }
@@ -81,15 +82,9 @@ export const FinancialProvider = ({ children }) => {
      */
 
     const calculatePercentageToPercentageSettings = async () => {
-        setIsFixedExpensesFromNomina(
-            (isPercentageSettings.fixedExpenses / 100) * isNomina
-        );
-        setIsLeisureExpensesFromNomina(
-            (isPercentageSettings.leisureExpenses / 100) * isNomina
-        );
-        setIsInvestmentFromNomina(
-            (isPercentageSettings.investment / 100) * isNomina
-        );
+        setIsFixedExpensesFromNomina((isPercentageSettings.fixedExpenses / 100) * isNomina);
+        setIsLeisureExpensesFromNomina((isPercentageSettings.leisureExpenses / 100) * isNomina);
+        setIsInvestmentFromNomina((isPercentageSettings.investment / 100) * isNomina);
         setIsSavingFromNomina((isPercentageSettings.savings / 100) * isNomina);
 
         console.log("MONTO ABSOLUTO POR CATEGORIA", isPercentageSettings);
@@ -98,14 +93,10 @@ export const FinancialProvider = ({ children }) => {
 
     const calcularTotalGastoFijoOcio = () => {
         const totalPercentage =
-            isPercentageSettings.fixedExpenses +
-            isPercentageSettings.leisureExpenses;
-        const totalToSpendFixedAndSpendLeisure =
-            (totalPercentage * isNomina) / 100;
+            isPercentageSettings.fixedExpenses + isPercentageSettings.leisureExpenses;
+        const totalToSpendFixedAndSpendLeisure = (totalPercentage * isNomina) / 100;
 
-        setIsTotalAmountToSpendFixedAndLeisure(
-            totalToSpendFixedAndSpendLeisure
-        );
+        setIsTotalAmountToSpendFixedAndLeisure(totalToSpendFixedAndSpendLeisure);
     };
 
     /**
@@ -131,10 +122,7 @@ export const FinancialProvider = ({ children }) => {
             const total = res.data.reduce((acc, curr) => acc + curr.amount, 0);
             return Number(total).toFixed(2);
         } catch (err) {
-            console.error(
-                "ERROR - FALLO FETCH DESDE FINANCIAL SERVICES",
-                err.message
-            );
+            console.error("ERROR - FALLO FETCH DESDE FINANCIAL SERVICES", err.message);
         }
     };
 
@@ -182,10 +170,7 @@ export const FinancialProvider = ({ children }) => {
         return Number((isAmountSpendByCategory * 100) / categoryBudgetAmount);
     };
 
-    const calculateAvailableMoneyToSpend = (
-        isTotalAmountToCategory,
-        isAmountSpendByCategory
-    ) => {
+    const calculateAvailableMoneyToSpend = (isTotalAmountToCategory, isAmountSpendByCategory) => {
         const result = isTotalAmountToCategory - isAmountSpendByCategory;
 
         return result < 0;
@@ -206,16 +191,39 @@ export const FinancialProvider = ({ children }) => {
 
     // Función para actualizar nómina
     const updateNomina = async (newNomina) => {
-        // Fer una fetch per actualitzar el servidor
-        setIsNomina(newNomina);
+        try {
+            setIsLoading(true);
+
+            const res = await updateUser({ nomina: newNomina }, session);
+
+            if (res) {
+                setIsNomina(newNomina);
+            }
+        } catch (err) {
+            console.error("ERROR - NO SE PUEDE ACTUALIZAR LA NÓMINA DEL USUARIO:", err);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    const updatePercentageSettings = async (newPercentage) => {
+        try {
+            setIsLoading(true);
+
+            const res = await updateUserProfile({ percentageSpend: newPercentage }, session);
+
+            if (res) {
+                setIsPercentageSettings(newPercentage);
+            }
+        } catch (err) {
+            console.error("ERROR - NO SE PUEDE ACTUALIZAR LOS % DEL USUARIO:", err);
+        } finally {
+            setIsLoading(false);
+        }
     };
 
     useEffect(() => {
-        if (
-            status === "authenticated" &&
-            session?.user?.user_id &&
-            session?.accessToken
-        ) {
+        if (status === "authenticated" && session?.user?.user_id && session?.accessToken) {
             fetchFinancialData();
         }
     }, [session, status]);
@@ -241,6 +249,7 @@ export const FinancialProvider = ({ children }) => {
                 isSavingFromNomina,
                 isTotalAmountToSpendFixedAndLeisure,
                 isTotalSumCategoriesFixedLeisure,
+                isFormModifyPercentageOpen,
 
                 // Setters
                 setIsNomina,
@@ -251,10 +260,12 @@ export const FinancialProvider = ({ children }) => {
                 setIsInvestmentFromNomina,
                 setIsSavingFromNomina,
                 setIsTotalSumCategoriesFixedLeisure,
+                setIsFormModifyPercentageOpen,
 
                 // Funciones CRUD
                 fetchFinancialData,
                 updateNomina,
+                updatePercentageSettings,
 
                 // Funciones de cálculo
                 calculatePercentageToPercentageSettings,
