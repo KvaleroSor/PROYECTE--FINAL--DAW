@@ -16,9 +16,11 @@ const FormModifyPercentage = () => {
     const [isTotalPercentage, setIsTotalPercentage] = useState(0);
     const [isTotalPercentageWrong, setIsTotalPercentageWrong] = useState(false);
     const [isNominaUpdated, setIsNominaUpdated] = useState(false);
+    const [isOldNominaValue, setIsOldNominaValue] = useState(isNomina);
 
     const handleClickCloseFormModifyPercentage = () => {
         setIsFormModifyPercentageOpen(false);
+        setIsNomina(isOldNominaValue);
     };
 
     const handleCalculateTotalPercentage = () => {

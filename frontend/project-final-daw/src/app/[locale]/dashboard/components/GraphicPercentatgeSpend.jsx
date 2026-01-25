@@ -37,11 +37,11 @@ const GraphicPercentatgeSpend = () => {
                     </div>
                 </div>
                 <div className="flex flex-row justify-center items-center mb-10 mx-6">
-                    <div className="flex justify-center items-center rounded-l-xl w-full h-20 p-3 bg-slate-600 dark:bg-slate-600 text-white dark:text-slate-100"><span>{fixedPercentage} %</span></div>
-                    <div className="flex justify-center items-center w-full h-20 p-3 bg-slate-500 dark:bg-blue-800 text-white dark:text-slate-100"><span>{leisurePercentage} %</span></div>
-                    <div className="flex justify-center items-center w-full h-20 p-3 bg-sky-500 dark:bg-teal-800 text-white dark:text-slate-100"><span>{investmentPercentage} %</span></div>
-                    <div className="flex justify-center items-center w-full h-20 p-3 bg-cyan-500 dark:bg-green-800 text-white dark:text-slate-100"><span>{savingsPercentage} %</span></div>
-                    <div className="flex justify-center items-center rounded-r-xl w-full h-20 p-3 bg-slate-400 dark:bg-slate-700 text-white dark:text-slate-100"><span>{isTotalImprevistosPercentatge} %</span></div>
+                    <div className="flex justify-center items-center rounded-l-xl w-full h-15 p-3 bg-slate-600 dark:bg-slate-600 text-white dark:text-slate-100"><span>{fixedPercentage} %</span></div>
+                    <div className="flex justify-center items-center w-full h-15 p-3 bg-slate-500 dark:bg-blue-800 text-white dark:text-slate-100"><span>{leisurePercentage} %</span></div>
+                    <div className="flex justify-center items-center w-full h-15 p-3 bg-sky-500 dark:bg-teal-800 text-white dark:text-slate-100"><span>{investmentPercentage} %</span></div>
+                    <div className="flex justify-center items-center w-full h-15 p-3 bg-cyan-500 dark:bg-green-800 text-white dark:text-slate-100"><span>{savingsPercentage} %</span></div>
+                    <div className="flex justify-center items-center rounded-r-xl w-full h-15 p-3 bg-slate-400 dark:bg-slate-700 text-white dark:text-slate-100"><span>{isTotalImprevistosPercentatge} %</span></div>
                 </div>
                 <div className="flex flex-col justify-start items-start gap-10 mx-6 mb-10">
                     <div className="w-full flex flex-row justify-center items-center gap-4">

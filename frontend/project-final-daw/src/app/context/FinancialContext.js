@@ -5,7 +5,6 @@ import { createContext, useContext, useState, useEffect } from "react";
 import getUserData from "@/services/users/getUserData.js";
 import getSpendByCategory from "@/services/spends/getSpendByCategory.js";
 import updateUserProfile from "@/services/users/updateUserProfile.js";
-import updateUser from "@/services/users/updateUser";
 
 const FinancialContext = createContext();
 
@@ -194,7 +193,7 @@ export const FinancialProvider = ({ children }) => {
         try {
             setIsLoading(true);
 
-            const res = await updateUser({ nomina: newNomina }, session);
+            const res = await updateUserProfile({ nomina: Number(newNomina) }, session);
 
             if (res) {
                 setIsNomina(newNomina);
