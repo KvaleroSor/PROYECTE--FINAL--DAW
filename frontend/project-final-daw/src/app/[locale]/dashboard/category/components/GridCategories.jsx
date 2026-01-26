@@ -56,7 +56,7 @@ const GridCategories = () => {
 
     return (
         <>
-            <div className="p-4 sm:p-6">
+            <div className="p-4 sm:p-6 shadow-2xl hover:shadow-md transition-all duration-300 rounded-2xl dark:bg-slate-800">
                 <div className="mb-5 flex flex-row justify-between">
                     <div className="flex flex-col items-start">
                         <h1 className="text-slate-900 dark:text-slate-100 text-xl">

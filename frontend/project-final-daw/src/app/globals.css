@@ -3,14 +3,14 @@
 @tailwind utilities;
 
 body {
-  @apply bg-background-slate dark:bg-slate-900 text-black dark:text-slate-100 transition-colors duration-300;
+    @apply bg-white text-black transition-colors duration-300 dark:bg-slate-900 dark:text-slate-100;
 }
 
 .no-scrollbar::-webkit-scrollbar {
-  display: none;
+    display: none;
 }
 
 .no-scrollbar {
-  -ms-overflow-style: none; /* IE y Edge */
-  scrollbar-width: none;     /* Firefox */
+    -ms-overflow-style: none; /* IE y Edge */
+    scrollbar-width: none; /* Firefox */
 }

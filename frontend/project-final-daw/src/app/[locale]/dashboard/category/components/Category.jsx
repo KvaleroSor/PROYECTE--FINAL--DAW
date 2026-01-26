@@ -146,7 +146,7 @@ const Category = ({ category, session }) => {
     return (
         <>
             <div
-                className="group w-full bg-white dark:bg-slate-800 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-slate-700 hover:shadow-xl hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-300 overflow-hidden cursor-pointer"
+                className="group w-full bg-white dark:bg-slate-700 rounded-2xl p-6 shadow-xl hover:shadow-md transition-all duration-300 overflow-hidden cursor-pointer"
                 onClick={(e) => {
                     handleClick(e, category);
                 }}
@@ -155,13 +155,13 @@ const Category = ({ category, session }) => {
                     <div className="w-full flex flex-col justify-start gap-4">
                         <div className="flex flex-row justify-between">
                             <div
-                                className="w-12 h-13 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center shadow-lg transition-all duration-300 border-2 bg-slate-800 dark:bg-slate-600 dark:border-slate-500"
+                                className="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl flex items-center justify-center shadow-lg transition-all duration-300 border-2 bg-slate-800 dark:bg-slate-600 dark:border-slate-500"
                             >
                                 {Icono && (
                                     <Icono className="w-7 h-7 text-slate-200" />
                                 )}
                             </div>
-                            <div className="flex justify-center items-center text-xs sm:text-sm rounded-3xl text-slate-500 dark:text-slate-300 m-3 p-1 px-3 bg-slate-100 dark:bg-slate-700">
+                            <div className="flex justify-center items-center text-xs sm:text-sm rounded-3xl text-slate-500 dark:text-slate-300 m-3 p-1 px-3 bg-slate-100 dark:bg-slate-800">
                                 {category_type && (
                                     <h3>{category_type.toUpperCase()}</h3>
                                 )}

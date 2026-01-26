@@ -16,8 +16,8 @@ const Header = () => {
 
     return (
         <>
-            <header className="flex justify-center items-center mx-5 my-3 bg-white dark:bg-slate-800 transition-colors duration-300">
-                <div className="border-2 border-gray-200 dark:border-slate-700 w-full h-full flex flex-row justify-center items-center rounded-xl">
+            <header className="sticky top-0 z-30 h-[100px] flex justify-center items-center bg-white dark:bg-slate-800 transition-colors duration-300 mx-4 mb-4 sm:mx-6 lg:mx-8 mt-4 sm:mt-6 lg:mt-8 rounded-2xl">
+                <div className="w-full h-full flex flex-row justify-center items-center rounded-xl shadow-2xl hover:shadow-md transition-all duration-300">
                     <div className="w-full ml-4">
                         <h1 className="text-2xl sm:text-3xl text-slate-900 dark:text-slate-100">{t("title")}</h1>
                         <p className="text-sm text-slate-600 dark:text-slate-400">{t("subtitle")}</p>

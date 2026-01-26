@@ -59,7 +59,7 @@ const Spend = ({ spend, session }) => {
     return (
         <>
             <div
-                className="bg-white dark:bg-slate-800 rounded-xl shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md transition-all duration-300 cursor-pointer group overflow-hidden flex-shrink-0"
+                className="bg-white dark:bg-slate-700 rounded-xl shadow-lg hover:shadow-md transition-all duration-300 cursor-pointer group overflow-hidden flex-shrink-0"
                 onClick={handleClickUpdate}
             >
                 <div className="flex">

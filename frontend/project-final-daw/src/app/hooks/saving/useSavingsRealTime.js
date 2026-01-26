@@ -36,13 +36,11 @@ export const useSavingsRealTime = (isTotalContributedAllTime = 0) => {
         );
 
         // 4. Calcular ahorro neto del mes actual (presupuesto - imprevistos)
-        const ahorroNetoMesActual = Math.max(
-            0,
-            (isSavingFromNomina || 0) - totalImprevistos
-        );
+        const ahorroNetoMesActual = Math.max(0, (isSavingFromNomina || 0) - totalImprevistos);
 
         // 5. Total ahorrado = ahorroGeneral (metas eliminadas) + contribuciones metas activas + ahorro neto mes
-        const totalAhorrado = (isAhorroGeneral || 0) + (isTotalContributedAllTime || 0) + ahorroNetoMesActual;
+        const totalAhorrado =
+            (isAhorroGeneral || 0) + (isTotalContributedAllTime || 0) + ahorroNetoMesActual;
 
         return Number(totalAhorrado).toFixed(2);
     }, [isTotalContributedAllTime, isSavingFromNomina, isSpends, isCategories, isAhorroGeneral]);
@@ -74,7 +72,6 @@ export const useSavingsRealTime = (isTotalContributedAllTime = 0) => {
         );
 
         return Number((totalImprevistos / isSavingFromNomina) * 100).toFixed(0);
-
     }, [isSavingFromNomina, isSpends, isCategories]);
 
     const isTotalImprevistos = useMemo(() => {
@@ -104,8 +101,7 @@ export const useSavingsRealTime = (isTotalContributedAllTime = 0) => {
         );
 
         return Number(totalImprevistos).toFixed(0);
-
-    }, [isSavingFromNomina, isSpends, isCategories])
+    }, [isSavingFromNomina, isSpends, isCategories]);
 
     return { isTotalSavingsRealTime, isTotalImprevistosPercentatge, isTotalImprevistos };
 };

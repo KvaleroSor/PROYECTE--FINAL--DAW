@@ -14,7 +14,7 @@ const GridSpends = () => {
 
     return (
         <>
-            <div className="w-full flex flex-col gap-2 p-4">
+            <div className="w-full flex flex-col gap-2 p-4 shadow-2xl hover:shadow-md transition-all duration-300 rounded-2xl m-2 sm:m-3 lg:m-4 dark:bg-slate-800">
                 <div className="mb-5 flex flex-col  gap-3">
                     <div className="flex flex-col items-start">
                         <h1 className="text-slate-900 dark:text-slate-100 text-xl">

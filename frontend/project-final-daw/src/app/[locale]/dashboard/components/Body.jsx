@@ -14,6 +14,7 @@ import CardsMainCategories from "./CardsMainCategories.jsx";
 import GridSpends from "../spend/components/GridSpends.jsx";
 import GraphicPercentatgeSpend from "./GraphicPercentatgeSpend.jsx";
 import FormModifyPercentage from "../settings/components/FormModifyPercentage.jsx";
+import GridInversion from "../inversion/components/GridInversion.jsx";
 
 const Body = () => {
     const { isFormCategoryOpen } = useCategories();
@@ -53,22 +54,25 @@ const Body = () => {
                         </div>
                     </div>
                 )}
-                <div className="flex flex-col justify-center items-center gap-5 m-2 sm:m-3 lg:m-4">
+                <div className="flex flex-col justify-center items-center gap-2 m-2 sm:m-3 lg:m-4">
                     <CardsMainCategories />
                 </div>
-                <div className="w-full flex flex-row gap-2">
-                    <div className="w-[60%]  border-2 rounded-xl flex flex-col justify-start items-start gap-5 bg-white dark:bg-slate-800 dark:border-2 dark:border-slate-700 rounded-xl m-2 sm:m-3 lg:m-4">
+                <div className="w-full flex flex-row gap-6">
+                    <div className="w-[60%] m-2 sm:m-3 lg:m-4">
                         {/* <Saving /> */}
                         <GridSpends />
                     </div>
-                    <div className="w-[40%] border-2 rounded-xl bg-white dark:bg-slate-800 dark:border-2 dark:border-slate-700 m-2 sm:m-3 lg:m-4">
+                    <div className="w-[40%] m-2 sm:m-3 lg:m-4">
                         {/* Repartición de la nómina en gráfico */}
                         <GraphicPercentatgeSpend />
                     </div>
                 </div>
                 {/*   */}
-                <div className="pt-4 border-2 rounded-xl m-2 sm:m-3 lg:m-4 bg-white dark:bg-slate-800 dark:border-2 dark:border-slate-700">
+                <div className="pt-4 m-4 sm:m-6 lg:m-8">
                     <GridCategories />
+                </div>
+                <div className="m-4 sm:m-6 lg:m-8">
+                    <GridInversion />
                 </div>
             </div>
         </>
