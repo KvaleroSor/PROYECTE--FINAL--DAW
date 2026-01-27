@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { registerSchema, loginSchema } from '@validations/validationsFormsLogin'
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import ButtonLogin from "./Button.jsx";
 import PercentageSelector, { BUDGET_PRESETS } from "./PercentageSelector.jsx";
 import { SquareUser, Mail, Lock, Eye, EyeOff, Euro } from "lucide-react";
-// import postNewUser from "@/services/users/postNewUser.js";
 
 const FormLogin = () => {
     const [isName, setIsName] = useState("");
@@ -16,16 +18,27 @@ const FormLogin = () => {
     const [isShowPassword, setIsShowPassword] = useState(false);
     const [isError, setIsError] = useState("");
     const [isLoginMode, setIsLoginMode] = useState(true);
-    // const [budgetPreset, setBudgetPreset] = useState("");
 
     const { data: session, status } = useSession();
     const router = useRouter();
+
+    const schema = isLoginMode ? loginSchema : registerSchema;
+
+    const { register, handleSubmit, formState: { errors }, reset } = useForm({
+        resolver: zodResolver(schema)
+    })
+
+    console.log("Errores de validación:", errors);
 
     useEffect(() => {
         if (status === "authenticated" && session) {
             router.push("/dashboard");
         }
     }, [session, status]);
+
+    useEffect(() => {
+        reset();
+    }, [isLoginMode, reset]);
 
     const handleCleanUpValuesForm = () => {
         setIsName("");
@@ -37,8 +50,9 @@ const FormLogin = () => {
         setIsError("");
     };
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    const handleSubmitForm = async (data) => {
+        // e.preventDefault();
+        console.log("Datos del formulario:", data);
 
         if (!isLoginMode) {
             const budgedPreset = BUDGET_PRESETS.find(
@@ -48,10 +62,10 @@ const FormLogin = () => {
             const nameSpendPercentage = budgedPreset?.name;
 
             const dataNewUser = {
-                name: isName,
-                email: isEmail,
-                password_hash: isPassword,
-                nomina: isNomina,
+                name: data.name,
+                email: data.email,
+                password_hash: data.password,
+                nomina: data.nomina,
                 percentageSpend: {
                     namePercentageSpend: nameSpendPercentage,
                     fixedExpenses: distributionSpendPercentage.fixedExpenses,
@@ -62,7 +76,7 @@ const FormLogin = () => {
                 },
             };
 
-            if (isPassword !== isPasswordConfirm) {
+            if (data.password !== data.confirmPassword) {
                 setIsError("❌ | LAS CONTRASEÑAS NO COINCIDEN");
                 return;
             }
@@ -82,6 +96,7 @@ const FormLogin = () => {
                     console.log("✅ - USER CREATED SUCCESFULLY: ", result);
                     setIsLoginMode(true);
                 } else {
+                    console.log("Error del servidor:", result);
                     setIsError(
                         `❌ ERROR - USER COULDN´T BEEN CREATED | ${result.mensaje}`
                     );
@@ -112,7 +127,7 @@ const FormLogin = () => {
     };
 
     return (
-        <form className="space-y-5 sm:space-y-6" onSubmit={handleSubmit}>
+        <form className="space-y-5 sm:space-y-6" onSubmit={handleSubmit(handleSubmitForm)}>
             <div className="space-y-2">
                 <label htmlFor="email" className="text-gray-700 dark:text-slate-300 text-xl">
                     Correo Electrónico
@@ -123,13 +138,15 @@ const FormLogin = () => {
                         id="email"
                         type="email"
                         placeholder="emial@email.com"
-                        value={isEmail}
-                        onChange={(e) => setIsEmail(e.target.value)}
+                        // value={isEmail}
+                        // onChange={(e) => setIsEmail(e.target.value)}
+                        {...register("email")}
                         className="w-full pl-11 h-11 sm:h-12 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-xl focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 focus:ring-0 transition-colors text-base outline-none focus:outline-none text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
                         required
                     />
                 </div>
             </div>
+            {errors.email && <p className="text-red-500 dark:text-red-400">{errors.email.message}</p>}
             <div className="space-y-2">
                 <label htmlFor="password" className="text-gray-700 dark:text-slate-300 text-xl">
                     Contraseña
@@ -141,8 +158,9 @@ const FormLogin = () => {
                         id="password"
                         type={isShowPassword ? "text" : "password"}
                         placeholder="••••••••"
-                        value={isPassword}
-                        onChange={(e) => setIsPassword(e.target.value)}
+                        // value={isPassword}
+                        // onChange={(e) => setIsPassword(e.target.value)}
+                        {...register("password")}
                         className="w-full pl-11 pr-11 h-11 sm:h-12 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-xl focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors text-base outline-none focus:outline-none text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
                         required
                     />
@@ -158,6 +176,7 @@ const FormLogin = () => {
                         )}
                     </button>
                 </div>
+                {errors.password && <p className="text-red-500 dark:text-red-400">{errors.password.message}</p>}
             </div>
 
             {!isLoginMode && (
@@ -176,10 +195,11 @@ const FormLogin = () => {
                                 id="passwordConfirm"
                                 type={isShowPassword ? "text" : "password"}
                                 placeholder="••••••••"
-                                value={isPasswordConfirm}
-                                onChange={(e) =>
-                                    setIsPasswordConfirm(e.target.value)
-                                }
+                                // value={isPasswordConfirm}
+                                // onChange={(e) =>
+                                //     setIsPasswordConfirm(e.target.value)
+                                // }
+                                {...register("confirmPassword")}
                                 className="w-full pl-11 pr-11 h-11 sm:h-12 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-xl focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors text-base outline-none focus:outline-none text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
                                 required
                             />
@@ -197,6 +217,7 @@ const FormLogin = () => {
                                 )}
                             </button>
                         </div>
+                        {errors.confirmPassword && <p className="text-red-500 dark:text-red-400">{errors.confirmPassword.message}</p>}
                     </div>
                     <div className="space-y-2">
                         <label htmlFor="name" className="text-gray-700 dark:text-slate-300 text-xl">
@@ -208,12 +229,14 @@ const FormLogin = () => {
                                 id="name"
                                 type="text"
                                 placeholder="Balance.app"
-                                value={isName}
-                                onChange={(e) => setIsName(e.target.value)}
+                                // value={isName}
+                                // onChange={(e) => setIsName(e.target.value)}
+                                {...register("name")}
                                 className="w-full pl-11 h-11 sm:h-12 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-xl focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors text-base outline-none focus:outline-none text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
                                 required
                             />
                         </div>
+                        {errors.name && <p className="text-red-500 dark:text-red-400">{errors.name.message}</p>}
                     </div>
                     <div className="space-y-2">
                         <label
@@ -228,12 +251,14 @@ const FormLogin = () => {
                                 id="nomina"
                                 type="text"
                                 placeholder="2500.00€"
-                                value={isNomina}
-                                onChange={(e) => setIsNomina(e.target.value)}
+                                // value={isNomina}
+                                // onChange={(e) => setIsNomina(e.target.value)}
+                                {...register("nomina", { valueAsNumber: true })}
                                 className="w-full pl-11 h-11 sm:h-12 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-xl focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors text-base outline-none focus:outline-none text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
                                 required
                             />
                         </div>
+                        {errors.nomina && <p className="text-red-500 dark:text-red-400">{errors.nomina.message}</p>}
                     </div>
 
                     <div className="space-y-2">
@@ -253,7 +278,7 @@ const FormLogin = () => {
                         </div>
                         <p className="text-md text-gray-500 dark:text-slate-400 mt-2">
                             Podrás personalizar estos valores después en tu
-                            dashboard
+                            dashboard.
                         </p>
                     </div>
                 </>

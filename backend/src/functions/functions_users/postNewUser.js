@@ -16,16 +16,16 @@ import hashingPassword from "../../utils/hashingPassword.js";
 
 const postNewUser = async (newUser) => {
     try {
-        const { name, email, password_hash, nomina, percentageSpend, role } = newUser;
+        const { name, email, password_hash, nomina, percentageSpend, role } =
+            newUser;
         const password_hashed = await hashingPassword(password_hash);
 
         //Realitzar accions de "SEGURETAT" abans de crear el nou usuari.
         const userSearched = await User.findOne({ email });
 
         if (userSearched) {
-            console.error(err);
             console.log("❌ ERROR - THE USER WITH THIS EMAIL EXIST | BBDD");
-            return;
+            throw new Error("El usuario con este email ya existe");
         }
 
         const registeredUser = await User.create({

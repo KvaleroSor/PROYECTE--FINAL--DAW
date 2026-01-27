@@ -6,9 +6,9 @@ const router = Router();
 router.post("/", async (req, res) => {
     try {
         const reqUser = req.body;
-        const { name, email, password_hash } = reqUser; 
+        const { name, email, password_hash } = reqUser;
 
-        if(!name || !email || !password_hash){
+        if (!name || !email || !password_hash) {
             res.status(204).send();
         }
 
@@ -22,7 +22,7 @@ router.post("/", async (req, res) => {
     } catch (err) {
         res.status(500).json({
             mensaje: `❌ ERROR - INTERNAL ERROR | SERVIDOR`,
-            error: err.mensage,
+            error: err.message,
         });
     }
 });
