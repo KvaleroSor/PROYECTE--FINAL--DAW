@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import ButtonLogin from "./Button.jsx";
 import PercentageSelector, { BUDGET_PRESETS } from "./PercentageSelector.jsx";
 import { SquareUser, Mail, Lock, Eye, EyeOff, Euro } from "lucide-react";
+import AlertMessage from "./AlertMessage.jsx";
 
 const FormLogin = () => {
     const [isName, setIsName] = useState("");
@@ -37,7 +38,7 @@ const FormLogin = () => {
     }, [session, status]);
 
     useEffect(() => {
-        reset();
+        reset(undefined, { keepValues: false, keepErrors: false });
     }, [isLoginMode, reset]);
 
     const handleCleanUpValuesForm = () => {
@@ -94,12 +95,21 @@ const FormLogin = () => {
 
                 if (response.ok) {
                     console.log("✅ - USER CREATED SUCCESFULLY: ", result);
+                    handleCleanUpValuesForm();
                     setIsLoginMode(true);
                 } else {
                     console.log("Error del servidor:", result);
-                    setIsError(
-                        `❌ ERROR - USER COULDN´T BEEN CREATED | ${result.mensaje}`
-                    );
+                    let errorMessage = result.mensaje;
+
+                    if (result.error) {
+                        try {
+                            const parsed = JSON.parse(result.error);
+                            errorMessage = parsed.error || parsed.mensaje || result.mensaje;
+                        } catch {
+                            errorMessage = result.error;
+                        }
+                    }
+                    setIsError(errorMessage);
                 }
             } catch (error) {
                 console.error("❌ ERROR - CONNECTION ERROR");
@@ -112,18 +122,16 @@ const FormLogin = () => {
             console.log("🔏 PASSWORD QUE LLEGA AL LOGIN: ", isPassword);
 
             const res = await signIn("credentials", {
-                email: isEmail,
-                password: isPassword,
+                email: data.email,
+                password: data.password,
                 redirect: false,
             });
             console.log(res);
 
             if (res.error) {
-                setIsError("❌ | CREDENCIALES INCORRECTAS");
+                setIsError("CREDENCIALES INCORRECTAS");
             }
         }
-
-        handleCleanUpValuesForm();
     };
 
     return (
@@ -146,7 +154,7 @@ const FormLogin = () => {
                     />
                 </div>
             </div>
-            {errors.email && <p className="text-red-500 dark:text-red-400">{errors.email.message}</p>}
+            {errors.email && <AlertMessage message={errors.email.message} type="error" />}
             <div className="space-y-2">
                 <label htmlFor="password" className="text-gray-700 dark:text-slate-300 text-xl">
                     Contraseña
@@ -176,7 +184,7 @@ const FormLogin = () => {
                         )}
                     </button>
                 </div>
-                {errors.password && <p className="text-red-500 dark:text-red-400">{errors.password.message}</p>}
+                {errors.password && <AlertMessage message={errors.password.message} type="error" />}
             </div>
 
             {!isLoginMode && (
@@ -217,7 +225,7 @@ const FormLogin = () => {
                                 )}
                             </button>
                         </div>
-                        {errors.confirmPassword && <p className="text-red-500 dark:text-red-400">{errors.confirmPassword.message}</p>}
+                        {errors.confirmPassword && <AlertMessage message={errors.confirmPassword.message} type="error" />}
                     </div>
                     <div className="space-y-2">
                         <label htmlFor="name" className="text-gray-700 dark:text-slate-300 text-xl">
@@ -236,7 +244,7 @@ const FormLogin = () => {
                                 required
                             />
                         </div>
-                        {errors.name && <p className="text-red-500 dark:text-red-400">{errors.name.message}</p>}
+                        {errors.name && <AlertMessage message={errors.name.message} type="error" />}
                     </div>
                     <div className="space-y-2">
                         <label
@@ -258,7 +266,7 @@ const FormLogin = () => {
                                 required
                             />
                         </div>
-                        {errors.nomina && <p className="text-red-500 dark:text-red-400">{errors.nomina.message}</p>}
+                        {errors.nomina && <AlertMessage message={errors.nomina.message} type="error" />}
                     </div>
 
                     <div className="space-y-2">
@@ -280,6 +288,7 @@ const FormLogin = () => {
                             Podrás personalizar estos valores después en tu
                             dashboard.
                         </p>
+                        {isError && <AlertMessage message={isError} type="error" />}
                     </div>
                 </>
             )}
@@ -289,6 +298,7 @@ const FormLogin = () => {
                     className="underline underline-offset-4 transition-shadow duration-200 hover:shadow-xl text-slate-700 dark:text-slate-300"
                     onClick={() => {
                         setIsLoginMode(true);
+                        handleCleanUpValuesForm();
                     }}
                 >
                     <span>Ir a Iniciar Sesión</span>
@@ -299,12 +309,13 @@ const FormLogin = () => {
                     className="underline underline-offset-4 transition-shadow duration-200 hover:shadow-xl text-slate-700 dark:text-slate-300"
                     onClick={() => {
                         setIsLoginMode(false);
+                        handleCleanUpValuesForm();
                     }}
                 >
                     <span>Ir a Crear Sesión</span>
                 </button>
             )}
-            {isError && <p className="text-red-500 dark:text-red-400">{isError}</p>}
+            {isError && <AlertMessage message={isError} type="error" />}
             <div className="flex flex-col justify-center items-center gap-4 mt-8 pt-4">
                 {isLoginMode ? (
                     <ButtonLogin
