@@ -6,7 +6,7 @@ import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import ButtonLogin from "./Button.jsx";
 import PercentageSelector, { BUDGET_PRESETS } from "./PercentageSelector.jsx";
-import { SquareUser, Mail, Lock, Eye, EyeOff, Euro } from "lucide-react";
+import { SquareUser, Mail, Lock, Eye, EyeOff, Euro, Check } from "lucide-react";
 import AlertMessage from "./AlertMessage.jsx";
 
 const FormLogin = () => {
@@ -25,8 +25,9 @@ const FormLogin = () => {
 
     const schema = isLoginMode ? loginSchema : registerSchema;
 
-    const { register, handleSubmit, formState: { errors }, reset } = useForm({
-        resolver: zodResolver(schema)
+    const { register, handleSubmit, formState: { errors, touchedFields }, reset } = useForm({
+        resolver: zodResolver(schema),
+        mode: "onBlur"
     })
 
     console.log("Errores de validación:", errors);
@@ -146,15 +147,15 @@ const FormLogin = () => {
                         id="email"
                         type="email"
                         placeholder="emial@email.com"
-                        // value={isEmail}
-                        // onChange={(e) => setIsEmail(e.target.value)}
                         {...register("email")}
-                        className="w-full pl-11 h-11 sm:h-12 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-xl focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 focus:ring-0 transition-colors text-base outline-none focus:outline-none text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
+                        className={`w-full pl-11 h-11 sm:h-12 bg-gray-50 dark:bg-slate-700 border ${!isLoginMode && errors.email && 'border-red-400 dark:border-red-400'} rounded-xl focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 focus:ring-0 transition-colors text-base outline-none focus:outline-none text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500`}
                         required
                     />
+                    {touchedFields.email && !errors.email && <Check className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500 dark:text-slate-400" />}
                 </div>
+                {touchedFields.email && errors.email && <AlertMessage message={errors.email.message} type="error" />}
             </div>
-            {errors.email && <AlertMessage message={errors.email.message} type="error" />}
+            {/* {errors.email && <AlertMessage message={errors.email.message} type="error" />} */}
             <div className="space-y-2">
                 <label htmlFor="password" className="text-gray-700 dark:text-slate-300 text-xl">
                     Contraseña
@@ -166,10 +167,8 @@ const FormLogin = () => {
                         id="password"
                         type={isShowPassword ? "text" : "password"}
                         placeholder="••••••••"
-                        // value={isPassword}
-                        // onChange={(e) => setIsPassword(e.target.value)}
                         {...register("password")}
-                        className="w-full pl-11 pr-11 h-11 sm:h-12 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-xl focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors text-base outline-none focus:outline-none text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
+                        className={`w-full pl-11 pr-11 h-11 sm:h-12 bg-gray-50 dark:bg-slate-700 border ${!isLoginMode && errors.password && 'border-red-400 dark:border-red-400'} rounded-xl focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors text-base outline-none focus:outline-none text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500`}
                         required
                     />
                     <button
@@ -184,7 +183,7 @@ const FormLogin = () => {
                         )}
                     </button>
                 </div>
-                {errors.password && <AlertMessage message={errors.password.message} type="error" />}
+                {touchedFields.password && errors.password && <AlertMessage message={errors.password.message} type="error" />}
             </div>
 
             {!isLoginMode && (
@@ -203,12 +202,8 @@ const FormLogin = () => {
                                 id="passwordConfirm"
                                 type={isShowPassword ? "text" : "password"}
                                 placeholder="••••••••"
-                                // value={isPasswordConfirm}
-                                // onChange={(e) =>
-                                //     setIsPasswordConfirm(e.target.value)
-                                // }
                                 {...register("confirmPassword")}
-                                className="w-full pl-11 pr-11 h-11 sm:h-12 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-xl focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors text-base outline-none focus:outline-none text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
+                                className={`w-full pl-11 pr-11 h-11 sm:h-12 bg-gray-50 dark:bg-slate-700 border ${!isLoginMode && errors.password && 'border-red-400 dark:border-red-400'} rounded-xl focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors text-base outline-none focus:outline-none text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500`}
                                 required
                             />
                             <button
@@ -225,7 +220,7 @@ const FormLogin = () => {
                                 )}
                             </button>
                         </div>
-                        {errors.confirmPassword && <AlertMessage message={errors.confirmPassword.message} type="error" />}
+                        {touchedFields.confirmPassword && errors.confirmPassword && <AlertMessage message={errors.confirmPassword.message} type="error" />}
                     </div>
                     <div className="space-y-2">
                         <label htmlFor="name" className="text-gray-700 dark:text-slate-300 text-xl">
@@ -237,14 +232,12 @@ const FormLogin = () => {
                                 id="name"
                                 type="text"
                                 placeholder="Balance.app"
-                                // value={isName}
-                                // onChange={(e) => setIsName(e.target.value)}
                                 {...register("name")}
-                                className="w-full pl-11 h-11 sm:h-12 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-xl focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors text-base outline-none focus:outline-none text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
+                                className={`w-full pl-11 h-11 sm:h-12 bg-gray-50 dark:bg-slate-700 border ${!isLoginMode && errors.name && 'border-red-400 dark:border-red-400'} rounded-xl focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors text-base outline-none focus:outline-none text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500`}
                                 required
                             />
                         </div>
-                        {errors.name && <AlertMessage message={errors.name.message} type="error" />}
+                        {touchedFields.name && errors.name && <AlertMessage message={errors.name.message} type="error" />}
                     </div>
                     <div className="space-y-2">
                         <label
@@ -259,14 +252,12 @@ const FormLogin = () => {
                                 id="nomina"
                                 type="text"
                                 placeholder="2500.00€"
-                                // value={isNomina}
-                                // onChange={(e) => setIsNomina(e.target.value)}
                                 {...register("nomina", { valueAsNumber: true })}
-                                className="w-full pl-11 h-11 sm:h-12 bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 rounded-xl focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors text-base outline-none focus:outline-none text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
+                                className={`w-full pl-11 h-11 sm:h-12 bg-gray-50 dark:bg-slate-700 border ${!isLoginMode && errors.nomina && 'border-red-400 dark:border-red-400'} rounded-xl focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors text-base outline-none focus:outline-none text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500`}
                                 required
                             />
                         </div>
-                        {errors.nomina && <AlertMessage message={errors.nomina.message} type="error" />}
+                        {touchedFields.nomina && errors.nomina && <AlertMessage message={errors.nomina.message} type="error" />}
                     </div>
 
                     <div className="space-y-2">
@@ -292,6 +283,7 @@ const FormLogin = () => {
                     </div>
                 </>
             )}
+            {isError && <AlertMessage message={isError} type="error" />}
             {!isLoginMode ? (
                 <button
                     type="button"
@@ -315,7 +307,7 @@ const FormLogin = () => {
                     <span>Ir a Crear Sesión</span>
                 </button>
             )}
-            {isError && <AlertMessage message={isError} type="error" />}
+
             <div className="flex flex-col justify-center items-center gap-4 mt-8 pt-4">
                 {isLoginMode ? (
                     <ButtonLogin

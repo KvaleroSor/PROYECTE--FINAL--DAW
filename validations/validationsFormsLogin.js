@@ -7,7 +7,11 @@ import { z } from "zod";
 
 export const registerSchema = z
     .object({
-        email: z.string().email("Email inválido").toLowerCase(),
+        email: z
+            .email("Formato de email inválido")
+            .min(1, "El email es obligatorio")
+            .toLowerCase()
+            .trim(),
 
         password: z
             .string()
@@ -24,7 +28,12 @@ export const registerSchema = z
             .min(2, "El nombre debe tener al menos 2 caracteres")
             .max(50, "El nombre no puede exceder 50 caracteres"),
 
-        nomina: z.number().positive("Debe ser positivo"),
+        nomina: z
+            .number({ invalid_type_error: "Debe ser un número válido" })
+            .positive("La nómina debe ser positiva")
+            .min(100, "La nómina mínima es 100€")
+            .max(500000, "La nómina máxima es 500.000€")
+            .multipleOf(0.01, "Usa máximo 2 decimales"),
     })
 
     .refine((data) => data.password === data.confirmPassword, {
@@ -33,6 +42,6 @@ export const registerSchema = z
     });
 
 export const loginSchema = z.object({
-    email: z.string().email("Email inválido").toLowerCase(),
+    email: z.email("Email inválido").toLowerCase(),
     password: z.string().min(1, "La contraseña es requerida"),
 });
