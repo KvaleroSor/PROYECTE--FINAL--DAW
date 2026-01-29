@@ -67,9 +67,14 @@ export const percentageSchema = z
 export const spendSchema = z.object({
     description: z.string().min(1, "La descripción es obligatoria").max(100),
     amount: z.number().positive("El importe debe ser mayor a 0"),
-    category_id: z.string().min(1, "Selecciona una categoría"),
-    payment_type: z.string().min(1, "Selecciona un tipo de pago"),
     date: z.date(),
+    payment_type: z
+        .string()
+        .min(1, "Selecciona un tipo de pago")
+        .refine(
+            (val) => ["Tarjeta", "Efectivo", "Transferencia"].includes(val),
+            { message: "Selecciona un tipo de pago" },
+        ),
 });
 
 export const createCategorySchema = (isSavingFromNomina) =>
