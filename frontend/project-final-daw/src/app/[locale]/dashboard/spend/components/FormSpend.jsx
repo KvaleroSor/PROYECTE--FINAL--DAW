@@ -26,9 +26,10 @@ import { useSession } from "next-auth/react";
 import ButtonTypePaymentForm from "./ButtonTypePaymentForm.jsx";
 import { useLeisureSpendTotalAvailable } from "@/app/hooks/spend/useLeisureSpendTotalAvailable.js";
 import { useFixedSpendTotalAvailable } from "@/app/hooks/spend/useFixedSpendTotalAvailable.js";
-import { spendSchema } from "@validations/validationsFormsLogin.js";
+import { createSpendSchema } from "@validations/validationsFormsLogin.js";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
+import AlertMessage from "@/components/AlertMessage.jsx";
 
 const FormSpend = () => {
     const {
@@ -69,8 +70,23 @@ const FormSpend = () => {
     ] = useState(false);
     const [isAmountToShowErrorMessage, setIsAmountToShowErrorMessage] =
         useState(0);
+    const [isMaxToSpend, setIsMaxToSpend] = useState(0);
     const [isFormData, setIsFormData] = useState({});
     const { data: session } = useSession();
+
+
+    const spendSchema = createSpendSchema(isMaxToSpend);
+
+    const { register, handleSubmit, control, formState: { errors } } = useForm({
+        resolver: zodResolver(spendSchema),
+        mode: "onSubmit",
+        defaultValues: {
+            description: "",
+            amount: 0,
+            category_id: "",
+            payment_type: "",
+        },
+    });
 
     useEffect(() => {
         if (isCategoryId && isCategories.length > 0) {
@@ -103,6 +119,8 @@ const FormSpend = () => {
                 );
             })
             .reduce((acc, spend) => acc + spend.amount, 0);
+
+        setIsMaxToSpend(totalGastosRealizados);
 
         if (
             isCategoryType !== "Gasto Fijo" &&
@@ -180,11 +198,11 @@ const FormSpend = () => {
          ***********************************************/
 
         const data = {
-            category_id: isCategoryId,
-            description: isDescription,
-            amount: isAmount,
-            date: isSpendDate,
-            payment_type: isPaymentType,
+            category_id: data.category_id,
+            description: data.description,
+            amount: data.amount,
+            date: data.date,
+            payment_type: data.payment_type,
         };
 
         console.log("📤 DATA TO SEND:", data);
@@ -223,9 +241,7 @@ const FormSpend = () => {
         <>
             <form
                 className="w-full flex flex-col justify-start items-center gap-3 text-slate-700 dark:text-slate-300"
-                onSubmit={(e) => {
-                    handleSubmitSpend(e);
-                }}
+                onSubmit={handleSubmit(handleSubmitSpend)}
             >
                 <div className="w-full flex flex-row justify-between mb-3 gap-2">
                     <div className="flex flex-col justify-start">
@@ -252,11 +268,15 @@ const FormSpend = () => {
                         type="text"
                         placeholder="Escribe una breve descripción"
                         className="h-12 w-full bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
-                        onChange={(e) => {
-                            setIsDescription(e.target.value || "");
-                        }}
-                        value={isDescription}
+                        // onChange={(e) => {
+                        //     setIsDescription(e.target.value || "");
+                        // }}
+                        // value={isDescription}
+                        {...register("description")}
                     />
+                    {errors.description && (
+                        <AlertMessage message={errors.description.message} type="error" />
+                    )}
                 </div>
                 <div className="w-full flex flex-col justify-start gap-2">
                     <label htmlFor="amount" className="text-slate-700 dark:text-slate-300">Cantidad del Gasto</label>
@@ -265,13 +285,17 @@ const FormSpend = () => {
                         type="number"
                         placeholder="0.00 €"
                         className="h-12 w-full bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
-                        onChange={(e) => {
-                            setIsAmount(e.target.value);
-                        }}
-                        value={isAmount || ""}
+                        // onChange={(e) => {
+                        //     setIsAmount(e.target.value);
+                        // }}
+                        // value={isAmount || ""}
+                        {...register("amount")}
                     />
+                    {errors.amount && (
+                        <AlertMessage message={errors.amount.message} type="error" />
+                    )}
                 </div>
-                {isMonthlyBudgetWrong && (
+                {/* {isMonthlyBudgetWrong && (
                     <div className="w-full flex flex-col justify-center items-center border-2 border-red-200 dark:border-red-800 rounded-xl p-3 bg-red-100 dark:bg-red-900/30 text-red-500 dark:text-red-400 shadow-xl shadow-red-200/20 dark:shadow-red-900/20">
                         <h1 className="">GASTO EXCEDIENDO EL LÍMITE</h1>
                         <div className="flex flex-row gap-2">
@@ -296,22 +320,26 @@ const FormSpend = () => {
                             </h1>
                         </div>
                     </div>
-                )}
+                )} */}
                 <div className="w-full flex flex-col justify-start gap-2">
                     <label htmlFor="date" className="text-slate-700 dark:text-slate-300">Fecha del Gasto</label>
                     <input
                         id="date"
                         type="date"
                         className="h-12 w-full bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-100"
-                        onChange={(e) => {
-                            setIsSpendDate(e.target.value);
-                        }}
-                        value={isSpendDate || ""}
+                        // onChange={(e) => {
+                        //     setIsSpendDate(e.target.value);
+                        // }}
+                        // value={isSpendDate || ""}
+                        {...register("date")}
                     />
+                    {errors.date && (
+                        <AlertMessage message={errors.date.message} type="error" />
+                    )}
                 </div>
                 <div className="w-full flex flex-col justify-start gap-2">
                     <label className="text-slate-700 dark:text-slate-300">Tipo de Pago</label>
-                    <div className="w-fit flex flex-wrap gap-2">
+                    {/* <div className="w-fit flex flex-wrap gap-2">
                         {payment_type.map((cat) => (
                             <ButtonTypePaymentForm
                                 key={cat}
@@ -321,7 +349,27 @@ const FormSpend = () => {
                                 isPaymentType={isPaymentType}
                             />
                         ))}
-                    </div>
+                    </div> */}
+                    <Controller
+                        name="payment_type"
+                        control={control}
+                        render={({ field }) => (
+                            <div className="w-fit flex flex-wrap gap-2">
+                                {payment_type.map((cat) => (
+                                    <ButtonTypePaymentForm
+                                        key={cat}
+                                        id={cat}
+                                        button_type={cat}
+                                        isPaymentType={field.value}
+                                        setIsPaymentType={(value) => field.onChange(value)}
+                                    />
+                                ))}
+                            </div>
+                        )}
+                    />
+                    {errors.payment_type && (
+                        <AlertMessage message={errors.payment_type.message} type="error" />
+                    )}
                 </div>
                 <div className="flex justify-center items-center w-full gap-3">
                     {!isUpdatedPushed ? (

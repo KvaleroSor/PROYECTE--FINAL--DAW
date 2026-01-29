@@ -192,11 +192,11 @@ const FormCategory = () => {
          ***********************************************/
 
         const data = {
-            name: isCategoryName,
-            monthly_budget: isMonthlyBudget,
-            category_type: isCategoryType,
-            color: isCategoryColor,
-            icon: isSelectedIcon,
+            name: data.name,
+            monthly_budget: data.monthly_budget,
+            category_type: data.category_type,
+            color: data.color,
+            icon: data.icon,
             user_id: session?.user?.user_id,
         };
 
