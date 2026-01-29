@@ -5,7 +5,7 @@ const ButtonLogin = ({ onClick, textButton }) => {
         <button
             id={`${textButton}`}
             type="submit"
-            className="w-full h-11 sm:h-12 flex justify-center items-center bg-white border-2 border-slate-900 hover:bg-slate-100 transition-all duration-300 rounded-xl"
+            className="w-full h-11 sm:h-12 flex justify-center items-center bg-white dark:bg-slate-700 text-slate-700 dark:text-slate-100 border-2 border-slate-900 dark:border-slate-400 hover:bg-slate-100 dark:hover:bg-slate-600 transition-all duration-300 rounded-xl"
             onClick={onClick}
         >
             <span>{textButton}</span>

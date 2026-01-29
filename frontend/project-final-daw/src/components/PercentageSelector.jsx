@@ -85,23 +85,23 @@ export function PercentageSelector({ value, onChange }) {
   const selectedPreset = BUDGET_PRESETS.find((p) => p.id === value);
 
   return (
-    <div className="space-y-3 mb-6">
+    <div className="space-y-2 mb-6">
       <Select value={value} onValueChange={onChange}>
-        <SelectTrigger className="w-full bg-gray-50 border-gray-200 h-12">
+        <SelectTrigger className="w-full bg-gray-50 dark:bg-slate-700 border-gray-100 dark:border-slate-400 h-11 sm:h-12 rounded-xl">
           <SelectValue placeholder="Selecciona un perfil de presupuesto" />
         </SelectTrigger>
-        <SelectContent position="popper" sideOffset={4}>
+        <SelectContent className="w-full bg-gray-50 dark:bg-slate-700 text-gray-900 dark:text-slate-100 border-gray-200 dark:border-slate-400" position="popper" sideOffset={4}>
           {BUDGET_PRESETS.map((preset) => (
-            <SelectItem key={preset.id} value={preset.id} data={preset.distribution}>
-              <div className="flex items-center gap-3 cursor-pointer">
-                <div className="flex items-center justify-center size-8 rounded-lg">
+            <SelectItem key={preset.id} value={preset.id} data={preset.distribution} className="cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-600 transition-all duration-300 rounded-xl p-2 m-2">
+              <div className="w-full flex items-center gap-3 ">
+                <div className="w-fullflex items-center justify-center size-8 rounded-lg">
                   {React.cloneElement(preset.icon, {
-                    className: 'size-5 text-gray-700',
+                    className: 'size-5 text-gray-700 dark:text-slate-100',
                   })}
                 </div>
                 <div className="flex flex-col">
-                  <span className="flex text-sm text-gray-900 justify-start">{preset.name}</span>
-                  <span className="text-xs text-gray-500">{preset.description}</span>
+                  <span className="flex text-sm text-gray-900 dark:text-slate-100 justify-start">{preset.name}</span>
+                  <span className="text-xs text-gray-500 dark:text-slate-400">{preset.description}</span>
                 </div>
               </div>
             </SelectItem>
@@ -111,7 +111,7 @@ export function PercentageSelector({ value, onChange }) {
 
       {/* Preview de la distribución seleccionada */}
       {selectedPreset && (
-        <div className="bg-slate-50 to-purple-50 rounded-xl p-4 border border-slate-600">
+        <div className="bg-slate-50 dark:bg-slate-700 to-purple-50 rounded-xl p-4 border border-slate-600 dark:border-slate-400">
           <p className="text-xs text-slate-900 mb-3">Vista previa de tu presupuesto:</p>
           <div className="grid grid-cols-2 gap-3">
             <div className="flex items-center gap-2">
@@ -143,23 +143,23 @@ export function PercentageSelector({ value, onChange }) {
               </div>
             </div>
           </div>
-          
+
           {/* Barra de progreso visual */}
           <div className="mt-3 h-2 bg-white rounded-full overflow-hidden flex">
-            <div 
-              className="bg-rose-500" 
+            <div
+              className="bg-rose-500"
               style={{ width: `${selectedPreset.distribution.fixedExpenses}%` }}
             />
-            <div 
-              className="bg-pink-500" 
+            <div
+              className="bg-pink-500"
               style={{ width: `${selectedPreset.distribution.leisureExpenses}%` }}
             />
-            <div 
-              className="bg-indigo-500" 
+            <div
+              className="bg-indigo-500"
               style={{ width: `${selectedPreset.distribution.investment}%` }}
             />
-            <div 
-              className="bg-emerald-500" 
+            <div
+              className="bg-emerald-500"
               style={{ width: `${selectedPreset.distribution.savings}%` }}
             />
           </div>

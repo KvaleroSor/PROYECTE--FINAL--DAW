@@ -59,7 +59,7 @@ const Spend = ({ spend, session }) => {
     return (
         <>
             <div
-                className="bg-white dark:bg-slate-700 rounded-xl shadow-lg hover:shadow-md transition-all duration-300 cursor-pointer group overflow-hidden flex-shrink-0"
+                className="bg-white dark:bg-slate-700 rounded-xl shadow-lg transition-all duration-300 cursor-pointer group overflow-hidden flex-shrink-0"
                 onClick={handleClickUpdate}
             >
                 <div className="flex">
@@ -70,7 +70,7 @@ const Spend = ({ spend, session }) => {
                     <div className="flex-1 p-5">
                         <div className="flex items-start justify-between mb-3">
                             <div className="flex items-center gap-3">
-                                <div className="border-r border-slate-500 dark:border-slate-600 pr-2">
+                                <div className="dark:border-slate-600 pr-2 transition-transform duration-300 group-hover:rotate-12">
                                     <Icon className="w-8 h-8 text-slate-700 dark:text-slate-300" />
                                 </div>
                                 <div>

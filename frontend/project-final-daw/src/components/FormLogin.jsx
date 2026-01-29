@@ -30,8 +30,6 @@ const FormLogin = () => {
         mode: "onBlur"
     })
 
-    console.log("Errores de validación:", errors);
-
     useEffect(() => {
         if (status === "authenticated" && session) {
             router.push("/dashboard");
@@ -53,9 +51,6 @@ const FormLogin = () => {
     };
 
     const handleSubmitForm = async (data) => {
-        // e.preventDefault();
-        console.log("Datos del formulario:", data);
-
         if (!isLoginMode) {
             const budgedPreset = BUDGET_PRESETS.find(
                 (p) => p.id === isSpendingPercentage
@@ -117,11 +112,6 @@ const FormLogin = () => {
                 setIsError(`❌ ERROR - CONNECTION ERROR`);
             }
         } else {
-            //ESTEM NO MODO LOGIN
-
-            console.log("🧾 EMAIL QUE LLEGA AL LOGIN: ", isEmail);
-            console.log("🔏 PASSWORD QUE LLEGA AL LOGIN: ", isPassword);
-
             const res = await signIn("credentials", {
                 email: data.email,
                 password: data.password,
@@ -146,7 +136,7 @@ const FormLogin = () => {
                     <input
                         id="email"
                         type="email"
-                        placeholder="emial@email.com"
+                        placeholder="email@email.com"
                         {...register("email")}
                         className={`w-full pl-11 h-11 sm:h-12 bg-gray-50 dark:bg-slate-700 border ${!isLoginMode && errors.email && 'border-red-400 dark:border-red-400'} rounded-xl focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 focus:ring-0 transition-colors text-base outline-none focus:outline-none text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500`}
                         required
@@ -279,7 +269,6 @@ const FormLogin = () => {
                             Podrás personalizar estos valores después en tu
                             dashboard.
                         </p>
-                        {isError && <AlertMessage message={isError} type="error" />}
                     </div>
                 </>
             )}

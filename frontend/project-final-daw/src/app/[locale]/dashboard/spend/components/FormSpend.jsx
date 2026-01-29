@@ -24,6 +24,11 @@ import { useFinancial } from "@/app/context/FinancialContext.js";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import ButtonTypePaymentForm from "./ButtonTypePaymentForm.jsx";
+import { useLeisureSpendTotalAvailable } from "@/app/hooks/spend/useLeisureSpendTotalAvailable.js";
+import { useFixedSpendTotalAvailable } from "@/app/hooks/spend/useFixedSpendTotalAvailable.js";
+import { spendSchema } from "@validations/validationsFormsLogin.js";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm, Controller } from "react-hook-form";
 
 const FormSpend = () => {
     const {
@@ -108,6 +113,8 @@ const FormSpend = () => {
         }
 
         const nuevoTotal = isTotalSumCategoriesFixedLeisure + Number(isAmount);
+
+        // La que necesitamos para comparar con zod validations
         const nuevoTotalMonthlyBudget =
             totalGastosRealizados + Number(isAmount);
 

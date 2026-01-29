@@ -176,12 +176,12 @@ const FormModifyPercentage = () => {
                         </div>
                     </div>
                 ) : (
-                    <div className="w-full flex flex-row justify-start items-center gap-2 border-2 border-red-300 dark:border-red-700 bg-red-100 dark:bg-red-800 rounded-xl p-4 mt-4">
-                        <div className="w-5 h-5 flex flex-row justify-center items-center rounded-full bg-red-500 dark:bg-red-700">
+                    <div className="w-full flex flex-row justify-start items-center gap-2 border-2 border-red-300 dark:border-red-700 bg-red-100 dark:bg-red-500 rounded-xl p-4 mt-4">
+                        <div className="w-5 h-5 flex flex-row justify-center items-center rounded-full bg-red-500 dark:bg-slate-100">
                         </div>
                         <div className="w-full flex flex-row justify-between items-center gap-4">
-                            <p className="text-red-500 dark:text-red-700 pr-4">Total</p>
-                            <div className="flex flex-row justify-center items-center gap-4 text-red-500 dark:text-red-700">
+                            <p className="text-red-500 dark:text-slate-100 pr-4">Total</p>
+                            <div className="flex flex-row justify-center items-center gap-4 text-red-500 dark:text-slate-100">
                                 <p>{isTotalPercentage} %</p>
                             </div>
                         </div>
