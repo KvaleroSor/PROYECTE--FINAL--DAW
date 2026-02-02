@@ -5,18 +5,27 @@ const postCategory = async (newCategory) => {
     try {
         console.log("🔍 === DEBUGGING POSTCATEGORY FUNCTION ===");
         console.log("📋 FUNCTION RECEIVED:", newCategory);
-        
-        const { name, monthly_budget, category_type, total_acumulated = 0, color = "Blue", icon = "Point blue", user_id } = newCategory;
-        
+
+        const {
+            name,
+            monthly_budget,
+            category_type,
+            total_acumulated = 0,
+            color = "Blue",
+            icon = "Point blue",
+            date,
+            user_id,
+        } = newCategory;
+
         console.log("👤 USER ID EXTRACTED:", user_id);
         console.log("🔍 USER ID TYPE:", typeof user_id);
         console.log("❓ USER ID EXISTS:", !!user_id);
-        
+
         if (!user_id) {
             console.log("❌ USER ID IS MISSING OR FALSY IN FUNCTION");
             throw new Error("user_id is required");
         }
-                
+
         let userIdParsed;
         try {
             userIdParsed = new mongoose.Types.ObjectId(user_id);
@@ -33,9 +42,10 @@ const postCategory = async (newCategory) => {
             total_acumulated: total_acumulated,
             color: color,
             icon: icon,
-            user_id: userIdParsed
+            date: date,
+            user_id: userIdParsed,
         };
-        
+
         console.log("💾 DATA TO SAVE IN DB:", categoryData);
 
         const registreCategory = await Category.create(categoryData);

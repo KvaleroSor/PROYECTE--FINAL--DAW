@@ -3,10 +3,12 @@ import { useSession } from "next-auth/react";
 import { useCategories } from "@/app/context/CategoryContext.js";
 import { useFinancial } from "@/app/context/FinancialContext.js";
 import { useSaving } from "@/app/context/SavingContext.js";
+import { useLeisureSpendTotalAvailable } from "@/app/hooks/spend/useLeisureSpendTotalAvailable.js";
+import { useFixedSpendTotalAvailable } from "@/app/hooks/spend/useFixedSpendTotalAvailable.js";
 import { useState, useEffect } from "react";
 import CardColor from "./CardColor.jsx";
 import ButtonTypeCategoryForm from "./ButtonTypeCategoryForm.jsx";
-import { createCategorySchema } from "@validations/validationsFormsLogin.js";
+import { createCategorySchema } from "@validations/validationsForms.js";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
 import AlertMessage from "@/components/AlertMessage.jsx";
@@ -39,6 +41,7 @@ const FormCategory = () => {
         isCategoryColor,
         isMonthlyBudget,
         isCategoryType,
+        isFormCategoryOpen,
         setIsCategory,
         setIsCategoryName,
         setIsCategoryColor,
@@ -58,25 +61,34 @@ const FormCategory = () => {
         isSavingFromNomina,
     } = useFinancial();
 
+    // HOOKS PERSONALIZADOS
+    const { isAvailableLeisure } = useLeisureSpendTotalAvailable();
+    const { isAvailableFixed } = useFixedSpendTotalAvailable();
+
+    // USE SAVING CONTEXT
     const { isTotalSavingsRealTime } = useSaving();
+
+    // ESTADOS DEL COMPONENTE
     const [isSelectedIcon, setIsSelectedIcon] = useState(null);
     const { data: session } = useSession();
-    const [isActiveButtonCategory, setIsActiveButtonCategory] = useState(false);
-    const [isMonthlyBudgetWrong, setIsMonthlyBudgetWrong] = useState(false);
+    // const [isMonthlyBudgetWrong, setIsMonthlyBudgetWrong] = useState(false);
     const [
         isMonthlyBudgetImprevistosWrong,
         setIsMonthlyBudgetImprevistosWrong,
     ] = useState(false);
-    const [isAmountToShowErrorMessage, setIsAmountToShowErrorMessage] =
-        useState(0);
+    // const [isAmountToShowErrorMessage, setIsAmountToShowErrorMessage] =
+    //     useState(0);
+    const [isButtonPushed, setIsButtonPushed] = useState("create");
+    const [isMaxToSpend, setIsMaxToSpend] = useState(0);
 
-    const categorySchema = createCategorySchema(isSavingFromNomina);
-    const { register, handleSubmit, control, formState: { errors } } = useForm({
+    const categorySchema = createCategorySchema(isMaxToSpend);
+    const { register, handleSubmit, control, formState: { errors }, reset } = useForm({
         resolver: zodResolver(categorySchema),
         mode: "onSubmit",
+        reValidateMode: "onChange",
         defaultValues: {
             name: "",
-            monthly_budget: 0,
+            monthly_budget: "",
             icon: "",
             type: "",
         },
@@ -90,6 +102,8 @@ const FormCategory = () => {
         setIsUpdatedPushed(false);
         setIsCategory({});
         setIsCategoryType(null);
+        setIsButtonPushed("create");
+        setIsFormCategoryOpen(false);
     };
 
     const availableIcons = [
@@ -113,57 +127,79 @@ const FormCategory = () => {
     const categoryType = ["Gasto Fijo", "Gasto Ocio", "Imprevistos"];
 
     useEffect(() => {
-        if (isUpdatedPushed && isCategory) {
-            setIsCategoryName(isCategory.name);
-            setIsMonthlyBudget(isCategory.monthly_budget);
-            setIsCategoryColor(isCategory.color);
-            setIsSelectedIcon(isCategory.icon);
-            setIsCategoryType(isCategory.category_type);
+        if (isCategory && isUpdatedPushed) {
+            reset({
+                name: isCategory.name || "",
+                monthly_budget: isCategory.monthly_budget || "",
+                type: isCategory.category_type || "",
+                icon: isCategory.icon || "",
+            });
+        } else if (!isUpdatedPushed) {
+            reset({
+                name: "",
+                monthly_budget: "",
+                icon: "",
+                type: "",
+            });
         }
-    }, [isUpdatedPushed, isCategory]);
+    }, [isCategory, reset, isUpdatedPushed]);
 
     useEffect(() => {
-        if (isCategoryType || isMonthlyBudget) {
-            handleCalculateMonthlyBudgetExceded();
-            handleCalculateMonthlyBudgetImprevistosExceded();
-        }
-    }, [isCategoryType, isMonthlyBudget]);
+        // const totalSpendsFixed = isCategories
+        //     .filter((cat) => cat.category_type === "Gasto Fijo")
+        //     .reduce((acc, current) => acc + current.monthly_budget, 0);
+
+        // const totalSpendsLeisure = isCategories
+        //     .filter((cat) => cat.category_type === "Gasto Ocio")
+        //     .reduce((acc, current) => acc + current.monthly_budget, 0);
+
+        // const totalSpendsImprevistos = isCategories
+        //     .filter((cat) => cat.category_type === "Imprevistos")
+        //     .reduce((acc, current) => acc + current.monthly_budget, 0);
+
+        // if (isCategoryType === "Gasto Fijo") {
+        //     setIsMaxToSpend(isAvailableFixed - totalSpendsFixed);
+        // } else if (isCategoryType === "Gasto Ocio") {
+        //     setIsMaxToSpend(isAvailableLeisure - totalSpendsLeisure);
+        // } else if (isCategoryType === "Imprevistos") {
+        //     setIsMaxToSpend(isTotalSavingsRealTime - totalSpendsImprevistos);
+        // } else {
+        //     setIsMaxToSpend(0);
+        // }
+
+
+        handleCalculateMonthlyBudgetExceded();
+        handleCalculateMonthlyBudgetImprevistosExceded();
+        console.log("SE HA EJECUTADO EL USE EFFECT");
+
+    }, [isFormCategoryOpen]);
 
     const handleCalculateMonthlyBudgetExceded = () => {
-        const totalSumMonthlyBudget = isCategories
-            .filter(
-                (cat) =>
-                    cat.category_type === "Gasto Fijo" ||
-                    cat.category_type === "Gasto Ocio"
-            )
+        console.log("ESTAMOS DENTRO DE LA FUNCIÓN");
+        console.log("isCategoryType", isCategoryType);
+        console.log("isMonthlyBudget", isMonthlyBudget);
+        console.log("CATORIAS", isCategories);
+
+        const totalSpendsFixed = isCategories
+            .filter((cat) => cat.category_type === "Gasto Fijo")
             .reduce((acc, current) => acc + current.monthly_budget, 0);
 
-        if (
-            isCategoryType !== "Gasto Fijo" &&
-            isCategoryType !== "Gasto Ocio"
-        ) {
-            setIsMonthlyBudgetWrong(false);
-            return false;
-        }
+        const totalSpendsLeisure = isCategories
+            .filter((cat) => cat.category_type === "Gasto Ocio")
+            .reduce((acc, current) => acc + current.monthly_budget, 0);
 
-        const nuevoTotal =
-            isTotalSumCategoriesFixedLeisure + Number(isMonthlyBudget);
-        const nuevoTotalMonthlyBudget =
-            totalSumMonthlyBudget + Number(isMonthlyBudget);
+        const totalSpendsImprevistos = isCategories
+            .filter((cat) => cat.category_type === "Imprevistos")
+            .reduce((acc, current) => acc + current.monthly_budget, 0);
 
-        if (
-            nuevoTotal > isTotalAmountToSpendFixedAndLeisure ||
-            nuevoTotalMonthlyBudget > isTotalAmountToSpendFixedAndLeisure
-        ) {
-            setIsMonthlyBudgetWrong(true);
-            setIsAmountToShowErrorMessage(
-                amountMaxToSpendFixedLeisure(
-                    totalSumMonthlyBudget,
-                    isTotalAmountToSpendFixedAndLeisure
-                )
-            );
+        if (isCategoryType === "Gasto Fijo") {
+            setIsMaxToSpend(isAvailableFixed - totalSpendsFixed);
+        } else if (isCategoryType === "Gasto Ocio") {
+            setIsMaxToSpend(isAvailableLeisure - totalSpendsLeisure);
+        } else if (isCategoryType === "Imprevistos") {
+            setIsMaxToSpend(isTotalSavingsRealTime - totalSpendsImprevistos);
         } else {
-            setIsMonthlyBudgetWrong(false);
+            setIsMaxToSpend(0);
         }
     };
 
@@ -182,55 +218,33 @@ const FormCategory = () => {
         }
     };
 
-    const handleSubmitCategory = async (e) => {
-        e.preventDefault();
-
-        const buttonPushed = e.nativeEvent.submitter.id;
-
+    const handleSubmitCategory = async (data) => {
         /***********************************************
          *         DATA QUE PASAMOS AL BACKEND         *
          ***********************************************/
 
-        const data = {
-            name: data.name,
-            monthly_budget: data.monthly_budget,
-            category_type: data.category_type,
-            color: data.color,
-            icon: data.icon,
-            user_id: session?.user?.user_id,
-        };
-
-        console.log("📤 DATA TO SEND:", data);
-
-        if (!data.user_id) {
-            console.error("❌ ERROR: No user_id disponible");
-            alert("Error: Usuario no logueado o sesión no válida");
-            return;
-        }
-        /***********************************************
-         *         DATA QUE PASAMOS AL BACKEND         *
-         ***********************************************/
-
-        if (buttonPushed === "button-create") {
+        if (isButtonPushed === "create") {
             try {
-                if (isMonthlyBudgetWrong) {
-                    return;
+                const dataToSend = {
+                    name: data.name,
+                    monthly_budget: data.monthly_budget,
+                    category_type: data.type,
+                    icon: data.icon,
+                    user_id: session?.user?.user_id,
                 }
 
-                const res = await createCategory(data, session);
-                console.log("DATA CATEGORY TYPE", data.category_type);
+                const res = await createCategory(dataToSend, session);
 
                 if (!res) {
                     console.log(`Algo mal ha pasado`);
                 }
 
-                console.log(res);
                 resetForm();
                 setIsFormCategoryOpen(false);
             } catch (err) {
                 console.error(err);
             }
-        } else if (buttonPushed === "button-update") {
+        } else if (isButtonPushed === "update") {
             try {
                 const res = await updatedCategory(
                     isCategory._id,
@@ -302,30 +316,6 @@ const FormCategory = () => {
                         <AlertMessage message={errors.monthly_budget.message} type="error" />
                     )}
                 </div>
-                {/* {isMonthlyBudgetWrong && (
-                    <div className="w-full flex flex-col justify-center items-center border-2 border-red-200 dark:border-red-800 rounded-xl p-3 bg-red-100 dark:bg-red-900/30 text-red-500 dark:text-red-400 shadow-xl shadow-red-200/20 dark:shadow-red-900/20">
-                        <h1>PARTIDA DE GASTO EXCEDIENDO EL LÍMITE</h1>
-                        <div className="flex flex-row gap-2">
-                            <p>Cantidad Máxima </p>
-                            <h1 className="text-xl">
-                                {"€ "}
-                                {isAmountToShowErrorMessage}
-                            </h1>
-                        </div>
-                    </div>
-                )}
-                {isMonthlyBudgetImprevistosWrong && (
-                    <div className="w-full flex flex-col justify-center items-center border-2 border-red-200 dark:border-red-800 rounded-xl p-3 bg-red-100 dark:bg-red-900/30 text-red-500 dark:text-red-400 shadow-xl shadow-red-200/20 dark:shadow-red-900/20">
-                        <h1>PARTIDA DE GASTO EXCEDIENDO EL LÍMITE</h1>
-                        <div className="flex flex-row gap-2">
-                            <p>Cantidad Máxima </p>
-                            <h1 className="text-xl">
-                                {"€ "}
-                                {Number(isSavingFromNomina).toFixed(2)}
-                            </h1>
-                        </div>
-                    </div>
-                )} */}
                 <div className="w-full flex flex-col gap-2 mt-5 mb-5">
                     <label htmlFor="icono" className="text-slate-700 dark:text-slate-300">Icono</label>
                     <Controller
@@ -359,17 +349,6 @@ const FormCategory = () => {
                 </div>
                 <div className="w-full flex flex-col justify-start gap-2">
                     <label className="text-slate-700 dark:text-slate-300">Tipo de Categoría</label>
-                    {/* <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-2">
-                        {categoryType.map((cat) => (
-                            <ButtonTypeCategoryForm
-                                key={cat}
-                                id={cat}
-                                button_type={cat}
-                                setIsCategoryType={setIsCategoryType}
-                                isCategoryType={isCategoryType}
-                            />
-                        ))}
-                    </div> */}
                     <Controller
                         name="type"
                         control={control}
@@ -396,32 +375,12 @@ const FormCategory = () => {
                         <div className="flex flex-col w-full gap-2">
                             <button
                                 id="button-create"
-                                type={
-                                    isMonthlyBudgetWrong ||
-                                        isMonthlyBudgetImprevistosWrong
-                                        ? "button"
-                                        : "submit"
-                                }
-                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 dark:bg-slate-600 text-slate-100 hover:border-slate-100 dark:hover:border-slate-100"
-                                onClick={
-                                    isMonthlyBudgetWrong ||
-                                        isMonthlyBudgetImprevistosWrong
-                                        ? handleCloseForm
-                                        : undefined
-                                }
+                                type="submit"
+                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 dark:bg-slate-600 text-slate-100 hover:border-slate-100 dark:hover:border-slate-400"
+                                onClick={() => setIsButtonPushed("create")}
                             >
-                                {isMonthlyBudgetWrong ||
-                                    isMonthlyBudgetImprevistosWrong ? (
-                                    <>
-                                        <X className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
-                                        <span>Cerrar</span>
-                                    </>
-                                ) : (
-                                    <>
-                                        <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
-                                        <span>Crear Categoría</span>
-                                    </>
-                                )}
+                                <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
+                                <span>Crear Gasto</span>
                             </button>
                             <button
                                 id="button-cancel"
@@ -438,10 +397,11 @@ const FormCategory = () => {
                             <button
                                 id="button-update"
                                 type="submit"
-                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 dark:bg-slate-600 text-slate-100 hover:border-slate-100 dark:hover:border-slate-100"
+                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 dark:bg-slate-600 text-slate-100 hover:border-slate-100 dark:hover:border-slate-400"
+                                onClick={() => setIsButtonPushed("update")}
                             >
                                 <Repeat className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
-                                <span>Actualizar Categoría</span>
+                                <span>Actualizar Gasto</span>
                             </button>
                             <button
                                 id="button-cancel"

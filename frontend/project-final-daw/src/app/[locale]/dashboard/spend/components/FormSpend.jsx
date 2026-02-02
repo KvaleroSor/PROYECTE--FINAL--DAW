@@ -1,16 +1,16 @@
 import {
     Plus,
-    ShoppingCart,
-    Home,
-    Car,
-    Utensils,
-    Heart,
-    Smartphone,
-    Palette,
+    // ShoppingCart,
+    // Home,
+    // Car,
+    // Utensils,
+    // Heart,
+    // Smartphone,
+    // Palette,
     X,
     Repeat,
-    SquareX,
-    CircleX,
+    // SquareX,
+    // CircleX,
     // TrendingUp,
     // PiggyBank,
     // ReceiptEuro,
@@ -24,9 +24,9 @@ import { useFinancial } from "@/app/context/FinancialContext.js";
 import { useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import ButtonTypePaymentForm from "./ButtonTypePaymentForm.jsx";
-import { useLeisureSpendTotalAvailable } from "@/app/hooks/spend/useLeisureSpendTotalAvailable.js";
-import { useFixedSpendTotalAvailable } from "@/app/hooks/spend/useFixedSpendTotalAvailable.js";
-import { createSpendSchema } from "@validations/validationsFormsLogin.js";
+// import { useLeisureSpendTotalAvailable } from "@/app/hooks/spend/useLeisureSpendTotalAvailable.js";
+// import { useFixedSpendTotalAvailable } from "@/app/hooks/spend/useFixedSpendTotalAvailable.js";
+import { createSpendSchema } from "@validations/validationsForms.js";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
 import AlertMessage from "@/components/AlertMessage.jsx";
@@ -35,11 +35,12 @@ const FormSpend = () => {
     const {
         //Estado
         isCategoryId,
-        isDescription,
+        // isDescription,
         isAmount,
-        isPaymentType,
+        // isPaymentType,
         isUpdatedPushed,
-        isSpendDate,
+        // isSpendDate,
+        isSpend,
         //Setters
         setIsFormSpendOpen,
         setIsCategoryId,
@@ -49,44 +50,71 @@ const FormSpend = () => {
         setIsUpdatedPushed,
         setIsCategoryType,
         setIsSpendDate,
+        setIsSpend,
         //Crud
         postNewSpend,
         isCategoryType,
+        updatedSpend,
+
     } = useSpends();
     const { isCategories, isMonthlyBudget } = useCategories();
     const { isTotalSavingsRealTime } = useSaving();
     const {
-        isTotalAmountToSpendFixedAndLeisure,
-        isTotalSumCategoriesFixedLeisure,
-        setIsTotalSumCategoriesFixedLeisure,
-        amountMaxToSpendFixedLeisure,
+        // isTotalAmountToSpendFixedAndLeisure,
+        // isTotalSumCategoriesFixedLeisure,
+        // setIsTotalSumCategoriesFixedLeisure,
+        // amountMaxToSpendFixedLeisure,
         isSavingFromNomina,
+        isLeisureExpensesFromNomina,
+        isFixedExpensesFromNomina,
     } = useFinancial();
     const { isSpends } = useSpends();
-    const [isMonthlyBudgetWrong, setIsMonthlyBudgetWrong] = useState(false);
+    // const [isMonthlyBudgetWrong, setIsMonthlyBudgetWrong] = useState(false);
     const [
         isMonthlyBudgetImprevistosWrong,
         setIsMonthlyBudgetImprevistosWrong,
     ] = useState(false);
-    const [isAmountToShowErrorMessage, setIsAmountToShowErrorMessage] =
-        useState(0);
+    // const [isAmountToShowErrorMessage, setIsAmountToShowErrorMessage] =
+    //     useState(0);
     const [isMaxToSpend, setIsMaxToSpend] = useState(0);
-    const [isFormData, setIsFormData] = useState({});
+    // const [isFormData, setIsFormData] = useState({});
     const { data: session } = useSession();
-
+    const [isButtonPushed, setIsButtonPushed] = useState("create");
 
     const spendSchema = createSpendSchema(isMaxToSpend);
-
-    const { register, handleSubmit, control, formState: { errors } } = useForm({
+    const { register, handleSubmit, control, formState: { errors }, reset } = useForm({
         resolver: zodResolver(spendSchema),
         mode: "onSubmit",
+        reValidateMode: "onChange",
         defaultValues: {
             description: "",
-            amount: 0,
+            amount: "",
             category_id: "",
             payment_type: "",
+            date: new Date().toISOString().split('T')[0],
         },
     });
+
+    useEffect(() => {
+        if (isSpend && isUpdatedPushed) {
+            setIsCategoryId(isSpend.category_id);
+            reset({
+                description: isSpend.description || "",
+                amount: Number(isSpend.amount).toFixed(2) || 0,
+                payment_type: isSpend.payment_type || "",
+                date: isSpend.date
+                    ? new Date(isSpend.date).toISOString().split('T')[0]
+                    : new Date().toISOString().split('T')[0],
+            });
+        } else {
+            reset({
+                description: "",
+                amount: "",
+                payment_type: "",
+                date: new Date().toISOString().split('T')[0],
+            });
+        }
+    }, [isSpend, reset, isUpdatedPushed]);
 
     useEffect(() => {
         if (isCategoryId && isCategories.length > 0) {
@@ -107,48 +135,47 @@ const FormSpend = () => {
     }, [isCategoryType, isAmount]);
 
     const handleCalculateMonthlyBudgetExceded = () => {
-        const totalGastosRealizados = isSpends
+        const totalSpendsFixed = isSpends
             .filter((spend) => {
                 const category = isCategories.find(
                     (cat) => cat._id === spend.category_id
                 );
                 return (
                     category &&
-                    (category.category_type === "Gasto Fijo" ||
-                        category.category_type === "Gasto Ocio")
-                );
+                    (category.category_type === "Gasto Fijo"));
             })
             .reduce((acc, spend) => acc + spend.amount, 0);
 
-        setIsMaxToSpend(totalGastosRealizados);
+        const totalSpendsLeisure = isSpends
+            .filter((spend) => {
+                const category = isCategories.find(
+                    (cat) => cat._id === spend.category_id
+                );
+                return (
+                    category &&
+                    (category.category_type === "Gasto Ocio"));
+            })
+            .reduce((acc, spend) => acc + spend.amount, 0);
 
-        if (
-            isCategoryType !== "Gasto Fijo" &&
-            isCategoryType !== "Gasto Ocio"
-        ) {
-            setIsMonthlyBudgetWrong(false);
-            return false;
-        }
+        const totalSpendsImprevistos = isSpends
+            .filter((spend) => {
+                const category = isCategories.find(
+                    (cat) => cat._id === spend.category_id
+                );
+                return (
+                    category &&
+                    (category.category_type === "Imprevistos"));
+            })
+            .reduce((acc, spend) => acc + spend.amount, 0);
 
-        const nuevoTotal = isTotalSumCategoriesFixedLeisure + Number(isAmount);
-
-        // La que necesitamos para comparar con zod validations
-        const nuevoTotalMonthlyBudget =
-            totalGastosRealizados + Number(isAmount);
-
-        if (
-            nuevoTotal > isTotalAmountToSpendFixedAndLeisure ||
-            nuevoTotalMonthlyBudget > isTotalAmountToSpendFixedAndLeisure
-        ) {
-            setIsMonthlyBudgetWrong(true);
-            setIsAmountToShowErrorMessage(
-                amountMaxToSpendFixedLeisure(
-                    totalGastosRealizados,
-                    isTotalAmountToSpendFixedAndLeisure
-                )
-            );
+        if (isCategoryType === "Gasto Fijo" && totalSpendsFixed > 0) {
+            setIsMaxToSpend(isFixedExpensesFromNomina - totalSpendsFixed);
+        } else if (isCategoryType === "Gasto Ocio" && totalSpendsLeisure > 0) {
+            setIsMaxToSpend(isLeisureExpensesFromNomina - totalSpendsLeisure);
+        } else if (isCategoryType === "Imprevistos" && totalSpendsImprevistos > 0) {
+            setIsMaxToSpend(isSavingFromNomina - totalSpendsImprevistos);
         } else {
-            setIsMonthlyBudgetWrong(false);
+            setIsMaxToSpend(0);
         }
     };
 
@@ -180,44 +207,30 @@ const FormSpend = () => {
         setIsAmount("");
         setIsSpendDate(null);
         setIsPaymentType("");
+        setIsSpend(null);
+        setIsButtonPushed("create");
+        setIsUpdatedPushed(false);
     };
 
     const findNameCategory = () => {
         const category = isCategories.find((cat) => cat._id === isCategoryId);
-        return category.name;
+        return category?.name || "Categoría no encontrada";
     };
 
-    const handleSubmitSpend = async (e) => {
-        e.preventDefault();
-
-        const buttonPushed = e.nativeEvent.submitter.id;
-        console.log(buttonPushed);
-
-        /***********************************************
-         *         DATA QUE PASAMOS AL BACKEND         *
-         ***********************************************/
-
-        const data = {
-            category_id: data.category_id,
-            description: data.description,
-            amount: data.amount,
-            date: data.date,
-            payment_type: data.payment_type,
-        };
-
-        console.log("📤 DATA TO SEND:", data);
-
-        /***********************************************
-         *         DATA QUE PASAMOS AL BACKEND         *
-         ***********************************************/
-
+    const handleSubmitSpend = async (formData) => {
         /***********************************************
          *         POST DE LA DATA A LA BBDD           *
          ***********************************************/
 
-        if (buttonPushed === "button-create") {
+        if (isButtonPushed === "create") {
             try {
-                const res = await postNewSpend(data, session);
+
+                const dataToSend = {
+                    ...formData,
+                    category_id: isCategoryId,
+                };
+
+                const res = await postNewSpend(dataToSend, session);
 
                 if (!res) {
                     console.log(`Algo mal ha pasado`);
@@ -225,6 +238,26 @@ const FormSpend = () => {
 
                 console.log(res);
                 resetForm();
+                setIsFormSpendOpen(false);
+            } catch (err) {
+                console.error(err);
+            }
+        } else if (isButtonPushed === "update") {
+            try {
+                const dataToSend = {
+                    ...formData,
+                    category_id: isCategoryId,
+                };
+
+                const res = await updatedSpend(isSpend._id, dataToSend, session);
+
+                if (!res) {
+                    console.log(`Algo mal ha pasado`);
+                }
+
+                console.log(res);
+                resetForm();
+                setIsFormSpendOpen(false);
             } catch (err) {
                 console.error(err);
             }
@@ -268,10 +301,6 @@ const FormSpend = () => {
                         type="text"
                         placeholder="Escribe una breve descripción"
                         className="h-12 w-full bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
-                        // onChange={(e) => {
-                        //     setIsDescription(e.target.value || "");
-                        // }}
-                        // value={isDescription}
                         {...register("description")}
                     />
                     {errors.description && (
@@ -283,54 +312,22 @@ const FormSpend = () => {
                     <input
                         id="amount"
                         type="number"
+                        step="any"
                         placeholder="0.00 €"
                         className="h-12 w-full bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
-                        // onChange={(e) => {
-                        //     setIsAmount(e.target.value);
-                        // }}
-                        // value={isAmount || ""}
-                        {...register("amount")}
+                        {...register("amount", { valueAsNumber: true })}
                     />
                     {errors.amount && (
                         <AlertMessage message={errors.amount.message} type="error" />
                     )}
                 </div>
-                {/* {isMonthlyBudgetWrong && (
-                    <div className="w-full flex flex-col justify-center items-center border-2 border-red-200 dark:border-red-800 rounded-xl p-3 bg-red-100 dark:bg-red-900/30 text-red-500 dark:text-red-400 shadow-xl shadow-red-200/20 dark:shadow-red-900/20">
-                        <h1 className="">GASTO EXCEDIENDO EL LÍMITE</h1>
-                        <div className="flex flex-row gap-2">
-                            <p>Cantidad Máxima </p>
-                            <h1 className="text-xl font-semibold">
-                                {"€ "}
-                                {isAmountToShowErrorMessage}
-                            </h1>
-                        </div>
-                    </div>
-                )}
-                {isMonthlyBudgetImprevistosWrong && (
-                    <div className="w-full flex flex-col justify-center items-center border-2 border-red-200 dark:border-red-800 rounded-xl p-3 bg-red-100 dark:bg-red-900/30 text-red-500 dark:text-red-400 shadow-xl shadow-red-200/20 dark:shadow-red-900/20">
-                        <h1 className="font-bold">
-                            GASTO EXCEDIENDO EL LÍMITE
-                        </h1>
-                        <div className="flex flex-row gap-2">
-                            <p>Cantidad Máxima </p>
-                            <h1 className="text-xl">
-                                {"€ "}
-                                {Number(isSavingFromNomina).toFixed(2)}
-                            </h1>
-                        </div>
-                    </div>
-                )} */}
+
                 <div className="w-full flex flex-col justify-start gap-2">
                     <label htmlFor="date" className="text-slate-700 dark:text-slate-300">Fecha del Gasto</label>
                     <input
                         id="date"
                         type="date"
                         className="h-12 w-full bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-100"
-                        // onChange={(e) => {
-                        //     setIsSpendDate(e.target.value);
-                        // }}
-                        // value={isSpendDate || ""}
                         {...register("date")}
                     />
                     {errors.date && (
@@ -339,17 +336,6 @@ const FormSpend = () => {
                 </div>
                 <div className="w-full flex flex-col justify-start gap-2">
                     <label className="text-slate-700 dark:text-slate-300">Tipo de Pago</label>
-                    {/* <div className="w-fit flex flex-wrap gap-2">
-                        {payment_type.map((cat) => (
-                            <ButtonTypePaymentForm
-                                key={cat}
-                                id={cat}
-                                button_type={cat}
-                                setIsPaymentType={setIsPaymentType}
-                                isPaymentType={isPaymentType}
-                            />
-                        ))}
-                    </div> */}
                     <Controller
                         name="payment_type"
                         control={control}
@@ -376,32 +362,12 @@ const FormSpend = () => {
                         <div className="flex flex-col w-full gap-2">
                             <button
                                 id="button-create"
-                                type={
-                                    isMonthlyBudgetWrong ||
-                                        isMonthlyBudgetImprevistosWrong
-                                        ? "button"
-                                        : "submit"
-                                }
+                                type="submit"
                                 className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 dark:bg-slate-600 text-slate-100 hover:border-slate-100 dark:hover:border-slate-400"
-                                onClick={
-                                    isMonthlyBudgetWrong ||
-                                        isMonthlyBudgetImprevistosWrong
-                                        ? handleCloseForm
-                                        : undefined
-                                }
+                                onClick={() => setIsButtonPushed("create")}
                             >
-                                {isMonthlyBudgetWrong ||
-                                    isMonthlyBudgetImprevistosWrong ? (
-                                    <>
-                                        <X className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
-                                        <span>Cerrar</span>
-                                    </>
-                                ) : (
-                                    <>
-                                        <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
-                                        <span>Crear Gasto</span>
-                                    </>
-                                )}
+                                <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
+                                <span>Crear Gasto</span>
                             </button>
                             <button
                                 id="button-cancel"
@@ -419,6 +385,7 @@ const FormSpend = () => {
                                 id="button-update"
                                 type="submit"
                                 className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 dark:bg-slate-600 text-slate-100 hover:border-slate-100 dark:hover:border-slate-400"
+                                onClick={() => setIsButtonPushed("update")}
                             >
                                 <Repeat className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
                                 <span>Actualizar Gasto</span>

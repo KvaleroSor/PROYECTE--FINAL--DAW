@@ -39,21 +39,19 @@ const Spend = ({ spend, session }) => {
         //Crud
         postNewSpend,
         isCategoryType,
+        setIsSpend,
     } = useSpends();
     const { isIconSpendCategory, isCategoryName } = useIconSpendCategory(spend.category_id);
     const Icon = isIconSpendCategory;
 
     const handleClickUpdate = () => {
+        setIsSpend(spend);
         setIsFormSpendOpen(true);
-        setIsCategoryId(spend.category_id);
-        setIsDescription(spend.description);
-        setIsAmount(spend.amount);
-        setIsPaymentType(spend.payment_type);
         setIsUpdatedPushed(true);
-        setIsSpendDate(new Date(spend.date).toISOString().split('T')[0]);
 
         console.log("IS SPEND DATE", (new Date(spend.date).toISOString().split('T')[0]));
         console.log("IS SPEND DATE", new Date(isSpendDate));
+        console.log("SPEND DATE", spend);
     };
 
     return (

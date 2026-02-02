@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import { registerSchema, loginSchema } from '@validations/validationsFormsLogin'
+import { registerSchema, loginSchema } from '@validations/validationsForms.js'
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import ButtonLogin from "./Button.jsx";

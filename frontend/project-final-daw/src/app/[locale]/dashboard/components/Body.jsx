@@ -57,6 +57,9 @@ const Body = () => {
                 <div className="flex flex-col justify-center items-center gap-2 m-2 sm:m-3 lg:m-4">
                     <CardsMainCategories />
                 </div>
+                <div className="pt-4 m-4 sm:m-6 lg:m-8">
+                    <GridCategories />
+                </div>
                 <div className="w-full flex flex-row gap-6">
                     <div className="w-[60%] m-2 sm:m-3 lg:m-4">
                         {/* <Saving /> */}
@@ -66,10 +69,6 @@ const Body = () => {
                         {/* Repartición de la nómina en gráfico */}
                         <GraphicPercentatgeSpend />
                     </div>
-                </div>
-                {/*   */}
-                <div className="pt-4 m-4 sm:m-6 lg:m-8">
-                    <GridCategories />
                 </div>
                 <div className="m-4 sm:m-6 lg:m-8">
                     <GridInversion />

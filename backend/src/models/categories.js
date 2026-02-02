@@ -7,12 +7,18 @@ const categoriesSchema = new mongoose.Schema({
     },
     monthly_budget: {
         type: Number,
-        required: true
+        required: true,
     },
     category_type: {
         type: String,
-        enum: ["Gasto Fijo", "Gasto Ocio", "Inversion", "Ahorro", "Imprevistos"],
-        required: true,        
+        enum: [
+            "Gasto Fijo",
+            "Gasto Ocio",
+            "Inversion",
+            "Ahorro",
+            "Imprevistos",
+        ],
+        required: true,
     },
     total_acumulated: {
         type: Number,
@@ -26,6 +32,10 @@ const categoriesSchema = new mongoose.Schema({
     icon: {
         type: String,
         required: false,
+    },
+    date: {
+        type: Date,
+        defualt: Date.now,
     },
     user_id: {
         type: mongoose.Schema.Types.ObjectId,

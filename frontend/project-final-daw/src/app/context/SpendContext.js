@@ -12,7 +12,7 @@ const SpendContext = createContext();
 
 export const SpendProvider = ({ children }) => {
     const { data: session, status } = useSession();
-    
+
     // Estados principales
     const [isSpends, setIsSpends] = useState([]);
     const [isSpend, setIsSpend] = useState({});
@@ -20,7 +20,7 @@ export const SpendProvider = ({ children }) => {
     const [error, setError] = useState(null);
     const [isFormSpendOpen, setIsFormSpendOpen] = useState(false);
     const [isUpdatedPushed, setIsUpdatedPushed] = useState(false);
-    
+
     // Estados del formulario
     const [isCategoryId, setIsCategoryId] = useState("");
     const [isDescription, setIsDescription] = useState("");
@@ -30,11 +30,9 @@ export const SpendProvider = ({ children }) => {
     const [isCategoryType, setIsCategoryType] = useState(null);
     const [isSpendDate, setIsSpendDate] = useState(null);
 
-    
-
     const fetchSpends = async () => {
-        if (!session?.accessToken) return;   
-        
+        if (!session?.accessToken) return;
+
         const userId = session?.user?.user_id;
 
         try {
@@ -43,11 +41,8 @@ export const SpendProvider = ({ children }) => {
             setIsSpends(data.data);
             console.log("DATA DE LOS GASTOS", data);
         } catch (err) {
-            console.error(
-                "ERROR - NO SE PUEDEN CARGAR LOS GASTOS | GLOBAL CONTEXT:",
-                err
-            );
-            setIsSpends([]);                       
+            console.error("ERROR - NO SE PUEDEN CARGAR LOS GASTOS | GLOBAL CONTEXT:", err);
+            setIsSpends([]);
         } finally {
             setIsLoading(false);
         }
@@ -58,12 +53,9 @@ export const SpendProvider = ({ children }) => {
             setIsLoading(true);
             const data = await getSpendById(id, session);
             console.log("DATA DESDE SERVER - ", data.data);
-            setIsSpend(data.data);            
+            setIsSpend(data.data);
         } catch (err) {
-            console.error(
-                "ERROR - NO SE PUEDE CARGAR EL GASTO | GLOBAL CONTEXT:",
-                err
-            );
+            console.error("ERROR - NO SE PUEDE CARGAR EL GASTO | GLOBAL CONTEXT:", err);
         } finally {
             setIsLoading(false);
         }
@@ -76,10 +68,7 @@ export const SpendProvider = ({ children }) => {
             await fetchSpends();
             return res;
         } catch (err) {
-            console.error(
-                "ERROR - NO SE PUEDE CREAR EL GASTO | GLOBAL CONTEXT:",
-                err
-            );
+            console.error("ERROR - NO SE PUEDE CREAR EL GASTO | GLOBAL CONTEXT:", err);
         }
     };
 
@@ -93,10 +82,7 @@ export const SpendProvider = ({ children }) => {
             await fetchSpendById(id, session);
             return res;
         } catch (err) {
-            console.error(
-                "ERROR - NO SE PUEDE ACTUALIZAR EL GASTO | GLOBAL CONTEXT:",
-                err
-            );
+            console.error("ERROR - NO SE PUEDE ACTUALIZAR EL GASTO | GLOBAL CONTEXT:", err);
         }
     };
 
@@ -107,10 +93,7 @@ export const SpendProvider = ({ children }) => {
             setIsSpend({});
             return res;
         } catch (err) {
-            console.error(
-                "ERROR - NO SE PUEDE ELIMINAR EL GASTO | GLOBAL CONTEXT:",
-                err
-            );
+            console.error("ERROR - NO SE PUEDE ELIMINAR EL GASTO | GLOBAL CONTEXT:", err);
         }
     };
 
@@ -139,6 +122,7 @@ export const SpendProvider = ({ children }) => {
                 isPaymentType,
                 isCategoryType,
                 isSpendDate,
+                isSpend,
 
                 // Setters
                 setIsFormSpendOpen,
@@ -150,6 +134,7 @@ export const SpendProvider = ({ children }) => {
                 setIsPaymentType,
                 setIsCategoryType,
                 setIsSpendDate,
+                setIsSpend,
 
                 // Funciones CRUD
                 fetchSpends,

@@ -7,7 +7,7 @@ const AlertMessage = ({ message, type }) => {
                 <div className="flex items-start gap-3">
                     <AlertTriangle className="w-5 h-5 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
                     <div>
-                        <p className="text-sm text-red-600 dark:text-red-300 mb-1">{message}</p>
+                        <p className="text-md text-red-600 dark:text-red-300 mb-1">{message}</p>
                     </div>
                 </div>
             </div >
