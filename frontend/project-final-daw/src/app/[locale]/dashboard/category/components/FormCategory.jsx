@@ -64,7 +64,6 @@ const FormCategory = () => {
     // HOOKS PERSONALIZADOS
     const { isAvailableLeisure } = useLeisureSpendTotalAvailable();
     const { isAvailableFixed } = useFixedSpendTotalAvailable();
-
     // USE SAVING CONTEXT
     const { isTotalSavingsRealTime } = useSaving();
 
@@ -167,6 +166,8 @@ const FormCategory = () => {
         //     setIsMaxToSpend(0);
         // }
 
+        // Probando el hook de categorías del mes.
+        // console.log("IS CATEGORIES MONTH", isCategoriesMonth);
 
         handleCalculateMonthlyBudgetExceded();
         handleCalculateMonthlyBudgetImprevistosExceded();

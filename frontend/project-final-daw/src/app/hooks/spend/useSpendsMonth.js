@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useSpends } from "@/app/context/SpendContext";
+import { useSpends } from "@/app/context/SpendContext.js";
 
 export const useSpendsMonth = () => {
     const { isSpends } = useSpends();
@@ -13,19 +13,19 @@ export const useSpendsMonth = () => {
         const currentMonth = currentDate.getMonth();
         const currentYear = currentDate.getFullYear();
 
-        const totalSpendMonth = isSpends.filter((spend) => {
-            const spendDate = new Date(spend.date);
-       
-            return (
-                spendDate.getMonth() === currentMonth &&
-                spendDate.getFullYear() === currentYear
-            );
-        }).sort((a, b) => new Date(b.date) - new Date(a.date));
+        const totalSpendMonth = isSpends
+            .filter((spend) => {
+                const spendDate = new Date(spend.date);
 
-        console.log("🚀 IS SPENDS OF MONTH:", totalSpendMonth);        
+                return (
+                    spendDate.getMonth() === currentMonth && spendDate.getFullYear() === currentYear
+                );
+            })
+            .sort((a, b) => new Date(b.date) - new Date(a.date));
 
-        return totalSpendMonth;        
+        console.log("🚀 IS SPENDS OF MONTH:", totalSpendMonth);
 
+        return totalSpendMonth;
     }, [isSpends]);
 
     return { isSpendsOfMonth };

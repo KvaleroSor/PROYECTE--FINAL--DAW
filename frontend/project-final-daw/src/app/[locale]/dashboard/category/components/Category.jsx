@@ -75,10 +75,9 @@ const Category = ({ category, session }) => {
                 setIsCurrentPercentagePerCategory(
                     calculateCategoryPercentage(
                         monthly_budget,
-                        total_acumulated
+                        isAmountSpendByCategory
                     )
                 );
-                console.log("TOTAL ACUMULADO", isCurrentPercentagePerCategory);
                 calculatePercentageToPercentageSettings();
 
                 const amount = await calculateMonthlyTotalAmountSpend(category);
@@ -100,6 +99,7 @@ const Category = ({ category, session }) => {
         isLeisureExpensesFromNomina,
         isInvestmentFromNomina,
         isSavingFromNomina,
+        isAmountSpendByCategory,
         calculateCategoryPercentage,
         monthly_budget,
         category_type,
@@ -114,7 +114,7 @@ const Category = ({ category, session }) => {
             setIsUpdatedPushed(true);
             setIsFormCategoryOpen(true);
             setIsCurrentPercentagePerCategory(
-                calculateCategoryPercentage(monthly_budget, total_acumulated)
+                calculateCategoryPercentage(monthly_budget)
             );
             calculatePercentageToPercentageSettings();
         } else {
@@ -146,7 +146,7 @@ const Category = ({ category, session }) => {
     return (
         <>
             <div
-                className="group w-full bg-white dark:bg-slate-700 rounded-2xl p-6 shadow-xl hover:shadow-md transition-all duration-300 overflow-hidden cursor-pointer"
+                className="group w-full bg-white dark:bg-slate-700 rounded-2xl p-6 shadow-xl hover:shadow-md transition-all duration-300 overflow-hidden flex-shrink-0 cursor-pointer"
                 onClick={(e) => {
                     handleClick(e, category);
                 }}

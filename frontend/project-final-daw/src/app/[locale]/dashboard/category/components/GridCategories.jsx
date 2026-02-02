@@ -66,6 +66,8 @@ const GridCategories = () => {
                             {t("monthlyDistribution")}
                         </p>
                     </div>
+
+
                     <div className="flex flex-row justify-center items-center gap-10">
                         <div className="flex flex-col">
                             <h1 className="text-4xl text-slate-900 dark:text-slate-100">
@@ -106,7 +108,8 @@ const GridCategories = () => {
                         </>
                     ))}
                 {isCategories && isCategories.length > 0 && (
-                    <div className="grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
+                    // ACABAR DE AJUSTAR LA ALTRUA DE LA CAJA PARA QUE QUEPAN AL MENOS 2 TARJETAS EN VERTICAL
+                    <div className="max-h-[800px] grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 overflow-y-auto no-scrollbar">
                         {isCategories?.map((category) => (
                             <Category
                                 key={category.id}

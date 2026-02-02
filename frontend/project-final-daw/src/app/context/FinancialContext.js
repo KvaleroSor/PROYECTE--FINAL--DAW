@@ -107,8 +107,8 @@ export const FinancialProvider = ({ children }) => {
      * @returns {string} El monto calculado formateado a 2 decimales.
      */
 
-    const calculateCategoryPercentage = (monthly_budget, total_acumulated) => {
-        return Number((total_acumulated * 100) / monthly_budget).toFixed(2);
+    const calculateCategoryPercentage = (monthly_budget, amountSpend) => {
+        return Number((amountSpend * 100) / monthly_budget).toFixed(2);
     };
 
     /**
@@ -119,9 +119,27 @@ export const FinancialProvider = ({ children }) => {
 
     const calculateMonthlyTotalAmountSpend = async (category) => {
         try {
+            const currentDate = new Date();
+            const currentMonth = currentDate.getMonth();
+            const currentYear = currentDate.getFullYear();
+
             const res = await getSpendByCategory(category._id, session);
-            const total = res.data.reduce((acc, curr) => acc + curr.amount, 0);
-            return Number(total).toFixed(2);
+
+            // Devolvemos solo los gastos del mes, de modo que las tarjetas
+            // solo pintaran los gastos de ese mes, las tarjetas se mantendrán
+            // a no ser que el usuario las quiera borrar
+            const totalPerMonth = res.data
+                .filter((spend) => {
+                    const dateSpend = new Date(spend.date);
+
+                    return (
+                        dateSpend.getMonth() === currentMonth &&
+                        dateSpend.getFullYear() === currentYear
+                    );
+                })
+                .reduce((acc, curr) => acc + curr.amount, 0);
+
+            return Number(totalPerMonth).toFixed(2);
         } catch (err) {
             console.error("ERROR - FALLO FETCH DESDE FINANCIAL SERVICES", err.message);
         }
