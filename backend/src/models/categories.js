@@ -35,7 +35,7 @@ const categoriesSchema = new mongoose.Schema({
     },
     date: {
         type: Date,
-        defualt: Date.now,
+        default: Date.now,
     },
     user_id: {
         type: mongoose.Schema.Types.ObjectId,

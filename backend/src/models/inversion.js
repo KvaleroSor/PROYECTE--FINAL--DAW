@@ -8,29 +8,29 @@ const inversion = new mongoose.Schema({
     },
     type: {
         type: String,
-        required: true
+        required: true,
     },
     amount: {
         type: Number,
-        required: true
+        required: true,
     },
     inversion_date: {
         type: Date,
         required: true,
-        default: new Date()
+        default: Date.now,
     },
-    target_profitability:{
+    target_profitability: {
         type: Number,
-        required: false
+        required: false,
     },
     real_profitability: {
         type: Number,
-        required: false
+        required: false,
     },
     total: {
         type: Number,
-        required: false
-    }
+        required: false,
+    },
 });
 
 const Inversion = mongoose.model("Inversion", inversion);

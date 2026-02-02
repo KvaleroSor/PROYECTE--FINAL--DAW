@@ -5,7 +5,7 @@ const spendSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         required: true,
         ref: "User",
-    },    
+    },
     category_id: {
         type: mongoose.Schema.Types.ObjectId,
         required: true,
@@ -23,7 +23,7 @@ const spendSchema = new mongoose.Schema({
     },
     date: {
         type: Date,
-        defualt: Date.now,
+        default: Date.now,
     },
     payment_type: {
         type: String,
