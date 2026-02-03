@@ -18,7 +18,7 @@ export const registerSchema = z
             .min(8, "Mínimo 8 caracteres")
             .regex(
                 /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/,
-                "Debe contener al menos un carácter especial | !@#$%^&*()_+-=[]{}|;:',.<>?/"
+                "Debe contener al menos un carácter especial | !@#$%^&*()_+-=[]{}|;:',.<>?/",
             ),
 
         confirmPassword: z.string(),
@@ -61,7 +61,7 @@ export const percentageSchema = z
                 data.investment +
                 data.savings ===
             100,
-        { message: "Los porcentajes deben sumar exactamente 100%" }
+        { message: "Los porcentajes deben sumar exactamente 100%" },
     );
 
 export const createSpendSchema = (maxToSpend) =>
@@ -97,7 +97,7 @@ export const createSpendSchema = (maxToSpend) =>
                 ctx.addIssue({
                     code: z.ZodIssueCode.custom,
                     message: `El gasto no puede exceder ${maxToSpend.toFixed(
-                        2
+                        2,
                     )} €`,
                 });
                 return z.NEVER;
@@ -112,57 +112,57 @@ export const createSpendSchema = (maxToSpend) =>
             .min(1, "Selecciona un tipo de pago")
             .refine(
                 (val) => ["Tarjeta", "Efectivo", "Transferencia"].includes(val),
-                { message: "Selecciona un tipo de pago" }
+                { message: "Selecciona un tipo de pago" },
             ),
     });
 
 export const createCategorySchema = (isMaxToSpend) =>
     z.object({
         name: z.string().min(1, "El nombre es obligatorio").max(50),
-        monthly_budget: z.coerce
-            .number()
-            .positive("Debe ser un número positivo"),
-        // monthly_budget: z.any().transform((val, ctx) => {
-        //     if (val === "" || val === undefined || val === null) {
-        //         ctx.addIssue({
-        //             code: z.ZodIssueCode.custom,
-        //             message: "El importe es obligatorio",
-        //         });
-        //         return z.NEVER;
-        //     }
-        //     const parsed = Number(val);
-        //     if (isNaN(parsed)) {
-        //         ctx.addIssue({
-        //             code: z.ZodIssueCode.custom,
-        //             message: "Introduce un número válido",
-        //         });
-        //         return z.NEVER;
-        //     }
-        //     if (parsed <= 0) {
-        //         ctx.addIssue({
-        //             code: z.ZodIssueCode.custom,
-        //             message: "El importe debe ser mayor a 0",
-        //         });
-        //         return z.NEVER;
-        //     }
-        //     if (parsed > isMaxToSpend) {
-        //         ctx.addIssue({
-        //             code: z.ZodIssueCode.custom,
-        //             message: `El gasto no puede exceder ${isMaxToSpend.toFixed(
-        //                 2
-        //             )} €`,
-        //         });
-        //         return z.NEVER;
-        //     }
-        //     return parsed;
-        // }),
+        // monthly_budget: z.coerce
+        //     .number()
+        //     .positive("Debe ser un número positivo"),
+        monthly_budget: z.any().transform((val, ctx) => {
+            if (val === "" || val === undefined || val === null) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    message: "El importe es obligatorio",
+                });
+                return z.NEVER;
+            }
+            const parsed = Number(val);
+            if (isNaN(parsed)) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    message: "Introduce un número válido",
+                });
+                return z.NEVER;
+            }
+            if (parsed <= 0) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    message: "El importe debe ser mayor a 0",
+                });
+                return z.NEVER;
+            }
+            if (parsed > isMaxToSpend) {
+                ctx.addIssue({
+                    code: z.ZodIssueCode.custom,
+                    message: `El gasto no puede exceder ${Number(
+                        isMaxToSpend,
+                    ).toFixed(2)} €`,
+                });
+                return z.NEVER;
+            }
+            return parsed;
+        }),
         icon: z.string().min(1, "Selecciona un icono"),
-        type: z
+        category_type: z
             .string()
             .min(1, "Selecciona un tipo de categoría")
             .refine(
                 (val) =>
                     ["Gasto Fijo", "Gasto Ocio", "Imprevistos"].includes(val),
-                { message: "Selecciona un tipo de categoría válido" }
+                { message: "Selecciona un tipo de categoría válido" },
             ),
     });

@@ -12,14 +12,14 @@ const CategoriesContext = createContext();
 
 export const CategoriesProvider = ({ children }) => {
     const { data: session, status } = useSession();
-    
+
     // Estados principales
     const [isCategories, setIsCategories] = useState([]);
     const [isCategory, setIsCategory] = useState({});
     const [isLoading, setIsLoading] = useState(false);
     const [isFormCategoryOpen, setIsFormCategoryOpen] = useState(false);
     const [isUpdatedPushed, setIsUpdatedPushed] = useState(false);
-    
+
     // Estados del formulario
     const [isCategoryName, setIsCategoryName] = useState("");
     const [isMonthlyBudget, setIsMonthlyBudget] = useState(0);
@@ -31,17 +31,14 @@ export const CategoriesProvider = ({ children }) => {
     // --------------------------
 
     const fetchCategories = async () => {
-        if (!session?.user?.user_id || !session?.accessToken) return;        
+        if (!session?.user?.user_id || !session?.accessToken) return;
 
         try {
             setIsLoading(true);
             const data = await getCategories(session.user.user_id, session);
             setIsCategories(data.data);
         } catch (err) {
-            console.error(
-                "ERROR - NO SE PUEDEN CARGAR LAS CATEGORIAS | GLOBAL CONTEXT:",
-                err
-            );
+            console.error("ERROR - NO SE PUEDEN CARGAR LAS CATEGORIAS | GLOBAL CONTEXT:", err);
             setIsCategories([]);
         } finally {
             setIsLoading(false);
@@ -59,10 +56,7 @@ export const CategoriesProvider = ({ children }) => {
             console.log("DATA DESDE SERVER - ", data.data);
             setIsCategory(data.data);
         } catch (err) {
-            console.error(
-                "ERROR - NO SE PUEDE CARGAR LA CATEGORÍA | GLOBAL CONTEXT:",
-                err
-            );
+            console.error("ERROR - NO SE PUEDE CARGAR LA CATEGORÍA | GLOBAL CONTEXT:", err);
         } finally {
             setIsLoading(false);
         }
@@ -83,10 +77,7 @@ export const CategoriesProvider = ({ children }) => {
             await fetchCategories();
             return res;
         } catch (err) {
-            console.error(
-                "ERROR - NO SE PUEDE CREAR LA CATEGORIA | GLOBAL CONTEXT:",
-                err
-            );
+            console.error("ERROR - NO SE PUEDE CREAR LA CATEGORIA | GLOBAL CONTEXT:", err);
         }
     };
 
@@ -96,6 +87,7 @@ export const CategoriesProvider = ({ children }) => {
 
     const updatedCategory = async (id, dataCategory, session) => {
         try {
+            console.log("DATA DESDE CONTEXT", dataCategory);
             const res = await udapteCategory(id, dataCategory, session);
 
             console.log("➡️ RESPUESTA FUNCTION FETCH:", res);
@@ -104,10 +96,7 @@ export const CategoriesProvider = ({ children }) => {
             await fetchCategoryById(id, session);
             return res;
         } catch (err) {
-            console.error(
-                "ERROR - NO SE PUEDE ACTUALIZAR LA CATEGORIA | GLOBAL CONTEXT:",
-                err
-            );
+            console.error("ERROR - NO SE PUEDE ACTUALIZAR LA CATEGORIA | GLOBAL CONTEXT:", err);
         }
     };
 
@@ -122,10 +111,7 @@ export const CategoriesProvider = ({ children }) => {
             setIsCategory({});
             return res;
         } catch (err) {
-            console.error(
-                "ERROR - NO SE PUEDE ELIMINAR LA CATEGORIA | GLOBAL CONTEXT:",
-                err
-            );
+            console.error("ERROR - NO SE PUEDE ELIMINAR LA CATEGORIA | GLOBAL CONTEXT:", err);
         }
     };
 

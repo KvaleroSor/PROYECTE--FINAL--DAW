@@ -21,6 +21,7 @@ const Category = ({ category, session }) => {
         setIsUpdatedPushed,
         deleteCategory,
         setIsFormCategoryOpen,
+        setIsCategoryType
     } = useCategories();
     const {
         isFixedExpensesFromNomina,
@@ -39,7 +40,6 @@ const Category = ({ category, session }) => {
         isAmount,
         setIsFormSpendOpen,
         setIsCategoryId,
-        setIsCategoryType,
     } = useSpends();
 
     const [isCurrentPercentagePerCategory, setIsCurrentPercentagePerCategory] =
@@ -81,7 +81,7 @@ const Category = ({ category, session }) => {
                 calculatePercentageToPercentageSettings();
 
                 const amount = await calculateMonthlyTotalAmountSpend(category);
-                console.log("ESTÁ MONTADO", isMounted);
+
                 if (isMounted) {
                     setIsAmountSpendByCategory(amount);
                 }
@@ -113,8 +113,9 @@ const Category = ({ category, session }) => {
             console.log("CATEGORÍA ", cat);
             setIsUpdatedPushed(true);
             setIsFormCategoryOpen(true);
+            setIsCategoryType(cat.category_type);
             setIsCurrentPercentagePerCategory(
-                calculateCategoryPercentage(monthly_budget)
+                calculateCategoryPercentage(monthly_budget, isAmountSpendByCategory)
             );
             calculatePercentageToPercentageSettings();
         } else {

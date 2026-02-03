@@ -1,25 +1,21 @@
 const updateCategory = async (id, dataCategory, session) => {
-    const res = await fetch(
-        `${process.env.NEXT_PUBLIC_BACKEND_URI}/api/categories/${id}`,
-        {
-            method: "PUT",
-            headers: {
-                "Authorization": `Bearer ${session?.accessToken}`,
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-                name: dataCategory.name,
-                monthly_budget: dataCategory.monthly_budget,
-                color: dataCategory.color,
-                icon: dataCategory.icon,
-            }),
-        }
-    );
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URI}/api/categories/${id}`, {
+        method: "PUT",
+        headers: {
+            Authorization: `Bearer ${session?.accessToken}`,
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            name: dataCategory.name,
+            monthly_budget: dataCategory.monthly_budget,
+            color: dataCategory.color,
+            icon: dataCategory.icon,
+            category_type: dataCategory.category_type,
+        }),
+    });
 
     if (!res.ok) {
-        throw new Error(
-            
-        );
+        throw new Error();
     }
 
     console.log("📡 Response status:", res.status);
@@ -32,11 +28,11 @@ const updateCategory = async (id, dataCategory, session) => {
         try {
             const errorData = await res.json();
             console.log("❌ ERROR DATA FROM SERVER:", errorData);
-            console.log("❌ ERROR - NO SE HA PODIDO HACER FETCH PARA ACTUALIZAR LA CATEGORÍA | FUNCIÓN UPDATECATEGORY");
+            console.log(
+                "❌ ERROR - NO SE HA PODIDO HACER FETCH PARA ACTUALIZAR LA CATEGORÍA | FUNCIÓN UPDATECATEGORY"
+            );
             errorMessage += ` - ${
-                errorData.message ||
-                errorData.error ||
-                JSON.stringify(errorData)
+                errorData.message || errorData.error || JSON.stringify(errorData)
             }`;
         } catch (e) {
             console.log("❌ No se pudo parsear el error del servidor");

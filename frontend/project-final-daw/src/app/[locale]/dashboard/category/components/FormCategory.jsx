@@ -29,7 +29,8 @@ import {
     Calendar,
     CreditCard,
     TriangleAlert,
-    Repeat
+    Repeat,
+    Watch
 } from "lucide-react";
 
 const FormCategory = () => {
@@ -53,13 +54,7 @@ const FormCategory = () => {
         setIsCategoryType,
     } = useCategories();
 
-    const {
-        isTotalAmountToSpendFixedAndLeisure,
-        isTotalSumCategoriesFixedLeisure,
-        setIsTotalSumCategoriesFixedLeisure,
-        amountMaxToSpendFixedLeisure,
-        isSavingFromNomina,
-    } = useFinancial();
+    const { isSavingFromNomina } = useFinancial();
 
     // HOOKS PERSONALIZADOS
     const { isAvailableLeisure } = useLeisureSpendTotalAvailable();
@@ -81,7 +76,7 @@ const FormCategory = () => {
     const [isMaxToSpend, setIsMaxToSpend] = useState(0);
 
     const categorySchema = createCategorySchema(isMaxToSpend);
-    const { register, handleSubmit, control, formState: { errors }, reset } = useForm({
+    const { register, handleSubmit, control, formState: { errors }, reset, watch } = useForm({
         resolver: zodResolver(categorySchema),
         mode: "onSubmit",
         reValidateMode: "onChange",
@@ -89,7 +84,7 @@ const FormCategory = () => {
             name: "",
             monthly_budget: "",
             icon: "",
-            type: "",
+            category_type: "",
         },
     });
 
@@ -104,6 +99,8 @@ const FormCategory = () => {
         setIsButtonPushed("create");
         setIsFormCategoryOpen(false);
     };
+
+    const category_type = watch("category_type");
 
     const availableIcons = [
         { icon: ShoppingCart, name: "ShoppingCart" },
@@ -130,7 +127,7 @@ const FormCategory = () => {
             reset({
                 name: isCategory.name || "",
                 monthly_budget: isCategory.monthly_budget || "",
-                type: isCategory.category_type || "",
+                category_type: isCategory.category_type || "",
                 icon: isCategory.icon || "",
             });
         } else if (!isUpdatedPushed) {
@@ -138,68 +135,26 @@ const FormCategory = () => {
                 name: "",
                 monthly_budget: "",
                 icon: "",
-                type: "",
+                category_type: "",
             });
         }
     }, [isCategory, reset, isUpdatedPushed]);
 
     useEffect(() => {
-        // const totalSpendsFixed = isCategories
-        //     .filter((cat) => cat.category_type === "Gasto Fijo")
-        //     .reduce((acc, current) => acc + current.monthly_budget, 0);
-
-        // const totalSpendsLeisure = isCategories
-        //     .filter((cat) => cat.category_type === "Gasto Ocio")
-        //     .reduce((acc, current) => acc + current.monthly_budget, 0);
-
-        // const totalSpendsImprevistos = isCategories
-        //     .filter((cat) => cat.category_type === "Imprevistos")
-        //     .reduce((acc, current) => acc + current.monthly_budget, 0);
-
-        // if (isCategoryType === "Gasto Fijo") {
-        //     setIsMaxToSpend(isAvailableFixed - totalSpendsFixed);
-        // } else if (isCategoryType === "Gasto Ocio") {
-        //     setIsMaxToSpend(isAvailableLeisure - totalSpendsLeisure);
-        // } else if (isCategoryType === "Imprevistos") {
-        //     setIsMaxToSpend(isTotalSavingsRealTime - totalSpendsImprevistos);
-        // } else {
-        //     setIsMaxToSpend(0);
-        // }
-
-        // Probando el hook de categorías del mes.
-        // console.log("IS CATEGORIES MONTH", isCategoriesMonth);
-
+        console.log("CATEGORY TYPE", category_type);
         handleCalculateMonthlyBudgetExceded();
         handleCalculateMonthlyBudgetImprevistosExceded();
-        console.log("SE HA EJECUTADO EL USE EFFECT");
-
-    }, [isFormCategoryOpen]);
+    }, [isFormCategoryOpen, isCategoryType, isCategories, isCategory, isUpdatedPushed, isAvailableFixed, isAvailableLeisure, isTotalSavingsRealTime, category_type]);
 
     const handleCalculateMonthlyBudgetExceded = () => {
-        console.log("ESTAMOS DENTRO DE LA FUNCIÓN");
-        console.log("isCategoryType", isCategoryType);
-        console.log("isMonthlyBudget", isMonthlyBudget);
-        console.log("CATORIAS", isCategories);
-
-        const totalSpendsFixed = isCategories
-            .filter((cat) => cat.category_type === "Gasto Fijo")
-            .reduce((acc, current) => acc + current.monthly_budget, 0);
-
-        const totalSpendsLeisure = isCategories
-            .filter((cat) => cat.category_type === "Gasto Ocio")
-            .reduce((acc, current) => acc + current.monthly_budget, 0);
-
-        const totalSpendsImprevistos = isCategories
-            .filter((cat) => cat.category_type === "Imprevistos")
-            .reduce((acc, current) => acc + current.monthly_budget, 0);
-
-        if (isCategoryType === "Gasto Fijo") {
-            setIsMaxToSpend(isAvailableFixed - totalSpendsFixed);
-        } else if (isCategoryType === "Gasto Ocio") {
-            setIsMaxToSpend(isAvailableLeisure - totalSpendsLeisure);
-        } else if (isCategoryType === "Imprevistos") {
-            setIsMaxToSpend(isTotalSavingsRealTime - totalSpendsImprevistos);
+        if (category_type === "Gasto Fijo") {
+            setIsMaxToSpend(isAvailableFixed);
+        } else if (category_type === "Gasto Ocio") {
+            setIsMaxToSpend(isAvailableLeisure);
+        } else if (category_type === "Imprevistos") {
+            setIsMaxToSpend(isTotalSavingsRealTime);
         } else {
+            console.log("IS CATEGORY TYPE", category_type);
             setIsMaxToSpend(0);
         }
     };
@@ -229,7 +184,7 @@ const FormCategory = () => {
                 const dataToSend = {
                     name: data.name,
                     monthly_budget: data.monthly_budget,
-                    category_type: data.type,
+                    category_type: data.category_type,
                     icon: data.icon,
                     user_id: session?.user?.user_id,
                 }
@@ -246,6 +201,7 @@ const FormCategory = () => {
                 console.error(err);
             }
         } else if (isButtonPushed === "update") {
+            console.log("DATA CATEGORY UPDATED", data);
             try {
                 const res = await updatedCategory(
                     isCategory._id,
@@ -351,7 +307,7 @@ const FormCategory = () => {
                 <div className="w-full flex flex-col justify-start gap-2">
                     <label className="text-slate-700 dark:text-slate-300">Tipo de Categoría</label>
                     <Controller
-                        name="type"
+                        name="category_type"
                         control={control}
                         render={({ field }) => (
                             <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-2">
@@ -367,8 +323,8 @@ const FormCategory = () => {
                             </div>
                         )}
                     />
-                    {errors.type && (
-                        <AlertMessage message={errors.type.message} type="error" />
+                    {errors.category_type && (
+                        <AlertMessage message={errors.category_type.message} type="error" />
                     )}
                 </div>
                 <div className="flex justify-center items-center w-full gap-3">
@@ -406,7 +362,7 @@ const FormCategory = () => {
                             </button>
                             <button
                                 id="button-cancel"
-                                type="submit"
+                                type="button"
                                 className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-100 dark:bg-slate-700 border-slate-200 dark:border-slate-600 hover:bg-slate-300 dark:hover:bg-slate-600 hover:border-slate-900 dark:hover:border-slate-400 text-slate-600 dark:text-slate-300"
                                 onClick={handleCloseForm}
                             >
