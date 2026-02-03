@@ -39,9 +39,7 @@ export const SavingProvider = ({ children }) => {
     const [isStatus, setIsStatus] = useState("active");
 
     // Hooks personalizados
-     const { isTotalSavingsRealTime } = useSavingsRealTime(isTotalContributedAllTime);
-
-    
+    const { isTotalSavingsRealTime } = useSavingsRealTime(isTotalContributedAllTime);
 
     // Calcular cuánto % queda sin asignar
     const calculateUnallocatedPercentage = () => {
@@ -88,14 +86,14 @@ export const SavingProvider = ({ children }) => {
             setError(null);
             const data = await getSavings(user_id, session);
             setSavingGoals(data.data || []);
-            
+
             // Calcular el total contribuido de todas las metas
             const totalContributed = (data.data || []).reduce(
                 (sum, goal) => sum + (Number(goal.total_contributed) || 0),
                 0
             );
             setIsTotalContributedAllTime(totalContributed);
-            
+
             console.log("✅ Savings cargados:", data.data);
             console.log("💰 Total contribuido histórico:", totalContributed);
         } catch (err) {
@@ -114,14 +112,14 @@ export const SavingProvider = ({ children }) => {
             console.log("📊 Obteniendo historial de contribuciones...");
             const data = await getContributionHistory(session);
             setIsContributionHistory(data.history || []);
-            
+
             // Calcular ahorro total acumulado desde el historial
             const totalAccumulated = (data.history || []).reduce(
                 (sum, entry) => sum + (Number(entry.totalAmount) || 0),
                 0
             );
             setIsTotalSavingsAccumulated(totalAccumulated);
-            
+
             console.log("✅ Historial cargado:", data);
             console.log("💰 Ahorro total acumulado:", totalAccumulated);
             return data;
@@ -217,8 +215,7 @@ export const SavingProvider = ({ children }) => {
             if (!goal) throw new Error("Meta no encontrada");
 
             const newCurrentAmount = goal.current_amount + amount;
-            const newStatus =
-                newCurrentAmount >= goal.target_amount ? "completed" : goal.status;
+            const newStatus = newCurrentAmount >= goal.target_amount ? "completed" : goal.status;
 
             await updateSavingGoal(id, {
                 current_amount: newCurrentAmount,
@@ -270,17 +267,14 @@ export const SavingProvider = ({ children }) => {
         // Es un nuevo mes, procesar contribuciones
         try {
             console.log("📅 Nuevo mes detectado, procesando contribuciones...");
-            await processMonthlyContributions(
-                isSavingFromNomina,
-                session
-            );
-            
+            await processMonthlyContributions(isSavingFromNomina, session);
+
             // Actualizar la fecha de último procesamiento
             localStorage.setItem(lastProcessedKey, currentDate.toISOString());
-            
+
             // Recargar las metas actualizadas
             await fetchSavings();
-            
+
             console.log("✅ Contribuciones mensuales procesadas automáticamente");
         } catch (err) {
             console.error("❌ Error al procesar contribuciones mensuales:", err);
@@ -296,15 +290,12 @@ export const SavingProvider = ({ children }) => {
 
         try {
             setIsLoading(true);
-            await processMonthlyContributions(
-                isSavingFromNomina,
-                session
-            );
-            
+            await processMonthlyContributions(isSavingFromNomina, session);
+
             // Actualizar la fecha de último procesamiento
             const lastProcessedKey = `lastProcessed_${session.user.user_id}`;
             localStorage.setItem(lastProcessedKey, new Date().toISOString());
-            
+
             await fetchSavings();
             console.log("✅ Contribuciones procesadas manualmente");
         } catch (err) {
@@ -383,6 +374,7 @@ export const SavingProvider = ({ children }) => {
                 calculateMonthlyContribution,
                 calculateProgress,
                 calculateMonthsRemaining,
+                manualProcessContributions,
             }}
         >
             {children}

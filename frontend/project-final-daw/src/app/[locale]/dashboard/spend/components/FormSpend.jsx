@@ -168,11 +168,11 @@ const FormSpend = () => {
             })
             .reduce((acc, spend) => acc + spend.amount, 0);
 
-        if (isCategoryType === "Gasto Fijo" && totalSpendsFixed > 0) {
+        if (isCategoryType === "Gasto Fijo") {
             setIsMaxToSpend(isFixedExpensesFromNomina - totalSpendsFixed);
-        } else if (isCategoryType === "Gasto Ocio" && totalSpendsLeisure > 0) {
+        } else if (isCategoryType === "Gasto Ocio") {
             setIsMaxToSpend(isLeisureExpensesFromNomina - totalSpendsLeisure);
-        } else if (isCategoryType === "Imprevistos" && totalSpendsImprevistos > 0) {
+        } else if (isCategoryType === "Imprevistos") {
             setIsMaxToSpend(isSavingFromNomina - totalSpendsImprevistos);
         } else {
             setIsMaxToSpend(0);
