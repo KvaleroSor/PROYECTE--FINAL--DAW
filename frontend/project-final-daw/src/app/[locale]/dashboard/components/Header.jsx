@@ -16,20 +16,20 @@ const Header = () => {
 
     return (
         <>
-            <header className="sticky top-0 z-30 h-[100px] flex justify-center items-center bg-white dark:bg-slate-800 transition-colors duration-300 mx-4 mb-4 sm:mx-6 lg:mx-8 mt-4 sm:mt-6 lg:mt-8 rounded-2xl">
-                <div className="w-full h-full flex flex-row justify-center items-center rounded-xl shadow-2xl hover:shadow-md transition-all duration-300">
-                    <div className="w-full ml-4">
-                        <h1 className="text-2xl sm:text-3xl text-slate-900 dark:text-slate-100">{t("title")}</h1>
-                        <p className="text-sm text-slate-600 dark:text-slate-400">{t("subtitle")}</p>
+            <header className="sticky top-0 z-30 min-h-[80px] md:h-[100px] flex justify-center items-center bg-slate-50 dark:bg-slate-800 transition-colors duration-300 mx-0 mb-4 sm:mx-6 lg:mx-8 mt-0 sm:mt-6 lg:mt-8 rounded-none sm:rounded-2xl">
+                <div className="w-full h-full flex flex-row justify-between items-center rounded-xl shadow-lg hover:shadow-md transition-all duration-300 px-4 py-3">
+                    <div className="flex-1 ml-0 md:ml-4">
+                        <h1 className="text-xl sm:text-2xl md:text-3xl text-slate-900 dark:text-slate-100">{t("title")}</h1>
+                        <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 hidden sm:block">{t("subtitle")}</p>
                     </div>
-                    <div className="w-full flex justify-end items-center gap-6 mr-4">
-                        <Search className="w-5 h-5 text-gray-700 dark:text-gray-300" />
-                        <Bell className="w-5 h-5 text-gray-700 dark:text-gray-300" />
+                    <div className="flex justify-end items-center gap-2 sm:gap-4 md:gap-6">
+                        <Search className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700 dark:text-gray-300 hidden sm:block" />
+                        <Bell className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700 dark:text-gray-300 hidden sm:block" />
                         <ThemeToggle />
                         <LanguageSelector />
-                        <div className="flex flex-col border-l border-slate-500 dark:border-slate-600 pl-3">
-                            <h1 className="text-slate-900 dark:text-slate-100">{session?.user?.name}</h1>
-                            <p className="text-slate-600 dark:text-slate-400">{session?.user?.email}</p>
+                        <div className="hidden lg:flex flex-col border-l border-slate-500 dark:border-slate-600 pl-3">
+                            <h1 className="text-sm text-slate-900 dark:text-slate-100">{session?.user?.name}</h1>
+                            <p className="text-xs text-slate-600 dark:text-slate-400">{session?.user?.email}</p>
                         </div>
                     </div>
                 </div>

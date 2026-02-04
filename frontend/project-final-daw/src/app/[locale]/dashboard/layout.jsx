@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { useLocale } from "next-intl";
 
 import Sidebar from "./components/Sidebar.jsx";
+import MobileSidebar from "./components/MobileSidebar.jsx";
 import Header from "./components/Header.jsx";
 import { CategoriesProvider } from "@/app/context/CategoryContext.js";
 import { SpendProvider } from "@/app/context/SpendContext.js";
@@ -31,11 +32,12 @@ export default function DashboardLayout({ children }) {
                 <FinancialProvider>
                     <SavingProvider>
                         <InversionProvider>
-                            <div className="min-h-screen w-full">
+                            <div className="min-h-screen w-full overflow-x-hidden">
                                 <Sidebar />
-                                <div className="md:ml-60 flex-1 flex flex-col">
+                                <MobileSidebar />
+                                <div className="md:ml-60 flex-1 flex flex-col w-full">
                                     <Header />
-                                    <main className="flex-1">
+                                    <main className="flex-1 w-full overflow-x-hidden">
                                         {children}
                                     </main>
                                 </div>

@@ -56,46 +56,38 @@ const GridCategories = () => {
 
     return (
         <>
-            <div className="p-4 sm:p-6 shadow-2xl hover:shadow-md transition-all duration-300 rounded-2xl dark:bg-slate-800">
-                <div className="mb-5 flex flex-row justify-between">
-                    <div className="flex flex-col items-start">
-                        <h1 className="text-slate-900 dark:text-slate-100 text-xl">
-                            {t("title")}
-                        </h1>
-                        <p className="text-slate-500 dark:text-slate-400">
-                            {t("monthlyDistribution")}
-                        </p>
-                    </div>
-
-
-                    <div className="flex flex-row justify-center items-center gap-10">
-                        <div className="flex flex-col">
-                            <h1 className="text-4xl text-slate-900 dark:text-slate-100">
-                                € {Number(isShowTotalSpend).toFixed(2)}
+            <div className="p-4 sm:p-6 shadow-lg bg-slate-50 hover:shadow-md transition-all duration-300 rounded-2xl dark:bg-slate-800">
+                <div className="mb-5 flex flex-col gap-4">
+                    <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                        <div className="flex flex-col items-start">
+                            <h1 className="text-slate-900 dark:text-slate-100 text-lg sm:text-xl">
+                                {t("title")}
                             </h1>
-                            {evaluateTotalAmountToSpend() !== false ? (
-                                <h1 className="text-red-500 dark:text-red-400 text-md">
-                                    {t("of")} €{" "}
-                                    {Number(
-                                        isTotalAmountToSpendFixedAndLeisure
-                                    ).toFixed(2)}
-                                </h1>
-                            ) : (
-                                <h1 className="text-slate-500 dark:text-slate-400 text-md">
-                                    {t("of")} €{" "}
-                                    {Number(
-                                        isTotalAmountToSpendFixedAndLeisure
-                                    ).toFixed(2)}
-                                </h1>
-                            )}
+                            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
+                                {t("monthlyDistribution")}
+                            </p>
                         </div>
                         <button
-                            className="flex items-center gap-2 h-10 px-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl group bg-slate-800 dark:bg-slate-400 text-slate-100 dark:text-slate-100 dark:hover:border-slate-100 dark:hover:bg-slate-500"
+                            className="flex items-center gap-2 h-10 px-3 sm:px-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl group bg-slate-800 dark:bg-slate-400 text-slate-100 text-sm sm:text-base flex-shrink-0"
                             onClick={handleClickButtonFormCategory}
                         >
-                            <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
+                            <Plus className="w-4 h-4 sm:w-5 sm:h-5 group-hover:rotate-90 transition-transform duration-300" />
                             <span>{t("addCategory")}</span>
                         </button>
+                    </div>
+                    <div className="flex flex-col items-start">
+                        <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100">
+                            €{Number(isShowTotalSpend).toFixed(2)}
+                        </h1>
+                        {evaluateTotalAmountToSpend() !== false ? (
+                            <h1 className="text-sm sm:text-base text-red-500 dark:text-red-400">
+                                {t("of")} €{Number(isTotalAmountToSpendFixedAndLeisure).toFixed(2)}
+                            </h1>
+                        ) : (
+                            <h1 className="text-sm sm:text-base text-slate-500 dark:text-slate-400">
+                                {t("of")} €{Number(isTotalAmountToSpendFixedAndLeisure).toFixed(2)}
+                            </h1>
+                        )}
                     </div>
                 </div>
                 {!isCategories ||
