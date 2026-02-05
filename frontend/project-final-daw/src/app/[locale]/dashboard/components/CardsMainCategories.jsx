@@ -17,7 +17,6 @@ const CardsMainCategories = () => {
 
     // Hooks personalizados
     const { isAvailableLeisure } = useLeisureSpendTotalAvailable();
-    // const { isTotalInversionRealTime } = useInversionRealTime();
     const { isAvailableFixed } = useFixedSpendTotalAvailable();
 
     // Estados del componente

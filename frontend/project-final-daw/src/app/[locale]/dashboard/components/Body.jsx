@@ -60,7 +60,7 @@ const Body = () => {
                 <div className="pt-4 pb-4 px-2 sm:px-4 lg:px-6 w-full">
                     <GridCategories />
                 </div>
-                <div className="w-full flex flex-col lg:flex-row gap-3 lg:gap-4 px-2 py-4 sm:px-4 lg:px-6">
+                <div className="w-full flex flex-col lg:flex-row gap-3 lg:gap-6 px-2 py-4 sm:px-4 lg:px-6">
                     <div className="w-full lg:w-[60%] min-w-0">
                         {/* <Saving /> */}
                         <GridSpends />

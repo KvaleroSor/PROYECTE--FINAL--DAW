@@ -32,7 +32,7 @@ export const useFixedSpendTotalAvailable = () => {
             })
             .reduce((acc, spend) => acc + spend.amount, 0);
 
-        return Number(isFixedExpensesFromNomina - totalGastado).toFixed(2);
+        return isFixedExpensesFromNomina - totalGastado;
     }, [isSpends, isCategories, isFixedExpensesFromNomina]);
 
     return { isAvailableFixed };

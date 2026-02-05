@@ -2,11 +2,15 @@ import { useMemo } from "react";
 import { useFinancial } from "@/app/context/FinancialContext";
 import { useCategories } from "@/app/context/CategoryContext";
 import { useSpends } from "@/app/context/SpendContext";
+import { useLeisureSpendTotalAvailable } from "@/app/hooks/spend/useLeisureSpendTotalAvailable.js";
+import { useFixedSpendTotalAvailable } from "@/app/hooks/spend/useFixedSpendTotalAvailable.js";
 
 export const useSavingsRealTime = (isTotalContributedAllTime = 0) => {
     const { isSavingFromNomina, isAhorroGeneral } = useFinancial();
     const { isCategories } = useCategories();
     const { isSpends } = useSpends();
+    const { isAvailableLeisure } = useLeisureSpendTotalAvailable();
+    const { isAvailableFixed } = useFixedSpendTotalAvailable();
 
     const isTotalSavingsRealTime = useMemo(() => {
         // 1. Obtener categorías de tipo "Imprevistos"
@@ -38,12 +42,24 @@ export const useSavingsRealTime = (isTotalContributedAllTime = 0) => {
         // 4. Calcular ahorro neto del mes actual (presupuesto - imprevistos)
         const ahorroNetoMesActual = Math.max(0, (isSavingFromNomina || 0) - totalImprevistos);
 
-        // 5. Total ahorrado = ahorroGeneral (metas eliminadas) + contribuciones metas activas + ahorro neto mes
+        // 5. Total ahorrado = ahorroGeneral (metas eliminadas) + contribuciones metas activas + ahorro neto mes + sobrantes de gasto fijo + sobrantes de gasto ocio
         const totalAhorrado =
-            (isAhorroGeneral || 0) + (isTotalContributedAllTime || 0) + ahorroNetoMesActual;
+            (isAhorroGeneral || 0) +
+            (isTotalContributedAllTime || 0) +
+            ahorroNetoMesActual +
+            (isAvailableLeisure || 0) +
+            (isAvailableFixed || 0);
 
         return Number(totalAhorrado).toFixed(2);
-    }, [isTotalContributedAllTime, isSavingFromNomina, isSpends, isCategories, isAhorroGeneral]);
+    }, [
+        isTotalContributedAllTime,
+        isSavingFromNomina,
+        isSpends,
+        isCategories,
+        isAhorroGeneral,
+        isAvailableLeisure,
+        isAvailableFixed,
+    ]);
 
     const isTotalImprevistosPercentatge = useMemo(() => {
         // 1. Obtener categorías de tipo "Imprevistos"

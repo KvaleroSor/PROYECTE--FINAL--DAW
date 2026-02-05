@@ -32,7 +32,7 @@ export const useLeisureSpendTotalAvailable = () => {
             })
             .reduce((acc, spend) => acc + spend.amount, 0);
 
-        return Number(isLeisureExpensesFromNomina - totalGastado).toFixed(2);
+        return isLeisureExpensesFromNomina - totalGastado;
     }, [isSpends, isCategories, isLeisureExpensesFromNomina]);
 
     return { isAvailableLeisure };
