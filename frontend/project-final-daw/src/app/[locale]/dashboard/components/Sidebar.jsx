@@ -60,7 +60,7 @@ const Sidebar = () => {
                             <ChevronRight className="w-4 h-4 ml-auto" />
                         )}
                     </Link>
-                    <Link
+                    {/* <Link
                         href="/dashboard/category"
                         className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${isActiveRoute("/dashboard/category")
                             ? "transition-all duration-300 group bg-slate-200 text-slate-800 hover:bg-slate-200 shadow-xl"
@@ -72,7 +72,7 @@ const Sidebar = () => {
                         {isActiveRoute("/dashboard/category") && (
                             <ChevronRight className="w-4 h-4 ml-auto" />
                         )}
-                    </Link>
+                    </Link> */}
                     <Link
                         href="/dashboard/saving"
                         className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${isActiveRoute("/dashboard/saving")

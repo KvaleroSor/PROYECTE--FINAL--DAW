@@ -61,12 +61,12 @@ const ContributionHistoryChart = () => {
     }
 
     return (
-        <div className="bg-white dark:bg-slate-800 rounded-lg shadow-md p-6 space-y-6 transition-colors duration-300">
+        <div className="bg-slate-50 dark:bg-slate-800 rounded-lg shadow-md p-6 space-y-6 transition-colors duration-300">
             {/* Header */}
             <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 pb-4">
                 <div>
-                    <h2 className="text-2xl font-bold text-gray-900 dark:text-slate-100 flex items-center gap-2">
-                        <TrendingUp className="text-blue-600 dark:text-blue-400" />
+                    <h2 className="text-3xl text-gray-900 dark:text-slate-100 flex items-center gap-2">
+                        {/* <TrendingUp className="text-slate-600 dark:text-slate-400" /> */}
                         Historial de Contribuciones
                     </h2>
                     <p className="text-gray-600 dark:text-slate-400 mt-1">
@@ -76,11 +76,11 @@ const ContributionHistoryChart = () => {
 
                 {/* Total acumulado histórico */}
                 <div className="text-right">
-                    <p className="text-sm text-gray-600 dark:text-slate-400">Total Contribuido</p>
-                    <p className="text-3xl font-bold text-green-600 dark:text-green-400">
+                    <p className="text-lg text-gray-600 dark:text-slate-400">Total Contribuido</p>
+                    <p className="text-3xl text-slate-900 dark:text-slate-200">
                         €{safeTotal.toFixed(2)}
                     </p>
-                    <p className="text-xs text-gray-500 dark:text-slate-500 mt-1">
+                    <p className="text-md text-gray-500 dark:text-slate-400 mt-1">
                         (Sin descontar imprevistos)
                     </p>
                 </div>
@@ -89,8 +89,8 @@ const ContributionHistoryChart = () => {
             {/* Tendencia */}
             {trend && (
                 <div className={`p-4 rounded-lg border-l-4 ${trend.isPositive
-                        ? 'bg-green-50 dark:bg-green-900/20 border-green-500'
-                        : 'bg-red-50 dark:bg-red-900/20 border-red-500'
+                    ? 'bg-green-50 dark:bg-green-900/20 border-green-500'
+                    : 'bg-red-50 dark:bg-red-900/20 border-red-500'
                     }`}>
                     <div className="flex items-center gap-2">
                         {trend.isPositive ? (
@@ -112,51 +112,51 @@ const ContributionHistoryChart = () => {
             {/* Historial por meses */}
             {isContributionHistory && isContributionHistory.length > 0 ? (
                 <div className="space-y-4">
-                    <h3 className="text-lg font-semibold text-gray-800 dark:text-slate-200 flex items-center gap-2">
+                    <h3 className="text-xl text-gray-800 dark:text-slate-200 flex items-center gap-2">
                         <Calendar className="w-5 h-5" />
                         Contribuciones Mensuales
                     </h3>
 
-                    <div className="space-y-3 max-h-96 overflow-y-auto">
+                    <div className="space-y-3 max-h-96 overflow-y-auto no-scrollbar">
                         {isContributionHistory.map((entry, index) => {
                             const maxAmount = Math.max(...isContributionHistory.map(e => e.totalAmount));
-                            const barWidth = (entry.totalAmount / maxAmount) * 100;
+                            // const barWidth = (entry.totalAmount / maxAmount) * 100;
 
                             return (
                                 <div key={`${entry.year}-${entry.month}`}
-                                    className="border border-slate-200 dark:border-slate-700 rounded-lg p-4 hover:shadow-md transition-shadow">
+                                    className="bg-white dark:bg-slate-800 rounded-xl p-6">
                                     {/* Fecha y monto */}
                                     <div className="flex items-center justify-between mb-2">
                                         <div className="flex items-center gap-2">
-                                            <Calendar className="w-4 h-4 text-gray-500 dark:text-slate-400" />
-                                            <span className="font-semibold text-gray-800 dark:text-slate-200">
+                                            <Calendar className="w-4 h-4 text-gray-800 dark:text-slate-200" />
+                                            <span className="text-gray-800 dark:text-slate-200">
                                                 {monthNames[entry.month]} {entry.year}
                                             </span>
                                         </div>
-                                        <span className="text-xl font-bold text-green-600 dark:text-green-400">
+                                        <span className="text-2xl text-slate-900 dark:text-slate-300">
                                             €{entry.totalAmount.toFixed(2)}
                                         </span>
                                     </div>
 
                                     {/* Barra de progreso */}
-                                    <div className="w-full bg-gray-200 dark:bg-slate-700 rounded-full h-3 mb-3">
+                                    {/* <div className="w-full bg-gray-200 dark:bg-slate-700 rounded-full h-3 mb-3">
                                         <div
                                             className="bg-gradient-to-r from-blue-500 to-green-500 h-3 rounded-full transition-all duration-500"
                                             style={{ width: `${barWidth}%` }}
                                         />
-                                    </div>
+                                    </div> */}
 
                                     {/* Desglose por metas */}
                                     {entry.goals && entry.goals.length > 0 && (
-                                        <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-700">
-                                            <p className="text-xs text-gray-500 dark:text-slate-400 mb-2 flex items-center gap-1">
-                                                <PiggyBank className="w-3 h-3" />
+                                        <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-500">
+                                            <p className="text-md text-gray-900 dark:text-slate-400 mb-2 flex items-center gap-1">
+                                                <PiggyBank className="w-4 h-4" />
                                                 Desglose por metas:
                                             </p>
                                             <div className="grid grid-cols-2 gap-2">
                                                 {entry.goals.map((goal, idx) => (
                                                     <div key={idx}
-                                                        className="text-xs bg-gray-50 dark:bg-slate-700 rounded px-2 py-1 flex items-center justify-between">
+                                                        className="text-sm bg-gray-50 dark:bg-slate-700 rounded px-2 py-1 flex items-center justify-between">
                                                         <span className="text-gray-700 dark:text-slate-300 truncate">
                                                             {goal.goalName}
                                                         </span>

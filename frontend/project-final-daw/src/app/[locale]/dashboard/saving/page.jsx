@@ -9,18 +9,8 @@ const SavingGoalsPage = () => {
     const { isFormSavingOpen } = useSaving();
 
     return (
-        <div className="min-h-screen bg-gray-50 dark:bg-slate-900 py-8 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
+        <div className="min-h-screen bg-white dark:bg-slate-900 py-8 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
             <div className="max-w-7xl mx-auto">
-                {/* Header */}
-                <div className="mb-8">
-                    <h1 className="text-3xl font-bold text-gray-900 dark:text-slate-100 mb-2">
-                        Metas de Ahorro
-                    </h1>
-                    <p className="text-gray-600 dark:text-slate-400">
-                        Gestiona tus objetivos financieros y alcanza tus metas
-                    </p>
-                </div>
-
                 {/* Modal del formulario */}
                 {isFormSavingOpen && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">

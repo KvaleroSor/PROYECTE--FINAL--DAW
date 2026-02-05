@@ -27,7 +27,7 @@ const GraphicPercentatgeSpend = () => {
                         <h1 className="text-slate-900 dark:text-slate-100 text-lg sm:text-xl">{t("title")}</h1>
                         <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">{t("subtitle")}</p>
                     </div>
-                    <button className="border-2 border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 sm:px-4 bg-slate-800 dark:bg-slate-400 text-slate-100 flex flex-row justify-center items-center gap-2 hover:gap-3 dark:hover:bg-slate-500 transition-all duration-300 flex-shrink-0 text-sm sm:text-base"
+                    <button className="border-2 border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 sm:px-4 bg-slate-800 dark:bg-slate-400 text-slate-100 flex flex-row justify-center items-center gap-2 hover:gap-4 dark:hover:bg-slate-500 transition-all duration-200 flex-shrink-0 text-sm sm:text-base"
                         onClick={handleClickEditPercentageSettings}
                     >
                         <PencilLine className="w-4 h-4" />

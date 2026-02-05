@@ -5,6 +5,7 @@ import Spend from "./Spend.jsx";
 import { useSpendsMonth } from "@/app/hooks/spend/useSpendsMonth.js";
 import { useSpends } from "@/app/context/SpendContext.js";
 import { useTranslations } from "next-intl";
+import Calendar from 'react-calendar'
 
 const GridSpends = () => {
     const t = useTranslations("expenses");
@@ -16,13 +17,20 @@ const GridSpends = () => {
         <>
             <div className="w-full max-w-full h-full flex flex-col gap-2 p-4 bg-slate-50 shadow-lg hover:shadow-md transition-all duration-300 rounded-2xl dark:bg-slate-800 overflow-x-hidden">
                 <div className="mb-5 flex flex-col  gap-3">
-                    <div className="flex flex-col items-start">
-                        <h1 className="text-slate-900 dark:text-slate-100 text-xl">
-                            {t("monthlyExpenses")}
-                        </h1>
-                        <p className="text-slate-500 dark:text-slate-400">
-                            {t("monthlyExpensesList")}
-                        </p>
+                    <div className="flex flex-row justify-between">
+                        <div className="flex flex-col items-start">
+                            <h1 className="text-slate-900 dark:text-slate-100 text-xl">
+                                {t("monthlyExpenses")}
+                            </h1>
+                            <p className="text-slate-500 dark:text-slate-400">
+                                {t("monthlyExpensesList")}
+                            </p>
+                        </div>
+                        {/* <div className="w-[300px] h-auto bg-white rounded-xl p-4 dark:bg-slate-700 rounded-lg">
+                            <div className="">
+                                <Calendar />
+                            </div>
+                        </div> */}
                     </div>
 
                     {isLoading ? (
