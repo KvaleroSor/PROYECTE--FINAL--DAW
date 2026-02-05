@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, useMemo, useCallback } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 import { useSession } from "next-auth/react";
 import { useFinancial } from "./FinancialContext.js";
 import { useSavingsRealTime } from "@/app/hooks/saving/useSavingsRealTime.js";
@@ -11,8 +11,8 @@ import updateSaving from "@/services/savings/updateSaving.js";
 import deleteSaving from "@/services/savings/deleteSaving.js";
 import processMonthlyContributions from "@/services/savings/processMonthlyContributions.js";
 import getContributionHistory from "@/services/savings/getContributionHistory.js";
-import { useFixedSpendTotalAvailable } from "@/app/hooks/spend/useFixedSpendTotalAvailable.js";
 import { useLeisureSpendTotalAvailable } from "@/app/hooks/spend/useLeisureSpendTotalAvailable.js";
+import { useFixedSpendTotalAvailable } from "@/app/hooks/spend/useFixedSpendTotalAvailable.js";
 
 const SavingContext = createContext();
 
@@ -44,11 +44,6 @@ export const SavingProvider = ({ children }) => {
     const { isTotalSavingsRealTime } = useSavingsRealTime(isTotalContributedAllTime);
     const { isAvailableLeisure } = useLeisureSpendTotalAvailable();
     const { isAvailableFixed } = useFixedSpendTotalAvailable();
-
-    // Variables del archivo
-    const sumTotalSavingFixedLeisure = useMemo(() => {
-        return isAvailableFixed + isAvailableLeisure + isSavingFromNomina;
-    }, [isAvailableFixed, isAvailableLeisure, isSavingFromNomina]);
 
     // Calcular cuánto % queda sin asignar
     const calculateUnallocatedPercentage = () => {
@@ -250,16 +245,9 @@ export const SavingProvider = ({ children }) => {
         setError(null);
     };
 
-    // Verificar si es un nuevo mes y procesar contribuciones + ahorro automático y manualmente
-    const checkAndProcessMonthlyContributions = useCallback(async () => {
-        if (
-            !session?.user?.user_id ||
-            !isSavingFromNomina ||
-            typeof isAvailableFixed === "undefined" ||
-            typeof isAvailableLeisure === "undefined"
-        ) {
-            return;
-        }
+    // Verificar si es un nuevo mes y procesar contribuciones automáticamente
+    const checkAndProcessMonthlyContributions = async () => {
+        if (!session?.user?.user_id || !isSavingFromNomina) return;
 
         const currentDate = new Date();
         const currentMonth = currentDate.getMonth();
@@ -295,11 +283,11 @@ export const SavingProvider = ({ children }) => {
         } catch (err) {
             console.error("❌ Error al procesar contribuciones mensuales:", err);
         }
-    }, [session?.user?.user_id, isSavingFromNomina, isAvailableFixed, isAvailableLeisure]);
+    };
 
     // Procesar contribución manual (botón)
     const manualProcessContributions = async () => {
-        if (!session?.user?.user_id || typeof isSavingFromNomina === "undefined") {
+        if (!session?.user?.user_id || !isSavingFromNomina) {
             setError("No se puede procesar: datos insuficientes");
             return;
         }
@@ -330,21 +318,12 @@ export const SavingProvider = ({ children }) => {
         }
     }, [session, status]);
 
-    // Verificar y procesar contribuciones automáticamente solo al cargar datos iniciales
+    // Verificar y procesar contribuciones automáticamente cuando cambia isSavingFromNomina
     useEffect(() => {
-        let hasChecked = false;
-
-        if (
-            !hasChecked &&
-            session?.user?.user_id &&
-            isSavingFromNomina &&
-            isAvailableFixed !== undefined &&
-            isAvailableLeisure !== undefined
-        ) {
-            hasChecked = true;
+        if (session?.user?.user_id && isSavingFromNomina) {
             checkAndProcessMonthlyContributions();
         }
-    }, [session?.user?.user_id, isSavingFromNomina, isAvailableFixed, isAvailableLeisure]);
+    }, [session?.user?.user_id, isSavingFromNomina]);
 
     return (
         <SavingContext.Provider

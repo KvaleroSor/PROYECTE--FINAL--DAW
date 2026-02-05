@@ -56,7 +56,7 @@ const GridCategories = () => {
 
     return (
         <>
-            <div className="p-4 sm:p-6 shadow-lg bg-slate-50 hover:shadow-md transition-all duration-300 rounded-2xl dark:bg-slate-800">
+            <div className="p-4 sm:p-6 shadow-lg bg-slate-50 hover:shadow-md transition-all duration-300 rounded-2xl dark:bg-slate-800 max-w-full overflow-x-hidden">
                 <div className="mb-5 flex flex-col gap-4">
                     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                         <div className="flex flex-col items-start">
@@ -75,7 +75,7 @@ const GridCategories = () => {
                             <span>{t("addCategory")}</span>
                         </button>
                     </div>
-                    <div className="flex flex-col items-start">
+                    <div className="flex flex-col items-end">
                         <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100">
                             €{Number(isShowTotalSpend).toFixed(2)}
                         </h1>

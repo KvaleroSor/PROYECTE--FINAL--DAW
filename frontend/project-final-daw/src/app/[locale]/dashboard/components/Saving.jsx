@@ -13,7 +13,7 @@ import { useSpends } from "@/app/context/SpendContext.js";
 import { useCategories } from "@/app/context/CategoryContext.js";
 import { useSaving } from "@/app/context/SavingContext.js";
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 
 const Saving = () => {
     const router = useRouter();

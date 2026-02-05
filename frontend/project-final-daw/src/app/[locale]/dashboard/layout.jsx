@@ -1,9 +1,8 @@
 "use client";
 
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import { useSession } from "next-auth/react";
-import { useLocale } from "next-intl";
 
 import Sidebar from "./components/Sidebar.jsx";
 import MobileSidebar from "./components/MobileSidebar.jsx";
@@ -17,14 +16,12 @@ import { InversionProvider } from "@/app/context/InversionContext.js";
 export default function DashboardLayout({ children }) {
     const router = useRouter();
     const { data: session, status } = useSession();
-    const locale = useLocale();
 
     useEffect(() => {
         if (status === "unauthenticated") {
-            // Redirigir a la landing con el locale actual
-            router.push(locale === "es" ? "/" : `/${locale}`);
+            router.push("/");
         }
-    }, [status, router, locale]);
+    }, [status, router]);
 
     return (
         <CategoriesProvider>
@@ -32,12 +29,12 @@ export default function DashboardLayout({ children }) {
                 <FinancialProvider>
                     <SavingProvider>
                         <InversionProvider>
-                            <div className="min-h-screen w-full overflow-x-hidden">
+                            <div className="min-h-screen w-full max-w-full overflow-x-hidden">
                                 <Sidebar />
                                 <MobileSidebar />
-                                <div className="md:ml-60 flex-1 flex flex-col w-full">
+                                <div className="md:ml-60 flex-1 flex flex-col max-w-full min-w-0">
                                     <Header />
-                                    <main className="flex-1 w-full overflow-x-hidden">
+                                    <main className="flex-1 max-w-full overflow-x-hidden">
                                         {children}
                                     </main>
                                 </div>

@@ -34,7 +34,10 @@ export const metadata = {
 // El locale dinámico se establece en el layout de [locale]
 export default function RootLayout({ children }) {
     return (
-        <html className="no-scrollbar h-full overflow-y-scroll" suppressHydrationWarning>
+        <html
+            className="no-scrollbar h-full overflow-x-hidden overflow-y-scroll"
+            suppressHydrationWarning
+        >
             <head>
                 <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192x192.png" />
                 <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-192x192.png" />
@@ -43,7 +46,9 @@ export default function RootLayout({ children }) {
                 <meta name="apple-mobile-web-app-capable" content="yes" />
                 <meta name="apple-mobile-web-app-status-bar-style" content="default" />
             </head>
-            <body className={`${exo2.className} h-full`}>{children}</body>
+            <body className={`${exo2.className} h-full max-w-full overflow-x-hidden`}>
+                {children}
+            </body>
         </html>
     );
 }

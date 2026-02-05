@@ -36,7 +36,7 @@ const CardsMainCategories = () => {
 
     return (
         <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 w-full gap-3 sm:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 w-full gap-3 sm:gap-4">
                 <div className="bg-slate-50 dark:bg-slate-700 rounded-xl p-4 sm:p-5 shadow-lg hover:shadow-md transition-all duration-300">
                     <div className="flex flex-col gap-2">
                         <div className="flex flex-row justify-between items-center">

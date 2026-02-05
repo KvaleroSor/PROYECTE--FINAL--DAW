@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { registerSchema, loginSchema } from '@validations/validationsForms.js'
 import { signIn, useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 import ButtonLogin from "./Button.jsx";
 import PercentageSelector, { BUDGET_PRESETS } from "./PercentageSelector.jsx";
 import { SquareUser, Mail, Lock, Eye, EyeOff, Euro, Check } from "lucide-react";

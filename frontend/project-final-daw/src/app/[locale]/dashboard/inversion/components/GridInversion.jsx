@@ -5,7 +5,7 @@ import { TrendingUp, Plus } from 'lucide-react'
 const GridInversion = () => {
     return (
         <>
-            <div className='w-full dark:bg-slate-800 flex flex-col justify-center items-center gap-4 bg-slate-50 dark:bg-slate-800 shadow-lg rounded-2xl hover:shadow-md transition-all duration-300'>
+            <div className='w-full max-w-full overflow-x-hidden dark:bg-slate-800 flex flex-col justify-center items-center gap-4 bg-slate-50 dark:bg-slate-800 shadow-lg rounded-2xl hover:shadow-md transition-all duration-300'>
                 <div className='w-full flex flex-col justify-center items-center'>
                     <div className='w-full flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 bg-slate-900 dark:bg-slate-700 rounded-2xl rounded-bl-none rounded-br-none p-4'>
                         <div className='flex flex-row justify-start items-start gap-3 sm:gap-4'>

@@ -3,7 +3,7 @@
 import { useSaving } from "@/app/context/SavingContext.js";
 import { useFinancial } from "@/app/context/FinancialContext.js";
 import { TrendingUp, Target, Calendar, ArrowUp, ArrowDown, Minus, History } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 
 const SavingsProgressDashboard = () => {
     const { savingGoals, calculateProgress } = useSaving();
@@ -15,7 +15,7 @@ const SavingsProgressDashboard = () => {
     const totalSaved = savingGoals.reduce((sum, goal) => sum + goal.current_amount, 0);
     const totalTarget = savingGoals.reduce((sum, goal) => sum + goal.target_amount, 0);
     const totalProgress = totalTarget > 0 ? (totalSaved / totalTarget) * 100 : 0;
-    
+
     // Calcular contribuciones totales del mes
     const totalMonthlyContribution = activeGoals.reduce((sum, goal) => {
         return sum + ((goal.percentage_allocation / 100) * isSavingFromNomina);
@@ -46,14 +46,13 @@ const SavingsProgressDashboard = () => {
                         <p className="text-sm text-slate-500">Visualiza tu avance mensual</p>
                     </div>
                 </div>
-                
+
                 <div className="flex items-center gap-3">
                     {/* Indicador de tendencia */}
-                    <div className={`flex items-center gap-2 px-3 py-2 rounded-lg ${
-                        trend === 'up' ? 'bg-green-50 text-green-700' :
-                        trend === 'stable' ? 'bg-yellow-50 text-yellow-700' :
-                        'bg-red-50 text-red-700'
-                    }`}>
+                    <div className={`flex items-center gap-2 px-3 py-2 rounded-lg ${trend === 'up' ? 'bg-green-50 text-green-700' :
+                            trend === 'stable' ? 'bg-yellow-50 text-yellow-700' :
+                                'bg-red-50 text-red-700'
+                        }`}>
                         {trend === 'up' && <ArrowUp className="w-4 h-4" />}
                         {trend === 'stable' && <Minus className="w-4 h-4" />}
                         {trend === 'down' && <ArrowDown className="w-4 h-4" />}

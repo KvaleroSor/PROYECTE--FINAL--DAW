@@ -15,7 +15,7 @@ import {
 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { Link, usePathname } from "@/i18n/navigation";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
 import { BalanceLogoCircle } from "@/components/BalanceLogoCircle.jsx";
 
 const MobileSidebar = () => {
@@ -24,13 +24,15 @@ const MobileSidebar = () => {
     const t = useTranslations("navigation");
     const tAuth = useTranslations("auth");
     const pathname = usePathname();
+    const router = useRouter();
     const isActiveRoute = (route) => pathname === route;
 
     if (status === "loading") return null;
     if (!session) return null;
 
-    const handleSignOut = (e) => {
-        signOut({ callbackUrl: "/" });
+    const handleSignOut = async (e) => {
+        await signOut({ redirect: false });
+        router.push("/");
     };
 
     const closeMenu = () => setIsOpen(false);
@@ -56,9 +58,8 @@ const MobileSidebar = () => {
 
             {/* Sidebar móvil */}
             <aside
-                className={`md:hidden fixed top-0 left-0 h-screen w-64 bg-slate-800 z-50 transform transition-transform duration-300 ease-in-out ${
-                    isOpen ? "translate-x-0" : "-translate-x-full"
-                }`}
+                className={`md:hidden fixed top-0 left-0 h-screen w-64 bg-slate-800 z-50 transform transition-transform duration-300 ease-in-out ${isOpen ? "translate-x-0" : "-translate-x-full"
+                    }`}
             >
                 <nav className="w-full h-full p-3 flex flex-col justify-between overflow-y-auto">
                     <div className="text-slate-300">
@@ -74,11 +75,10 @@ const MobileSidebar = () => {
                         </Link>
                         <Link
                             href="/dashboard"
-                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${
-                                isActiveRoute("/dashboard")
+                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${isActiveRoute("/dashboard")
                                     ? "bg-slate-200 text-slate-800 shadow-xl"
                                     : "text-slate-300"
-                            }`}
+                                }`}
                             onClick={closeMenu}
                         >
                             <House className="w-5 h-5 stroke-current" />
@@ -89,11 +89,10 @@ const MobileSidebar = () => {
                         </Link>
                         <Link
                             href="/dashboard/category"
-                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${
-                                isActiveRoute("/dashboard/category")
+                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${isActiveRoute("/dashboard/category")
                                     ? "bg-slate-200 text-slate-800 shadow-xl"
                                     : "text-slate-300"
-                            }`}
+                                }`}
                             onClick={closeMenu}
                         >
                             <ChartBarStacked className="w-5 h-5 stroke-current" />
@@ -104,11 +103,10 @@ const MobileSidebar = () => {
                         </Link>
                         <Link
                             href="/dashboard/saving"
-                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${
-                                isActiveRoute("/dashboard/saving")
+                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${isActiveRoute("/dashboard/saving")
                                     ? "bg-slate-200 text-slate-800 shadow-xl"
                                     : "text-slate-300"
-                            }`}
+                                }`}
                             onClick={closeMenu}
                         >
                             <PiggyBank className="w-5 h-5 stroke-current" />
@@ -119,11 +117,10 @@ const MobileSidebar = () => {
                         </Link>
                         <Link
                             href="/dashboard/spend"
-                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${
-                                isActiveRoute("/dashboard/spend")
+                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${isActiveRoute("/dashboard/spend")
                                     ? "bg-slate-200 text-slate-800 shadow-xl"
                                     : "text-slate-300"
-                            }`}
+                                }`}
                             onClick={closeMenu}
                         >
                             <HandCoins className="w-5 h-5 stroke-current" />
@@ -134,11 +131,10 @@ const MobileSidebar = () => {
                         </Link>
                         <Link
                             href="/dashboard/inversion"
-                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${
-                                isActiveRoute("/dashboard/inversion")
+                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${isActiveRoute("/dashboard/inversion")
                                     ? "bg-slate-200 text-slate-800 shadow-xl"
                                     : "text-slate-300"
-                            }`}
+                                }`}
                             onClick={closeMenu}
                         >
                             <ChartColumnIncreasing className="w-5 h-5 stroke-current" />
@@ -149,11 +145,10 @@ const MobileSidebar = () => {
                         </Link>
                         <Link
                             href="/dashboard/settings"
-                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${
-                                isActiveRoute("/dashboard/settings")
+                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${isActiveRoute("/dashboard/settings")
                                     ? "bg-slate-200 text-slate-800 shadow-xl"
                                     : "text-slate-300"
-                            }`}
+                                }`}
                             onClick={closeMenu}
                         >
                             <Settings className="w-5 h-5 stroke-current" />

@@ -21,7 +21,7 @@ const GraphicPercentatgeSpend = () => {
 
     return (
         <>
-            <div className="h-full flex flex-col gap-4 p-4 bg-slate-50 shadow-lg hover:shadow-md transition-all duration-300 rounded-2xl dark:bg-slate-800">
+            <div className="h-full flex flex-col gap-4 p-4 bg-slate-50 shadow-lg hover:shadow-md transition-all duration-300 rounded-2xl dark:bg-slate-800 max-w-full overflow-x-hidden">
                 <div className="w-full flex flex-col sm:flex-row justify-between items-start gap-3 mb-6">
                     <div className="flex flex-col justify-start items-start">
                         <h1 className="text-slate-900 dark:text-slate-100 text-lg sm:text-xl">{t("title")}</h1>
@@ -34,7 +34,7 @@ const GraphicPercentatgeSpend = () => {
                         <span>{tCommon("edit")}</span>
                     </button>
                 </div>
-                <div className="flex flex-row justify-center items-center mb-10">
+                <div className="flex flex-row justify-center items-center mb-10 max-w-full overflow-hidden">
                     <div className="flex justify-center items-center rounded-l-xl w-full h-15 p-2 sm:p-3 bg-slate-600 dark:bg-slate-600 text-white dark:text-slate-100 text-xs sm:text-sm"><span>{fixedPercentage}%</span></div>
                     <div className="flex justify-center items-center w-full h-15 p-2 sm:p-3 bg-slate-500 dark:bg-blue-800 text-white dark:text-slate-100 text-xs sm:text-sm"><span>{leisurePercentage}%</span></div>
                     <div className="flex justify-center items-center w-full h-15 p-2 sm:p-3 bg-sky-500 dark:bg-teal-800 text-white dark:text-slate-100 text-xs sm:text-sm"><span>{investmentPercentage}%</span></div>

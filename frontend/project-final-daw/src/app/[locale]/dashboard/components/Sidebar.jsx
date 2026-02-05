@@ -12,7 +12,7 @@ import {
 } from "lucide-react";
 import { signOut, useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { Link, usePathname } from "@/i18n/navigation";
+import { Link, usePathname, useRouter } from "@/i18n/navigation";
 // import { BalanceLogoAlt } from "@/components/BalanceLogoAlt.jsx";
 import { BalanceLogoCircle } from "@/components/BalanceLogoCircle.jsx";
 
@@ -21,14 +21,16 @@ const Sidebar = () => {
     const t = useTranslations("navigation");
     const tAuth = useTranslations("auth");
     const pathname = usePathname();
+    const router = useRouter();
     // Ahora pathname ya no incluye el locale, así que la comparación funciona directamente
     const isActiveRoute = (route) => pathname === route;
 
     if (status === "loading") return null;
     if (!session) return null;
 
-    const handleSignOut = (e) => {
-        signOut({ callbackUrl: "/" });
+    const handleSignOut = async (e) => {
+        await signOut({ redirect: false });
+        router.push("/");
     };
 
     return (

@@ -25,7 +25,7 @@ const Body = () => {
     return (
         <>
             {/* <div className="h-full grid grid-rows-[auto_auto_auto] lg:grid-rows-[3fr_2fr_5fr] sm:grid-cols-1"> */}
-            <div className="h-full grid grid-rows-[auto_auto_auto]">
+            <div className="h-full grid grid-rows-[auto_auto_auto] max-w-full overflow-x-hidden">
                 {isFormCategoryOpen && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
                         <div className="w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-xl bg-white dark:bg-slate-800 dark:border-2 dark:border-slate-700 p-4 sm:p-6">
@@ -54,23 +54,23 @@ const Body = () => {
                         </div>
                     </div>
                 )}
-                <div className="flex flex-col justify-center items-center gap-2 px-3 py-3 sm:px-4 sm:py-3 lg:px-4 lg:py-4">
+                <div className="flex flex-col justify-center items-center gap-2 px-2 py-3 sm:px-4 sm:py-3 lg:px-4 lg:py-4 w-full">
                     <CardsMainCategories />
                 </div>
-                <div className="pt-4 pb-4 px-3 sm:px-6 lg:px-8">
+                <div className="pt-4 pb-4 px-2 sm:px-4 lg:px-6 w-full">
                     <GridCategories />
                 </div>
-                <div className="w-full flex flex-col lg:flex-row gap-4 lg:gap-6 px-3 py-4 sm:px-6 lg:px-8">
-                    <div className="w-full lg:w-[60%]">
+                <div className="w-full flex flex-col lg:flex-row gap-3 lg:gap-4 px-2 py-4 sm:px-4 lg:px-6">
+                    <div className="w-full lg:w-[60%] min-w-0">
                         {/* <Saving /> */}
                         <GridSpends />
                     </div>
-                    <div className="w-full lg:w-[40%]">
+                    <div className="w-full lg:w-[40%] min-w-0">
                         {/* Repartición de la nómina en gráfico */}
                         <GraphicPercentatgeSpend />
                     </div>
                 </div>
-                <div className="px-3 py-4 sm:px-6 lg:px-8">
+                <div className="px-2 py-4 sm:px-4 lg:px-6 w-full">
                     <GridInversion />
                 </div>
             </div>

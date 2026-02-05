@@ -2,7 +2,7 @@
 
 import { useSaving } from "@/app/context/SavingContext.js";
 import { Target, TrendingUp, Plus, ArrowRight } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { useRouter } from "@/i18n/navigation";
 
 const SavingGoalsSummary = () => {
     const router = useRouter();
@@ -21,7 +21,7 @@ const SavingGoalsSummary = () => {
             // Primero por prioridad, luego por porcentaje de progreso
             const priorityDiff = priorityOrder[a.priority] - priorityOrder[b.priority];
             if (priorityDiff !== 0) return priorityDiff;
-            
+
             const progressA = calculateProgress(a.current_amount, a.target_amount);
             const progressB = calculateProgress(b.current_amount, b.target_amount);
             return progressB - progressA;
