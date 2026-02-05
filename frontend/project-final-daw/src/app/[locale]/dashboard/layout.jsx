@@ -34,7 +34,7 @@ export default function DashboardLayout({ children }) {
                                 <MobileSidebar />
                                 <div className="md:ml-60 flex-1 flex flex-col max-w-full min-w-0">
                                     <Header />
-                                    <main className="flex-1 max-w-full overflow-x-hidden">
+                                    <main className="flex-1 max-w-full overflow-x-hidden md:pt-[100px]">
                                         {children}
                                     </main>
                                 </div>
