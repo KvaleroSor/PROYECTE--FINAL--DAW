@@ -54,7 +54,7 @@ const Body = () => {
                         </div>
                     </div>
                 )}
-                <div className="flex flex-col justify-center items-center gap-2 px-2 py-3 sm:px-4 sm:py-3 lg:px-4 lg:py-4 w-full">
+                <div className="flex flex-col justify-center items-center gap-4 px-2 py-3 sm:px-4 sm:py-3 lg:px-4 lg:py-4 w-full">
                     <CardsMainCategories />
                 </div>
                 <div className="pt-4 pb-4 px-2 sm:px-4 lg:px-6 w-full">
