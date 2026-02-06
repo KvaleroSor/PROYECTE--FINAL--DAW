@@ -9,25 +9,27 @@ const SavingGoalsPage = () => {
     const { isFormSavingOpen } = useSaving();
 
     return (
-        <div className="min-h-screen bg-white dark:bg-slate-900 py-8 px-4 sm:px-6 lg:px-8 transition-colors duration-300">
-            <div className="max-w-7xl mx-auto">
-                {/* Modal del formulario */}
-                {isFormSavingOpen && (
-                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
-                        <div className="w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-xl bg-white dark:bg-slate-800 p-6 m-4">
-                            <FormSavingGoal />
-                        </div>
+        <div className="w-full min-h-screen bg-white dark:bg-slate-900 py-8 transition-colors duration-300">
+
+            {/* Modal: FULL SCREEN, no limitado */}
+            {isFormSavingOpen && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40">
+                    <div className="w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-xl bg-white dark:bg-slate-800 p-6 m-4">
+                        <FormSavingGoal />
                     </div>
-                )}
-
-                {/* Grid de metas */}
-                <GridSavingGoals />
-
-                {/* Historial de contribuciones */}
-                <div className="mt-8">
-                    <ContributionHistoryChart />
                 </div>
+            )}
+
+            {/* Grid de metas — FULL WIDTH */}
+            <div className="w-full px-4 sm:px-6 lg:px-8">
+                <GridSavingGoals />
             </div>
+
+            {/* Gráfica — centrada y contenida */}
+            <section className="w-full px-4 sm:px-6 lg:px-8 mt-8">
+                <ContributionHistoryChart />
+            </section>
+
         </div>
     );
 };

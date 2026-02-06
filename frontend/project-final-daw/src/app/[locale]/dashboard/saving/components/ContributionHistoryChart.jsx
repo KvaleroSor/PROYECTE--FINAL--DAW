@@ -61,7 +61,7 @@ const ContributionHistoryChart = () => {
     }
 
     return (
-        <div className="bg-slate-50 dark:bg-slate-800 rounded-lg shadow-md p-6 space-y-6 transition-colors duration-300">
+        <div className="w-full bg-slate-50 dark:bg-slate-800 rounded-lg shadow-md p-6 space-y-6 transition-colors duration-300">
             {/* Header */}
             <div className="flex items-center justify-between border-b border-slate-200 dark:border-slate-700 pb-4">
                 <div>

@@ -17,7 +17,7 @@ const Header = () => {
     return (
         <>
             <header className="relative w-full lg:fixed lg:top-0 lg:left-60 lg:right-0 lg:w-auto z-30 min-h-[80px] lg:h-[100px] flex justify-center items-center bg-slate-50 dark:bg-slate-800 transition-colors duration-300 px-2 sm:px-4 lg:px-6 mr-2 sm:mr-4 lg:mr-4">
-                <div className="w-full h-full flex flex-row justify-between items-center bg-white dark:bg-slate-800 shadow-lg hover:shadow-md transition-all duration-300 py-3 rounded-xl">
+                <div className="w-full h-full flex flex-row justify-between items-center dark:bg-slate-800 shadow-lg hover:shadow-md transition-all duration-300 py-3 rounded-xl">
                     <div className="flex-1 ml-0 lg:ml-4">
                         <h1 className="text-xl sm:text-2xl lg:text-3xl text-slate-900 dark:text-slate-100">{t("title")}</h1>
                         <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 hidden sm:block">{t("subtitle")}</p>

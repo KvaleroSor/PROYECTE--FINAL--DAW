@@ -36,7 +36,7 @@ const CardsMainCategories = () => {
     return (
         <>
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 w-full gap-3 sm:gap-4">
-                <div className="bg-slate-50 dark:bg-slate-700 rounded-xl p-4 sm:p-5 shadow-lg hover:shadow-md transition-all duration-300">
+                <div className="bg-white dark:bg-slate-700 rounded-xl p-4 sm:p-5 shadow-lg hover:shadow-md transition-all duration-300">
                     <div className="flex flex-col gap-2">
                         <div className="flex flex-row justify-between items-center">
                             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -50,7 +50,7 @@ const CardsMainCategories = () => {
                         <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">{t("totalSaved")}</p>
                     </div>
                 </div>
-                <div className="bg-slate-50 dark:bg-slate-700 rounded-xl p-4 sm:p-5 shadow-lg hover:shadow-md transition-all duration-300">
+                <div className="bg-white dark:bg-slate-700 rounded-xl p-4 sm:p-5 shadow-lg hover:shadow-md transition-all duration-300">
                     <div className="flex flex-col gap-2">
                         <div className="flex flex-row justify-between items-center">
                             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -64,7 +64,7 @@ const CardsMainCategories = () => {
                         <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">{t("thisMonth")}</p>
                     </div>
                 </div>
-                <div className="bg-slate-50 dark:bg-slate-700 rounded-xl p-4 sm:p-5 shadow-lg hover:shadow-md transition-all duration-300">
+                <div className="bg-white dark:bg-slate-700 rounded-xl p-4 sm:p-5 shadow-lg hover:shadow-md transition-all duration-300">
                     <div className="flex flex-col gap-2">
                         <div className="flex flex-row justify-between items-center">
                             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -78,7 +78,7 @@ const CardsMainCategories = () => {
                         <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">{t("fixed")}</p>
                     </div>
                 </div>
-                <div className="bg-slate-50 dark:bg-slate-700 rounded-xl p-4 sm:p-5 shadow-lg hover:shadow-md transition-all duration-300">
+                <div className="bg-white dark:bg-slate-700 rounded-xl p-4 sm:p-5 shadow-lg hover:shadow-md transition-all duration-300">
                     <div className="flex flex-col gap-2">
                         <div className="flex flex-row justify-between items-center">
                             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center flex-shrink-0">
