@@ -15,11 +15,11 @@ const GridSpends = () => {
 
     return (
         <>
-            <div className="w-full max-w-full h-full flex flex-col gap-2 p-4 bg-slate-50 shadow-lg hover:shadow-md transition-all duration-300 rounded-2xl dark:bg-slate-800 overflow-x-hidden">
+            <div className="w-full max-w-full h-full flex flex-col gap-2 p-4 bg-slate-50 shadow-lg hover:shadow-md transition-all duration-300 rounded-2xl dark:bg-slate-800 overflow-x-hidden no-scrollbar">
                 <div className="mb-5 flex flex-col  gap-3">
                     <div className="flex flex-row justify-between">
                         <div className="flex flex-col items-start">
-                            <h1 className="text-slate-900 dark:text-slate-100 text-xl">
+                            <h1 className="text-3xl text-gray-900 dark:text-slate-100 mb-2">
                                 {t("monthlyExpenses")}
                             </h1>
                             <p className="text-slate-500 dark:text-slate-400">

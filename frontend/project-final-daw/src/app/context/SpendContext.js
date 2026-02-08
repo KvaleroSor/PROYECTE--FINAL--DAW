@@ -97,6 +97,16 @@ export const SpendProvider = ({ children }) => {
         }
     };
 
+    /**
+     * FUNCION PARA DEVOLVER MONTHLYBUDGET Y TOTAL GASTADO POR MES
+     *
+     * Tenemos que tener en cuenta que es:
+     *
+     * 1. El gasto de cada mes (gasto ocio, gasto fijo)
+     * 2. El presupuesto de las categorias (ocio, fijo) de cada mes
+     *
+     */
+
     useEffect(() => {
         if (status === "authenticated" && session?.accessToken) {
             fetchSpends();

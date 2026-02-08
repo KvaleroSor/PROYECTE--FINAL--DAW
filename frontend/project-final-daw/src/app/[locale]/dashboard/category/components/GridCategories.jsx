@@ -60,7 +60,7 @@ const GridCategories = () => {
                 <div className="mb-5 flex flex-col gap-4">
                     <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
                         <div className="flex flex-col items-start">
-                            <h1 className="text-slate-900 dark:text-slate-100 text-lg sm:text-xl">
+                            <h1 className="text-3xl text-gray-900 dark:text-slate-100 mb-2">
                                 {t("title")}
                             </h1>
                             <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">

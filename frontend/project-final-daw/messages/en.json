@@ -200,5 +200,25 @@
         "es": "Spanish",
         "ca": "Valencian/Catalan",
         "en": "English"
+    },
+    "monthlyAnalysis": {
+        "title": "Monthly Analysis",
+        "subtitle": "Expenses vs Budget",
+        "spent": "Spent",
+        "budget": "Budget",
+        "months": {
+            "jan": "Jan",
+            "feb": "Feb",
+            "mar": "Mar",
+            "apr": "Apr",
+            "may": "May",
+            "jun": "Jun",
+            "jul": "Jul",
+            "aug": "Aug",
+            "sep": "Sep",
+            "oct": "Oct",
+            "nov": "Nov",
+            "dec": "Dec"
+        }
     }
 }

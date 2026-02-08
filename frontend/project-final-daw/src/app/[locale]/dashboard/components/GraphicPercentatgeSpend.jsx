@@ -21,7 +21,7 @@ const GraphicPercentatgeSpend = () => {
 
     return (
         <>
-            <div className="h-full flex flex-col gap-4 p-4 bg-slate-50 shadow-lg hover:shadow-md transition-all duration-300 rounded-2xl dark:bg-slate-800 max-w-full overflow-x-hidden">
+            <div className="h-full h-fit flex flex-col gap-4 p-4 bg-slate-50 shadow-lg hover:shadow-md transition-all duration-300 rounded-2xl dark:bg-slate-800 max-w-full overflow-x-hidden">
                 <div className="w-full flex flex-col sm:flex-row justify-between items-start gap-3 mb-6">
                     <div className="flex flex-col justify-start items-start">
                         <h1 className="text-slate-900 dark:text-slate-100 text-lg sm:text-xl">{t("title")}</h1>
