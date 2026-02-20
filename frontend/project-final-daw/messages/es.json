@@ -103,7 +103,9 @@
         "cash": "Efectivo",
         "transfer": "Transferencia",
         "exceedingLimit": "GASTO EXCEDIENDO EL LÍMITE",
-        "maxAmount": "Cantidad Máxima"
+        "maxAmount": "Cantidad Máxima",
+        "categoryNotFound": "Categoría no encontrada",
+        "searchPlaceholder": "Buscar por nombre o categoria..."
     },
     "categories": {
         "title": "Categoría de Gastos",
@@ -147,7 +149,63 @@
         "featuredGoals": "Metas Destacadas",
         "mainObjectives": "Tus principales objetivos",
         "viewAll": "Ver Todas",
-        "perMonth": "/mes"
+        "perMonth": "/mes",
+        "editGoal": "Editar Meta de Ahorro",
+        "createNewGoal": "Crear Meta de Ahorro",
+        "updateGoal": "Actualiza tu meta de ahorro",
+        "defineNewGoal": "Define una nueva meta de ahorro",
+        "goalNameRequired": "El nombre de la meta es obligatorio",
+        "errorSavingGoal": "Error al guardar la meta de ahorro",
+        "goalSavedSuccessfully": "✅ Meta guardada exitosamente",
+        "goalName": "Nombre de la Meta",
+        "goalNamePlaceholder": "Ej: Viaje a Japón, Fondo emergencia...",
+        "descriptionOptional": "Descripción (opcional)",
+        "descriptionPlaceholder": "Describe tu meta de ahorro...",
+        "savingBudget": "Presupuesto de Ahorro",
+        "totalMonthly": "Total mensual:",
+        "unexpectedExpenses": "Gastos imprevistos:",
+        "realAvailable": "Disponible real:",
+        "unassigned": "Sin asignar:",
+        "deadlineOptional": "Fecha Límite (opcional)",
+        "priorityHigh": "Alta",
+        "priorityMedium": "Media",
+        "priorityLow": "Baja",
+        "statusActive": "Activa",
+        "statusCompleted": "Completada",
+        "statusPaused": "Pausada",
+        "priority": "Prioridad:",
+        "editGoalButton": "Editar Meta",
+        "deleteGoalButton": "Eliminar Meta",
+        "deleteConfirm": "¿Estás seguro de eliminar la meta \"{goalName}\"?",
+        "noDeadline": "Sin fecha límite",
+        "estimatedTime": "Tiempo estimado:",
+        "month": "mes",
+        "months": "meses",
+        "contributionHistory": "Historial de Contribuciones",
+        "monthlyTracking": "Seguimiento mensual de tus aportaciones",
+        "goalBreakdown": "Desglose por metas:",
+        "monthNames": {
+            "january": "Enero",
+            "february": "Febrero",
+            "march": "Marzo",
+            "april": "Abril",
+            "may": "Mayo",
+            "june": "Junio",
+            "july": "Julio",
+            "august": "Agosto",
+            "september": "Septiembre",
+            "october": "Octubre",
+            "november": "Noviembre",
+            "december": "Diciembre"
+        },
+        "processContributionsConfirm": "¿Estás seguro de procesar las contribuciones manualmente? Esto agregará el monto mensual a todas tus metas activas.",
+        "totalContributed": "Total Contribuido",
+        "monthlyContributionStatus": {
+            "subtitle": "Sin descontar imprevistos"
+        },
+        "monthlyContributionHistory": {
+            "title": "Historial de Contribuciones Mensuales"
+        }
     },
     "savingsPage": {
         "totalProgress": "Progreso Total",
@@ -161,7 +219,12 @@
         "budgetFullWarning": "Has asignado el 100% de tu presupuesto de ahorro. Para crear nuevas metas, edita o elimina alguna existente.",
         "noGoals": "No tienes metas de ahorro",
         "createFirstGoalDescription": "Crea tu primera meta de ahorro para empezar a alcanzar tus objetivos financieros",
-        "createFirstGoal": "Crear Mi Primera Meta"
+        "createFirstGoal": "Crear Mi Primera Meta",
+        "savingGoals": "Metas de Ahorro",
+        "manageFinancialGoals": "Gestiona tus objetivos financieros y alcanza tus metas",
+        "monthlyContributionStatus": {
+            "title": "Contribuciones Mensuales Automáticas"
+        }
     },
     "investments": {
         "title": "Inversiones",
@@ -190,7 +253,9 @@
         "profile": "Perfil",
         "preferences": "Preferencias",
         "language": "Idioma",
+        "languageDescription": "Selecciona tu idioma preferido",
         "theme": "Tema",
+        "themeDescription": "Modo claro u oscuro",
         "darkMode": "Modo oscuro",
         "lightMode": "Modo claro",
         "notifications": "Notificaciones",
@@ -221,5 +286,41 @@
             "nov": "Nov",
             "dec": "Dic"
         }
+    },
+    "admin": {
+        "totalUsers": "TOTAL USUARIOS REGISTRADOS",
+        "totalCategories": "TOTAL CATEGORIAS REGISTRADAS",
+        "totalAdmins": "TOTAL ADMINS REGISTRADOS",
+        "userRegistrationChart": "GRÁFICO REGISTRO USUARIOS",
+        "usersAndCategories": "USUARIOS REGISTRADOS Y NUM. CATEGORÍAS",
+        "generalMetrics": "MÉTRICAS GENERALES",
+        "userRegistration": "Registro Usuarios"
+    },
+    "landing": {
+        "pricing": "Precios",
+        "blog": "Blog",
+        "contact": "Contacto",
+        "login": "Iniciar Sesión",
+        "signUp": "Registrarse",
+        "heroTitle1": "Finanzas personales,",
+        "heroTitle2": "simplificadas",
+        "heroSubtitle1": "La forma más inteligente de gestionar tu dinero. Controla gastos, planifica",
+        "heroSubtitle2": "ahorros y alcanza tus metas financieras.",
+        "startFree": "Comenzar gratis",
+        "viewFeatures": "Ver Características",
+        "featuresTitle": "Todo lo que necesitas",
+        "featuresSubtitle": "Herramientas poderosas para tu bienestar financiero",
+        "feature1Title": "Visualización Clásica",
+        "feature1Description": "Gráficos intuitivos que muestran hacia dónde va tu dinero",
+        "feature2Title": "Metas de Ahorro",
+        "feature2Description": "Define y alcanza tus objetivos financieros paso a paso",
+        "feature3Title": "Alertas Inteligentes",
+        "feature3Description": "Notificaciones sobre gastos inusuales o límites alcanzados",
+        "feature4Title": "100% Seguro",
+        "feature4Description": "Encriptación bancaria y autenticación de dos factores",
+        "feature5Title": "Multiplataforma",
+        "feature5Description": "Accede desde web, iOS y Android sin problemas",
+        "feature6Title": "Análisis Automático",
+        "feature6Description": "Insights sobre tus patrones de gasto e ingreso"
     }
 }

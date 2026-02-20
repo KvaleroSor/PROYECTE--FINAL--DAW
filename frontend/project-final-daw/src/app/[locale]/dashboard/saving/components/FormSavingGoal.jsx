@@ -14,8 +14,10 @@ import {
     TrendingUp,
     AlertCircle,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const FormSavingGoal = () => {
+    const t = useTranslations("savings");
     const { data: session } = useSession();
     const { isSpends } = useSpends();
     const { isCategories } = useCategories();
@@ -78,9 +80,9 @@ const FormSavingGoal = () => {
     }, [isSpends, isCategories, isSavingFromNomina]);
 
     const priorities = [
-        { value: "high", label: "Alta", color: "bg-red-500" },
-        { value: "medium", label: "Media", color: "bg-yellow-500" },
-        { value: "low", label: "Baja", color: "bg-green-500" },
+        { value: "high", label: t("priorityHigh"), color: "bg-red-500" },
+        { value: "medium", label: t("priorityMedium"), color: "bg-yellow-500" },
+        { value: "low", label: t("priorityLow"), color: "bg-green-500" },
     ];
 
     const handleCloseForm = () => {
@@ -97,7 +99,7 @@ const FormSavingGoal = () => {
 
         // Validaciones
         if (!isGoalName.trim()) {
-            setIsError("El nombre de la meta es obligatorio");
+            setIsError(t("goalNameRequired"));
             return;
         }
 
@@ -137,7 +139,7 @@ const FormSavingGoal = () => {
                 handleCloseForm();
             }, 1500);
         } catch (err) {
-            setIsError(err.message || "Error al guardar la meta de ahorro");
+            setIsError(err.message || t("errorSavingGoal"));
         }
     };
 
@@ -150,12 +152,12 @@ const FormSavingGoal = () => {
             <div className="w-full flex flex-row justify-between mb-3 gap-2">
                 <div className="flex flex-col justify-start">
                     <h1 className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
-                        {selectedGoal ? "Editar Meta de Ahorro" : "Crear Meta de Ahorro"}
+                        {selectedGoal ? t("editGoal") : t("createNewGoal")}
                     </h1>
                     <p className="text-sm text-slate-600 dark:text-slate-400">
                         {selectedGoal
-                            ? "Actualiza tu meta de ahorro"
-                            : "Define una nueva meta de ahorro"}
+                            ? t("updateGoal")
+                            : t("defineNewGoal")}
                     </p>
                 </div>
                 <div>
@@ -170,27 +172,27 @@ const FormSavingGoal = () => {
             <div className="w-full bg-slate-50 dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg p-4 mb-2">
                 <div className="flex items-center gap-2 mb-3">
                     <Wallet className="w-5 h-5 text-slate-700 dark:text-slate-300" />
-                    <p className="font-semibold text-slate-900 dark:text-slate-100">Presupuesto de Ahorro</p>
+                    <p className="font-semibold text-slate-900 dark:text-slate-100">{t("savingBudget")}</p>
                 </div>
                 <div className="space-y-2 text-sm">
                     <div className="flex justify-between items-center">
-                        <span className="text-slate-700 dark:text-slate-300">Total mensual:</span>
+                        <span className="text-slate-700 dark:text-slate-300">{t("totalMonthly")}</span>
                         <span className="font-bold text-slate-900 dark:text-slate-100">€{isSavingFromNomina?.toFixed(2) || 0}</span>
                     </div>
                     {gastoImprevistos > 0 && (
                         <div className="flex justify-between items-center">
-                            <span className="text-slate-700 dark:text-slate-300">Gastos imprevistos:</span>
+                            <span className="text-slate-700 dark:text-slate-300">{t("unexpectedExpenses")}</span>
                             <span className="font-semibold text-red-600 dark:text-red-400">-€{gastoImprevistos.toFixed(2)}</span>
                         </div>
                     )}
                     <div className="flex justify-between items-center pt-2 border-t border-slate-300 dark:border-slate-600">
-                        <span className="text-slate-700 dark:text-slate-300 font-medium">Disponible real:</span>
+                        <span className="text-slate-700 dark:text-slate-300 font-medium">{t("realAvailable")}</span>
                         <span className={`font-bold text-lg ${netSaving >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
                             €{netSaving.toFixed(2)}
                         </span>
                     </div>
                     <div className="flex justify-between items-center">
-                        <span className="text-slate-700 dark:text-slate-300">Sin asignar:</span>
+                        <span className="text-slate-700 dark:text-slate-300">{t("unassigned")}</span>
                         <span className="font-bold text-green-700 dark:text-green-400">{unallocatedPercentage.toFixed(1)}%</span>
                     </div>
                 </div>
@@ -207,7 +209,7 @@ const FormSavingGoal = () => {
             {isSuccess && (
                 <div className="w-full bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3">
                     <p className="text-sm text-green-800 dark:text-green-300 text-center">
-                        ✅ Meta guardada exitosamente
+                        {t("goalSavedSuccessfully")}
                     </p>
                 </div>
             )}
@@ -216,13 +218,13 @@ const FormSavingGoal = () => {
             <div className="w-full flex flex-col gap-2">
                 <label className="flex items-center gap-2 font-medium text-slate-900 dark:text-slate-100">
                     <Target className="w-4 h-4" />
-                    Nombre de la Meta *
+                    {t("goalName")} *
                 </label>
                 <input
                     type="text"
                     value={isGoalName}
                     onChange={(e) => setIsGoalName(e.target.value)}
-                    placeholder="Ej: Viaje a Japón, Fondo emergencia..."
+                    placeholder={t("goalNamePlaceholder")}
                     className="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
                     required
                 />
@@ -230,11 +232,11 @@ const FormSavingGoal = () => {
 
             {/* Descripción (opcional) */}
             <div className="w-full flex flex-col gap-2">
-                <label className="font-medium text-slate-900 dark:text-slate-100">Descripción (opcional)</label>
+                <label className="font-medium text-slate-900 dark:text-slate-100">{t("descriptionOptional")}</label>
                 <textarea
                     value={isDescription}
                     onChange={(e) => setIsDescription(e.target.value)}
-                    placeholder="Describe tu meta de ahorro..."
+                    placeholder={t("descriptionPlaceholder")}
                     rows="2"
                     className="w-full px-4 py-2 border border-slate-300 dark:border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-slate-500 focus:border-transparent resize-none bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
                 />
@@ -307,7 +309,7 @@ const FormSavingGoal = () => {
             <div className="w-full flex flex-col gap-2">
                 <label className="flex items-center gap-2 font-medium text-slate-900 dark:text-slate-100">
                     <Calendar className="w-4 h-4" />
-                    Fecha Límite (opcional)
+                    {t("deadlineOptional")}
                 </label>
                 <input
                     type="date"
@@ -327,8 +329,8 @@ const FormSavingGoal = () => {
                             type="button"
                             onClick={() => setIsPriority(priority.value)}
                             className={`border-2 flex flex-1 justify-center items-center p-5 rounded-xl gap-2 cursor-pointer transition-colors ${isPriority === priority.value
-                                    ? "bg-slate-800 dark:bg-slate-600 text-slate-100 shadow-md"
-                                    : "border-slate-300 dark:border-slate-600 hover:border-slate-800 dark:hover:border-slate-400 bg-gray-100 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200"
+                                ? "bg-slate-800 dark:bg-slate-600 text-slate-100 shadow-md"
+                                : "border-slate-300 dark:border-slate-600 hover:border-slate-800 dark:hover:border-slate-400 bg-gray-100 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200"
                                 }`}
                         >
                             {priority.label}

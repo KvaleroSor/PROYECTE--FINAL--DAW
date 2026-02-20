@@ -4,8 +4,10 @@ import { Plus, Target, Wallet, TrendingUp, AlertCircle, TrendingDown, PartyPoppe
 import GraphicMonthSpend from "./GraphicMonthSpend";
 import GridSpends from "./GridSpends";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 const GridSpendsMainPage = () => {
+    const t = useTranslations("expenses");
     // Hooks del componente
     const [isSearchOptionSelected, setIsSearchOptionSelected] = useState("month");
 
@@ -111,7 +113,7 @@ const GridSpendsMainPage = () => {
                             <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2">
                                 <div className="h-10 relative ml-2">
                                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 sm:w-6 sm:h-6 text-slate-500 dark:text-slate-400" />
-                                    <input type="text" className="w-full h-full bg-slate-50 dark:bg-slate-600 rounded-xl text-slate-500 pl-12 appearance-none border-2 border-transparent outline-none ring-0 focus:border-2 focus:border-slate-500 focus:ring-0 transition-all duration-300" placeholder="Buscar por nombre o categoria..." />
+                                    <input type="text" className="w-full h-full bg-slate-50 dark:bg-slate-600 rounded-xl text-slate-500 pl-12 appearance-none border-2 border-transparent outline-none ring-0 focus:border-2 focus:border-slate-500 focus:ring-0 transition-all duration-300" placeholder={t("searchPlaceholder")} />
                                 </div>
                                 <div className="group relative w-full h-10 bg-slate-50 dark:bg-slate-600 rounded-xl p-2 border-2 border-transparent focus:border-slate-500 focus:ring-0 transition-all duration-300 mr-2">
                                     <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 sm:w-6 sm:h-6 text-slate-500 dark:text-slate-400" />

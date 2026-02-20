@@ -30,8 +30,10 @@ import { createSpendSchema } from "@validations/validationsForms.js";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm, Controller } from "react-hook-form";
 import AlertMessage from "@/components/AlertMessage.jsx";
+import { useTranslations } from "next-intl";
 
 const FormSpend = () => {
+    const t = useTranslations("expenses");
     const {
         //Estado
         isCategoryId,
@@ -214,7 +216,7 @@ const FormSpend = () => {
 
     const findNameCategory = () => {
         const category = isCategories.find((cat) => cat._id === isCategoryId);
-        return category?.name || "Categoría no encontrada";
+        return category?.name || t("categoryNotFound");
     };
 
     const handleSubmitSpend = async (formData) => {
@@ -295,11 +297,11 @@ const FormSpend = () => {
                     </p>
                 </div>
                 <div className="w-full flex flex-col justify-start gap-2">
-                    <label htmlFor="description" className="text-slate-700 dark:text-slate-300">Descripción</label>
+                    <label htmlFor="description" className="text-slate-700 dark:text-slate-300">{t("description")}</label>
                     <input
                         id="description"
                         type="text"
-                        placeholder="Escribe una breve descripción"
+                        placeholder={t("descriptionPlaceholder")}
                         className="h-12 w-full bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
                         {...register("description")}
                     />
@@ -308,7 +310,7 @@ const FormSpend = () => {
                     )}
                 </div>
                 <div className="w-full flex flex-col justify-start gap-2">
-                    <label htmlFor="amount" className="text-slate-700 dark:text-slate-300">Cantidad del Gasto</label>
+                    <label htmlFor="amount" className="text-slate-700 dark:text-slate-300">{t("expenseAmount")}</label>
                     <input
                         id="amount"
                         type="number"
@@ -323,7 +325,7 @@ const FormSpend = () => {
                 </div>
 
                 <div className="w-full flex flex-col justify-start gap-2">
-                    <label htmlFor="date" className="text-slate-700 dark:text-slate-300">Fecha del Gasto</label>
+                    <label htmlFor="date" className="text-slate-700 dark:text-slate-300">{t("expenseDate")}</label>
                     <input
                         id="date"
                         type="date"
@@ -335,7 +337,7 @@ const FormSpend = () => {
                     )}
                 </div>
                 <div className="w-full flex flex-col justify-start gap-2">
-                    <label className="text-slate-700 dark:text-slate-300">Tipo de Pago</label>
+                    <label className="text-slate-700 dark:text-slate-300">{t("paymentType")}</label>
                     <Controller
                         name="payment_type"
                         control={control}

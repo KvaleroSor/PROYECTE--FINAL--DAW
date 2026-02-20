@@ -2,8 +2,10 @@
 
 import { useSaving } from "@/app/context/SavingContext.js";
 import { Target, TrendingUp, Calendar, Trash2, Edit, Plus } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const SavingGoalCard = ({ goal }) => {
+    const t = useTranslations("savings");
     const {
         calculateProgress,
         calculateMonthlyContribution,
@@ -28,9 +30,9 @@ const SavingGoalCard = ({ goal }) => {
     };
 
     const priorityLabels = {
-        high: "Alta",
-        medium: "Media",
-        low: "Baja",
+        high: t("priorityHigh"),
+        medium: t("priorityMedium"),
+        low: t("priorityLow"),
     };
 
     const statusColors = {
@@ -40,9 +42,9 @@ const SavingGoalCard = ({ goal }) => {
     };
 
     const statusLabels = {
-        active: "Activa",
-        completed: "Completada",
-        paused: "Pausada",
+        active: t("statusActive"),
+        completed: t("statusCompleted"),
+        paused: t("statusPaused"),
     };
 
     const handleEdit = () => {
@@ -51,7 +53,7 @@ const SavingGoalCard = ({ goal }) => {
     };
 
     const handleDelete = async () => {
-        if (window.confirm(`¿Estás seguro de eliminar la meta "${goal.goal_name}"?`)) {
+        if (window.confirm(t("deleteConfirm", { goalName: goal.goal_name }))) {
             try {
                 await deleteSavingGoal(goal._id);
             } catch (err) {
@@ -61,7 +63,7 @@ const SavingGoalCard = ({ goal }) => {
     };
 
     const formatDate = (dateString) => {
-        if (!dateString) return "Sin fecha límite";
+        if (!dateString) return t("noDeadline");
         const date = new Date(dateString);
         return date.toLocaleDateString("es-ES", {
             year: "numeric",
@@ -94,7 +96,7 @@ const SavingGoalCard = ({ goal }) => {
                     {statusLabels[goal.status]}
                 </span>
                 <span className="px-3 py-1 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-600 text-slate-700 dark:text-slate-300">
-                    Prioridad: {priorityLabels[goal.priority]}
+                    {t("priority")} {priorityLabels[goal.priority]}
                 </span>
             </div>
 
@@ -144,9 +146,9 @@ const SavingGoalCard = ({ goal }) => {
 
                 {monthsRemaining !== Infinity && monthsRemaining > 0 && (
                     <div className="flex items-center justify-between">
-                        <span className="text-slate-600 dark:text-slate-300">Tiempo estimado:</span>
+                        <span className="text-slate-600 dark:text-slate-300">{t("estimatedTime")}</span>
                         <span className="text-slate-700 dark:text-slate-300">
-                            {monthsRemaining} {monthsRemaining === 1 ? "mes" : "meses"}
+                            {monthsRemaining} {monthsRemaining === 1 ? t("month") : t("months")}
                         </span>
                     </div>
                 )}
@@ -155,7 +157,7 @@ const SavingGoalCard = ({ goal }) => {
                     <div className="flex items-center justify-between pt-2 border-t border-slate-200 dark:border-slate-500">
                         <div className="flex items-center gap-2 text-slate-600 dark:text-slate-300">
                             <Calendar className="w-4 h-4" />
-                            <span>Fecha límite:</span>
+                            <span>{t("deadline")}:</span>
                         </div>
                         <span className="font-medium text-slate-700 dark:text-slate-300">{formatDate(goal.deadline)}</span>
                     </div>
@@ -170,7 +172,7 @@ const SavingGoalCard = ({ goal }) => {
                             handleEdit()
                         }}
                     >
-                        Editar Meta
+                        {t("editGoalButton")}
                     </button>
                     <button
                         className="flex-1 px-3 py-2 text-xs sm:text-sm bg-slate-50 dark:bg-slate-700 hover:bg-red-100 dark:hover:bg-red-900/30 text-slate-700 dark:text-slate-300 hover:text-red-500 dark:hover:text-red-400 rounded-lg transition-colors"
@@ -179,7 +181,7 @@ const SavingGoalCard = ({ goal }) => {
                             handleDelete()
                         }}
                     >
-                        Eliminar Meta
+                        {t("deleteGoalButton")}
                     </button>
                 </div>
             </div>

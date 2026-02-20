@@ -53,6 +53,7 @@
         "spentThisMonth": "Gastat del mes",
         "thisMonth": "Aquest mes",
         "available": "DISPONIBLE",
+        "fixedLeisure": "Despesa Fixa/Oci",
         "fixed": "Despesa Fixa",
         "leisure": "Despesa Oci",
         "investment": "Inversió"
@@ -102,7 +103,9 @@
         "cash": "Efectiu",
         "transfer": "Transferència",
         "exceedingLimit": "DESPESA EXCEDINT EL LÍMIT",
-        "maxAmount": "Quantitat Màxima"
+        "maxAmount": "Quantitat Màxima",
+        "categoryNotFound": "Categoria no trobada",
+        "searchPlaceholder": "Cercar per nom o categoria..."
     },
     "categories": {
         "title": "Categoria de Despeses",
@@ -146,7 +149,63 @@
         "featuredGoals": "Metes Destacades",
         "mainObjectives": "Els teus principals objectius",
         "viewAll": "Veure Totes",
-        "perMonth": "/mes"
+        "perMonth": "/mes",
+        "editGoal": "Editar Meta d'Estalvi",
+        "createNewGoal": "Crear Meta d'Estalvi",
+        "updateGoal": "Actualitza la teua meta d'estalvi",
+        "defineNewGoal": "Defineix una nova meta d'estalvi",
+        "goalNameRequired": "El nom de la meta és obligatori",
+        "errorSavingGoal": "Error al guardar la meta d'estalvi",
+        "goalSavedSuccessfully": "✅ Meta guardada exitosament",
+        "goalName": "Nom de la Meta",
+        "goalNamePlaceholder": "Ex: Viatge a Japó, Fons emergència...",
+        "descriptionOptional": "Descripció (opcional)",
+        "descriptionPlaceholder": "Descriu la teua meta d'estalvi...",
+        "savingBudget": "Pressupost d'Estalvi",
+        "totalMonthly": "Total mensual:",
+        "unexpectedExpenses": "Despeses imprevistes:",
+        "realAvailable": "Disponible real:",
+        "unassigned": "Sense assignar:",
+        "deadlineOptional": "Data Límit (opcional)",
+        "priorityHigh": "Alta",
+        "priorityMedium": "Mitjana",
+        "priorityLow": "Baixa",
+        "statusActive": "Activa",
+        "statusCompleted": "Completada",
+        "statusPaused": "Pausada",
+        "priority": "Prioritat:",
+        "editGoalButton": "Editar Meta",
+        "deleteGoalButton": "Eliminar Meta",
+        "deleteConfirm": "Estàs segur d'eliminar la meta \"{goalName}\"?",
+        "noDeadline": "Sense data límit",
+        "estimatedTime": "Temps estimat:",
+        "month": "mes",
+        "months": "mesos",
+        "contributionHistory": "Historial de Contribucions",
+        "monthlyTracking": "Seguiment mensual de les teues aportacions",
+        "goalBreakdown": "Desglossament per metes:",
+        "monthNames": {
+            "january": "Gener",
+            "february": "Febrer",
+            "march": "Març",
+            "april": "Abril",
+            "may": "Maig",
+            "june": "Juny",
+            "july": "Juliol",
+            "august": "Agost",
+            "september": "Setembre",
+            "october": "Octubre",
+            "november": "Novembre",
+            "december": "Desembre"
+        },
+        "processContributionsConfirm": "Estàs segur de processar les contribucions manualment? Açò afegirà el muntant mensual a totes les teues metes actives.",
+        "totalContributed": "Total Contribuït",
+        "monthlyContributionStatus": {
+            "subtitle": "Sense descontar imprevistos"
+        },
+        "monthlyContributionHistory": {
+            "title": "Historial de Contribucions Mensuals"
+        }
     },
     "savingsPage": {
         "totalProgress": "Progrés Total",
@@ -160,7 +219,12 @@
         "budgetFullWarning": "Has assignat el 100% del teu pressupost d'estalvi. Per crear noves metes, edita o elimina alguna existent.",
         "noGoals": "No tens metes d'estalvi",
         "createFirstGoalDescription": "Crea la teua primera meta d'estalvi per començar a aconseguir els teus objectius financers",
-        "createFirstGoal": "Crear La Meua Primera Meta"
+        "createFirstGoal": "Crear La Meua Primera Meta",
+        "savingGoals": "Metes d'Estalvi",
+        "manageFinancialGoals": "Gestiona els teus objectius financers i aconsegueix les teues metes",
+        "monthlyContributionStatus": {
+            "title": "Contribucions Mensuals Automàtiques"
+        }
     },
     "investments": {
         "title": "Inversions",
@@ -189,7 +253,9 @@
         "profile": "Perfil",
         "preferences": "Preferències",
         "language": "Idioma",
+        "languageDescription": "Selecciona el teu idioma preferit",
         "theme": "Tema",
+        "themeDescription": "Mode clar o fosc",
         "darkMode": "Mode fosc",
         "lightMode": "Mode clar",
         "notifications": "Notificacions",
@@ -220,5 +286,41 @@
             "nov": "Nov",
             "dec": "Des"
         }
+    },
+    "admin": {
+        "totalUsers": "TOTAL USUARIS REGISTRATS",
+        "totalCategories": "TOTAL CATEGORIES REGISTRADES",
+        "totalAdmins": "TOTAL ADMINS REGISTRATS",
+        "userRegistrationChart": "GRÀFIC REGISTRE USUARIS",
+        "usersAndCategories": "USUARIS REGISTRATS I NUM. CATEGORIES",
+        "generalMetrics": "MÈTRIQUES GENERALS",
+        "userRegistration": "Registre Usuaris"
+    },
+    "landing": {
+        "pricing": "Preus",
+        "blog": "Blog",
+        "contact": "Contacte",
+        "login": "Iniciar Sessió",
+        "signUp": "Registrar-se",
+        "heroTitle1": "Finances personals,",
+        "heroTitle2": "simplificades",
+        "heroSubtitle1": "La forma més intel·ligent de gestionar els teus diners. Controla despeses, planifica",
+        "heroSubtitle2": "estalvis i aconsegueix les teues metes financeres.",
+        "startFree": "Començar gratis",
+        "viewFeatures": "Veure Característiques",
+        "featuresTitle": "Tot el que necessites",
+        "featuresSubtitle": "Eines poderoses per al teu benestar financer",
+        "feature1Title": "Visualització Clàssica",
+        "feature1Description": "Gràfics intuïtius que mostren cap a on va el teu diner",
+        "feature2Title": "Metes d'Estalvi",
+        "feature2Description": "Defineix i aconsegueix els teus objectius financers pas a pas",
+        "feature3Title": "Alertes Intel·ligents",
+        "feature3Description": "Notificacions sobre despeses inusuals o límits aconseguits",
+        "feature4Title": "100% Segur",
+        "feature4Description": "Encriptació bancària i autenticació de dos factors",
+        "feature5Title": "Multiplataforma",
+        "feature5Description": "Accedeix des de web, iOS i Android sense problemes",
+        "feature6Title": "Anàlisi Automàtica",
+        "feature6Description": "Insights sobre els teus patrons de despesa i ingrés"
     }
 }

@@ -7,8 +7,11 @@ import {
     XAxis,
     YAxis,
 } from "recharts";
+import { useTranslations } from "next-intl";
 
 export default function Example({ data }) {
+    const t = useTranslations("admin");
+
     return (
         <LineChart
             data={data}
@@ -31,7 +34,7 @@ export default function Example({ data }) {
             <Line
                 type="monotone"
                 dataKey="users"
-                name="Registro Usuarios"
+                name={t("userRegistration")}
                 stroke="#0EA5E9"
                 strokeWidth={2}
                 activeDot={{ r: 6 }}

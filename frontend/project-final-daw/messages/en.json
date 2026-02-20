@@ -53,6 +53,7 @@
         "spentThisMonth": "Spent this month",
         "thisMonth": "This month",
         "available": "AVAILABLE",
+        "fixedLeisure": "Fixed/Leisure Expense",
         "fixed": "Fixed",
         "leisure": "Leisure",
         "investment": "Investment"
@@ -102,7 +103,9 @@
         "cash": "Cash",
         "transfer": "Transfer",
         "exceedingLimit": "EXPENSE EXCEEDING LIMIT",
-        "maxAmount": "Maximum Amount"
+        "maxAmount": "Maximum Amount",
+        "categoryNotFound": "Category not found",
+        "searchPlaceholder": "Search by name or category..."
     },
     "categories": {
         "title": "Expense Categories",
@@ -146,7 +149,63 @@
         "featuredGoals": "Featured Goals",
         "mainObjectives": "Your main objectives",
         "viewAll": "View All",
-        "perMonth": "/month"
+        "perMonth": "/month",
+        "editGoal": "Edit Savings Goal",
+        "createNewGoal": "Create Savings Goal",
+        "updateGoal": "Update your savings goal",
+        "defineNewGoal": "Define a new savings goal",
+        "goalNameRequired": "Goal name is required",
+        "errorSavingGoal": "Error saving the goal",
+        "goalSavedSuccessfully": "✅ Goal saved successfully",
+        "goalName": "Goal Name",
+        "goalNamePlaceholder": "E.g: Trip to Japan, Emergency fund...",
+        "descriptionOptional": "Description (optional)",
+        "descriptionPlaceholder": "Describe your savings goal...",
+        "savingBudget": "Savings Budget",
+        "totalMonthly": "Monthly total:",
+        "unexpectedExpenses": "Unexpected expenses:",
+        "realAvailable": "Real available:",
+        "unassigned": "Unassigned:",
+        "deadlineOptional": "Deadline (optional)",
+        "priorityHigh": "High",
+        "priorityMedium": "Medium",
+        "priorityLow": "Low",
+        "statusActive": "Active",
+        "statusCompleted": "Completed",
+        "statusPaused": "Paused",
+        "priority": "Priority:",
+        "editGoalButton": "Edit Goal",
+        "deleteGoalButton": "Delete Goal",
+        "deleteConfirm": "Are you sure you want to delete the goal \"{goalName}\"?",
+        "noDeadline": "No deadline",
+        "estimatedTime": "Estimated time:",
+        "month": "month",
+        "months": "months",
+        "contributionHistory": "Contribution History",
+        "monthlyTracking": "Monthly tracking of your contributions",
+        "goalBreakdown": "Breakdown by goals:",
+        "monthNames": {
+            "january": "January",
+            "february": "February",
+            "march": "March",
+            "april": "April",
+            "may": "May",
+            "june": "June",
+            "july": "July",
+            "august": "August",
+            "september": "September",
+            "october": "October",
+            "november": "November",
+            "december": "December"
+        },
+        "processContributionsConfirm": "Are you sure you want to process contributions manually? This will add the monthly amount to all your active goals.",
+        "totalContributed": "Total Contributed",
+        "monthlyContributionStatus": {
+            "subtitle": "Without unexpected expenses"
+        },
+        "monthlyContributionHistory": {
+            "title": "Monthly Contribution History"
+        }
     },
     "savingsPage": {
         "totalProgress": "Total Progress",
@@ -160,7 +219,12 @@
         "budgetFullWarning": "You have allocated 100% of your savings budget. To create new goals, edit or delete an existing one.",
         "noGoals": "You have no savings goals",
         "createFirstGoalDescription": "Create your first savings goal to start reaching your financial objectives",
-        "createFirstGoal": "Create My First Goal"
+        "createFirstGoal": "Create My First Goal",
+        "savingGoals": "Saving Goals",
+        "manageFinancialGoals": "Manage your financial goals and achieve your objectives",
+        "monthlyContributionStatus": {
+            "title": "Monthly Automatic Contributions"
+        }
     },
     "investments": {
         "title": "Investments",
@@ -189,7 +253,9 @@
         "profile": "Profile",
         "preferences": "Preferences",
         "language": "Language",
+        "languageDescription": "Select your preferred language",
         "theme": "Theme",
+        "themeDescription": "Light or dark mode",
         "darkMode": "Dark mode",
         "lightMode": "Light mode",
         "notifications": "Notifications",
@@ -220,5 +286,41 @@
             "nov": "Nov",
             "dec": "Dec"
         }
+    },
+    "admin": {
+        "totalUsers": "TOTAL REGISTERED USERS",
+        "totalCategories": "TOTAL REGISTERED CATEGORIES",
+        "totalAdmins": "TOTAL REGISTERED ADMINS",
+        "userRegistrationChart": "USER REGISTRATION CHART",
+        "usersAndCategories": "REGISTERED USERS AND NUM. CATEGORIES",
+        "generalMetrics": "GENERAL METRICS",
+        "userRegistration": "User Registration"
+    },
+    "landing": {
+        "pricing": "Pricing",
+        "blog": "Blog",
+        "contact": "Contact",
+        "login": "Log In",
+        "signUp": "Sign Up",
+        "heroTitle1": "Personal finances,",
+        "heroTitle2": "simplified",
+        "heroSubtitle1": "The smartest way to manage your money. Track expenses, plan",
+        "heroSubtitle2": "savings and achieve your financial goals.",
+        "startFree": "Start for free",
+        "viewFeatures": "View Features",
+        "featuresTitle": "Everything you need",
+        "featuresSubtitle": "Powerful tools for your financial wellbeing",
+        "feature1Title": "Classic Visualization",
+        "feature1Description": "Intuitive charts showing where your money goes",
+        "feature2Title": "Savings Goals",
+        "feature2Description": "Define and achieve your financial objectives step by step",
+        "feature3Title": "Smart Alerts",
+        "feature3Description": "Notifications about unusual expenses or reached limits",
+        "feature4Title": "100% Secure",
+        "feature4Description": "Bank-level encryption and two-factor authentication",
+        "feature5Title": "Cross-platform",
+        "feature5Description": "Access from web, iOS and Android seamlessly",
+        "feature6Title": "Automatic Analysis",
+        "feature6Description": "Insights about your spending and income patterns"
     }
 }

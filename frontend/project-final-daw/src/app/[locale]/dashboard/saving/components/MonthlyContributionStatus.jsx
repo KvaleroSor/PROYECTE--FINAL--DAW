@@ -4,8 +4,10 @@ import { useSaving } from "@/app/context/SavingContext.js";
 import { Calendar, PlayCircle, CheckCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
+import { useTranslations } from "next-intl";
 
 const MonthlyContributionStatus = () => {
+    const t = useTranslations("savingsPage");
     const { data: session } = useSession();
     const { manualProcessContributions, isLoading } = useSaving();
     const [lastProcessed, setLastProcessed] = useState(null);
@@ -40,7 +42,7 @@ const MonthlyContributionStatus = () => {
 
     //💡 REVISAR LA FORMA DE MOSTRAR PARA LA CONFIRMACIÓN ❌
     const handleManualProcess = async () => {
-        if (window.confirm("¿Estás seguro de procesar las contribuciones manualmente? Esto agregará el monto mensual a todas tus metas activas.")) {
+        if (window.confirm(t("processContributionsConfirm"))) {
             await manualProcessContributions();
             // Actualizar las fechas
             const date = new Date();
@@ -56,7 +58,7 @@ const MonthlyContributionStatus = () => {
         <div className="bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-700 rounded-lg p-4 mb-6 shadow-sm transition-colors duration-300">
             <div className="flex items-center gap-2 mb-3">
                 <Calendar className="w-5 h-5 text-slate-700 dark:text-slate-300" />
-                <h3 className="font-semibold text-slate-900 dark:text-slate-100">Contribuciones Mensuales Automáticas</h3>
+                <h3 className="font-semibold text-slate-900 dark:text-slate-100">{t("monthlyContributionStatus.title")}</h3>
             </div>
 
             <div className="space-y-2 text-sm">

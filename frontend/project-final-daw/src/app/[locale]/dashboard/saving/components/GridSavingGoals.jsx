@@ -41,10 +41,10 @@ const GridSavingGoals = () => {
                 {/* Header */}
                 <div className="mb-8">
                     <h1 className="text-3xl text-gray-900 dark:text-slate-100 mb-2">
-                        Metas de Ahorro
+                        {t("savingGoals")}
                     </h1>
                     <p className="text-gray-600 dark:text-slate-400">
-                        Gestiona tus objetivos financieros y alcanza tus metas
+                        {t("manageFinancialGoals")}
                     </p>
                 </div>
                 {/* Resumen general */}

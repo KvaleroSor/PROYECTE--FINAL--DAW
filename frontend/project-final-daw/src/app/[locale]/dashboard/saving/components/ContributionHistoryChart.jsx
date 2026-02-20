@@ -2,6 +2,7 @@
 
 import { useSaving } from "@/app/context/SavingContext.js";
 import { useEffect } from "react";
+import { useTranslations } from "next-intl";
 import {
     TrendingUp,
     Calendar,
@@ -12,6 +13,7 @@ import {
 } from "lucide-react";
 
 const ContributionHistoryChart = () => {
+    const t = useTranslations("savings");
     const {
         isContributionHistory,
         isTotalContributedAllTime,
@@ -26,10 +28,12 @@ const ContributionHistoryChart = () => {
     // Asegurar que isTotalContributedAllTime sea un número válido
     const safeTotal = Number(isTotalContributedAllTime) || 0;
 
-    // Nombres de meses en español
+    // Nombres de meses
     const monthNames = [
-        "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio",
-        "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"
+        t("monthNames.january"), t("monthNames.february"), t("monthNames.march"),
+        t("monthNames.april"), t("monthNames.may"), t("monthNames.june"),
+        t("monthNames.july"), t("monthNames.august"), t("monthNames.september"),
+        t("monthNames.october"), t("monthNames.november"), t("monthNames.december")
     ];
 
     // Calcular tendencia (comparar últimos 2 meses)
@@ -67,21 +71,21 @@ const ContributionHistoryChart = () => {
                 <div>
                     <h2 className="text-3xl text-gray-900 dark:text-slate-100 flex items-center gap-2">
                         {/* <TrendingUp className="text-slate-600 dark:text-slate-400" /> */}
-                        Historial de Contribuciones
+                        {t("contributionHistory")}
                     </h2>
                     <p className="text-gray-600 dark:text-slate-400 mt-1">
-                        Seguimiento mensual de tus aportaciones
+                        {t("monthlyTracking")}
                     </p>
                 </div>
 
                 {/* Total acumulado histórico */}
                 <div className="text-right">
-                    <p className="text-lg text-gray-600 dark:text-slate-400">Total Contribuido</p>
+                    <p className="text-lg text-gray-600 dark:text-slate-400">{t("totalContributed")}</p>
                     <p className="text-3xl text-slate-900 dark:text-slate-200">
                         €{safeTotal.toFixed(2)}
                     </p>
                     <p className="text-md text-gray-500 dark:text-slate-400 mt-1">
-                        (Sin descontar imprevistos)
+                        ({t("monthlyContributionStatus.subtitle")})
                     </p>
                 </div>
             </div>
@@ -114,7 +118,8 @@ const ContributionHistoryChart = () => {
                 <div className="space-y-4">
                     <h3 className="text-xl text-gray-800 dark:text-slate-200 flex items-center gap-2">
                         <Calendar className="w-5 h-5" />
-                        Contribuciones Mensuales
+                        {t("monthlyContributionHistory.title")}
+                        {/* Contribuciones Mensuales */}
                     </h3>
 
                     <div className="space-y-3 max-h-96 overflow-y-auto no-scrollbar">
@@ -151,7 +156,7 @@ const ContributionHistoryChart = () => {
                                         <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-500">
                                             <p className="text-md text-gray-900 dark:text-slate-400 mb-2 flex items-center gap-1">
                                                 <PiggyBank className="w-4 h-4" />
-                                                Desglose por metas:
+                                                {t("goalBreakdown")}
                                             </p>
                                             <div className="grid grid-cols-2 gap-2">
                                                 {entry.goals.map((goal, idx) => (
