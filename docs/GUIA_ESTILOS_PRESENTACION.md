@@ -66,7 +66,6 @@ El diseño se centra en la claridad, simplicidad y accesibilidad, utilizando un 
 ### Configuración Tailwind
 
 ```javascript
-// tailwind.config.js
 colors: {
   background: {
     slate: "#F8FAFC",
@@ -79,14 +78,6 @@ colors: {
   },
   text: {
     slate: "#0F172A",
-  },
-  main: {
-    indigo: "#6366F1",
-    purple: "#8B5CF6",
-    pink: "#EC4899",
-    rose: "#F43F5E",
-    emerald: "#10B981",
-    sky: "#0EA5E9"
   },
 }
 ```
@@ -117,44 +108,6 @@ colors: {
 
 ### Colores de Acento (Categorías y Estados)
 
-#### Colores Principales
-
-```css
---main-indigo: #6366f1 /* Acciones principales, CTAs */ --main-purple: #8b5cf6
-    /* Categorías especiales */ --main-pink: #ec4899
-    /* Salud, alertas importantes */ --main-rose: #f43f5e /* Comida, errores */
-    --main-emerald: #10b981 /* Transporte, éxito */ --main-sky: #0ea5e9
-    /* Hogar, información */;
-```
-
-#### Uso por Contexto
-
-| Color       | Contexto              | Ejemplo de Uso                          |
-| ----------- | --------------------- | --------------------------------------- |
-| **Indigo**  | Acciones principales  | Botones "Iniciar Sesión", "Guardar"     |
-| **Purple**  | Categorías especiales | Mascotas, Tecnología                    |
-| **Pink**    | Salud y bienestar     | Categoría Salud, Gym                    |
-| **Rose**    | Alimentación          | Categoría Comida, Restaurantes          |
-| **Emerald** | Transporte y éxito    | Categoría Coche, Estados exitosos       |
-| **Sky**     | Hogar e información   | Categoría Despensa, Mensajes info       |
-| **Yellow**  | Advertencias          | Alertas, presupuesto completo           |
-| **Red**     | Errores y peligro     | Mensajes de error, exceder límites      |
-| **Green**   | Éxito y confirmación  | Operaciones exitosas, metas completadas |
-
-### Escala de Colores Extendida
-
-Tailwind genera automáticamente escalas de 50-950 para cada color:
-
-```tsx
-// Ejemplo con Indigo
-bg - indigo - 50; // #EEF2FF - Backgrounds muy claros
-bg - indigo - 100; // #E0E7FF - Backgrounds hover
-bg - indigo - 500; // #6366F1 - Base (main-indigo)
-bg - indigo - 600; // #4F46E5 - Hover de botones
-bg - indigo - 700; // #4338CA - Active de botones
-bg - indigo - 900; // #312E81 - Muy oscuro
-```
-
 ### Implementación en Código
 
 ```tsx
@@ -167,11 +120,6 @@ bg - indigo - 900; // #312E81 - Muy oscuro
 <div className="dark:bg-slate-800 dark:text-slate-100 dark:border-slate-700">
   Contenido en modo oscuro
 </div>
-
-// Colores de acento
-<button className="bg-main-indigo hover:bg-indigo-600 text-white">
-  Acción Principal
-</button>
 ```
 
 ---
@@ -212,17 +160,14 @@ font-family:
 ### Pesos de Fuente (Font Weights)
 
 ```tsx
-font - normal; // 400 - Texto de párrafos
-font - medium; // 500 - Botones, labels destacados
-font - semibold; // 600 - Subtítulos, nombres
-font - bold; // 700 - Títulos principales
+font - normal; //Para todo los textos
 ```
 
 ### Ejemplos de Uso
 
 ```tsx
 // Título de página
-<h1 className="text-3xl font-bold text-gray-900 dark:text-slate-100">
+<h1 className="text-3xl text-gray-900 dark:text-slate-100">
   Metas de Ahorro
 </h1>
 
@@ -232,12 +177,12 @@ font - bold; // 700 - Títulos principales
 </p>
 
 // Texto destacado
-<span className="text-2xl font-semibold text-slate-900 dark:text-slate-100">
+<span className="text-2xl text-slate-900 dark:text-slate-100">
   €1,234.56
 </span>
 
 // Label
-<label className="text-sm font-medium text-slate-700 dark:text-slate-300">
+<label className="text-sm text-slate-700 dark:text-slate-300">
   Nombre de la Meta
 </label>
 ```
@@ -253,12 +198,8 @@ font - bold; // 700 - Títulos principales
 ```tsx
 <button
     className="
-  px-6 py-3 
-  bg-main-indigo hover:bg-indigo-600 active:bg-indigo-700
-  text-white text-sm font-medium 
-  rounded-xl 
-  transition-colors duration-200
-  disabled:opacity-50 disabled:cursor-not-allowed
+w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300
+rounded-xl group bg-slate-800 dark:bg-slate-600 text-slate-100 hover:border-slate-100 dark:hover:border-slate-400
 "
 >
     Guardar Cambios
@@ -272,13 +213,10 @@ font - bold; // 700 - Títulos principales
 ```tsx
 <button
     className="
-  px-6 py-3 
-  bg-white dark:bg-slate-700 
-  border-2 border-slate-200 dark:border-slate-600
-  hover:bg-slate-50 dark:hover:bg-slate-600
-  text-slate-900 dark:text-slate-100 text-sm font-medium 
-  rounded-xl 
-  transition-colors duration-200
+w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all 
+duration-300 rounded-xl group bg-slate-100 dark:bg-slate-700 border-slate-200 
+dark:border-slate-600 hover:bg-slate-300 dark:hover:bg-slate-600 hover:border-slate-900 
+dark:hover:border-slate-400 text-slate-600 dark:text-slate-300
 "
 >
     Cancelar
@@ -287,39 +225,15 @@ font - bold; // 700 - Títulos principales
 
 **Uso:** Acciones secundarias (Cancelar, Volver)
 
-#### Icon Button
-
-```tsx
-<button
-    className="
-  w-12 h-12 
-  flex items-center justify-center 
-  rounded-xl 
-  hover:bg-slate-100 dark:hover:bg-slate-700 
-  text-slate-600 dark:text-slate-300
-  transition-colors duration-200
-"
->
-    <Plus className="w-5 h-5" />
-</button>
-```
-
-**Uso:** Acciones con iconos, botones de menú
-
 #### Button con Icono y Texto
 
 ```tsx
 <button
-    className="
-  flex items-center gap-2 
-  px-4 py-2 
-  bg-slate-800 dark:bg-slate-600 
-  hover:bg-slate-900 dark:hover:bg-slate-500
-  text-white text-sm font-medium 
-  rounded-xl 
-  transition-all duration-300
-  shadow-lg hover:shadow-xl
-"
+    className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${
+        isActiveRoute("/dashboard/saving")
+            ? "transition-all duration-300 group bg-slate-200 text-slate-800 hover:bg-slate-200 shadow-xl"
+            : "text-slate-300 hover:text-slate-300"
+    }`}
 >
     <Plus className="w-5 h-5 group-hover:rotate-90 transition-transform duration-300" />
     Crear Nueva Meta
@@ -370,9 +284,7 @@ font - bold; // 700 - Títulos principales
   shadow-lg hover:shadow-md 
   transition-all duration-300
 "
->
-    {/* Contenido de la card */}
-</div>
+></div>
 ```
 
 **Uso:** Contenedores principales de contenido
@@ -390,7 +302,6 @@ font - bold; // 700 - Títulos principales
   transition-all duration-300
 "
 >
-    {/* Header con nombre y prioridad */}
     <div className="flex justify-between items-start mb-4">
         <h3 className="text-xl font-semibold text-gray-900 dark:text-slate-100">
             Viaje a Japón
@@ -400,7 +311,6 @@ font - bold; // 700 - Títulos principales
         </span>
     </div>
 
-    {/* Progreso */}
     <div className="mb-4">
         <div className="flex justify-between text-sm mb-2">
             <span className="text-slate-600 dark:text-slate-400">Progreso</span>
@@ -416,7 +326,6 @@ font - bold; // 700 - Títulos principales
         </div>
     </div>
 
-    {/* Montos */}
     <div className="flex justify-between text-sm">
         <span className="text-slate-600 dark:text-slate-400">
             €1,200 / €2,000
@@ -495,46 +404,6 @@ font - bold; // 700 - Títulos principales
     <option>Media</option>
     <option>Baja</option>
 </select>
-```
-
-### 4. Badges y Tags
-
-#### Priority Badge
-
-```tsx
-// Alta prioridad
-<span className="px-3 py-1 bg-yellow-100 dark:bg-yellow-900/30 text-yellow-800 dark:text-yellow-300 text-xs font-medium rounded-lg">
-  Alta
-</span>
-
-// Media prioridad
-<span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-xs font-medium rounded-lg">
-  Media
-</span>
-
-// Baja prioridad
-<span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300 text-xs font-medium rounded-lg">
-  Baja
-</span>
-```
-
-#### Status Badge
-
-```tsx
-// Activo
-<span className="px-3 py-1 bg-green-100 dark:bg-green-900/30 text-green-800 dark:text-green-300 text-xs font-medium rounded-lg">
-  Activa
-</span>
-
-// Completado
-<span className="px-3 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-800 dark:text-blue-300 text-xs font-medium rounded-lg">
-  Completada
-</span>
-
-// Pausado
-<span className="px-3 py-1 bg-gray-100 dark:bg-gray-700 text-gray-800 dark:text-gray-300 text-xs font-medium rounded-lg">
-  Pausada
-</span>
 ```
 
 ### 5. Alertas y Mensajes
@@ -681,12 +550,10 @@ font - bold; // 700 - Títulos principales
 ### Responsive Spacing
 
 ```tsx
-// Padding responsive
 <div className="p-4 sm:p-5 md:p-6 lg:p-8">
   Contenido con padding adaptativo
 </div>
 
-// Gap responsive
 <div className="grid gap-4 md:gap-6 lg:gap-8">
   Grid con gap adaptativo
 </div>
@@ -699,28 +566,23 @@ font - bold; // 700 - Títulos principales
 ### Niveles de Sombra
 
 ```css
-/* Nivel 0 - Plano */
+/* Nivel 0 - Sin sombra */
 shadow-none
 
-/* Nivel 1 - Sutil */
+/* Nivel 1 - Mínimo */
 shadow-sm
-/* 0 1px 2px rgba(0, 0, 0, 0.05) */
 
 /* Nivel 2 - Estándar */
 shadow
-/* 0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06) */
 
 /* Nivel 3 - Medio */
 shadow-md
-/* 0 4px 6px rgba(0, 0, 0, 0.1), 0 2px 4px rgba(0, 0, 0, 0.06) */
 
 /* Nivel 4 - Elevado */
 shadow-lg
-/* 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05) */
 
 /* Nivel 5 - Máximo */
 shadow-xl
-/* 0 20px 25px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.04) */
 ```
 
 ### Uso por Componente
@@ -755,18 +617,18 @@ shadow-xl
 ### Duraciones Estándar
 
 ```css
-duration-200  → 200ms  /* Cambios rápidos (hover, focus) */
-duration-300  → 300ms  /* Cambios estándar (transiciones generales) */
-duration-500  → 500ms  /* Cambios lentos (progress bars, modales) */
+duration-200  → 200ms
+duration-300  → 300ms
+duration-500  → 500ms
 ```
 
 ### Timing Functions
 
 ```css
-ease-in       /* Aceleración al inicio */
-ease-out      /* Desaceleración al final */
-ease-in-out   /* Aceleración y desaceleración */
-linear        /* Velocidad constante */
+ease-in
+ease-out
+ease-in-out
+linear
 ```
 
 ### Transiciones Comunes
@@ -824,13 +686,10 @@ linear        /* Velocidad constante */
 ### Animaciones Predefinidas
 
 ```tsx
-// Spinner
 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600" />
 
-// Pulse (skeleton loader)
 <div className="animate-pulse bg-slate-200 h-4 rounded" />
 
-// Bounce
 <div className="animate-bounce">↓</div>
 ```
 
@@ -851,10 +710,13 @@ xl:  1280px  /* Desktops */
 ### Mobile First Approach
 
 ```tsx
-// Base: Mobile
-// sm: Tablet pequeña
-// md: Tablet
-// lg: Desktop
+/*
+ * Base: Mobile
+ * sm: Tablet pequeña
+ * md: Tablet
+ * lg: Desktop
+ */
+
 <div
     className="
   grid 
@@ -863,9 +725,7 @@ xl:  1280px  /* Desktops */
   lg:grid-cols-3 
   gap-4
 "
->
-    {/* Contenido responsive */}
-</div>
+></div>
 ```
 
 ### Patrones Responsive Comunes
@@ -873,7 +733,11 @@ xl:  1280px  /* Desktops */
 #### Grid Adaptativo
 
 ```tsx
-// 1 columna en móvil, 2 en tablet, 3 en desktop
+/*
+ * 1 columna en móvil
+ * 2 columnas en tablet
+ * 3 columnas en desktop
+ */
 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
     {items.map((item) => (
         <Card key={item.id} {...item} />
@@ -898,12 +762,19 @@ xl:  1280px  /* Desktops */
 #### Ocultar/Mostrar Elementos
 
 ```tsx
-// Ocultar en móvil, mostrar en desktop
+
+/*
+ * Ocultar en móvil
+ * Mostrar en desktop
+ */
 <div className="hidden lg:block">
   Contenido solo desktop
 </div>
 
-// Mostrar en móvil, ocultar en desktop
+/*
+ * Mostrar en móvil
+ * Ocultar en desktop
+ */
 <div className="block lg:hidden">
   Contenido solo móvil
 </div>
@@ -923,6 +794,7 @@ xl:  1280px  /* Desktops */
 
 ```javascript
 // messages/es.json
+
 {
   "savingsPage": {
     "totalProgress": "Progreso Total",
