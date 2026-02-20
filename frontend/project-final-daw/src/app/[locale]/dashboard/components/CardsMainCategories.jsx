@@ -7,6 +7,7 @@ import { useFixedSpendTotalAvailable } from "@/app/hooks/spend/useFixedSpendTota
 import { useInversionRealTime } from "@/app/hooks/inversion/useInversionRealTime.js";
 import { useSaving } from "@/app/context/SavingContext.js";
 import { useSpends } from "@/app/context/SpendContext.js";
+import { useBlur } from "@/app/context/BlurContext";
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 
@@ -14,6 +15,7 @@ const CardsMainCategories = () => {
     const t = useTranslations("cards");
     const { isTotalSavingsRealTime } = useSaving();
     const { isSpends } = useSpends();
+    const { isBlurred, blurToggle } = useBlur();
 
     // Hooks personalizados
     const { isAvailableLeisure } = useLeisureSpendTotalAvailable();
@@ -44,9 +46,14 @@ const CardsMainCategories = () => {
                             </div>
                             <h1 className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">{t("savings")}</h1>
                         </div>
-                        <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1">
+                        {isBlurred ? <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1 blur-md select-none">
                             €{Number(isTotalSavingsRealTime).toFixed(2)}
-                        </h1>
+                        </h1> :
+                            <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1">
+                                €{Number(isTotalSavingsRealTime).toFixed(2)}
+                            </h1>
+                        }
+
                         <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">{t("totalSaved")}</p>
                     </div>
                 </div>
@@ -58,9 +65,16 @@ const CardsMainCategories = () => {
                             </div>
                             <h1 className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">{t("spent")}</h1>
                         </div>
-                        <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1">
+                        {/* <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1">
                             €{Number(isTotalSpends).toFixed(2)}
-                        </h1>
+                        </h1> */}
+                        {isBlurred ? <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1 blur-md select-none">
+                            €{Number(isTotalSpends).toFixed(2)}
+                        </h1> :
+                            <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1">
+                                €{Number(isTotalSpends).toFixed(2)}
+                            </h1>
+                        }
                         <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">{t("thisMonth")}</p>
                     </div>
                 </div>
@@ -72,9 +86,16 @@ const CardsMainCategories = () => {
                             </div>
                             <h1 className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">{t("available")}</h1>
                         </div>
-                        <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1">
+                        {/* <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1">
                             €{Number(isAvailableFixed).toFixed(2)}
-                        </h1>
+                        </h1> */}
+                        {isBlurred ? <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1 blur-md select-none">
+                            €{Number(isAvailableFixed).toFixed(2)}
+                        </h1> :
+                            <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1">
+                                €{Number(isAvailableFixed).toFixed(2)}
+                            </h1>
+                        }
                         <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">{t("fixed")}</p>
                     </div>
                 </div>
@@ -86,9 +107,16 @@ const CardsMainCategories = () => {
                             </div>
                             <h1 className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">{t("available")}</h1>
                         </div>
-                        <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1">
+                        {/* <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1">
                             €{Number(isAvailableLeisure).toFixed(2)}
-                        </h1>
+                        </h1> */}
+                        {isBlurred ? <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1 blur-md select-none">
+                            €{Number(isAvailableLeisure).toFixed(2)}
+                        </h1> :
+                            <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1">
+                                €{Number(isAvailableLeisure).toFixed(2)}
+                            </h1>
+                        }
                         <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">{t("leisure")}</p>
                     </div>
                 </div>

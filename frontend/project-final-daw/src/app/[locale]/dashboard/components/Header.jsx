@@ -8,6 +8,8 @@ import { useTranslations } from "next-intl";
 import ThemeToggle from "@/components/ThemeToggle.jsx";
 import LanguageSelector from "@/components/LanguageSelector.jsx";
 import { useTheme } from "@/app/context/ThemeContext.js";
+import { useBlur } from "@/app/context/BlurContext";
+import BlurToggle from "@/components/BlurToggle";
 
 const Header = () => {
     const { data: session, status } = useSession();
@@ -16,6 +18,7 @@ const Header = () => {
     const t = useTranslations("header");
     const tSettings = useTranslations("settings");
     const { isDarkMode, toggleTheme } = useTheme();
+    const { isBlurred, blurToggle } = useBlur();
 
     return (
         <>
@@ -39,6 +42,14 @@ const Header = () => {
                             <ThemeToggle />
                             <span className="group ml-2 opacity-0 max-w-0 text-slate-700 dark:text-slate-200 overflow-hidden whitespace-nowrap transition-all duration-500 group-hover:opacity-100 group-hover:max-w-xs">
                                 {isDarkMode ? tSettings("lightMode") : tSettings("darkMode")}
+                            </span>
+                        </div>
+                        <div className="group top-4 right-4 flex justify-center items-center border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-700 rounded-full p-2 cursor-pointer"
+                            onClick={blurToggle}
+                        >
+                            <BlurToggle />
+                            <span className="group ml-2 opacity-0 max-w-0 text-slate-700 dark:text-slate-200 overflow-hidden whitespace-nowrap transition-all duration-500 group-hover:opacity-100 group-hover:max-w-xs">
+                                {isBlurred ? tSettings("unblur") : tSettings("blur")}
                             </span>
                         </div>
                         <LanguageSelector />
