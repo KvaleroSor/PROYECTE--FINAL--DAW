@@ -25,7 +25,7 @@ const Header = () => {
                     <div className="flex justify-end items-center gap-2 sm:gap-4 md:gap-6">
                         {/* <Search className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700 dark:text-gray-300 hidden sm:block" /> */}
                         <Bell className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700 dark:text-gray-300 hidden sm:block" />
-                        <ThemeToggle />
+                        <ThemeToggle width={5} height={5} />
                         <LanguageSelector />
                         <div className="hidden lg:flex flex-col border-l border-slate-500 dark:border-slate-600 pl-3 m-2">
                             <h1 className="text-md text-slate-900 dark:text-slate-100">{session?.user?.name}</h1>

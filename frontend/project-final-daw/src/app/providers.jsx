@@ -2,13 +2,15 @@
 
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "@/app/context/ThemeContext.js";
-import PWAInstaller from "@/components/PWAInstaller.jsx";
+// PWA desactivado temporalmente
+// import PWAInstaller from "@/components/PWAInstaller.jsx";
 
 export default function Providers({ children }) {
     return (
         <SessionProvider>
             <ThemeProvider>
-                <PWAInstaller />
+                {/* PWA desactivado temporalmente */}
+                {/* <PWAInstaller /> */}
                 {children}
             </ThemeProvider>
         </SessionProvider>

@@ -22,7 +22,7 @@ const GridSpendsMainPage = () => {
         {/* <div className="h-full grid grid-rows-[auto_auto_auto] lg:grid-rows-[3fr_2fr_5fr] sm:grid-cols-1"> */}
         <div className="w-full flex flex-col gap-4">
 
-            {/*Header */}
+            {/* Header */}
             <div className="bg-slate-50 dark:bg-slate-800 p-4 rounded-xl shadow-lg hover:shadow-md transition-all duration-300">
                 <div className="mb-8">
                     <h1 className="text-3xl text-gray-900 dark:text-slate-100 mb-2">Gastos</h1>
@@ -88,6 +88,8 @@ const GridSpendsMainPage = () => {
                     <GraphicMonthSpend />
                 </div>
             </div>
+
+            {/* Buscador */}
             <div className="bg-slate-50 dark:bg-slate-800 p-4 rounded-xl shadow-lg hover:shadow-md transition-all duration-300">
                 <div className="w-full min-w-0 bg-white dark:bg-slate-700 rounded-xl">
                     {/* <Saving /> */}

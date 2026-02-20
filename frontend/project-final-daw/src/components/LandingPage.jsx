@@ -1,6 +1,8 @@
 "use client";
 
 import { FaInstagram, FaFacebook, FaXTwitter } from "react-icons/fa6";
+import ThemeToggle from "./ThemeToggle";
+import { useTheme } from "@/app/context/ThemeContext.js";
 import {
     Sparkles,
     Zap,
@@ -11,12 +13,12 @@ import {
 import FormLogin from "./FormLogin.jsx";
 
 const LandingPage = () => {
-
+    const { isDarkMode, toggleTheme } = useTheme();
 
     return (
         <div className="min-h-screen flex flex-col lg:flex-row">
             {/* //PART ESQUERRA */}
-            <div className="w-1/2 flex justify-center items-center bg-background-slate dark:bg-slate-800 p-14 transition-colors duration-300">
+            <div className="w-1/2 flex flex-col justify-center items-center bg-background-slate dark:bg-slate-800 p-14 transition-colors duration-300">
                 <div className="w-full max-w-xl flex flex-col gap-8">
                     <h3 className="text-[4rem] font-light text-slate-900 dark:text-slate-100">
                         Tu App Favorita para Gestionar los Gastos
@@ -83,11 +85,20 @@ const LandingPage = () => {
                         <FaInstagram className="text-2xl sm:text-3xl mb-1 text-gray-600 dark:text-slate-400 cursor-pointer hover:rotate-180 tranisition-transform duration-300 hover:text-gray-800 dark:hover:text-slate-200" />
                         <FaFacebook className="text-2xl sm:text-3xl mb-1 text-gray-600 dark:text-slate-400 cursor-pointer hover:rotate-180 tranisition-transform duration-300 hover:text-gray-800 dark:hover:text-slate-200" />
                         <FaXTwitter className="text-2xl sm:text-3xl mb-1 text-gray-600 dark:text-slate-400 cursor-pointer hover:rotate-180 tranisition-transform duration-300 hover:text-gray-800 dark:hover:text-slate-200" />
+
                     </div>
                 </div>
             </div>
             {/* //PART DRETA */}
-            <div className="lg:w-1/2 bg-white dark:bg-slate-900 flex flex-col items-center justify-center p-8 lg:p-16 transition-colors duration-300">
+            <div className="relative lg:w-1/2 bg-white dark:bg-slate-900 flex flex-col items-center justify-center p-8 lg:p-16 transition-colors duration-300">
+                <div className="absolute group top-4 right-4 flex justify-center items-center border-2 border-slate-200 dark:border-slate-700 rounded-full p-2 bg-slate-200 dark:bg-slate-700 cursor-pointer"
+                    onClick={toggleTheme}
+                >
+                    <ThemeToggle />
+                    <span className="group ml-2 opacity-0 max-w-0 text-slate-700 dark:text-slate-200 overflow-hidden whitespace-nowrap transition-all duration-500 group-hover:opacity-100 group-hover:max-w-xs">
+                        {isDarkMode ? "Modo claro" : "Modo oscuro"}
+                    </span>
+                </div>
                 <div className="max-w-lg w-full border border-slate-200 dark:border-slate-700 p-10 rounded-xl shadow-2xl bg-white dark:bg-slate-800">
                     <div className="mb-10">
                         <h1 className="text-6xl mb-2 text-gray-800 dark:text-slate-100 pb-2 font-light">

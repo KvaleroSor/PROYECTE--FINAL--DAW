@@ -65,7 +65,7 @@ const Body = () => {
                         {/* <Saving /> */}
                         <GridSpends />
                     </div>
-                    <div className="w-full lg:w-[40%] min-w-0">
+                    <div className="w-full h-fit lg:w-[40%] min-w-0">
                         {/* Repartición de la nómina en gráfico */}
                         <GraphicPercentatgeSpend />
                     </div>

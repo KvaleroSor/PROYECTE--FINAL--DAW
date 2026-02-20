@@ -4,6 +4,9 @@ import { useEffect } from "react";
 
 export default function PWAInstaller() {
     useEffect(() => {
+        // Service Worker desactivado temporalmente para debugging
+        // TODO: Reactivar cuando se resuelva el error /undefinedundefined
+        /*
         if ("serviceWorker" in navigator) {
             window.addEventListener("load", () => {
                 navigator.serviceWorker
@@ -16,6 +19,7 @@ export default function PWAInstaller() {
                     });
             });
         }
+        */
     }, []);
 
     return null;

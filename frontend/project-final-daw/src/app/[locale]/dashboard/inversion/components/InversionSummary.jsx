@@ -55,12 +55,12 @@ const InversionSummary = () => {
                 <div className="bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-300">
                     <div className="flex flex-col gap-2">
                         <div className="flex flex-row justify-between items-center">
-                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-green-600 dark:bg-green-700 rounded-lg flex items-center justify-center">
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
                                 <TrendingUp className="w-6 h-6 text-white" />
                             </div>
                             <h1 className="text-slate-500 dark:text-slate-400">GANANCIA</h1>
                         </div>
-                        <h1 className="text-4xl text-green-600 dark:text-green-400 mb-1">
+                        <h1 className="text-4xl text-slate-900 dark:text-slate-100 mb-1">
                             € {Number(isTotalProfitability).toFixed(2)}
                         </h1>
                         <p className="text-slate-500 dark:text-slate-400">Rentabilidad total</p>
@@ -71,12 +71,12 @@ const InversionSummary = () => {
                 <div className="bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-300">
                     <div className="flex flex-col gap-2">
                         <div className="flex flex-row justify-between items-center">
-                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-blue-600 dark:bg-blue-700 rounded-lg flex items-center justify-center">
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
                                 <Target className="w-6 h-6 text-white" />
                             </div>
                             <h1 className="text-slate-500 dark:text-slate-400">VALOR TOTAL</h1>
                         </div>
-                        <h1 className="text-4xl text-blue-600 dark:text-blue-400 mb-1">
+                        <h1 className="text-4xl text-slate-900 dark:text-slate-100 mb-1">
                             € {Number(isTotalValue).toFixed(2)}
                         </h1>
                         <p className="text-slate-500 dark:text-slate-400">Inversión + Ganancia</p>
@@ -87,12 +87,12 @@ const InversionSummary = () => {
                 <div className="bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-300">
                     <div className="flex flex-col gap-2">
                         <div className="flex flex-row justify-between items-center">
-                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-purple-600 dark:bg-purple-700 rounded-lg flex items-center justify-center">
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
                                 <Activity className="w-6 h-6 text-white" />
                             </div>
                             <h1 className="text-slate-500 dark:text-slate-400">RENTABILIDAD</h1>
                         </div>
-                        <h1 className="text-4xl text-purple-600 dark:text-purple-400 mb-1">
+                        <h1 className="text-4xl text-slate-900 dark:text-slate-100 mb-1">
                             {Number(isAverageProfitability).toFixed(2)} %
                         </h1>
                         <p className="text-slate-500 dark:text-slate-400">Rentabilidad media</p>
@@ -145,8 +145,8 @@ const InversionSummary = () => {
                                             </td>
                                             <td className="py-3 px-4 text-right">
                                                 <span className={`font-medium ${(inversion.real_profitability || 0) >= 0
-                                                        ? 'text-green-600 dark:text-green-400'
-                                                        : 'text-red-600 dark:text-red-400'
+                                                    ? 'text-green-600 dark:text-green-400'
+                                                    : 'text-red-600 dark:text-red-400'
                                                     }`}>
                                                     {Number(inversion.real_profitability || 0).toFixed(2)}%
                                                 </span>

@@ -8,8 +8,8 @@ const ThemeToggle = () => {
 
     return (
         <button
-            onClick={toggleTheme}
-            className="dark:bg-slate-800 transition-all duration-300"
+            // onClick={toggleTheme}
+            className="dark:bg-slate-700 transition-all duration-300"
             aria-label={isDarkMode ? "Cambiar a modo claro" : "Cambiar a modo oscuro"}
         >
             {isDarkMode ? (

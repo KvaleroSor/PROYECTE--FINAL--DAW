@@ -9,21 +9,23 @@ const exo2 = Exo_2({
 export const metadata = {
     title: "Expenses Control",
     description: "App de gestión de gastos, ahorros e inversiones",
-    manifest: "/manifest.json",
-    appleWebApp: {
-        capable: true,
-        statusBarStyle: "default",
-        title: "ExpControl",
-    },
+    // PWA desactivado temporalmente
+    // manifest: "/manifest.json",
+    // appleWebApp: {
+    //     capable: true,
+    //     statusBarStyle: "default",
+    //     title: "ExpControl",
+    // },
     formatDetection: {
         telephone: false,
     },
-    viewport: {
-        width: "device-width",
-        initialScale: 1,
-        maximumScale: 5,
-        userScalable: true,
-    },
+};
+
+export const viewport = {
+    width: "device-width",
+    initialScale: 1,
+    maximumScale: 5,
+    userScalable: true,
     themeColor: [
         { media: "(prefers-color-scheme: light)", color: "#ffffff" },
         { media: "(prefers-color-scheme: dark)", color: "#1e293b" },
@@ -39,12 +41,10 @@ export default function RootLayout({ children }) {
             suppressHydrationWarning
         >
             <head>
-                <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192x192.png" />
-                <link rel="icon" type="image/png" sizes="32x32" href="/icons/icon-192x192.png" />
-                <link rel="icon" type="image/png" sizes="16x16" href="/icons/icon-192x192.png" />
-                <meta name="mobile-web-app-capable" content="yes" />
-                <meta name="apple-mobile-web-app-capable" content="yes" />
-                <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+                {/* PWA metas desactivados temporalmente */}
+                {/* <meta name="mobile-web-app-capable" content="yes" /> */}
+                {/* <meta name="apple-mobile-web-app-capable" content="yes" /> */}
+                {/* <meta name="apple-mobile-web-app-status-bar-style" content="default" /> */}
             </head>
             <body className={`${exo2.className} h-full max-w-full overflow-x-hidden`}>
                 {children}

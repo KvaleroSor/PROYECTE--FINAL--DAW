@@ -39,14 +39,14 @@ export const useSavingsRealTime = (isTotalContributedAllTime = 0) => {
             0
         );
 
-        // 4. Calcular ahorro neto del mes actual (presupuesto - imprevistos)
-        const ahorroNetoMesActual = Math.max(0, (isSavingFromNomina || 0) - totalImprevistos);
-
-        // 5. Total ahorrado = ahorroGeneral (metas eliminadas) + contribuciones metas activas + ahorro neto mes + sobrantes de gasto fijo + sobrantes de gasto ocio
+        // 4. Total ahorrado = ahorroGeneral (sobrantes + metas eliminadas) + contribuciones metas activas + sobrantes de gasto fijo + sobrantes de gasto ocio
+        // NOTA: NO sumamos ahorroNetoMesActual porque ya está incluido en:
+        // - isTotalContributedAllTime (contribuciones procesadas a metas)
+        // - isAhorroGeneral (sobrante después de distribuir a metas)
+        // Solo se debe sumar si las contribuciones del mes NO han sido procesadas aún
         const totalAhorrado =
             (isAhorroGeneral || 0) +
             (isTotalContributedAllTime || 0) +
-            ahorroNetoMesActual +
             (isAvailableLeisure || 0) +
             (isAvailableFixed || 0);
 
