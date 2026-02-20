@@ -28,7 +28,8 @@
 
 ## 🎯 Introducción
 
-Numoes.app es una aplicación web moderna diseñada para ayudar a personas sin conocimientos financieros a **gestionar su dinero de forma sencilla**. El diseño se centra en la claridad, simplicidad y accesibilidad, utilizando un sistema de diseño coherente que funciona tanto en modo claro como oscuro.
+Numoes.app es una aplicación web moderna diseñada para ayudar a personas sin conocimientos financieros a **gestionar su dinero de forma sencilla** y **eliminar esos excel poco amigables**.
+El diseño se centra en la claridad, simplicidad y accesibilidad, utilizando un sistema de diseño coherente que funciona tanto en modo claro como oscuro.
 
 ### Objetivos del Diseño
 
