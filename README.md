@@ -6,16 +6,16 @@ Aplicación web para ayudar a personas sin conocimientos financieros a **gestion
 
 ## 🚀 Características principales
 
--   Registro de **ingresos** y **gastos** por categorías.
--   Asignación de **gastos fijos** (alquiler, luz, etc.).
--   Cálculo automático del **presupuesto mensual**:
-    -   💰 Ahorro
-    -   🛒 Gastos variables
-    -   🎉 Ocio
-    -   📈 Inversión
--   Dashboard con estadísticas y gráficos financieros.
--   Configuración personalizable de porcentajes de reparto.
--   Control y seguimiento de la inversión.
+- Registro de **ingresos** y **gastos** por categorías.
+- Asignación de **gastos fijos** (alquiler, luz, etc.).
+- Cálculo automático del **presupuesto mensual**:
+    - 💰 Ahorro
+    - 🛒 Gastos variables
+    - 🎉 Ocio
+    - 📈 Inversión
+- Dashboard con estadísticas y gráficos financieros.
+- Configuración personalizable de porcentajes de reparto.
+- Control y seguimiento de la inversión.
 
 ---
 
@@ -35,7 +35,7 @@ Ayudar a las personas a **aprender a gestionar su dinero**, entender en qué gas
 | **Base de datos**        | MongoDB           |
 | **Control de versiones** | Git + GitHub      |
 | **Depliegue Backend**    | Render            |
-| **Despliegue Frontend**  | Vercel            |   
+| **Despliegue Frontend**  | Vercel            |
 
 ---
 
@@ -58,16 +58,14 @@ root/
 
 Nos situaremos en el directorio de "backend"
 
--   npm install
+- npm install
+    - Instalamos todas las dependencias que necesite el proyecto.
 
-    -   Instalamos todas las dependencias que necesite el proyecto.
+- npm run dev
+    - Arrancaremos nuestro servidor de node con express.
 
--   npm run dev
-
-    -   Arrancaremos nuestro servidor de node con express.
-
--   Anotación:
-    -   Nos deberá salir en la terminal lo siguiente:
+- Anotación:
+    - Nos deberá salir en la terminal lo siguiente:
     ```
     ✅🚀 BBDD conectada
     ✅🚀 Servidor escuchando el puerto 3003
@@ -77,23 +75,21 @@ Nos situaremos en el directorio de "backend"
 
 Nos situaremos en el directorio de "frontend/project-final-daw"
 
--   npm install
+- npm install
+    - Instalamos todas las dependencias que necesite el proyecto.
 
-    -   Instalamos todas las dependencias que necesite el proyecto.
+- npm run dev
+    - Arrancaremos nuestro servidor de node con express.
 
--   npm run dev
-
-    -   Arrancaremos nuestro servidor de node con express.
-
--   Anotación:
-    -   Nos deberá salir en la terminal lo siguiente:
+- Anotación:
+    - Nos deberá salir en la terminal lo siguiente:
 
     ```
        ▲ Next.js 16.0.3 (Turbopack)
     -   Local: http://localhost:3000
     -   Network: http://192.168.1.40:3000
     -   Environments: .env
-    
+
     ✓ Starting...
     ✓ Ready in 662ms
     ```
@@ -109,3 +105,7 @@ Nos situaremos en el directorio de "frontend/project-final-daw"
 ```
 - https://proyecte-final-daw.onrender.com
 ```
+
+## 🔗 Enlace a Guía de Estilos
+
+- [Guía de Estilos](./docs/GUIA_ESTILOS_PRESENTACION.md)
