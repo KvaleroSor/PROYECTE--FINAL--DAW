@@ -15,9 +15,9 @@ const BlurToggle = () => {
             aria-label={isBlurred ? t("lightMode") : t("darkMode")}
         >
             {isBlurred ? (
-                <EyeClosed className="w-5 h-5 text-slate-700" />
+                <EyeClosed className="w-5 h-5 text-slate-700 dark:text-slate-200" />
             ) : (
-                <Eye className="w-5 h-5 text-slate-700" />
+                <Eye className="w-5 h-5 text-slate-700 dark:text-slate-200" />
             )}
         </button>
     );

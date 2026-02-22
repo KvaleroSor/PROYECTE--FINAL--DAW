@@ -43,7 +43,7 @@ const Sidebar = () => {
                     >
                         <div className="flex items-center gap-3">
                             <BalanceLogoCircle className="w-10 h-10" />
-                            <span className="text-2xl">numoes.app</span>
+                            <span className="text-2xl">Numoes.app</span>
                             {/* <span>{session.user.name.split(" ")[0]}</span> */}
                         </div>
                     </Link>

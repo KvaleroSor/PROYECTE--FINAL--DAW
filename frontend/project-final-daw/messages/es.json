@@ -1,7 +1,6 @@
 {
     "header": {
-        "title": "Dashboard Financiero",
-        "subtitle": "Gestiona tus finanzas de forma inteligente"
+        "title": "Numoes.app"
     },
     "common": {
         "loading": "Cargando...",
@@ -249,7 +248,8 @@
         "comingSoon": "Próximamente podrás gestionar tus inversiones aquí"
     },
     "settings": {
-        "title": "Configuración",
+        "title": "Configuración Usuario",
+        "description": "Gestiona la configuración y preferencias de tu usuario",
         "profile": "Perfil",
         "preferences": "Preferencias",
         "language": "Idioma",
@@ -260,7 +260,20 @@
         "lightMode": "Modo claro",
         "notifications": "Notificaciones",
         "security": "Seguridad",
-        "changePassword": "Cambiar contraseña"
+        "changePassword": "Cambiar contraseña",
+        "changeNickname": "Cambiar nombre de usuario",
+        "changeLocation": "Cambiar ubicación",
+        "changeSalary": "Cambiar nómina",
+        "password": "Contraseña",
+        "passwordDescription": "Cambia tu contraseña de acceso",
+        "nickname": "Nombre de usuario",
+        "nicknameDescription": "Personaliza tu nombre de usuario",
+        "blur": "Desenfoque",
+        "blurDescription": "Activa o desactiva el desenfoque de datos sensibles",
+        "location": "Ubicación",
+        "locationDescription": "Personaliza tu ubicación",
+        "salary": "Nómina",
+        "salaryDescription": "Personaliza tu nómina"
     },
     "languages": {
         "es": "Español",
