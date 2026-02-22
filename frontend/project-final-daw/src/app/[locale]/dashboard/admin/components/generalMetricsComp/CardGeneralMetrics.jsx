@@ -35,19 +35,15 @@ const CardGeneralMetrics = ({ data, titel, icon }) => {
     }
 
     return (
-        <div className="flex flex-col justify-center items-start gap-4 w-[400px] group bg-slate-10 rounded-2xl p-6 shadow-xl border border-gray-100 hover:border-slate-300 transition-all duration-300 overflow-hidden cursor-pointer">
+        <div className="flex flex-col justify-center items-start gap-4 w-[400px] group bg-white dark:bg-slate-700 rounded-2xl p-6 shadow-xl border border-gray-100 dark:border-slate-600 hover:border-slate-300 dark:hover:border-slate-500 transition-all duration-300 overflow-hidden cursor-pointer">
             <div
-                className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-all duration-300 border-2 mb-2`}
-                style={{
-                    backgroundColor: toRGBA("#10B981", 0.25),
-                    // border: `2px solid ${toRGBA("#10B981", 0.6)}`,
-                }}
+                className={`w-14 h-14 rounded-2xl flex items-center justify-center shadow-lg group-hover:scale-110 transition-all duration-300 border-2 mb-2 bg-slate-800 dark:bg-slate-400 border-slate-700 dark:border-slate-300`}
             >
-                <Icono className="size-6 text-[#10B981]" />
+                <Icono className="size-6 text-slate-200 dark:text-slate-800" />
             </div>
-            <h1 className="text-slate-600">{titel}</h1>
+            <h1 className="text-slate-600 dark:text-slate-300">{titel}</h1>
             {/* {ICON.name === 'UserRoundCheck' && ()} */}
-            <p className="text-xl font-medium">{valueDataToShow}</p>
+            <p className="text-xl font-medium text-slate-900 dark:text-slate-100">{valueDataToShow}</p>
         </div>
     );
 };

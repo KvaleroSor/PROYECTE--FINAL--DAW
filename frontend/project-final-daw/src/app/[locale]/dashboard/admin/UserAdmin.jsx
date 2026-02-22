@@ -27,14 +27,14 @@ const UserAdmin = () => {
     console.log(users);
 
     return (
-        <div className="flex flex-col justify-center items-center gap-8">            
+        <div className="flex flex-col justify-center items-center gap-8 transition-colors duration-300">
             <div className="w-full p-5">
-                <GeneralMetrics data={users}/>
-            </div>            
+                <GeneralMetrics data={users} />
+            </div>
             <div className="w-full p-5">
                 <GraficUsers data={users} />
                 {/* <GraficUsersLines data={users} /> */}
-            </div>            
+            </div>
             <div className="w-full p-5">
                 <UserRegisteredCategories data={users} />
             </div>

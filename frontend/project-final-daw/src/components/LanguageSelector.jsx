@@ -43,7 +43,7 @@ export default function LanguageSelector() {
             onMouseLeave={secureHandleMouseLeave}
             onClick={() => setIsOpen(false)}
         >
-            <div className="flex justify-center items-center border-2 border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-700 rounded-full p-2 cursor-pointer">
+            <div className="flex justify-center items-center hover:gap-2 hover:border-2 hover:border-slate-200 dark:hover:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-600 rounded-full p-2 cursor-pointer">
                 <Globe className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700 dark:text-gray-300" />
                 <span className="ml-2 opacity-0 max-w-0 text-slate-700 dark:text-slate-200 overflow-hidden whitespace-nowrap transition-all duration-500 group-hover:opacity-100 group-hover:max-w-xs">
                     {languageNames[locale]}

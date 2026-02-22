@@ -11,7 +11,7 @@ const BlurToggle = () => {
     return (
         <button
             // onClick={toggleTheme}
-            className="dark:bg-slate-700 transition-all duration-300"
+            className="dark:hover:bg-slate-600 transition-all duration-300"
             aria-label={isBlurred ? t("lightMode") : t("darkMode")}
         >
             {isBlurred ? (

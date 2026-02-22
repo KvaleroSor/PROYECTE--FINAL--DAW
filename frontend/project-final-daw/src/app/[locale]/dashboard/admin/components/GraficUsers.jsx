@@ -27,8 +27,8 @@ export default function GraficUsers({ data }) {
     chartData.sort((a, b) => new Date(a.date) - new Date(b.date));
 
     return (
-        <div className="w-full h-64 sm:h-72 md:h-80 lg:h-96 flex justify-center items-center flex-col rounded-xl bg-slate-10 p-3 sm:p-4 lg:p-6 shadow-xl gap-4 sm:gap-6 lg:gap-10">
-            {/* <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-slate-600 sm:mt-2 text-center border border-xl p-8 rounded-xl shadow-xl">
+        <div className="w-full h-64 sm:h-72 md:h-80 lg:h-96 flex justify-center items-center flex-col rounded-xl bg-slate-50 dark:bg-slate-800 p-3 sm:p-4 lg:p-6 shadow-xl gap-4 sm:gap-6 lg:gap-10 transition-colors duration-300">
+            {/* <h1 className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-slate-600 dark:text-slate-100 sm:mt-2 text-center border border-xl p-8 rounded-xl shadow-xl">
                 GRÁFICO REGISTRO USUARIOS
             </h1>             */}
             <ResponsiveContainer
