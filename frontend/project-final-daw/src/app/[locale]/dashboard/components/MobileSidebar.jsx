@@ -61,112 +61,116 @@ const MobileSidebar = () => {
                 className={`md:hidden fixed top-0 left-0 h-screen w-64 bg-slate-800 z-50 transform transition-transform duration-300 ease-in-out ${isOpen ? "translate-x-0" : "-translate-x-full"
                     }`}
             >
-                <nav className="w-full h-full p-3 flex flex-col justify-between overflow-y-auto">
-                    <div className="text-slate-300">
-                        <Link
-                            href="/dashboard"
-                            className="text-slate-300 flex justify-start ml-2 mb-8 mt-4"
-                            onClick={closeMenu}
-                        >
-                            <div className="flex items-center gap-3">
-                                <BalanceLogoCircle className="w-10 h-10" />
-                                <span className="text-2xl">numoes.app</span>
-                            </div>
-                        </Link>
-                        <Link
-                            href="/dashboard"
-                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${isActiveRoute("/dashboard")
+                <div className="w-full h-full flex flex-col">
+                    <nav className="flex-1 p-3 overflow-y-auto">
+                        <div className="text-slate-300">
+                            <Link
+                                href="/dashboard"
+                                className="text-slate-300 flex justify-start ml-2 mb-8 mt-4"
+                                onClick={closeMenu}
+                            >
+                                <div className="flex items-center gap-3">
+                                    <BalanceLogoCircle className="w-10 h-10" />
+                                    <span className="text-2xl">Numoes.app</span>
+                                </div>
+                            </Link>
+                            <Link
+                                href="/dashboard"
+                                className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${isActiveRoute("/dashboard")
                                     ? "bg-slate-200 text-slate-800 shadow-xl"
                                     : "text-slate-300"
-                                }`}
-                            onClick={closeMenu}
-                        >
-                            <House className="w-5 h-5 stroke-current" />
-                            <span>{t("dashboard")}</span>
-                            {isActiveRoute("/dashboard") && (
-                                <ChevronRight className="w-4 h-4 ml-auto" />
-                            )}
-                        </Link>
-                        <Link
-                            href="/dashboard/category"
-                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${isActiveRoute("/dashboard/category")
+                                    }`}
+                                onClick={closeMenu}
+                            >
+                                <House className="w-5 h-5 stroke-current" />
+                                <span>{t("dashboard")}</span>
+                                {isActiveRoute("/dashboard") && (
+                                    <ChevronRight className="w-4 h-4 ml-auto" />
+                                )}
+                            </Link>
+                            {/* <Link
+                                href="/dashboard/category"
+                                className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${isActiveRoute("/dashboard/category")
                                     ? "bg-slate-200 text-slate-800 shadow-xl"
                                     : "text-slate-300"
-                                }`}
-                            onClick={closeMenu}
-                        >
-                            <ChartBarStacked className="w-5 h-5 stroke-current" />
-                            <span>{t("categories")}</span>
-                            {isActiveRoute("/dashboard/category") && (
-                                <ChevronRight className="w-4 h-4 ml-auto" />
-                            )}
-                        </Link>
-                        <Link
-                            href="/dashboard/saving"
-                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${isActiveRoute("/dashboard/saving")
+                                    }`}
+                                onClick={closeMenu}
+                            >
+                                <ChartBarStacked className="w-5 h-5 stroke-current" />
+                                <span>{t("categories")}</span>
+                                {isActiveRoute("/dashboard/category") && (
+                                    <ChevronRight className="w-4 h-4 ml-auto" />
+                                )}
+                            </Link> */}
+                            <Link
+                                href="/dashboard/saving"
+                                className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${isActiveRoute("/dashboard/saving")
                                     ? "bg-slate-200 text-slate-800 shadow-xl"
                                     : "text-slate-300"
-                                }`}
-                            onClick={closeMenu}
-                        >
-                            <PiggyBank className="w-5 h-5 stroke-current" />
-                            <span>{t("savings")}</span>
-                            {isActiveRoute("/dashboard/saving") && (
-                                <ChevronRight className="w-4 h-4 ml-auto" />
-                            )}
-                        </Link>
-                        <Link
-                            href="/dashboard/spend"
-                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${isActiveRoute("/dashboard/spend")
+                                    }`}
+                                onClick={closeMenu}
+                            >
+                                <PiggyBank className="w-5 h-5 stroke-current" />
+                                <span>{t("savings")}</span>
+                                {isActiveRoute("/dashboard/saving") && (
+                                    <ChevronRight className="w-4 h-4 ml-auto" />
+                                )}
+                            </Link>
+                            <Link
+                                href="/dashboard/spend"
+                                className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${isActiveRoute("/dashboard/spend")
                                     ? "bg-slate-200 text-slate-800 shadow-xl"
                                     : "text-slate-300"
-                                }`}
-                            onClick={closeMenu}
-                        >
-                            <HandCoins className="w-5 h-5 stroke-current" />
-                            <span>{t("expenses")}</span>
-                            {isActiveRoute("/dashboard/spend") && (
-                                <ChevronRight className="w-4 h-4 ml-auto" />
-                            )}
-                        </Link>
-                        <Link
-                            href="/dashboard/inversion"
-                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${isActiveRoute("/dashboard/inversion")
+                                    }`}
+                                onClick={closeMenu}
+                            >
+                                <HandCoins className="w-5 h-5 stroke-current" />
+                                <span>{t("expenses")}</span>
+                                {isActiveRoute("/dashboard/spend") && (
+                                    <ChevronRight className="w-4 h-4 ml-auto" />
+                                )}
+                            </Link>
+                            {/* <Link
+                                href="/dashboard/inversion"
+                                className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${isActiveRoute("/dashboard/inversion")
                                     ? "bg-slate-200 text-slate-800 shadow-xl"
                                     : "text-slate-300"
-                                }`}
-                            onClick={closeMenu}
-                        >
-                            <ChartColumnIncreasing className="w-5 h-5 stroke-current" />
-                            <span>{t("investments")}</span>
-                            {isActiveRoute("/dashboard/inversion") && (
-                                <ChevronRight className="w-4 h-4 ml-auto" />
-                            )}
-                        </Link>
-                        <Link
-                            href="/dashboard/settings"
-                            className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${isActiveRoute("/dashboard/settings")
+                                    }`}
+                                onClick={closeMenu}
+                            >
+                                <ChartColumnIncreasing className="w-5 h-5 stroke-current" />
+                                <span>{t("investments")}</span>
+                                {isActiveRoute("/dashboard/inversion") && (
+                                    <ChevronRight className="w-4 h-4 ml-auto" />
+                                )}
+                            </Link> */}
+                            <Link
+                                href="/dashboard/settings"
+                                className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl transition-all ${isActiveRoute("/dashboard/settings")
                                     ? "bg-slate-200 text-slate-800 shadow-xl"
                                     : "text-slate-300"
-                                }`}
-                            onClick={closeMenu}
+                                    }`}
+                                onClick={closeMenu}
+                            >
+                                <Settings className="w-5 h-5 stroke-current" />
+                                <span>{t("settings")}</span>
+                                {isActiveRoute("/dashboard/settings") && (
+                                    <ChevronRight className="w-4 h-4 ml-auto" />
+                                )}
+                            </Link>
+                        </div>
+                    </nav>
+                    <div className="p-3 border-t-2 border-slate-700">
+                        <button
+                            type="button"
+                            className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-slate-300 hover:text-red-600 hover:bg-slate-700 transition-all"
+                            onClick={handleSignOut}
                         >
-                            <Settings className="w-5 h-5 stroke-current" />
-                            <span>{t("settings")}</span>
-                            {isActiveRoute("/dashboard/settings") && (
-                                <ChevronRight className="w-4 h-4 ml-auto" />
-                            )}
-                        </Link>
+                            <DoorOpen className="w-5 h-5 stroke-current" />
+                            {tAuth("logout")}
+                        </button>
                     </div>
-                    <button
-                        type="button"
-                        className="w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-slate-300 hover:text-red-600 hover:bg-slate-200 transition-all mt-4 bg-slate-800 border-t-2"
-                        onClick={handleSignOut}
-                    >
-                        <DoorOpen className="w-5 h-5 stroke-current" />
-                        {tAuth("logout")}
-                    </button>
-                </nav>
+                </div>
             </aside>
         </>
     );
