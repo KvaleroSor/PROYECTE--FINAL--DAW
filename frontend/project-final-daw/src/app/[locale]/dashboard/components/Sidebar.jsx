@@ -14,7 +14,6 @@ import { signOut, useSession } from "next-auth/react";
 import { useState, useEffect } from "react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname, useRouter } from "@/i18n/navigation";
-// import { BalanceLogoAlt } from "@/components/BalanceLogoAlt.jsx";
 import { BalanceLogoCircle } from "@/components/BalanceLogoCircle.jsx";
 
 const Sidebar = () => {

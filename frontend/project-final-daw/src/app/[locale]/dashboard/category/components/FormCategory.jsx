@@ -234,47 +234,53 @@ const FormCategory = () => {
                 className="w-full flex flex-col justify-start items-center gap-3 text-slate-700 dark:text-slate-300 transition-all duration-300"
                 onSubmit={handleSubmit(handleSubmitCategory)}
             >
-                <div className="w-full flex flex-row justify-between mb-8 gap-2">
-                    <div className="flex flex-col justify-start">
-                        <h1 className="text-2xl text-slate-900 dark:text-slate-100">Crear Nueva Categoría</h1>
-                        <p className="text-slate-600 dark:text-slate-400">Personaliza tu categoría de gastos</p>
+                <div className="w-full h-full p-4 bg-slate-50 dark:bg-slate-700 rounded-xl shadow-lg hover:shadow-md transition-all duration-300">
+                    <div className="w-full flex flex-row justify-between mb-8">
+                        <div className="flex flex-col justify-start">
+                            <h1 className="text-2xl text-slate-900 dark:text-slate-100">Crear Nueva Categoría</h1>
+                            <p className="text-slate-600 dark:text-slate-400">Personaliza tu categoría de gastos</p>
+                        </div>
+                        <div className="">
+                            <X
+                                className="w-15 h-15 transition-all duration-300 hover:rotate-90 cursor-pointer text-slate-700 dark:text-slate-300"
+                                onClick={handleCloseForm}
+                            />
+                        </div>
                     </div>
-                    <div className="">
-                        <X
-                            className="w-15 h-15 transition-all duration-300 hover:rotate-90 cursor-pointer text-slate-700 dark:text-slate-300"
-                            onClick={handleCloseForm}
-                        />
-                    </div>
-                </div>
-                <div className="w-full flex flex-col justify-start gap-2">
-                    <label htmlFor="name" className="text-slate-700 dark:text-slate-300">Nombre</label>
-                    <input
-                        id="name"
-                        type="text"
-                        placeholder="Nombre Categoría"
-                        className="h-12 w-full bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
-                        {...register("name")}
-                    />
-                    {errors.name && (
-                        <AlertMessage message={errors.name.message} type="error" />
-                    )}
-                </div>
 
-                <div className="w-full flex flex-col justify-start gap-2">
-                    <label htmlFor="monthly_budget" className="text-slate-700 dark:text-slate-300">Presupuesto Mensual</label>
-                    <input
-                        id="monthly_budget"
-                        type="number"
-                        placeholder="0.00 €"
-                        className="h-12 w-full bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
-                        {...register("monthly_budget")}
-                    />
-                    {errors.monthly_budget && (
-                        <AlertMessage message={errors.monthly_budget.message} type="error" />
-                    )}
+                    <div className="flex flex-col gap-4">
+                        <div className="w-full flex flex-col justify-start gap-2">
+                            <label htmlFor="name" className="text-slate-700 dark:text-slate-300 text-lg">Nombre</label>
+                            <input
+                                id="name"
+                                type="text"
+                                placeholder="Nombre Categoría"
+                                className="h-12 w-full bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
+                                {...register("name")}
+                            />
+                            {errors.name && (
+                                <AlertMessage message={errors.name.message} type="error" />
+                            )}
+                        </div>
+
+                        <div className="w-full flex flex-col justify-start gap-2">
+                            <label htmlFor="monthly_budget" className="text-slate-700 dark:text-slate-300 text-lg">Presupuesto Mensual</label>
+                            <input
+                                id="monthly_budget"
+                                type="number"
+                                placeholder="0.00 €"
+                                className="h-12 w-full bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
+                                {...register("monthly_budget")}
+                            />
+                            {errors.monthly_budget && (
+                                <AlertMessage message={errors.monthly_budget.message} type="error" />
+                            )}
+                        </div>
+                    </div>
+
                 </div>
-                <div className="w-full flex flex-col gap-2 mt-5 mb-5">
-                    <label htmlFor="icono" className="text-slate-700 dark:text-slate-300">Icono</label>
+                <div className="w-full flex flex-col gap-2 mt-5 mb-5 bg-slate-50 dark:bg-slate-700 p-4 rounded-xl shadow-lg hover:shadow-md">
+                    <label htmlFor="icono" className="text-slate-800 dark:text-slate-300 text-lg">Icono</label>
                     <Controller
                         name="icon"
                         control={control}
@@ -287,9 +293,9 @@ const FormCategory = () => {
                                         <button
                                             key={icon.name}
                                             type="button"
-                                            className={`w-[70px] h-[70px] aspect-square rounded-2xl border-2 transition-all duration-100 flex items-center justify-center group hover:scale-105 p-2 ${isActive
-                                                ? "bg-slate-800 dark:bg-slate-600 text-slate-100 shadow-md"
-                                                : "border-slate-300 dark:border-slate-600 hover:border-slate-800 dark:hover:border-slate-400 bg-gray-100 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200"
+                                            className={`w-[70px] h-[70px] aspect-square rounded-2xl transition-all duration-100 flex items-center justify-center group hover:scale-105 p-2 shadow hover:shadow-lg ${isActive
+                                                ? "bg-slate-500 dark:bg-slate-600 text-slate-50 shadow-md"
+                                                : "bg-gray-200 dark:bg-slate-800 hover:bg-slate-500 dark:hover:bg-slate-600 text-slate-800 hover:text-slate-50 dark:text-slate-200"
                                                 }`}
                                             onClick={() => field.onChange(isActive ? "" : icon.name)}
                                         >
@@ -304,8 +310,8 @@ const FormCategory = () => {
                         <AlertMessage message={errors.icon.message} type="error" />
                     )}
                 </div>
-                <div className="w-full flex flex-col justify-start gap-2">
-                    <label className="text-slate-700 dark:text-slate-300">Tipo de Categoría</label>
+                <div className="w-full flex flex-col justify-start gap-2 bg-slate-50 dark:bg-slate-700 p-4 rounded-xl shadow-lg hover:shadow-md">
+                    <label className="text-slate-700 dark:text-slate-300 text-lg">Tipo de Categoría</label>
                     <Controller
                         name="category_type"
                         control={control}

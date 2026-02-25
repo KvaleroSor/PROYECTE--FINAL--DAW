@@ -94,69 +94,72 @@ const FormModifyPercentage = () => {
             <form className="w-full flex flex-col justify-start items-center gap-3 text-slate-700 dark:text-slate-300" onSubmit={(e) => {
                 handleSubmitFormModifyPercentage(e);
             }}>
-                <div className="w-full flex flex-row justify-between mb-8 gap-2">
-                    <div className="flex flex-col justify-start">
-                        <h1 className="text-2xl text-slate-900 dark:text-slate-100">Actualizar Porcentajes</h1>
-                        <p className="text-slate-600 dark:text-slate-400">Personaliza tus porcentajes de gastos</p>
+                <div className="w-full flex flex-col justify-start items-center gap-3 bg-slate-50 dark:bg-slate-800 rounded-xl p-4 shadow-lg hover:shadow-md transition-all duration-300">
+                    <div className="w-full flex flex-row justify-between mb-8 gap-2">
+                        <div className="flex flex-col justify-start">
+                            <h1 className="text-2xl text-slate-900 dark:text-slate-100">Actualizar Porcentajes</h1>
+                            <p className="text-slate-600 dark:text-slate-400">Personaliza tus porcentajes de gastos</p>
+                        </div>
+                        <div className="">
+                            <X
+                                className="w-15 h-15 transition-all duration-300 hover:rotate-90 cursor-pointer text-slate-700 dark:text-slate-300"
+                                onClick={handleClickCloseFormModifyPercentage}
+                            />
+                        </div>
                     </div>
-                    <div className="">
-                        <X
-                            className="w-15 h-15 transition-all duration-300 hover:rotate-90 cursor-pointer text-slate-700 dark:text-slate-300"
-                            onClick={handleClickCloseFormModifyPercentage}
-                        />
+                    <div className="w-full flex flex-row justify-center items-center mb-6 mx-6">
+                        <div className="flex justify-center items-center rounded-l-xl w-full h-15 p-3 bg-slate-600 dark:bg-slate-600 text-white dark:text-slate-100"><span>{fixedPercentage} %</span></div>
+                        <div className="flex justify-center items-center w-full h-15 p-3 bg-slate-500 dark:bg-blue-800 text-white dark:text-slate-100"><span>{leisurePercentage} %</span></div>
+                        <div className="flex justify-center items-center w-full h-15 p-3 bg-sky-500 dark:bg-teal-800 text-white dark:text-slate-100"><span>{investmentPercentage} %</span></div>
+                        <div className="flex justify-center items-center w-full h-15 p-3 bg-cyan-500 dark:bg-green-800 text-white dark:text-slate-100"><span>{savingsPercentage} %</span></div>
+                        <div className="flex justify-center items-center rounded-r-xl w-full h-15 p-3 bg-slate-400 dark:bg-slate-700 text-white dark:text-slate-100"><span>{isTotalImprevistosPercentatge} %</span></div>
                     </div>
                 </div>
-                <div className="w-full flex flex-row justify-center items-center mb-6 mx-6">
-                    <div className="flex justify-center items-center rounded-l-xl w-full h-15 p-3 bg-slate-600 dark:bg-slate-600 text-white dark:text-slate-100"><span>{fixedPercentage} %</span></div>
-                    <div className="flex justify-center items-center w-full h-15 p-3 bg-slate-500 dark:bg-blue-800 text-white dark:text-slate-100"><span>{leisurePercentage} %</span></div>
-                    <div className="flex justify-center items-center w-full h-15 p-3 bg-sky-500 dark:bg-teal-800 text-white dark:text-slate-100"><span>{investmentPercentage} %</span></div>
-                    <div className="flex justify-center items-center w-full h-15 p-3 bg-cyan-500 dark:bg-green-800 text-white dark:text-slate-100"><span>{savingsPercentage} %</span></div>
-                    <div className="flex justify-center items-center rounded-r-xl w-full h-15 p-3 bg-slate-400 dark:bg-slate-700 text-white dark:text-slate-100"><span>{isTotalImprevistosPercentatge} %</span></div>
-                </div>
-                <div className="w-full flex flex-col justify-start gap-2 border-2 border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 rounded-xl p-4">
-                    <div className="w-full flex flex-row justify-start items-center gap-2 border-2 border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl p-4">
+
+                <div className="w-full flex flex-col justify-start gap-2 bg-slate-50 dark:bg-slate-800 rounded-xl p-4 shadow-lg hover:shadow-md transition-all duration-300">
+                    <div className="w-full flex flex-row justify-start items-center gap-2 bg-white dark:bg-slate-700 rounded-xl p-4 shadow-lg hover:shadow-md transition-all duration-300">
                         <div className="w-5 h-5 rounded-full bg-slate-600 dark:bg-slate-600">
                         </div>
                         <div className="w-full flex flex-row justify-between items-center gap-4">
                             <p className="text-slate-900 dark:text-slate-100">{t("fixedExpense")}</p>
                             <div className="flex flex-row justify-center items-center gap-4 text-slate-700 dark:text-slate-300">
-                                <input type="number" value={fixedPercentage} className="w-16 p-2 rounded-xl border-2 border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300" onChange={(e) => setFixedPercentage(e.target.value)} />
+                                <input type="number" value={fixedPercentage} className="w-16 p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 shadow-lg hover:shadow-md transition-all duration-300" onChange={(e) => setFixedPercentage(e.target.value)} />
                                 <span>%</span>
                                 <p>€ {Number(isFixedExpensesFromNomina).toFixed(2)}</p>
                             </div>
                         </div>
                     </div>
-                    <div className="w-full flex flex-row justify-start items-center gap-2 border-2 border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl p-4">
+                    <div className="w-full flex flex-row justify-start items-center gap-2 bg-white dark:bg-slate-700 rounded-xl p-4 shadow-lg hover:shadow-md transition-all duration-300">
                         <div className="w-5 h-5 flex flex-row justify-center items-center rounded-full bg-slate-500 dark:bg-blue-800">
                         </div>
                         <div className="w-full flex flex-row justify-between items-center gap-4">
                             <p className="text-slate-900 dark:text-slate-100 pr-4">{t("leisureExpense")}</p>
                             <div className="flex flex-row justify-center items-center gap-4 text-slate-700 dark:text-slate-300">
-                                <input type="number" value={leisurePercentage} className="w-16 p-2 rounded-xl border-2 border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300" onChange={(e) => setLeisurePercentage(e.target.value)} />
+                                <input type="number" value={leisurePercentage} className="w-16 p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 shadow-lg hover:shadow-md transition-all duration-300" onChange={(e) => setLeisurePercentage(e.target.value)} />
                                 <span>%</span>
                                 <p>€ {Number(isLeisureExpensesFromNomina).toFixed(2)}</p>
                             </div>
                         </div>
                     </div>
-                    <div className="w-full flex flex-row justify-start items-center gap-2 border-2 border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl p-4">
+                    <div className="w-full flex flex-row justify-start items-center gap-2 bg-white dark:bg-slate-700 rounded-xl p-4 shadow-lg hover:shadow-md transition-all duration-300">
                         <div className="w-5 h-5 flex flex-row justify-center items-center rounded-full bg-sky-500 dark:bg-teal-800">
                         </div>
                         <div className="w-full flex flex-row justify-between items-center gap-4">
                             <p className="text-slate-900 dark:text-slate-100 pr-4">{t("investment")}</p>
                             <div className="flex flex-row justify-center items-center gap-4 text-slate-700 dark:text-slate-300">
-                                <input type="number" value={investmentPercentage} className="w-16 p-2 rounded-xl border-2 border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300" onChange={(e) => setInvestmentPercentage(e.target.value)} />
+                                <input type="number" value={investmentPercentage} className="w-16 p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 shadow-lg hover:shadow-md transition-all duration-300" onChange={(e) => setInvestmentPercentage(e.target.value)} />
                                 <span>%</span>
                                 <p>€ {Number(isInvestmentFromNomina).toFixed(2)}</p>
                             </div>
                         </div>
                     </div>
-                    <div className="w-full flex flex-row justify-start items-center gap-2 border-2 border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 rounded-xl p-4">
+                    <div className="w-full flex flex-row justify-start items-center gap-2 bg-white dark:bg-slate-700 rounded-xl p-4 shadow-lg hover:shadow-md transition-all duration-300">
                         <div className="w-5 h-5 flex flex-row justify-center items-center rounded-full bg-cyan-500 dark:bg-green-800">
                         </div>
                         <div className="w-full flex flex-row justify-between items-center gap-4">
                             <p className="text-slate-900 dark:text-slate-100 pr-4">{t("savings")}</p>
                             <div className="flex flex-row justify-center items-center gap-4 text-slate-700 dark:text-slate-300">
-                                <input type="number" value={savingsPercentage} className="w-16 p-2 rounded-xl border-2 border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300" onChange={(e) => setSavingsPercentage(e.target.value)} />
+                                <input type="number" value={savingsPercentage} className="w-16 p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 shadow-lg hover:shadow-md transition-all duration-300" onChange={(e) => setSavingsPercentage(e.target.value)} />
                                 <span>%</span>
                                 <p>€ {Number(isSavingFromNomina).toFixed(2)}</p>
                             </div>
@@ -164,44 +167,45 @@ const FormModifyPercentage = () => {
                     </div>
                 </div>
 
-                {!isTotalPercentageWrong ? (
-                    <div className="w-full flex flex-row justify-start items-center gap-2 border-2 border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 rounded-xl p-4 mt-4">
-                        <div className="w-5 h-5 flex flex-row justify-center items-center rounded-full bg-slate-400 dark:bg-slate-700">
-                        </div>
-                        <div className="w-full flex flex-row justify-between items-center gap-4">
-                            <p className="text-slate-900 dark:text-slate-100 pr-4">Total</p>
-                            <div className="flex flex-row justify-center items-center gap-4 text-slate-700 dark:text-slate-300">
-                                <p>{isTotalPercentage} %</p>
+                <div className='w-full h-full flex flex-col bg-slate-50 dark-bg-slate-700 rounded-xl p-4 shadow-lg hover-shadow-md'>
+                    {!isTotalPercentageWrong ? (
+                        <div className="w-full flex flex-row justify-start items-center gap-2 bg-white dark:bg-slate-800 rounded-xl p-4 mt-4 shadow-lg hover:shadow-md transition-all duration-300">
+                            <div className="w-5 h-5 flex flex-row justify-center items-center rounded-full bg-slate-400 dark:bg-slate-700">
+                            </div>
+                            <div className="w-full flex flex-row justify-between items-center gap-4">
+                                <p className="text-slate-900 dark:text-slate-100 pr-4">Total</p>
+                                <div className="flex flex-row justify-center items-center gap-4 text-slate-700 dark:text-slate-300">
+                                    <p>{isTotalPercentage} %</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                ) : (
-                    <div className="w-full flex flex-row justify-start items-center gap-2 border-2 border-red-300 dark:border-red-700 bg-red-100 dark:bg-red-500 rounded-xl p-4 mt-4">
-                        <div className="w-5 h-5 flex flex-row justify-center items-center rounded-full bg-red-500 dark:bg-slate-100">
-                        </div>
-                        <div className="w-full flex flex-row justify-between items-center gap-4">
-                            <p className="text-red-500 dark:text-slate-100 pr-4">Total</p>
-                            <div className="flex flex-row justify-center items-center gap-4 text-red-500 dark:text-slate-100">
-                                <p>{isTotalPercentage} %</p>
+                    ) : (
+                        <div className="w-full flex flex-row justify-start items-center gap-2 bg-red-100 dark:bg-red-500 rounded-xl p-4 mt-4 shadow-lg hover:shadow-md transition-all duration-300">
+                            <div className="w-5 h-5 flex flex-row justify-center items-center rounded-full bg-red-500 dark:bg-slate-100">
+                            </div>
+                            <div className="w-full flex flex-row justify-between items-center gap-4">
+                                <p className="text-red-500 dark:text-slate-100 pr-4">Total</p>
+                                <div className="flex flex-row justify-center items-center gap-4 text-red-500 dark:text-slate-100">
+                                    <p>{isTotalPercentage} %</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                )}
+                    )}
 
-                < div className='w-full border-t-2 border-slate-300 dark:border-slate-700 my-4'>
-                    <div className="w-full flex flex-row justify-start items-center gap-2 border-2 border-emerald-400 dark:border-emerald-700 bg-emerald-100 dark:bg-emerald-800 rounded-xl p-4 mt-4">
-                        <div className="w-5 h-5 flex flex-row justify-center items-center rounded-full bg-emerald-500 dark:bg-emerald-00">
-                        </div>
-                        <div className="w-full flex flex-row justify-between items-center gap-4">
-                            <p className="text-slate-900 dark:text-slate-100 pr-4">Nómina</p>
-                            <div className="flex flex-row justify-center items-center gap-4 text-slate-700 dark:text-slate-300">
-                                <input type="number" value={isNomina} className="w-28 p-2 rounded-xl border-2 border-emerald-300 dark:border-slate-700 bg-emerald-50 dark:bg-emerald-900 text-slate-700 dark:text-slate-300" onChange={(e) => setIsNomina(e.target.value)} />
-                                <p>€ {Number(isNomina).toFixed(2)}</p>
+                    <div className='w-full border-t-2 border-slate-300 dark:border-slate-700 my-4'>
+                        <div className="w-full flex flex-row justify-start items-center gap-2 bg-emerald-100 dark:bg-emerald-800 rounded-xl p-4 mt-4 shadow-lg hover:shadow-md transition-all duration-300">
+                            <div className="w-5 h-5 flex flex-row justify-center items-center rounded-full bg-emerald-500 dark:bg-emerald-00">
+                            </div>
+                            <div className="w-full flex flex-row justify-between items-center gap-4">
+                                <p className="text-slate-900 dark:text-slate-100 pr-4">Nómina</p>
+                                <div className="flex flex-row justify-center items-center gap-4 text-slate-700 dark:text-slate-300">
+                                    <input type="number" value={isNomina} className="w-28 p-2 rounded-xl bg-emerald-50 dark:bg-emerald-900 text-slate-700 dark:text-slate-300 shadow-lg hover:shadow-md transition-all duration-300" onChange={(e) => setIsNomina(e.target.value)} />
+                                    <p>€ {Number(isNomina).toFixed(2)}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
 
                 <div className="flex justify-center items-center w-full gap-3">
                     <div className="flex flex-col w-full gap-2">

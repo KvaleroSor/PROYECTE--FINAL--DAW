@@ -278,65 +278,72 @@ const FormSpend = () => {
                 className="w-full flex flex-col justify-start items-center gap-3 text-slate-700 dark:text-slate-300"
                 onSubmit={handleSubmit(handleSubmitSpend)}
             >
-                <div className="w-full flex flex-row justify-between mb-3 gap-2">
-                    <div className="flex flex-col justify-start">
-                        <h1 className="text-2xl text-slate-900 dark:text-slate-100">Crear Nuevo Gasto</h1>
-                        <p className="text-slate-600 dark:text-slate-400">Añade un nuevo gasto a la lista</p>
+
+                <div className="w-full h-full flex flex-col bg-slate-50 dark:bg-slate-700 rounded-xl p-4 shadow-lg hover:shadow-md transition-all duration-300">
+                    <div className="w-full flex flex-row justify-between mb-3 gap-2">
+                        <div className="flex flex-col justify-start">
+                            <h1 className="text-2xl text-slate-900 dark:text-slate-100">Crear Nuevo Gasto</h1>
+                            <p className="text-slate-600 dark:text-slate-400">Añade un nuevo gasto a la lista</p>
+                        </div>
+                        <div className="">
+                            <X
+                                className="w-15 h-15 transition-all duration-300 hover:rotate-90 cursor-pointer text-slate-700 dark:text-slate-300"
+                                onClick={handleCloseForm}
+                            />
+                        </div>
                     </div>
-                    <div className="">
-                        <X
-                            className="w-15 h-15 transition-all duration-300 hover:rotate-90 cursor-pointer text-slate-700 dark:text-slate-300"
-                            onClick={handleCloseForm}
-                        />
+
+                    <div className="w-full flex flex-col justify-start gap-4">
+                        <div className="w-full flex flex-row justify-start items-center gap-2">
+                            <p className="text-2xl text-slate-800 dark:text-slate-100">
+                                {findNameCategory()}
+                            </p>
+                        </div>
+                        <div className="w-full flex flex-col justify-start gap-2">
+                            <label htmlFor="description" className="text-slate-700 dark:text-slate-300">{t("description")}</label>
+                            <input
+                                id="description"
+                                type="text"
+                                placeholder={t("descriptionPlaceholder")}
+                                className="h-12 w-full bg-gray-50 dark:bg-slate-500 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-900 placeholder-slate-400 dark:placeholder-slate-900"
+                                {...register("description")}
+                            />
+                            {errors.description && (
+                                <AlertMessage message={errors.description.message} type="error" />
+                            )}
+                        </div>
+                        <div className="w-full flex flex-col justify-start gap-2">
+                            <label htmlFor="amount" className="text-slate-700 dark:text-slate-300">{t("expenseAmount")}</label>
+                            <input
+                                id="amount"
+                                type="number"
+                                step="any"
+                                placeholder="0.00 €"
+                                className="h-12 w-full bg-gray-50 dark:bg-slate-500 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-900 placeholder-slate-400 dark:placeholder-slate-900"
+                                {...register("amount", { valueAsNumber: true })}
+                            />
+                            {errors.amount && (
+                                <AlertMessage message={errors.amount.message} type="error" />
+                            )}
+                        </div>
+
+                        <div className="w-full flex flex-col justify-start gap-2">
+                            <label htmlFor="date" className="text-slate-700 dark:text-slate-300">{t("expenseDate")}</label>
+                            <input
+                                id="date"
+                                type="date"
+                                className="h-12 w-full bg-gray-50 dark:bg-slate-500 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-900 placeholder-slate-400 dark:placeholder-slate-900"
+                                {...register("date")}
+                            />
+                            {errors.date && (
+                                <AlertMessage message={errors.date.message} type="error" />
+                            )}
+                        </div>
                     </div>
                 </div>
 
-                <div className="w-full flex flex-row justify-start items-center gap-2">
-                    <p className="text-2xl text-slate-800 dark:text-slate-100">
-                        {findNameCategory()}
-                    </p>
-                </div>
-                <div className="w-full flex flex-col justify-start gap-2">
-                    <label htmlFor="description" className="text-slate-700 dark:text-slate-300">{t("description")}</label>
-                    <input
-                        id="description"
-                        type="text"
-                        placeholder={t("descriptionPlaceholder")}
-                        className="h-12 w-full bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
-                        {...register("description")}
-                    />
-                    {errors.description && (
-                        <AlertMessage message={errors.description.message} type="error" />
-                    )}
-                </div>
-                <div className="w-full flex flex-col justify-start gap-2">
-                    <label htmlFor="amount" className="text-slate-700 dark:text-slate-300">{t("expenseAmount")}</label>
-                    <input
-                        id="amount"
-                        type="number"
-                        step="any"
-                        placeholder="0.00 €"
-                        className="h-12 w-full bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500"
-                        {...register("amount", { valueAsNumber: true })}
-                    />
-                    {errors.amount && (
-                        <AlertMessage message={errors.amount.message} type="error" />
-                    )}
-                </div>
 
-                <div className="w-full flex flex-col justify-start gap-2">
-                    <label htmlFor="date" className="text-slate-700 dark:text-slate-300">{t("expenseDate")}</label>
-                    <input
-                        id="date"
-                        type="date"
-                        className="h-12 w-full bg-gray-50 dark:bg-slate-700 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-100"
-                        {...register("date")}
-                    />
-                    {errors.date && (
-                        <AlertMessage message={errors.date.message} type="error" />
-                    )}
-                </div>
-                <div className="w-full flex flex-col justify-start gap-2">
+                <div className="w-full flex flex-col justify-start gap-4 bg-slate-50 dark:bg-slate-700 rounded-xl p-4 shadow-lg hover:shadow-md">
                     <label className="text-slate-700 dark:text-slate-300">{t("paymentType")}</label>
                     <Controller
                         name="payment_type"

@@ -101,21 +101,21 @@ const GridSpendsMainPage = () => {
                             <h1 className="text-3xl text-gray-900 dark:text-slate-100 mb-2">Buscardor Gastos</h1>
                             <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 rounded-xl bg-slate-50 dark:bg-slate-700 py-2">
                                 <div className="h-10 rounded-xl bg-white dark:bg-slate-600 flex justify-center items-center m-1 ml-2 pl-4">
-                                    <button>Por mes</button>
+                                    <button>Por dia</button>
                                 </div>
                                 <div className="h-10 rounded-xl bg-white dark:bg-slate-600 flex justify-center items-center m-1 pl-4">
-                                    <button>Por dia</button>
+                                    <button>Por mes</button>
                                 </div>
                                 <div className="h-10 rounded-xl bg-white dark:bg-slate-600 flex justify-center items-center m-1 mr-2 pl-4">
                                     <button>Por año</button>
                                 </div>
                             </div>
-                            <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2">
+                            <div className="w-full">
                                 <div className="h-10 relative ml-2">
                                     <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 sm:w-6 sm:h-6 text-slate-500 dark:text-slate-400" />
                                     <input type="text" className="w-full h-full bg-slate-50 dark:bg-slate-600 rounded-xl text-slate-500 pl-12 appearance-none border-2 border-transparent outline-none ring-0 focus:border-2 focus:border-slate-500 focus:ring-0 transition-all duration-300" placeholder={t("searchPlaceholder")} />
                                 </div>
-                                <div className="group relative w-full h-10 bg-slate-50 dark:bg-slate-600 rounded-xl p-2 border-2 border-transparent focus:border-slate-500 focus:ring-0 transition-all duration-300 mr-2">
+                                {/* <div className="group relative w-full h-10 bg-slate-50 dark:bg-slate-600 rounded-xl p-2 border-2 border-transparent focus:border-slate-500 focus:ring-0 transition-all duration-300 mr-2">
                                     <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 sm:w-6 sm:h-6 text-slate-500 dark:text-slate-400" />
                                     <select className="w-full h-full appearance-none bg-slate-50 dark:bg-slate-600 rounded-xl pl-12 pr-4 outline-none focus:outline-none text-slate-500 dark:text-slate-400 cursor-pointer" value={"Enero"}>
                                         <option value="Enero">Enero</option>
@@ -125,7 +125,7 @@ const GridSpendsMainPage = () => {
                                         <option value="Mayo">Mayo</option>
                                     </select>
                                     <ChevronDown className="absolute right-3 top-1/2 -translate-y-1/2 w-5 h-5 sm:w-6 sm:h-6 text-slate-500 dark:text-slate-400" />
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>
