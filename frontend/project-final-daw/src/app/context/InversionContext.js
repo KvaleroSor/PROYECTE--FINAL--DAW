@@ -36,7 +36,7 @@ export const InversionProvider = ({ children }) => {
     const [isTotal, setIsTotal] = useState("");
 
     // Varibale de entorno api_key
-    const api_key_alpha = process.env.NEXT_PUBLIC_ALPHA_VANTAGE_API_KEY;
+    const api_key_alpha = process.env.NEXT_PUBLIC_API_KEY_ALPHA_VANTAGE;
 
     // CRUD Operations
 

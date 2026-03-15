@@ -1,8 +1,10 @@
 "use client";
 
+import { useState } from "react";
 import { useSaving } from "@/app/context/SavingContext.js";
 import { Target, TrendingUp, Calendar, Trash2, Edit, Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
+import ConfirmationModal from "@/components/ConfirmationModal";
 
 const SavingGoalCard = ({ goal }) => {
     const t = useTranslations("savings");
@@ -14,6 +16,9 @@ const SavingGoalCard = ({ goal }) => {
         setSelectedGoal,
         setIsFormSavingOpen,
     } = useSaving();
+
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     const progress = calculateProgress(goal.current_amount, goal.target_amount);
     const monthlyContribution = calculateMonthlyContribution(goal.percentage_allocation);
@@ -53,12 +58,14 @@ const SavingGoalCard = ({ goal }) => {
     };
 
     const handleDelete = async () => {
-        if (window.confirm(t("deleteConfirm", { goalName: goal.goal_name }))) {
-            try {
-                await deleteSavingGoal(goal._id);
-            } catch (err) {
-                console.error("Error al eliminar:", err);
-            }
+        setIsDeleting(true);
+        try {
+            await deleteSavingGoal(goal._id);
+            setShowDeleteModal(false);
+        } catch (err) {
+            console.error("Error al eliminar:", err);
+        } finally {
+            setIsDeleting(false);
         }
     };
 
@@ -178,13 +185,33 @@ const SavingGoalCard = ({ goal }) => {
                         className="flex-1 px-3 py-2 text-xs sm:text-sm bg-slate-50 dark:bg-slate-700 hover:bg-red-100 dark:hover:bg-red-900/30 text-slate-700 dark:text-slate-300 hover:text-red-500 dark:hover:text-red-400 rounded-lg transition-colors"
                         onClick={(e) => {
                             e.stopPropagation();
-                            handleDelete()
+                            setShowDeleteModal(true);
                         }}
                     >
                         {t("deleteGoalButton")}
                     </button>
                 </div>
             </div>
+
+            {/* Modal de confirmación para eliminar objetivo de ahorro */}
+            <ConfirmationModal
+                isOpen={showDeleteModal}
+                onClose={() => setShowDeleteModal(false)}
+                onConfirm={handleDelete}
+                title={t("deleteGoalButton")}
+                message={t("deleteConfirm", { goalName: goal.goal_name })}
+                confirmText={t("deleteGoalButton")}
+                cancelText="Cancelar"
+                type="danger"
+                isLoading={isDeleting}
+                itemDetails={{
+                    "Objetivo": goal.goal_name,
+                    "Cantidad objetivo": `€${goal.target_amount.toFixed(2)}`,
+                    "Cantidad actual": `€${goal.current_amount.toFixed(2)}`,
+                    "Progreso": `${progress.toFixed(1)}%`,
+                    "Prioridad": priorityLabels[goal.priority],
+                }}
+            />
         </div>
     );
 };

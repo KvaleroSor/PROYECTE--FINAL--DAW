@@ -4,6 +4,7 @@ import { useCategories } from "@/app/context/CategoryContext.js";
 import { useFinancial } from "@/app/context/FinancialContext.js";
 import { useSpends } from "@/app/context/SpendContext.js";
 import { useState, useEffect } from "react";
+import ConfirmationModal from "@/components/ConfirmationModal";
 import {
     Plus,
     ShoppingCart,
@@ -45,6 +46,8 @@ const Category = ({ category, session }) => {
     const [isCurrentPercentagePerCategory, setIsCurrentPercentagePerCategory] =
         useState(0);
     const [isAmountSpendByCategory, setIsAmountSpendByCategory] = useState(0);
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     const {
         _id,
@@ -133,11 +136,14 @@ const Category = ({ category, session }) => {
     };
 
     const handleClickRemoveCategory = async () => {
+        setIsDeleting(true);
         try {
             await deleteCategory(category._id, session);
+            setShowDeleteModal(false);
         } catch (err) {
             console.error(err);
-            return;
+        } finally {
+            setIsDeleting(false);
         }
     };
 
@@ -239,7 +245,7 @@ const Category = ({ category, session }) => {
                             className="flex-1 px-3 py-2 text-xs sm:text-sm bg-slate-50 dark:bg-slate-700 hover:bg-red-100 dark:hover:bg-red-900/30 text-slate-700 dark:text-slate-300 hover:text-red-500 dark:hover:text-red-400 rounded-lg transition-colors"
                             onClick={(e) => {
                                 e.stopPropagation();
-                                handleClickRemoveCategory();
+                                setShowDeleteModal(true);
                             }}
                         >
                             Eliminar Categoria
@@ -257,6 +263,25 @@ const Category = ({ category, session }) => {
                     </div>
                 </div>
             </div>
+
+            {/* Modal de confirmación para eliminar categoría */}
+            <ConfirmationModal
+                isOpen={showDeleteModal}
+                onClose={() => setShowDeleteModal(false)}
+                onConfirm={handleClickRemoveCategory}
+                title="Eliminar Categoría"
+                message="¿Estás seguro de que quieres eliminar esta categoría?"
+                confirmText="Eliminar"
+                cancelText="Cancelar"
+                type="danger"
+                isLoading={isDeleting}
+                itemDetails={{
+                    "Nombre": name,
+                    "Presupuesto mensual": `€${monthly_budget}`,
+                    "Tipo": category_type,
+                    "Gastado este mes": `€${isAmountSpendByCategory}`,
+                }}
+            />
         </>
     );
 };
