@@ -3,12 +3,12 @@
 import { useState, useEffect, useRef } from "react";
 import { Search, X, Loader2, TrendingUp } from "lucide-react";
 
-const StockSearchInput = ({ 
-    alphaVantageData, 
-    isLoading, 
-    onSelect, 
+const StockSearchInput = ({
+    alphaVantageData,
+    isLoading,
+    onSelect,
     selectedSymbol,
-    onClear 
+    onClear
 }) => {
     const [searchTerm, setSearchTerm] = useState("");
     const [filteredResults, setFilteredResults] = useState([]);
@@ -33,7 +33,7 @@ const StockSearchInput = ({
                     return symbol.includes(search) || name.includes(search);
                 })
                 .slice(0, 50); // Limitar a 50 resultados para mejor rendimiento
-            
+
             setFilteredResults(filtered);
             setIsOpen(true);
         } else {
@@ -55,7 +55,9 @@ const StockSearchInput = ({
 
     const handleSelect = (item) => {
         setSearchTerm(item.symbol);
+        setFilteredResults([]);
         setIsOpen(false);
+        setHighlightedIndex(-1);
         onSelect(item);
     };
 
@@ -127,11 +129,10 @@ const StockSearchInput = ({
                             key={`${item.symbol}-${index}`}
                             type="button"
                             onClick={() => handleSelect(item)}
-                            className={`w-full px-4 py-3 text-left hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors border-b border-slate-100 dark:border-slate-600 last:border-b-0 ${
-                                index === highlightedIndex
+                            className={`w-full px-4 py-3 text-left hover:bg-slate-100 dark:hover:bg-slate-600 transition-colors border-b border-slate-100 dark:border-slate-600 last:border-b-0 ${index === highlightedIndex
                                     ? "bg-slate-100 dark:bg-slate-600"
                                     : ""
-                            }`}
+                                }`}
                             onMouseEnter={() => setHighlightedIndex(index)}
                         >
                             <div className="flex items-start justify-between gap-2">

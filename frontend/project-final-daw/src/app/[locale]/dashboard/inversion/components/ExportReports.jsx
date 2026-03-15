@@ -111,6 +111,83 @@ const ExportReports = () => {
         document.body.removeChild(link);
     };
 
+    // Exportar informe fiscal para Hacienda (solo inversiones cerradas)
+    const exportTaxReport = () => {
+        const closedInversions = isInversions.filter(inv => inv.status === "closed");
+
+        if (closedInversions.length === 0) {
+            alert("No hay inversiones cerradas para el informe fiscal");
+            return;
+        }
+
+        const currentYear = new Date().getFullYear();
+        const yearInversions = closedInversions.filter(inv =>
+            new Date(inv.closing_date).getFullYear() === currentYear
+        );
+
+        const totalGains = yearInversions
+            .filter(inv => (inv.final_profit_loss || 0) > 0)
+            .reduce((sum, inv) => sum + (inv.final_profit_loss || 0), 0);
+
+        const totalLosses = yearInversions
+            .filter(inv => (inv.final_profit_loss || 0) < 0)
+            .reduce((sum, inv) => sum + Math.abs(inv.final_profit_loss || 0), 0);
+
+        const netResult = totalGains - totalLosses;
+
+        const taxReport = {
+            titulo: `INFORME FISCAL DE INVERSIONES - AÑO ${currentYear}`,
+            fecha_generacion: new Date().toISOString(),
+            ejercicio_fiscal: currentYear,
+            resumen_fiscal: {
+                total_ganancias: totalGains.toFixed(2),
+                total_perdidas: totalLosses.toFixed(2),
+                resultado_neto: netResult.toFixed(2),
+                numero_operaciones: yearInversions.length,
+            },
+            detalle_operaciones: yearInversions.map((inv) => ({
+                fecha_apertura: new Date(inv.inversion_date).toLocaleDateString('es-ES'),
+                fecha_cierre: new Date(inv.closing_date).toLocaleDateString('es-ES'),
+                simbolo: inv.symbol || "N/A",
+                nombre: inv.name || "N/A",
+                tipo_activo: inv.type,
+                importe_invertido: inv.amount.toFixed(2),
+                valor_final: (inv.final_value || 0).toFixed(2),
+                ganancia_perdida: (inv.final_profit_loss || 0).toFixed(2),
+                rentabilidad_porcentual: (inv.real_profitability || 0).toFixed(2) + "%",
+            })),
+            nota_legal: "Este informe es un resumen de sus operaciones de inversión. Consulte con un asesor fiscal para la correcta declaración de impuestos.",
+        };
+
+        const csvContent = [
+            "INFORME FISCAL DE INVERSIONES - AÑO " + currentYear,
+            "Fecha de generación: " + new Date().toLocaleDateString('es-ES'),
+            "",
+            "RESUMEN FISCAL",
+            `Total Ganancias,€${totalGains.toFixed(2)}`,
+            `Total Pérdidas,€${totalLosses.toFixed(2)}`,
+            `Resultado Neto,€${netResult.toFixed(2)}`,
+            `Número de Operaciones,${yearInversions.length}`,
+            "",
+            "DETALLE DE OPERACIONES",
+            "Fecha Apertura,Fecha Cierre,Símbolo,Nombre,Tipo,Invertido (€),Valor Final (€),Ganancia/Pérdida (€),Rentabilidad (%)",
+            ...yearInversions.map(inv =>
+                `${new Date(inv.inversion_date).toLocaleDateString('es-ES')},${new Date(inv.closing_date).toLocaleDateString('es-ES')},${inv.symbol || "N/A"},${inv.name || "N/A"},${inv.type},${inv.amount.toFixed(2)},${(inv.final_value || 0).toFixed(2)},${(inv.final_profit_loss || 0).toFixed(2)},${(inv.real_profitability || 0).toFixed(2)}%`
+            ),
+        ].join("\n");
+
+        const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+        const link = document.createElement("a");
+        const url = URL.createObjectURL(blob);
+
+        link.setAttribute("href", url);
+        link.setAttribute("download", `informe_fiscal_${currentYear}.csv`);
+        link.style.visibility = "hidden";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
     return (
         <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
             <div className="flex items-center gap-2 mb-4">
@@ -126,6 +203,15 @@ const ExportReports = () => {
                 <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
                     Descarga tus datos de inversión en diferentes formatos
                 </p>
+
+                <button
+                    onClick={exportTaxReport}
+                    disabled={isInversions.filter(inv => inv.status === "closed").length === 0}
+                    className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-600 dark:bg-green-700 text-white rounded-lg hover:bg-green-700 dark:hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+                >
+                    <FileText className="w-5 h-5" />
+                    <span>📋 Informe Fiscal para Hacienda</span>
+                </button>
 
                 <button
                     onClick={exportToCSV}
@@ -148,6 +234,11 @@ const ExportReports = () => {
                 {isInversions.length === 0 && (
                     <p className="text-xs text-center text-slate-500 dark:text-slate-400 mt-2">
                         Añade inversiones para poder exportar reportes
+                    </p>
+                )}
+                {isInversions.filter(inv => inv.status === "closed").length === 0 && isInversions.length > 0 && (
+                    <p className="text-xs text-center text-slate-500 dark:text-slate-400 mt-2">
+                        💡 Cierra inversiones para generar el informe fiscal
                     </p>
                 )}
             </div>

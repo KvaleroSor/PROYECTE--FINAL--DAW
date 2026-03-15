@@ -39,6 +39,28 @@ const inversion = new mongoose.Schema({
         type: Number,
         required: false,
     },
+    status: {
+        type: String,
+        enum: ["active", "closed"],
+        default: "active",
+        required: true,
+    },
+    closing_date: {
+        type: Date,
+        required: false,
+    },
+    closing_price: {
+        type: Number,
+        required: false,
+    },
+    final_profit_loss: {
+        type: Number,
+        required: false,
+    },
+    final_value: {
+        type: Number,
+        required: false,
+    },
 });
 
 const Inversion = mongoose.model("Inversion", inversion);

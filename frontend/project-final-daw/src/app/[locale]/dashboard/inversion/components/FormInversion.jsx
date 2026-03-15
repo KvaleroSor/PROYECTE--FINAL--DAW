@@ -315,7 +315,7 @@ const FormInversion = () => {
                 {/* Tipo de inversión */}
                 <div className="w-full flex flex-col justify-start gap-2 mb-4">
                     <label htmlFor="type" className="text-slate-700 dark:text-slate-300">
-                        Tipo de Inversión
+                        Tipo de Inversión {selectedStock && <span className="text-xs text-slate-500 dark:text-slate-400">(autocompletado)</span>}
                     </label>
                     <select
                         id="type"
@@ -330,6 +330,11 @@ const FormInversion = () => {
                         ))}
                     </select>
                     {errors.type && <AlertMessage message={errors.type.message} type="error" />}
+                    {selectedStock && (
+                        <p className="text-xs text-slate-500 dark:text-slate-400">
+                            💡 El tipo se autocompletó basado en el símbolo seleccionado, pero puedes cambiarlo si lo deseas
+                        </p>
+                    )}
                 </div>
 
                 {/* Monto */}

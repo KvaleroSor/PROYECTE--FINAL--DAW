@@ -218,6 +218,45 @@ export const InversionProvider = ({ children }) => {
         }
     };
 
+    // CERRAR INVERSIÓN - Marca como cerrada y devuelve dinero al presupuesto
+    const closeInversion = async (inversionId, closingPrice = null) => {
+        try {
+            const inversion = isInversions.find((inv) => inv._id === inversionId);
+            if (!inversion) {
+                throw new Error("Inversión no encontrada");
+            }
+
+            // Calcular ganancia/pérdida final
+            const profitLoss = ((inversion.real_profitability || 0) * inversion.amount) / 100;
+            const finalValue = inversion.amount + profitLoss;
+
+            const closingData = {
+                status: "closed",
+                closing_date: new Date().toISOString(),
+                closing_price: closingPrice,
+                final_profit_loss: profitLoss,
+                final_value: finalValue,
+            };
+
+            await updateInversionData(inversionId, closingData);
+
+            console.log(`✅ Inversión cerrada. Ganancia/Pérdida: €${profitLoss.toFixed(2)}`);
+            console.log(`💰 Valor final devuelto al presupuesto: €${finalValue.toFixed(2)}`);
+
+            await fetchInversions();
+
+            return {
+                success: true,
+                finalValue,
+                profitLoss,
+            };
+        } catch (error) {
+            console.error("❌ Error cerrando inversión:", error);
+            setError(error.message);
+            throw error;
+        }
+    };
+
     // Resetear formulario
     const resetForm = () => {
         setIsType("");
@@ -285,6 +324,7 @@ export const InversionProvider = ({ children }) => {
                 fetchInvestmentAlphaVantage,
                 fetchStockPrice,
                 updateRealProfitability,
+                closeInversion,
             }}
         >
             {children}

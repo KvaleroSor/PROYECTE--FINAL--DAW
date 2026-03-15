@@ -17,6 +17,7 @@ import GraphicPercentatgeSpend from "./GraphicPercentatgeSpend.jsx";
 import FormModifyPercentage from "../settings/components/FormModifyPercentage.jsx";
 import GridInversion from "../inversion/components/GridInversion.jsx";
 import FormInversion from "../inversion/components/FormInversion.jsx";
+import InvestmentList from "./InvestmentList.jsx";
 
 const Body = () => {
     const { isFormCategoryOpen } = useCategories();
@@ -81,7 +82,7 @@ const Body = () => {
                     </div>
                 </div>
                 <div className="px-2 py-4 sm:px-4 lg:px-6 w-full">
-                    <GridInversion />
+                    <InvestmentList />
                 </div>
             </div>
         </>
