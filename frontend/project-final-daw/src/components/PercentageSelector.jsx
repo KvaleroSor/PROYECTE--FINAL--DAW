@@ -1,5 +1,6 @@
 import React from 'react';
 import { TrendingDown, Coffee, TrendingUp, PiggyBank, Sparkles } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import {
   Select,
   SelectContent,
@@ -28,8 +29,8 @@ import {
 export const BUDGET_PRESETS = [
   {
     id: 'conservative',
-    name: 'Conservador',
-    description: 'Prioriza gastos fijos y ahorro',
+    nameKey: 'conservative',
+    descriptionKey: 'conservativeDesc',
     icon: <PiggyBank className="size-4" />,
     distribution: {
       fixedExpenses: 60,
@@ -40,8 +41,8 @@ export const BUDGET_PRESETS = [
   },
   {
     id: 'balanced',
-    name: 'Equilibrado',
-    description: 'Balance entre todas las categorías',
+    nameKey: 'balanced',
+    descriptionKey: 'balancedDesc',
     icon: <Sparkles className="size-4" />,
     distribution: {
       fixedExpenses: 50,
@@ -52,8 +53,8 @@ export const BUDGET_PRESETS = [
   },
   {
     id: 'investor',
-    name: 'Inversor',
-    description: 'Enfocado en hacer crecer el dinero',
+    nameKey: 'investor',
+    descriptionKey: 'investorDesc',
     icon: <TrendingUp className="size-4" />,
     distribution: {
       fixedExpenses: 45,
@@ -64,8 +65,8 @@ export const BUDGET_PRESETS = [
   },
   {
     id: 'saver',
-    name: 'Ahorrador',
-    description: 'Maximiza el ahorro mensual',
+    nameKey: 'saver',
+    descriptionKey: 'saverDesc',
     icon: <PiggyBank className="size-4" />,
     distribution: {
       fixedExpenses: 45,
@@ -82,13 +83,14 @@ export const BUDGET_PRESETS = [
  * @param {function} [props.onChange] - Función callback cuando cambia la selección
  */
 export function PercentageSelector({ value, onChange }) {
+  const t = useTranslations('percentageSelector');
   const selectedPreset = BUDGET_PRESETS.find((p) => p.id === value);
 
   return (
     <div className="space-y-2 mb-6">
       <Select value={value} onValueChange={onChange}>
         <SelectTrigger className="w-full bg-gray-50 dark:bg-slate-700 border-gray-100 dark:border-slate-400 h-11 sm:h-12 rounded-xl">
-          <SelectValue placeholder="Selecciona un perfil de presupuesto" />
+          <SelectValue placeholder={t('selectProfile')} />
         </SelectTrigger>
         <SelectContent className="w-full bg-gray-50 dark:bg-slate-700 text-gray-900 dark:text-slate-100 border-gray-200 dark:border-slate-400" position="popper" sideOffset={4}>
           {BUDGET_PRESETS.map((preset) => (
@@ -100,8 +102,8 @@ export function PercentageSelector({ value, onChange }) {
                   })}
                 </div>
                 <div className="flex flex-col">
-                  <span className="flex text-sm text-gray-900 dark:text-slate-100 justify-start">{preset.name}</span>
-                  <span className="text-xs text-gray-500 dark:text-slate-400">{preset.description}</span>
+                  <span className="flex text-sm text-gray-900 dark:text-slate-100 justify-start">{t(preset.nameKey)}</span>
+                  <span className="text-xs text-gray-500 dark:text-slate-400">{t(preset.descriptionKey)}</span>
                 </div>
               </div>
             </SelectItem>
@@ -112,33 +114,33 @@ export function PercentageSelector({ value, onChange }) {
       {/* Preview de la distribución seleccionada */}
       {selectedPreset && (
         <div className="bg-slate-50 dark:bg-slate-700 to-purple-50 rounded-xl p-4 border border-slate-600 dark:border-slate-400">
-          <p className="text-xs text-slate-900 mb-3">Vista previa de tu presupuesto:</p>
+          <p className="text-xs text-slate-900 mb-3">{t('previewTitle')}</p>
           <div className="grid grid-cols-2 gap-3">
             <div className="flex items-center gap-2">
               <TrendingDown className="size-3.5 text-rose-600" />
               <div className="flex flex-col">
-                <span className="text-xs text-gray-600">Gasto Fijo</span>
+                <span className="text-xs text-gray-600">{t('fixedExpense')}</span>
                 <span className="text-sm text-gray-900">{selectedPreset.distribution.fixedExpenses}%</span>
               </div>
             </div>
             <div className="flex items-center gap-2">
               <Coffee className="size-3.5 text-pink-600" />
               <div className="flex flex-col">
-                <span className="text-xs text-gray-600">Ocio</span>
+                <span className="text-xs text-gray-600">{t('leisure')}</span>
                 <span className="text-sm text-gray-900">{selectedPreset.distribution.leisureExpenses}%</span>
               </div>
             </div>
             <div className="flex items-center gap-2">
               <TrendingUp className="size-3.5 text-indigo-600" />
               <div className="flex flex-col">
-                <span className="text-xs text-gray-600">Inversión</span>
+                <span className="text-xs text-gray-600">{t('investment')}</span>
                 <span className="text-sm text-gray-900">{selectedPreset.distribution.investment}%</span>
               </div>
             </div>
             <div className="flex items-center gap-2">
               <PiggyBank className="size-3.5 text-emerald-600" />
               <div className="flex flex-col">
-                <span className="text-xs text-gray-600">Ahorro</span>
+                <span className="text-xs text-gray-600">{t('savings')}</span>
                 <span className="text-sm text-gray-900">{selectedPreset.distribution.savings}%</span>
               </div>
             </div>

@@ -6,6 +6,14 @@ const inversion = new mongoose.Schema({
         required: true,
         ref: "User",
     },
+    symbol: {
+        type: String,
+        required: false,
+    },
+    name: {
+        type: String,
+        required: false,
+    },
     type: {
         type: String,
         required: true,

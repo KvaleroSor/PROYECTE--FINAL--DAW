@@ -1,7 +1,13 @@
 "use client";
 
 import { useInversion } from "@/app/context/InversionContext";
-import { TrendingUp, DollarSign, Target, Activity } from "lucide-react";
+import { TrendingUp, DollarSign, Target, Activity, PieChart, BarChart3, LineChart } from "lucide-react";
+import PortfolioDistributionChart from "./PortfolioDistributionChart";
+import ProfitabilityComparisonChart from "./ProfitabilityComparisonChart";
+import PortfolioEvolutionChart from "./PortfolioEvolutionChart";
+import InvestmentAlerts from "./InvestmentAlerts";
+import MarketComparison from "./MarketComparison";
+import ExportReports from "./ExportReports";
 
 const InversionSummary = () => {
     const { isInversions, isInversionFromNomina, isLoading } = useInversion();
@@ -100,6 +106,65 @@ const InversionSummary = () => {
                 </div>
             </div>
 
+            {/* Alertas de rendimiento */}
+            {isInversions.length > 0 && <InvestmentAlerts />}
+
+            {/* Gráficas de análisis */}
+            {isInversions.length > 0 && (
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    {/* Distribución del Portfolio */}
+                    <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+                        <div className="flex items-center gap-2 mb-4">
+                            <div className="w-10 h-10 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
+                                <PieChart className="w-5 h-5 text-white" />
+                            </div>
+                            <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
+                                Distribución del Portfolio
+                            </h2>
+                        </div>
+                        <PortfolioDistributionChart />
+                    </div>
+
+                    {/* Comparación de Rentabilidad */}
+                    <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
+                        <div className="flex items-center gap-2 mb-4">
+                            <div className="w-10 h-10 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
+                                <BarChart3 className="w-5 h-5 text-white" />
+                            </div>
+                            <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
+                                Rentabilidad: Objetivo vs Real
+                            </h2>
+                        </div>
+                        <ProfitabilityComparisonChart />
+                    </div>
+
+                    {/* Evolución del Portfolio */}
+                    <div className="bg-white dark:bg-slate-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 lg:col-span-2">
+                        <div className="flex items-center gap-2 mb-4">
+                            <div className="w-10 h-10 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
+                                <LineChart className="w-5 h-5 text-white" />
+                            </div>
+                            <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
+                                Evolución del Portfolio
+                            </h2>
+                        </div>
+                        <PortfolioEvolutionChart />
+                    </div>
+                </div>
+            )}
+
+            {/* Comparación con índices de mercado y exportación */}
+            {isInversions.length > 0 && (
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <div className="lg:col-span-2">
+                        <MarketComparison />
+                    </div>
+                    <div>
+                        <ExportReports />
+                    </div>
+                </div>
+            )}
+
             {/* Lista de inversiones */}
             <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
                 <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100 mb-4">
@@ -120,10 +185,12 @@ const InversionSummary = () => {
                         <table className="w-full">
                             <thead>
                                 <tr className="border-b border-slate-200 dark:border-slate-700">
+                                    <th className="text-left py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">Inversión</th>
                                     <th className="text-left py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">Tipo</th>
                                     <th className="text-right py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">Cantidad</th>
                                     <th className="text-right py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">Rent. Objetivo</th>
                                     <th className="text-right py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">Rent. Real</th>
+                                    <th className="text-right py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">Ganancia</th>
                                     <th className="text-right py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">Valor Total</th>
                                     <th className="text-center py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">Fecha</th>
                                 </tr>
@@ -134,10 +201,31 @@ const InversionSummary = () => {
                                     const totalValue = (inversion.amount || 0) + profitability;
                                     return (
                                         <tr key={inversion._id} className="border-b border-slate-100 dark:border-slate-700 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors">
-                                            <td className="py-3 px-4 text-slate-900 dark:text-slate-100 font-medium">
-                                                {inversion.type}
+                                            <td className="py-3 px-4">
+                                                <div className="flex flex-col">
+                                                    {inversion.symbol && (
+                                                        <span className="text-slate-900 dark:text-slate-100 font-bold">
+                                                            {inversion.symbol}
+                                                        </span>
+                                                    )}
+                                                    {inversion.name && (
+                                                        <span className="text-slate-600 dark:text-slate-400 text-sm">
+                                                            {inversion.name}
+                                                        </span>
+                                                    )}
+                                                    {!inversion.symbol && !inversion.name && (
+                                                        <span className="text-slate-500 dark:text-slate-400 italic text-sm">
+                                                            Sin símbolo
+                                                        </span>
+                                                    )}
+                                                </div>
                                             </td>
-                                            <td className="py-3 px-4 text-right text-slate-900 dark:text-slate-100">
+                                            <td className="py-3 px-4 text-slate-900 dark:text-slate-100">
+                                                <span className="px-2 py-1 bg-slate-100 dark:bg-slate-700 rounded-md text-sm">
+                                                    {inversion.type}
+                                                </span>
+                                            </td>
+                                            <td className="py-3 px-4 text-right text-slate-900 dark:text-slate-100 font-medium">
                                                 €{Number(inversion.amount).toFixed(2)}
                                             </td>
                                             <td className="py-3 px-4 text-right text-slate-600 dark:text-slate-400">
@@ -151,10 +239,18 @@ const InversionSummary = () => {
                                                     {Number(inversion.real_profitability || 0).toFixed(2)}%
                                                 </span>
                                             </td>
+                                            <td className="py-3 px-4 text-right">
+                                                <span className={`font-medium ${profitability >= 0
+                                                    ? 'text-green-600 dark:text-green-400'
+                                                    : 'text-red-600 dark:text-red-400'
+                                                    }`}>
+                                                    €{Number(profitability).toFixed(2)}
+                                                </span>
+                                            </td>
                                             <td className="py-3 px-4 text-right text-slate-900 dark:text-slate-100 font-semibold">
                                                 €{Number(totalValue).toFixed(2)}
                                             </td>
-                                            <td className="py-3 px-4 text-center text-slate-600 dark:text-slate-400">
+                                            <td className="py-3 px-4 text-center text-slate-600 dark:text-slate-400 text-sm">
                                                 {new Date(inversion.inversion_date).toLocaleDateString('es-ES')}
                                             </td>
                                         </tr>

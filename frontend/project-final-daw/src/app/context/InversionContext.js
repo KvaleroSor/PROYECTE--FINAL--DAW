@@ -7,6 +7,7 @@ import getInversions from "@/services/inversion/getInversions.js";
 import postInversion from "@/services/inversion/postInversion.js";
 import updateInversion from "@/services/inversion/updateInversion.js";
 import deleteInversion from "@/services/inversion/deleteInversion.js";
+import Papa from "papaparse";
 
 const InversionContext = createContext();
 
@@ -21,6 +22,11 @@ export const InversionProvider = ({ children }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
 
+    // Cache de datos de Alpha Vantage
+    const [isAlphaVantageData, setIsAlphaVantageData] = useState([]);
+    const [isAlphaVantageLoading, setIsAlphaVantageLoading] = useState(false);
+    const [isAlphaVantageLoaded, setIsAlphaVantageLoaded] = useState(false);
+
     // Estados del formulario
     const [isType, setIsType] = useState("");
     const [isAmount, setIsAmount] = useState("");
@@ -28,6 +34,9 @@ export const InversionProvider = ({ children }) => {
     const [isTargetProfitability, setIsTargetProfitability] = useState("");
     const [isRealProfitability, setIsRealProfitability] = useState("");
     const [isTotal, setIsTotal] = useState("");
+
+    // Varibale de entorno api_key
+    const api_key_alpha = process.env.NEXT_PUBLIC_ALPHA_VANTAGE_API_KEY;
 
     // CRUD Operations
 
@@ -59,7 +68,9 @@ export const InversionProvider = ({ children }) => {
         try {
             const inversionData = {
                 ...newInversion,
+                inversion_date: newInversion.date,
             };
+            delete inversionData.date;
 
             const res = await postInversion(inversionData, session);
             console.log("✅ INVERSIÓN CREADA EXITOSAMENTE:", res);
@@ -106,6 +117,107 @@ export const InversionProvider = ({ children }) => {
         }
     };
 
+    // FETCH API INVESTMENT ALPHA VANTAGE (con caché)
+    const fetchInvestmentAlphaVantage = async () => {
+        // Si ya tenemos los datos cacheados, no hacer petición
+        if (isAlphaVantageLoaded && isAlphaVantageData.length > 0) {
+            console.log("✅ Usando datos cacheados de Alpha Vantage");
+            return isAlphaVantageData;
+        }
+
+        // Si ya está cargando, esperar
+        if (isAlphaVantageLoading) {
+            console.log("⏳ Petición a Alpha Vantage en progreso...");
+            return [];
+        }
+
+        try {
+            setIsAlphaVantageLoading(true);
+            console.log("🔄 Obteniendo datos de Alpha Vantage...");
+
+            const response = await fetch(
+                `https://www.alphavantage.co/query?function=LISTING_STATUS&apikey=${api_key_alpha}`
+            );
+            const data = await response.text();
+
+            // Parseamos la data porque está en formato CSV
+            const parsedData = Papa.parse(data, {
+                header: true,
+                dynamicTyping: true,
+                skipEmptyLines: true,
+            });
+
+            console.log("✅ Datos parseados de Alpha Vantage:", parsedData.data.length, "símbolos");
+
+            // Cachear los datos
+            setIsAlphaVantageData(parsedData.data);
+            setIsAlphaVantageLoaded(true);
+
+            return parsedData.data;
+        } catch (error) {
+            console.error("❌ Error fetching investment data:", error);
+            setError(error.message);
+            throw error;
+        } finally {
+            setIsAlphaVantageLoading(false);
+        }
+    };
+
+    // FETCH PRECIO EN TIEMPO REAL de un símbolo específico
+    const fetchStockPrice = async (symbol) => {
+        if (!symbol) return null;
+
+        try {
+            console.log(`🔄 Obteniendo precio de ${symbol}...`);
+
+            const response = await fetch(
+                `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${api_key_alpha}`
+            );
+            const data = await response.json();
+
+            if (data["Global Quote"]) {
+                const quote = data["Global Quote"];
+                return {
+                    symbol: quote["01. symbol"],
+                    price: parseFloat(quote["05. price"]),
+                    change: parseFloat(quote["09. change"]),
+                    changePercent: quote["10. change percent"],
+                    volume: parseInt(quote["06. volume"]),
+                    latestTradingDay: quote["07. latest trading day"],
+                };
+            }
+
+            console.warn(`⚠️ No se encontró precio para ${symbol}`);
+            return null;
+        } catch (error) {
+            console.error(`❌ Error obteniendo precio de ${symbol}:`, error);
+            return null;
+        }
+    };
+
+    // ACTUALIZAR RENTABILIDAD REAL basada en precios actuales
+    const updateRealProfitability = async (inversionId, symbol, initialPrice) => {
+        if (!symbol) return;
+
+        try {
+            const currentPriceData = await fetchStockPrice(symbol);
+            if (!currentPriceData || !initialPrice) return;
+
+            const realProfitability =
+                ((currentPriceData.price - initialPrice) / initialPrice) * 100;
+
+            await updateInversionData(inversionId, {
+                real_profitability: realProfitability,
+            });
+
+            console.log(
+                `✅ Rentabilidad actualizada para ${symbol}: ${realProfitability.toFixed(2)}%`
+            );
+        } catch (error) {
+            console.error("❌ Error actualizando rentabilidad:", error);
+        }
+    };
+
     // Resetear formulario
     const resetForm = () => {
         setIsType("");
@@ -122,6 +234,10 @@ export const InversionProvider = ({ children }) => {
     useEffect(() => {
         if (status === "authenticated" && session?.user?.user_id && session?.accessToken) {
             fetchInversions();
+            // Cargar datos de Alpha Vantage en segundo plano
+            if (!isAlphaVantageLoaded) {
+                fetchInvestmentAlphaVantage();
+            }
         }
     }, [session, status]);
 
@@ -135,6 +251,11 @@ export const InversionProvider = ({ children }) => {
                 isLoading,
                 error,
                 isInversionFromNomina,
+
+                // Estados de Alpha Vantage
+                isAlphaVantageData,
+                isAlphaVantageLoading,
+                isAlphaVantageLoaded,
 
                 // Estados del formulario
                 isType,
@@ -161,6 +282,9 @@ export const InversionProvider = ({ children }) => {
                 updateInversionData,
                 deleteInversionData,
                 resetForm,
+                fetchInvestmentAlphaVantage,
+                fetchStockPrice,
+                updateRealProfitability,
             }}
         >
             {children}

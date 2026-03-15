@@ -4,6 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { registerSchema, loginSchema } from '@validations/validationsForms.js'
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "@/i18n/navigation";
+import { useTranslations } from "next-intl";
 import ButtonLogin from "./Button.jsx";
 import PercentageSelector, { BUDGET_PRESETS } from "./PercentageSelector.jsx";
 import { SquareUser, Mail, Lock, Eye, EyeOff, Euro, Check } from "lucide-react";
@@ -22,6 +23,7 @@ const FormLogin = () => {
 
     const { data: session, status } = useSession();
     const router = useRouter();
+    const t = useTranslations("formLogin");
 
     const schema = isLoginMode ? loginSchema : registerSchema;
 
@@ -74,7 +76,7 @@ const FormLogin = () => {
             };
 
             if (data.password !== data.confirmPassword) {
-                setIsError("❌ | LAS CONTRASEÑAS NO COINCIDEN");
+                setIsError(t("passwordMismatch"));
                 return;
             }
 
@@ -90,7 +92,7 @@ const FormLogin = () => {
                 const result = await response.json();
 
                 if (response.ok) {
-                    console.log("✅ - USER CREATED SUCCESFULLY: ", result);
+                    console.log(t("userCreatedSuccess"), result);
                     handleCleanUpValuesForm();
                     setIsLoginMode(true);
                 } else {
@@ -108,8 +110,8 @@ const FormLogin = () => {
                     setIsError(errorMessage);
                 }
             } catch (error) {
-                console.error("❌ ERROR - CONNECTION ERROR");
-                setIsError(`❌ ERROR - CONNECTION ERROR`);
+                console.error(t("connectionError"));
+                setIsError(t("connectionError"));
             }
         } else {
             const res = await signIn("credentials", {
@@ -120,7 +122,7 @@ const FormLogin = () => {
             console.log(res);
 
             if (res.error) {
-                setIsError("CREDENCIALES INCORRECTAS");
+                setIsError(t("invalidCredentials"));
             }
         }
     };
@@ -129,14 +131,14 @@ const FormLogin = () => {
         <form className="space-y-5 sm:space-y-6" onSubmit={handleSubmit(handleSubmitForm)}>
             <div className="space-y-2">
                 <label htmlFor="email" className="text-gray-700 dark:text-slate-300 text-xl">
-                    Correo Electrónico
+                    {t("email")}
                 </label>
                 <div className="relative">
                     <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-700 dark:text-slate-400" />
                     <input
                         id="email"
                         type="email"
-                        placeholder="email@email.com"
+                        placeholder={t("emailPlaceholder")}
                         {...register("email")}
                         className={`w-full pl-11 h-11 sm:h-12 bg-gray-50 dark:bg-slate-700 border ${!isLoginMode && errors.email && 'border-red-400 dark:border-red-400'} rounded-xl focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 focus:ring-0 transition-colors text-base outline-none focus:outline-none text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500`}
                         required
@@ -148,7 +150,7 @@ const FormLogin = () => {
             {/* {errors.email && <AlertMessage message={errors.email.message} type="error" />} */}
             <div className="space-y-2">
                 <label htmlFor="password" className="text-gray-700 dark:text-slate-300 text-xl">
-                    Contraseña
+                    {t("password")}
                 </label>
 
                 <div className="relative">
@@ -156,7 +158,7 @@ const FormLogin = () => {
                     <input
                         id="password"
                         type={isShowPassword ? "text" : "password"}
-                        placeholder="••••••••"
+                        placeholder={t("passwordPlaceholder")}
                         {...register("password")}
                         className={`w-full pl-11 pr-11 h-11 sm:h-12 bg-gray-50 dark:bg-slate-700 border ${!isLoginMode && errors.password && 'border-red-400 dark:border-red-400'} rounded-xl focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors text-base outline-none focus:outline-none text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500`}
                         required
@@ -183,7 +185,7 @@ const FormLogin = () => {
                             htmlFor="passwordConfirm"
                             className="text-gray-700 dark:text-slate-300 text-xl"
                         >
-                            Confirmación Contraseña
+                            {t("confirmPassword")}
                         </label>
 
                         <div className="relative">
@@ -191,7 +193,7 @@ const FormLogin = () => {
                             <input
                                 id="passwordConfirm"
                                 type={isShowPassword ? "text" : "password"}
-                                placeholder="••••••••"
+                                placeholder={t("passwordPlaceholder")}
                                 {...register("confirmPassword")}
                                 className={`w-full pl-11 pr-11 h-11 sm:h-12 bg-gray-50 dark:bg-slate-700 border ${!isLoginMode && errors.password && 'border-red-400 dark:border-red-400'} rounded-xl focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors text-base outline-none focus:outline-none text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500`}
                                 required
@@ -214,14 +216,14 @@ const FormLogin = () => {
                     </div>
                     <div className="space-y-2">
                         <label htmlFor="name" className="text-gray-700 dark:text-slate-300 text-xl">
-                            Nombre completo
+                            {t("name")}
                         </label>
                         <div className="relative">
                             <SquareUser className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-700 dark:text-slate-400" />
                             <input
                                 id="name"
                                 type="text"
-                                placeholder="Balance.app"
+                                placeholder={t("namePlaceholder")}
                                 {...register("name")}
                                 className={`w-full pl-11 h-11 sm:h-12 bg-gray-50 dark:bg-slate-700 border ${!isLoginMode && errors.name && 'border-red-400 dark:border-red-400'} rounded-xl focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors text-base outline-none focus:outline-none text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500`}
                                 required
@@ -234,14 +236,14 @@ const FormLogin = () => {
                             htmlFor="nomina"
                             className="text-gray-700 dark:text-slate-300 text-xl"
                         >
-                            Nómina
+                            {t("salary")}
                         </label>
                         <div className="relative">
                             <Euro className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-700 dark:text-slate-400" />
                             <input
                                 id="nomina"
                                 type="text"
-                                placeholder="2500.00€"
+                                placeholder={t("salaryPlaceholder")}
                                 {...register("nomina", { valueAsNumber: true })}
                                 className={`w-full pl-11 h-11 sm:h-12 bg-gray-50 dark:bg-slate-700 border ${!isLoginMode && errors.nomina && 'border-red-400 dark:border-red-400'} rounded-xl focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors text-base outline-none focus:outline-none text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500`}
                                 required
@@ -255,7 +257,7 @@ const FormLogin = () => {
                             htmlFor="percentageSelector"
                             className="text-gray-700 dark:text-slate-300 text-xl"
                         >
-                            Perfil de presupuesto
+                            {t("budgetDistribution")}
                         </label>
                         <div className="relative">
                             <PercentageSelector
@@ -266,8 +268,7 @@ const FormLogin = () => {
                             />
                         </div>
                         <p className="text-md text-gray-500 dark:text-slate-400 mt-2">
-                            Podrás personalizar estos valores después en tu
-                            dashboard.
+                            {t("selectDistribution")}
                         </p>
                     </div>
                 </>
@@ -282,7 +283,7 @@ const FormLogin = () => {
                         handleCleanUpValuesForm();
                     }}
                 >
-                    <span>Ir a Iniciar Sesión</span>
+                    <span>{t("hasAccount")} {t("loginHere")}</span>
                 </button>
             ) : (
                 <button
@@ -293,7 +294,7 @@ const FormLogin = () => {
                         handleCleanUpValuesForm();
                     }}
                 >
-                    <span>Ir a Crear Sesión</span>
+                    <span>{t("noAccount")} {t("signUpHere")}</span>
                 </button>
             )}
 
@@ -303,14 +304,14 @@ const FormLogin = () => {
                         onClick={() => {
                             setIsLoginMode(true);
                         }}
-                        textButton={"Iniciar Sesión"}
+                        textButton={t("loginButton")}
                     />
                 ) : (
                     <ButtonLogin
                         onClick={() => {
                             setIsLoginMode(false);
                         }}
-                        textButton={"Crear Cuenta"}
+                        textButton={t("registerButton")}
                     />
                 )}
             </div>

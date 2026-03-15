@@ -5,6 +5,7 @@ import { useSpends } from "@/app/context/SpendContext.js";
 import { useCategories } from "@/app/context/CategoryContext.js";
 import { useSaving } from "@/app/context/SavingContext.js";
 import { useFinancial } from "@/app/context/FinancialContext.js";
+import { useInversion } from "@/app/context/InversionContext.js";
 import FormCategory from "../category/components/FormCategory.jsx";
 import GridCategories from "../category/components/GridCategories.jsx";
 import CategoryByIdTemp from "../category/components/CategoryByIdTemp.jsx";
@@ -15,12 +16,14 @@ import GridSpends from "../spend/components/GridSpends.jsx";
 import GraphicPercentatgeSpend from "./GraphicPercentatgeSpend.jsx";
 import FormModifyPercentage from "../settings/components/FormModifyPercentage.jsx";
 import GridInversion from "../inversion/components/GridInversion.jsx";
+import FormInversion from "../inversion/components/FormInversion.jsx";
 
 const Body = () => {
     const { isFormCategoryOpen } = useCategories();
     const { isFormSpendOpen } = useSpends();
     const { isFormSavingOpen } = useSaving();
     const { isFormModifyPercentageOpen } = useFinancial();
+    const { isFormInversionOpen } = useInversion();
 
     return (
         <>
@@ -51,6 +54,13 @@ const Body = () => {
                     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
                         <div className="w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-xl bg-white dark:bg-slate-800 dark:border-2 dark:border-slate-700 p-4 sm:p-6">
                             <FormModifyPercentage />
+                        </div>
+                    </div>
+                )}
+                {isFormInversionOpen && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
+                        <div className="w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-xl bg-white dark:bg-slate-800 dark:border-2 dark:border-slate-700 p-4 sm:p-6">
+                            <FormInversion />
                         </div>
                     </div>
                 )}

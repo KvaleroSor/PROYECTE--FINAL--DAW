@@ -1,8 +1,15 @@
+"use client";
+
 import React from 'react'
 import Inversion from './Inversion'
 import { TrendingUp, Plus } from 'lucide-react'
+import { useInversion } from '@/app/context/InversionContext.js'
+
 
 const GridInversion = () => {
+    const { fetchInvestmentAlphaVantage } = useInversion();
+    const { setIsFormInversionOpen } = useInversion();
+
     return (
         <>
             <div className='w-full max-w-full overflow-x-hidden dark:bg-slate-800 flex flex-col justify-center items-center gap-4 bg-slate-50 dark:bg-slate-800 shadow-lg rounded-2xl hover:shadow-md transition-all duration-300'>
@@ -18,7 +25,9 @@ const GridInversion = () => {
                             </div>
                         </div>
                         <button
-                            className="w-full sm:w-auto flex items-center justify-center gap-2 h-10 px-3 sm:px-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl group bg-slate-700 dark:bg-slate-400 text-slate-100 text-sm sm:text-base flex-shrink-0">
+                            className="w-full sm:w-auto flex items-center justify-center gap-2 h-10 px-3 sm:px-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl group bg-slate-700 dark:bg-slate-400 text-slate-100 text-sm sm:text-base flex-shrink-0"
+                            onClick={() => setIsFormInversionOpen(true)}
+                        >
                             <Plus className="w-4 h-4 sm:w-5 sm:h-5 group-hover:rotate-90 transition-transform duration-300" />
                             <span>Añadir inversión</span>
                         </button>
