@@ -21,6 +21,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import AlertMessage from "@/components/AlertMessage.jsx";
 import StockSearchInput from "./StockSearchInput.jsx";
+import { useTranslations } from "next-intl";
 
 const inversionSchema = z.object({
     symbol: z.string().optional(),
@@ -33,6 +34,8 @@ const inversionSchema = z.object({
 });
 
 const FormInversion = () => {
+    const t = useTranslations("investments");
+    const tCommon = useTranslations("common");
     const { data: session } = useSession();
     const {
         isSelectedInversion,
@@ -57,13 +60,13 @@ const FormInversion = () => {
     const [selectedStock, setSelectedStock] = useState(null);
 
     const inversionTypes = [
-        "Acciones",
-        "Bonos",
-        "Fondos de Inversión",
-        "ETFs",
-        "Criptomonedas",
-        "Bienes Raíces",
-        "Otro",
+        t("stocks"),
+        t("bonds"),
+        t("mutualFunds"),
+        t("etfs"),
+        t("cryptocurrencies"),
+        t("realEstate"),
+        t("other"),
     ];
 
     const {
@@ -148,8 +151,21 @@ const FormInversion = () => {
     }, [isSelectedInversion, reset]);
 
     useEffect(() => {
-        const totalInvested = isInversions.reduce((acc, inv) => acc + Number(inv.amount || 0), 0);
-        const available = isInvestmentFromNomina - totalInvested;
+        // Inversiones activas
+        const activeInversions = isInversions.filter(inv => inv.status !== "closed");
+        const totalInvested = activeInversions.reduce((acc, inv) => acc + Number(inv.amount || 0), 0);
+
+        // Capital recuperado de inversiones cerradas (capital + beneficios/pérdidas)
+        const closedInversions = isInversions.filter(inv => inv.status === "closed");
+        const capitalFromClosedInversions = closedInversions.reduce((acc, inv) => {
+            // Si tiene final_value, usarlo; si no, calcular manualmente
+            const finalValue = inv.final_value || (Number(inv.amount || 0) + ((inv.real_profitability || 0) * Number(inv.amount || 0)) / 100);
+            return acc + finalValue;
+        }, 0);
+
+        // Si hay capital cerrado, usarlo como base; sino, usar el presupuesto mensual
+        const baseCapital = capitalFromClosedInversions > 0 ? capitalFromClosedInversions : isInvestmentFromNomina;
+        const available = baseCapital - totalInvested;
         setAvailableToInvest(available);
     }, [isInversions, isInvestmentFromNomina]);
 
@@ -168,7 +184,7 @@ const FormInversion = () => {
 
         if (isButtonPushed === "create") {
             if (formData.amount > availableToInvest) {
-                setIsError(`Solo tienes €${availableToInvest.toFixed(2)} disponibles para invertir`);
+                setIsError(`${t("onlyAvailable")} €${availableToInvest.toFixed(2)} ${t("availableToInvest")}`);
                 return;
             }
 
@@ -185,7 +201,7 @@ const FormInversion = () => {
                 }, 1500);
             } catch (err) {
                 console.error(err);
-                setIsError("Error al crear la inversión");
+                setIsError(t("errorCreatingInvestment"));
             }
         } else if (isButtonPushed === "update") {
             try {
@@ -196,7 +212,7 @@ const FormInversion = () => {
                 }, 1500);
             } catch (err) {
                 console.error(err);
-                setIsError("Error al actualizar la inversión");
+                setIsError(t("errorUpdatingInvestment"));
             }
         }
     };
@@ -217,12 +233,12 @@ const FormInversion = () => {
                 <div className="w-full flex flex-row justify-between mb-3 gap-2">
                     <div className="flex flex-col justify-start">
                         <h1 className="text-2xl text-slate-900 dark:text-slate-100">
-                            {isSelectedInversion ? "Actualizar Inversión" : "Nueva Inversión"}
+                            {isSelectedInversion ? t("updateInvestment") : t("newInvestment")}
                         </h1>
                         <p className="text-slate-600 dark:text-slate-400">
                             {isSelectedInversion
-                                ? "Modifica los datos de tu inversión"
-                                : "Añade una nueva inversión a tu portfolio"}
+                                ? t("modifyInvestmentData")
+                                : t("addNewInvestment")}
                         </p>
                     </div>
                     <div>
@@ -238,19 +254,19 @@ const FormInversion = () => {
                     <div className="flex items-center gap-2 mb-2">
                         <DollarSign className="w-5 h-5 text-slate-700 dark:text-slate-300" />
                         <p className="font-semibold text-slate-900 dark:text-slate-100">
-                            Presupuesto de Inversión
+                            {t("investmentBudget")}
                         </p>
                     </div>
                     <div className="space-y-2 text-sm">
                         <div className="flex justify-between items-center">
-                            <span className="text-slate-700 dark:text-slate-300">Total Mensual</span>
+                            <span className="text-slate-700 dark:text-slate-300">{t("totalMonthly")}</span>
                             <span className="font-bold text-slate-900 dark:text-slate-100">
                                 €{isInvestmentFromNomina?.toFixed(2) || 0}
                             </span>
                         </div>
                         <div className="flex justify-between items-center pt-2 border-t border-slate-300 dark:border-slate-500">
                             <span className="text-slate-700 dark:text-slate-300 font-medium">
-                                Disponible
+                                {t("available")}
                             </span>
                             <span
                                 className={`font-bold text-lg ${availableToInvest >= 0
@@ -275,7 +291,7 @@ const FormInversion = () => {
                 {isSuccess && (
                     <div className="w-full bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3 mb-3">
                         <p className="text-sm text-green-800 dark:text-green-300 text-center">
-                            ✅ Inversión guardada exitosamente
+                            {t("investmentSavedSuccessfully")}
                         </p>
                     </div>
                 )}
@@ -283,15 +299,15 @@ const FormInversion = () => {
                 {/* Buscador de símbolos (opcional) */}
                 <div className="w-full flex flex-col justify-start gap-2 mb-4">
                     <label className="text-slate-700 dark:text-slate-300 flex items-center justify-between">
-                        <span>Buscar Símbolo (Opcional)</span>
+                        <span>{t("searchSymbol")}</span>
                         {isAlphaVantageLoading && (
                             <span className="text-xs text-slate-500 dark:text-slate-400">
-                                Cargando datos...
+                                {t("loadingData")}
                             </span>
                         )}
                         {isAlphaVantageLoaded && !isAlphaVantageLoading && (
                             <span className="text-xs text-green-600 dark:text-green-400">
-                                ✓ {isAlphaVantageData.length} símbolos disponibles
+                                ✓ {isAlphaVantageData.length} {t("symbolsAvailable")}
                             </span>
                         )}
                     </label>
@@ -305,7 +321,7 @@ const FormInversion = () => {
                     {selectedStock && (
                         <div className="mt-2 p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
                             <p className="text-sm text-green-800 dark:text-green-300">
-                                ✓ Seleccionado: <span className="font-bold">{selectedStock.symbol}</span>
+                                ✓ {t("selected")}: <span className="font-bold">{selectedStock.symbol}</span>
                                 {selectedStock.name && ` - ${selectedStock.name}`}
                             </p>
                         </div>
@@ -315,14 +331,14 @@ const FormInversion = () => {
                 {/* Tipo de inversión */}
                 <div className="w-full flex flex-col justify-start gap-2 mb-4">
                     <label htmlFor="type" className="text-slate-700 dark:text-slate-300">
-                        Tipo de Inversión {selectedStock && <span className="text-xs text-slate-500 dark:text-slate-400">(autocompletado)</span>}
+                        {t("investmentType")} {selectedStock && <span className="text-xs text-slate-500 dark:text-slate-400">({t("autoCompleted")})</span>}
                     </label>
                     <select
                         id="type"
                         className="h-12 w-full bg-gray-50 dark:bg-slate-500 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-100"
                         {...register("type")}
                     >
-                        <option value="">Selecciona un tipo</option>
+                        <option value="">{t("selectType")}</option>
                         {inversionTypes.map((type) => (
                             <option key={type} value={type}>
                                 {type}
@@ -332,7 +348,7 @@ const FormInversion = () => {
                     {errors.type && <AlertMessage message={errors.type.message} type="error" />}
                     {selectedStock && (
                         <p className="text-xs text-slate-500 dark:text-slate-400">
-                            💡 El tipo se autocompletó basado en el símbolo seleccionado, pero puedes cambiarlo si lo deseas
+                            💡 {t("autoCompletedNote")}
                         </p>
                     )}
                 </div>
@@ -340,7 +356,7 @@ const FormInversion = () => {
                 {/* Monto */}
                 <div className="w-full flex flex-col justify-start gap-2 mb-4">
                     <label htmlFor="amount" className="text-slate-700 dark:text-slate-300">
-                        Monto de Inversión
+                        {t("investmentAmount")}
                     </label>
                     <input
                         id="amount"
@@ -356,7 +372,7 @@ const FormInversion = () => {
                 {/* Fecha */}
                 <div className="w-full flex flex-col justify-start gap-2 mb-4">
                     <label htmlFor="date" className="text-slate-700 dark:text-slate-300">
-                        Fecha de Inversión
+                        {t("investmentDate")}
                     </label>
                     <input
                         id="date"
@@ -376,7 +392,7 @@ const FormInversion = () => {
                             htmlFor="target_profitability"
                             className="text-slate-700 dark:text-slate-300"
                         >
-                            Rentabilidad Objetivo (%)
+                            {t("targetProfitability")}
                         </label>
                         <input
                             id="target_profitability"
@@ -396,7 +412,7 @@ const FormInversion = () => {
                             htmlFor="real_profitability"
                             className="text-slate-700 dark:text-slate-300"
                         >
-                            Rentabilidad Real (%)
+                            {t("realProfitability")}
                         </label>
                         <input
                             id="real_profitability"
@@ -413,7 +429,7 @@ const FormInversion = () => {
                 {watchAmount > 0 && watch("target_profitability") > 0 && (
                     <div className="w-full bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-3">
                         <p className="text-sm text-green-800 dark:text-green-300">
-                            💰 Retorno potencial:{" "}
+                            💰 {t("potentialReturn")}:{" "}
                             <span className="font-bold">€{calculatePotentialReturn().toFixed(2)}</span>
                         </p>
                     </div>
@@ -430,7 +446,7 @@ const FormInversion = () => {
                             className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 dark:bg-slate-600 text-slate-100 hover:border-slate-100 dark:hover:border-slate-400"
                         >
                             <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
-                            <span>Crear Inversión</span>
+                            <span>{t("createInvestment")}</span>
                         </button>
                         <button
                             id="button-cancel"
@@ -439,7 +455,7 @@ const FormInversion = () => {
                             onClick={handleCloseForm}
                         >
                             <Ban className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
-                            <span>Cancelar</span>
+                            <span>{tCommon("cancel")}</span>
                         </button>
                     </div>
                 ) : (
@@ -450,7 +466,7 @@ const FormInversion = () => {
                             className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 dark:bg-slate-600 text-slate-100 hover:border-slate-100 dark:hover:border-slate-400"
                         >
                             <Repeat className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
-                            <span>Actualizar Inversión</span>
+                            <span>{t("updateInvestment")}</span>
                         </button>
                         <button
                             id="button-cancel"
@@ -459,7 +475,7 @@ const FormInversion = () => {
                             onClick={handleCloseForm}
                         >
                             <Ban className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
-                            <span>Cancelar</span>
+                            <span>{tCommon("cancel")}</span>
                         </button>
                     </div>
                 )}

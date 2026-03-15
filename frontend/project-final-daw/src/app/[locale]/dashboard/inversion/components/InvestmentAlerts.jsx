@@ -2,8 +2,10 @@
 
 import { useInversion } from "@/app/context/InversionContext";
 import { AlertCircle, TrendingUp, TrendingDown, CheckCircle } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const InvestmentAlerts = () => {
+    const t = useTranslations("investments");
     const { isInversions } = useInversion();
 
     // Generar alertas basadas en el rendimiento
@@ -22,8 +24,8 @@ const InvestmentAlerts = () => {
                 return {
                     type: "success",
                     icon: TrendingUp,
-                    title: `${displayName} superando objetivo`,
-                    message: `Rentabilidad real: ${realProfit.toFixed(2)}% (Objetivo: ${targetProfit.toFixed(2)}%)`,
+                    title: `${displayName} ${t("exceedingTarget")}`,
+                    message: `${t("realProfitabilityLabel")}: ${realProfit.toFixed(2)}% (${t("targetLabel")}: ${targetProfit.toFixed(2)}%)`,
                     difference: `+${difference.toFixed(2)}%`,
                     color: "green",
                 };
@@ -31,8 +33,8 @@ const InvestmentAlerts = () => {
                 return {
                     type: "warning",
                     icon: TrendingDown,
-                    title: `${displayName} bajo objetivo`,
-                    message: `Rentabilidad real: ${realProfit.toFixed(2)}% (Objetivo: ${targetProfit.toFixed(2)}%)`,
+                    title: `${displayName} ${t("belowTarget")}`,
+                    message: `${t("realProfitabilityLabel")}: ${realProfit.toFixed(2)}% (${t("targetLabel")}: ${targetProfit.toFixed(2)}%)`,
                     difference: `${difference.toFixed(2)}%`,
                     color: "red",
                 };
@@ -48,13 +50,13 @@ const InvestmentAlerts = () => {
                         <CheckCircle className="w-5 h-5 text-white" />
                     </div>
                     <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
-                        Alertas de Rendimiento
+                        {t("performanceAlerts")}
                     </h2>
                 </div>
                 <div className="text-center py-8">
                     <CheckCircle className="w-12 h-12 text-green-500 mx-auto mb-3" />
                     <p className="text-slate-600 dark:text-slate-400">
-                        Todas tus inversiones están dentro del rango esperado
+                        {t("allInvestmentsInRange")}
                     </p>
                 </div>
             </div>
@@ -68,7 +70,7 @@ const InvestmentAlerts = () => {
                     <AlertCircle className="w-5 h-5 text-white" />
                 </div>
                 <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
-                    Alertas de Rendimiento
+                    {t("performanceAlerts")}
                 </h2>
             </div>
 

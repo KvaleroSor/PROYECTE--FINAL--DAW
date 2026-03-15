@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useInversion } from "@/app/context/InversionContext";
 import { TrendingUp, DollarSign, Target, Activity, PieChart, BarChart3, LineChart, X, CheckCircle } from "lucide-react";
+import { useTranslations } from "next-intl";
 import PortfolioDistributionChart from "./PortfolioDistributionChart";
 import ProfitabilityComparisonChart from "./ProfitabilityComparisonChart";
 import PortfolioEvolutionChart from "./PortfolioEvolutionChart";
@@ -12,6 +13,8 @@ import ExportReports from "./ExportReports";
 import InvestmentHistory from "./InvestmentHistory";
 
 const InversionSummary = () => {
+    const t = useTranslations("investments");
+    const tCommon = useTranslations("common");
     const { isInversions, isInversionFromNomina, isLoading, closeInversion } = useInversion();
     const [closingInversion, setClosingInversion] = useState(null);
     const [isClosing, setIsClosing] = useState(false);
@@ -20,21 +23,21 @@ const InversionSummary = () => {
     const activeInversions = isInversions.filter(inv => inv.status !== "closed");
 
     // Calcular totales solo de inversiones activas
-    const isTotalInverted = activeInversions.reduce(
+    const totalInvested = activeInversions.reduce(
         (sum, inv) => sum + (inv.amount || 0),
         0
     );
 
-    const isTotalProfitability = activeInversions.reduce(
+    const totalProfitability = activeInversions.reduce(
         (sum, inv) => sum + ((inv.real_profitability || 0) * (inv.amount || 0)) / 100,
         0
     );
 
-    const isAverageProfitability = activeInversions.length > 0
+    const averageProfitability = activeInversions.length > 0
         ? activeInversions.reduce((sum, inv) => sum + (inv.real_profitability || 0), 0) / activeInversions.length
         : 0;
 
-    const isTotalValue = isTotalInverted + isTotalProfitability;
+    const totalValue = totalInvested + totalProfitability;
 
     const handleCloseInversion = async () => {
         if (!closingInversion) return;
@@ -69,12 +72,12 @@ const InversionSummary = () => {
                             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
                                 <DollarSign className="w-6 h-6 text-white" />
                             </div>
-                            <h1 className="text-slate-500 dark:text-slate-400">INVERTIDO</h1>
+                            <h1 className="text-slate-500 dark:text-slate-400">{t("totalInvested").toUpperCase()}</h1>
                         </div>
                         <h1 className="text-4xl text-slate-900 dark:text-slate-100 mb-1">
-                            € {Number(isTotalInverted).toFixed(2)}
+                            € {Number(totalInvested).toFixed(2)}
                         </h1>
-                        <p className="text-slate-500 dark:text-slate-400">Total invertido</p>
+                        <p className="text-slate-500 dark:text-slate-400">{t("totalInvested")}</p>
                     </div>
                 </div>
 
@@ -85,12 +88,12 @@ const InversionSummary = () => {
                             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
                                 <TrendingUp className="w-6 h-6 text-white" />
                             </div>
-                            <h1 className="text-slate-500 dark:text-slate-400">GANANCIA</h1>
+                            <h1 className="text-slate-500 dark:text-slate-400">{t("performance").toUpperCase()}</h1>
                         </div>
                         <h1 className="text-4xl text-slate-900 dark:text-slate-100 mb-1">
-                            € {Number(isTotalProfitability).toFixed(2)}
+                            € {Number(totalProfitability).toFixed(2)}
                         </h1>
-                        <p className="text-slate-500 dark:text-slate-400">Rentabilidad total</p>
+                        <p className="text-slate-500 dark:text-slate-400">{t("performance")}</p>
                     </div>
                 </div>
 
@@ -101,12 +104,12 @@ const InversionSummary = () => {
                             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
                                 <Target className="w-6 h-6 text-white" />
                             </div>
-                            <h1 className="text-slate-500 dark:text-slate-400">VALOR TOTAL</h1>
+                            <h1 className="text-slate-500 dark:text-slate-400">{t("currentValue").toUpperCase()}</h1>
                         </div>
                         <h1 className="text-4xl text-slate-900 dark:text-slate-100 mb-1">
-                            € {Number(isTotalValue).toFixed(2)}
+                            € {Number(totalValue).toFixed(2)}
                         </h1>
-                        <p className="text-slate-500 dark:text-slate-400">Inversión + Ganancia</p>
+                        <p className="text-slate-500 dark:text-slate-400">{t("currentValue")}</p>
                     </div>
                 </div>
 
@@ -117,12 +120,12 @@ const InversionSummary = () => {
                             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
                                 <Activity className="w-6 h-6 text-white" />
                             </div>
-                            <h1 className="text-slate-500 dark:text-slate-400">RENTABILIDAD</h1>
+                            <h1 className="text-slate-500 dark:text-slate-400">{t("roi").toUpperCase()}</h1>
                         </div>
                         <h1 className="text-4xl text-slate-900 dark:text-slate-100 mb-1">
-                            {Number(isAverageProfitability).toFixed(2)} %
+                            {Number(averageProfitability).toFixed(2)} %
                         </h1>
-                        <p className="text-slate-500 dark:text-slate-400">Rentabilidad media</p>
+                        <p className="text-slate-500 dark:text-slate-400">{t("roi")}</p>
                     </div>
                 </div>
             </div>
@@ -140,7 +143,7 @@ const InversionSummary = () => {
                                 <PieChart className="w-5 h-5 text-white" />
                             </div>
                             <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
-                                Distribución del Portfolio
+                                {t("portfolioDistribution")}
                             </h2>
                         </div>
                         <PortfolioDistributionChart />
@@ -153,7 +156,7 @@ const InversionSummary = () => {
                                 <BarChart3 className="w-5 h-5 text-white" />
                             </div>
                             <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
-                                Rentabilidad: Objetivo vs Real
+                                {t("profitabilityComparison")}
                             </h2>
                         </div>
                         <ProfitabilityComparisonChart />
@@ -166,7 +169,7 @@ const InversionSummary = () => {
                                 <LineChart className="w-5 h-5 text-white" />
                             </div>
                             <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
-                                Evolución del Portfolio
+                                {t("portfolioEvolution")}
                             </h2>
                         </div>
                         <PortfolioEvolutionChart />
@@ -189,16 +192,16 @@ const InversionSummary = () => {
             {/* Lista de inversiones activas */}
             <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
                 <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100 mb-4">
-                    Inversiones Activas ({activeInversions.length})
+                    {t("activeInvestments")} ({activeInversions.length})
                 </h2>
                 {activeInversions.length === 0 ? (
                     <div className="text-center py-12">
                         <DollarSign className="w-16 h-16 text-slate-300 dark:text-slate-600 mx-auto mb-4" />
                         <p className="text-slate-500 dark:text-slate-400 text-lg">
-                            No tienes inversiones activas
+                            {t("noActiveInvestments")}
                         </p>
                         <p className="text-slate-400 dark:text-slate-500 text-sm mt-2">
-                            Presupuesto mensual: €{Number(isInversionFromNomina || 0).toFixed(2)}
+                            {t("monthlyBudget")}: €{Number(isInversionFromNomina || 0).toFixed(2)}
                         </p>
                     </div>
                 ) : (
@@ -206,15 +209,15 @@ const InversionSummary = () => {
                         <table className="w-full">
                             <thead>
                                 <tr className="border-b border-slate-200 dark:border-slate-700">
-                                    <th className="text-left py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">Inversión</th>
-                                    <th className="text-left py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">Tipo</th>
-                                    <th className="text-right py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">Cantidad</th>
-                                    <th className="text-right py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">Rent. Objetivo</th>
-                                    <th className="text-right py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">Rent. Real</th>
-                                    <th className="text-right py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">Ganancia</th>
-                                    <th className="text-right py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">Valor Total</th>
-                                    <th className="text-center py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">Fecha</th>
-                                    <th className="text-center py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">Acciones</th>
+                                    <th className="text-left py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">{t("title")}</th>
+                                    <th className="text-left py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">{t("type")}</th>
+                                    <th className="text-right py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">{t("amount")}</th>
+                                    <th className="text-right py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">{t("targetProfitability")}</th>
+                                    <th className="text-right py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">{t("realProfitability")}</th>
+                                    <th className="text-right py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">{t("performance")}</th>
+                                    <th className="text-right py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">{t("currentValue")}</th>
+                                    <th className="text-center py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">{tCommon("date")}</th>
+                                    <th className="text-center py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">{tCommon("edit")}</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -237,7 +240,7 @@ const InversionSummary = () => {
                                                     )}
                                                     {!inversion.symbol && !inversion.name && (
                                                         <span className="text-slate-500 dark:text-slate-400 italic text-sm">
-                                                            Sin símbolo
+                                                            {t("noSymbol")}
                                                         </span>
                                                     )}
                                                 </div>
@@ -280,7 +283,7 @@ const InversionSummary = () => {
                                                     onClick={() => setClosingInversion(inversion)}
                                                     className="px-3 py-1.5 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-300 rounded-lg hover:bg-red-200 dark:hover:bg-red-900/50 transition-colors text-sm font-medium"
                                                 >
-                                                    Cerrar
+                                                    {t("closeInvestment")}
                                                 </button>
                                             </td>
                                         </tr>
@@ -304,40 +307,40 @@ const InversionSummary = () => {
                                 <X className="w-6 h-6 text-red-600 dark:text-red-400" />
                             </div>
                             <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-                                Cerrar Inversión
+                                {t("closeInvestment")}
                             </h3>
                         </div>
 
                         <div className="mb-6">
                             <p className="text-slate-700 dark:text-slate-300 mb-4">
-                                ¿Estás seguro de que quieres cerrar esta inversión?
+                                {t("closeInvestmentConfirm")}
                             </p>
 
                             <div className="bg-slate-50 dark:bg-slate-700/50 rounded-lg p-4 space-y-2">
                                 <div className="flex justify-between">
-                                    <span className="text-slate-600 dark:text-slate-400">Inversión:</span>
+                                    <span className="text-slate-600 dark:text-slate-400">{t("title")}:</span>
                                     <span className="font-bold text-slate-900 dark:text-slate-100">
                                         {closingInversion.symbol || closingInversion.type}
                                     </span>
                                 </div>
                                 <div className="flex justify-between">
-                                    <span className="text-slate-600 dark:text-slate-400">Capital invertido:</span>
+                                    <span className="text-slate-600 dark:text-slate-400">{t("investedCapital")}:</span>
                                     <span className="font-medium text-slate-900 dark:text-slate-100">
                                         €{closingInversion.amount.toFixed(2)}
                                     </span>
                                 </div>
                                 <div className="flex justify-between">
-                                    <span className="text-slate-600 dark:text-slate-400">Rentabilidad:</span>
+                                    <span className="text-slate-600 dark:text-slate-400">{t("performance")}:</span>
                                     <span className={`font-medium ${(closingInversion.real_profitability || 0) >= 0
-                                            ? 'text-green-600 dark:text-green-400'
-                                            : 'text-red-600 dark:text-red-400'
+                                        ? 'text-green-600 dark:text-green-400'
+                                        : 'text-red-600 dark:text-red-400'
                                         }`}>
                                         {(closingInversion.real_profitability || 0) >= 0 ? '+' : ''}
                                         {(closingInversion.real_profitability || 0).toFixed(2)}%
                                     </span>
                                 </div>
                                 <div className="flex justify-between pt-2 border-t border-slate-200 dark:border-slate-600">
-                                    <span className="text-slate-600 dark:text-slate-400 font-medium">Valor final:</span>
+                                    <span className="text-slate-600 dark:text-slate-400 font-medium">{t("finalValue")}:</span>
                                     <span className="font-bold text-slate-900 dark:text-slate-100">
                                         €{(closingInversion.amount + ((closingInversion.real_profitability || 0) * closingInversion.amount) / 100).toFixed(2)}
                                     </span>
@@ -346,7 +349,7 @@ const InversionSummary = () => {
 
                             <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
                                 <p className="text-sm text-blue-800 dark:text-blue-300">
-                                    💰 El dinero se devolverá a tu presupuesto de inversión y se registrará en el historial fiscal.
+                                    💰 {t("closeInvestmentNote")}
                                 </p>
                             </div>
                         </div>
@@ -357,7 +360,7 @@ const InversionSummary = () => {
                                 disabled={isClosing}
                                 className="flex-1 px-4 py-2.5 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors font-medium disabled:opacity-50"
                             >
-                                Cancelar
+                                {tCommon("cancel")}
                             </button>
                             <button
                                 onClick={handleCloseInversion}
@@ -367,12 +370,12 @@ const InversionSummary = () => {
                                 {isClosing ? (
                                     <>
                                         <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
-                                        Cerrando...
+                                        {t("closingAction")}...
                                     </>
                                 ) : (
                                     <>
                                         <CheckCircle className="w-4 h-4" />
-                                        Confirmar Cierre
+                                        {t("confirmClose")}
                                     </>
                                 )}
                             </button>

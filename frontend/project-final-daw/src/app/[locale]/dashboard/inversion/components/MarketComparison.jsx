@@ -3,8 +3,10 @@
 import { useInversion } from "@/app/context/InversionContext";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import { TrendingUp } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const MarketComparison = () => {
+    const t = useTranslations("investments");
     const { isInversions } = useInversion();
 
     // Calcular rentabilidad promedio del portfolio
@@ -14,7 +16,7 @@ const MarketComparison = () => {
 
     // Índices de referencia (valores aproximados anuales)
     const marketIndices = [
-        { name: "Tu Portfolio", value: portfolioReturn, color: "#1e293b" },
+        { name: t("yourPortfolio"), value: portfolioReturn, color: "#1e293b" },
         { name: "S&P 500", value: 10.5, color: "#3b82f6" },
         { name: "NASDAQ", value: 12.3, color: "#8b5cf6" },
         { name: "DAX", value: 8.7, color: "#10b981" },
@@ -28,12 +30,11 @@ const MarketComparison = () => {
                     <p className="text-slate-900 dark:text-slate-100 font-semibold">
                         {payload[0].payload.name}
                     </p>
-                    <p className={`text-sm font-medium ${
-                        payload[0].value >= 0
+                    <p className={`text-sm font-medium ${payload[0].value >= 0
                             ? "text-green-600 dark:text-green-400"
                             : "text-red-600 dark:text-red-400"
-                    }`}>
-                        {payload[0].value.toFixed(2)}% rentabilidad
+                        }`}>
+                        {payload[0].value.toFixed(2)}% {t("profitabilityTooltip")}
                     </p>
                 </div>
             );
@@ -49,17 +50,17 @@ const MarketComparison = () => {
                 </div>
                 <div>
                     <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
-                        Comparación con Índices de Mercado
+                        {t("marketComparison")}
                     </h2>
                     <p className="text-sm text-slate-500 dark:text-slate-400">
-                        Rentabilidad anual promedio
+                        {t("averageAnnualReturn")}
                     </p>
                 </div>
             </div>
 
             {isInversions.length === 0 ? (
                 <div className="text-center py-12 text-slate-500 dark:text-slate-400">
-                    Añade inversiones para ver la comparación
+                    {t("addInvestmentsToCompare")}
                 </div>
             ) : (
                 <>
@@ -84,7 +85,7 @@ const MarketComparison = () => {
                                     className="text-slate-600 dark:text-slate-400"
                                     tick={{ fill: "currentColor" }}
                                     label={{
-                                        value: "Rentabilidad (%)",
+                                        value: t("profitabilityLabel"),
                                         angle: -90,
                                         position: "insideLeft",
                                         className: "fill-slate-600 dark:fill-slate-400",
@@ -108,15 +109,15 @@ const MarketComparison = () => {
                         <p className="text-sm text-slate-700 dark:text-slate-300">
                             {portfolioReturn > 10.5 ? (
                                 <span className="text-green-600 dark:text-green-400 font-semibold">
-                                    ✓ Tu portfolio está superando al S&P 500 por {(portfolioReturn - 10.5).toFixed(2)}%
+                                    ✓ {t("portfolioBeatingIndex")} {(portfolioReturn - 10.5).toFixed(2)}%
                                 </span>
                             ) : portfolioReturn > 0 ? (
                                 <span className="text-yellow-600 dark:text-yellow-400 font-semibold">
-                                    ⚠ Tu portfolio está {(10.5 - portfolioReturn).toFixed(2)}% por debajo del S&P 500
+                                    ⚠ {t("portfolioBelowIndex")} {(10.5 - portfolioReturn).toFixed(2)}% {t("belowSP500")}
                                 </span>
                             ) : (
                                 <span className="text-red-600 dark:text-red-400 font-semibold">
-                                    ✗ Tu portfolio tiene rentabilidad negativa
+                                    ✗ {t("negativeReturn")}
                                 </span>
                             )}
                         </p>

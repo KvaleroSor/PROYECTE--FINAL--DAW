@@ -4,9 +4,11 @@ import React from 'react'
 import Inversion from './Inversion'
 import { TrendingUp, Plus } from 'lucide-react'
 import { useInversion } from '@/app/context/InversionContext.js'
+import { useTranslations } from 'next-intl'
 
 
 const GridInversion = () => {
+    const t = useTranslations("investments");
     const { fetchInvestmentAlphaVantage } = useInversion();
     const { setIsFormInversionOpen } = useInversion();
 
@@ -20,8 +22,8 @@ const GridInversion = () => {
                                 <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-slate-50" />
                             </div>
                             <div className='flex flex-col justify-start items-start'>
-                                <h3 className="text-slate-50 text-base sm:text-lg lg:text-xl font-medium">Inversión</h3>
-                                <p className="text-slate-200 text-xs sm:text-sm">Tu portfolio de inversiones</p>
+                                <h3 className="text-slate-50 text-base sm:text-lg lg:text-xl font-medium">{t("title")}</h3>
+                                <p className="text-slate-200 text-xs sm:text-sm">{t("managePortfolio")}</p>
                             </div>
                         </div>
                         <button
@@ -29,7 +31,7 @@ const GridInversion = () => {
                             onClick={() => setIsFormInversionOpen(true)}
                         >
                             <Plus className="w-4 h-4 sm:w-5 sm:h-5 group-hover:rotate-90 transition-transform duration-300" />
-                            <span>Añadir inversión</span>
+                            <span>{t("addInvestment")}</span>
                         </button>
                     </div>
                 </div>

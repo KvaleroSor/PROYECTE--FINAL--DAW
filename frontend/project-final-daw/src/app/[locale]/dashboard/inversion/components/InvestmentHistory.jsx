@@ -2,8 +2,10 @@
 
 import { useInversion } from "@/app/context/InversionContext";
 import { History, TrendingUp, TrendingDown, Calendar, DollarSign } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const InvestmentHistory = () => {
+    const t = useTranslations("investments");
     const { isInversions } = useInversion();
 
     // Filtrar solo inversiones cerradas
@@ -28,16 +30,16 @@ const InvestmentHistory = () => {
                         <History className="w-5 h-5 text-white" />
                     </div>
                     <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
-                        Historial de Inversiones Cerradas
+                        {t("investmentHistory")}
                     </h2>
                 </div>
                 <div className="text-center py-12">
                     <History className="w-16 h-16 text-slate-300 dark:text-slate-600 mx-auto mb-4" />
                     <p className="text-slate-500 dark:text-slate-400 text-lg">
-                        No hay inversiones cerradas
+                        {t("noClosedInvestments")}
                     </p>
                     <p className="text-slate-400 dark:text-slate-500 text-sm mt-2">
-                        Las inversiones cerradas aparecerán aquí para tu historial fiscal
+                        {t("closedInvestmentsWillAppear")}
                     </p>
                 </div>
             </div>
@@ -52,10 +54,10 @@ const InvestmentHistory = () => {
                 </div>
                 <div>
                     <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
-                        Historial de Inversiones Cerradas
+                        {t("investmentHistory")}
                     </h2>
                     <p className="text-sm text-slate-500 dark:text-slate-400">
-                        {closedInversions.length} operación{closedInversions.length !== 1 ? 'es' : ''} cerrada{closedInversions.length !== 1 ? 's' : ''}
+                        {closedInversions.length} {closedInversions.length !== 1 ? t("operationsPlural") : t("operations")} {closedInversions.length !== 1 ? t("closedPlural") : t("closed")}
                     </p>
                 </div>
             </div>
@@ -66,7 +68,7 @@ const InvestmentHistory = () => {
                     <div className="flex items-center gap-2 mb-2">
                         <TrendingUp className="w-5 h-5 text-green-600 dark:text-green-400" />
                         <span className="text-sm text-green-800 dark:text-green-300 font-medium">
-                            Ganancias Totales
+                            {t("totalGains")}
                         </span>
                     </div>
                     <p className="text-2xl font-bold text-green-600 dark:text-green-400">
@@ -78,7 +80,7 @@ const InvestmentHistory = () => {
                     <div className="flex items-center gap-2 mb-2">
                         <TrendingDown className="w-5 h-5 text-red-600 dark:text-red-400" />
                         <span className="text-sm text-red-800 dark:text-red-300 font-medium">
-                            Pérdidas Totales
+                            {t("totalLosses")}
                         </span>
                     </div>
                     <p className="text-2xl font-bold text-red-600 dark:text-red-400">
@@ -86,30 +88,26 @@ const InvestmentHistory = () => {
                     </p>
                 </div>
 
-                <div className={`${
-                    netResult >= 0
-                        ? "bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800"
-                        : "bg-orange-50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800"
-                } border rounded-lg p-4`}>
+                <div className={`${netResult >= 0
+                    ? "bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800"
+                    : "bg-orange-50 dark:bg-orange-900/20 border-orange-200 dark:border-orange-800"
+                    } border rounded-lg p-4`}>
                     <div className="flex items-center gap-2 mb-2">
-                        <DollarSign className={`w-5 h-5 ${
-                            netResult >= 0
-                                ? "text-blue-600 dark:text-blue-400"
-                                : "text-orange-600 dark:text-orange-400"
-                        }`} />
-                        <span className={`text-sm font-medium ${
-                            netResult >= 0
-                                ? "text-blue-800 dark:text-blue-300"
-                                : "text-orange-800 dark:text-orange-300"
-                        }`}>
-                            Resultado Neto Fiscal
-                        </span>
-                    </div>
-                    <p className={`text-2xl font-bold ${
-                        netResult >= 0
+                        <DollarSign className={`w-5 h-5 ${netResult >= 0
                             ? "text-blue-600 dark:text-blue-400"
                             : "text-orange-600 dark:text-orange-400"
-                    }`}>
+                            }`} />
+                        <span className={`text-sm font-medium ${netResult >= 0
+                            ? "text-blue-800 dark:text-blue-300"
+                            : "text-orange-800 dark:text-orange-300"
+                            }`}>
+                            {t("netFiscalResult")}
+                        </span>
+                    </div>
+                    <p className={`text-2xl font-bold ${netResult >= 0
+                        ? "text-blue-600 dark:text-blue-400"
+                        : "text-orange-600 dark:text-orange-400"
+                        }`}>
                         {netResult >= 0 ? '+' : ''}€{netResult.toFixed(2)}
                     </p>
                 </div>
@@ -120,13 +118,13 @@ const InvestmentHistory = () => {
                 <table className="w-full">
                     <thead>
                         <tr className="border-b border-slate-200 dark:border-slate-700">
-                            <th className="text-left py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">Inversión</th>
-                            <th className="text-left py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">Tipo</th>
-                            <th className="text-right py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">Invertido</th>
-                            <th className="text-center py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">Apertura</th>
-                            <th className="text-center py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">Cierre</th>
-                            <th className="text-right py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">Ganancia/Pérdida</th>
-                            <th className="text-right py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">Valor Final</th>
+                            <th className="text-left py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">{t("title")}</th>
+                            <th className="text-left py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">{t("type")}</th>
+                            <th className="text-right py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">{t("invested")}</th>
+                            <th className="text-center py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">{t("opening")}</th>
+                            <th className="text-center py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">{t("closingDate")}</th>
+                            <th className="text-right py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">{t("profitLoss")}</th>
+                            <th className="text-right py-3 px-4 text-slate-600 dark:text-slate-400 font-medium">{t("finalValue")}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -153,7 +151,7 @@ const InvestmentHistory = () => {
                                                 )}
                                                 {!inversion.symbol && !inversion.name && (
                                                     <span className="text-slate-500 dark:text-slate-400 italic text-sm">
-                                                        Sin símbolo
+                                                        {t("noSymbol")}
                                                     </span>
                                                 )}
                                             </div>
@@ -173,11 +171,10 @@ const InvestmentHistory = () => {
                                             {new Date(inversion.closing_date).toLocaleDateString('es-ES')}
                                         </td>
                                         <td className="py-3 px-4 text-right">
-                                            <span className={`font-bold ${
-                                                isProfit
-                                                    ? 'text-green-600 dark:text-green-400'
-                                                    : 'text-red-600 dark:text-red-400'
-                                            }`}>
+                                            <span className={`font-bold ${isProfit
+                                                ? 'text-green-600 dark:text-green-400'
+                                                : 'text-red-600 dark:text-red-400'
+                                                }`}>
                                                 {isProfit ? '+' : ''}€{Number(inversion.final_profit_loss || 0).toFixed(2)}
                                             </span>
                                         </td>
@@ -194,8 +191,7 @@ const InvestmentHistory = () => {
             {/* Nota fiscal */}
             <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
                 <p className="text-sm text-blue-800 dark:text-blue-300">
-                    <strong>📋 Información fiscal:</strong> Este historial muestra todas tus operaciones cerradas.
-                    Puedes exportar un informe completo para tu declaración de impuestos usando el botón de exportación.
+                    <strong>📋 {t("taxInfo")}:</strong> {t("taxInfoMessage")}
                 </p>
             </div>
         </div>

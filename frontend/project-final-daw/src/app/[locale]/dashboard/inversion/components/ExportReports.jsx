@@ -2,14 +2,16 @@
 
 import { useInversion } from "@/app/context/InversionContext";
 import { Download, FileText } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 const ExportReports = () => {
+    const t = useTranslations("investments");
     const { isInversions } = useInversion();
 
     // Exportar a CSV
     const exportToCSV = () => {
         if (isInversions.length === 0) {
-            alert("No hay inversiones para exportar");
+            alert(t("noInvestmentsToExport"));
             return;
         }
 
@@ -62,7 +64,7 @@ const ExportReports = () => {
     // Exportar resumen en JSON
     const exportToJSON = () => {
         if (isInversions.length === 0) {
-            alert("No hay inversiones para exportar");
+            alert(t("noInvestmentsToExport"));
             return;
         }
 
@@ -116,7 +118,7 @@ const ExportReports = () => {
         const closedInversions = isInversions.filter(inv => inv.status === "closed");
 
         if (closedInversions.length === 0) {
-            alert("No hay inversiones cerradas para el informe fiscal");
+            alert(t("noClosedInvestmentsForTaxReport"));
             return;
         }
 
@@ -195,13 +197,13 @@ const ExportReports = () => {
                     <FileText className="w-5 h-5 text-white" />
                 </div>
                 <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
-                    Exportar Reportes
+                    {t("exportReports")}
                 </h2>
             </div>
 
             <div className="space-y-3">
                 <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">
-                    Descarga tus datos de inversión en diferentes formatos
+                    {t("downloadInvestmentData")}
                 </p>
 
                 <button
@@ -210,7 +212,7 @@ const ExportReports = () => {
                     className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-green-600 dark:bg-green-700 text-white rounded-lg hover:bg-green-700 dark:hover:bg-green-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-medium"
                 >
                     <FileText className="w-5 h-5" />
-                    <span>📋 Informe Fiscal para Hacienda</span>
+                    <span>📋 {t("taxReportForHacienda")}</span>
                 </button>
 
                 <button
@@ -219,7 +221,7 @@ const ExportReports = () => {
                     className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-slate-800 dark:bg-slate-600 text-white rounded-lg hover:bg-slate-700 dark:hover:bg-slate-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     <Download className="w-5 h-5" />
-                    <span>Exportar a CSV</span>
+                    <span>{t("exportToCSV")}</span>
                 </button>
 
                 <button
@@ -228,17 +230,17 @@ const ExportReports = () => {
                     className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-slate-100 dark:bg-slate-700 text-slate-800 dark:text-slate-100 border-2 border-slate-200 dark:border-slate-600 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     <Download className="w-5 h-5" />
-                    <span>Exportar Reporte JSON</span>
+                    <span>{t("exportJSONReport")}</span>
                 </button>
 
                 {isInversions.length === 0 && (
                     <p className="text-xs text-center text-slate-500 dark:text-slate-400 mt-2">
-                        Añade inversiones para poder exportar reportes
+                        {t("addInvestmentsToExport")}
                     </p>
                 )}
                 {isInversions.filter(inv => inv.status === "closed").length === 0 && isInversions.length > 0 && (
                     <p className="text-xs text-center text-slate-500 dark:text-slate-400 mt-2">
-                        💡 Cierra inversiones para generar el informe fiscal
+                        💡 {t("closeInvestmentsForTaxReport")}
                     </p>
                 )}
             </div>
