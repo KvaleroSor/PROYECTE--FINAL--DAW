@@ -104,7 +104,7 @@
         "exceedingLimit": "GASTO EXCEDIENDO EL LÍMITE",
         "maxAmount": "Cantidad Máxima",
         "categoryNotFound": "Categoría no encontrada",
-        "searchPlaceholder": "Buscar por nombre o categoria..."
+        "searchPlaceholder": "Buscar por nombre ..."
     },
     "categories": {
         "title": "Categoría de Gastos",

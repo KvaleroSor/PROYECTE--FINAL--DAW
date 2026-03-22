@@ -12,7 +12,7 @@ export default function SettingsPage() {
     const tSettings = useTranslations("settings");
 
     return (
-        <div className="p-6 flex flex-col gap-6">
+        <div className="px-2 sm:px-4 lg:px-4 py-6 flex flex-col gap-6">
             <div className="flex flex-col gap-2 justify-start items-start p-2 sm:p-4 shadow-lg bg-slate-50 hover:shadow-md transition-all duration-300 rounded-2xl dark:bg-slate-800 max-w-full h-fit overflow-x-hidden">
                 <h1 className="text-3xl text-slate-900 dark:text-slate-100">{t("title")}</h1>
                 <p className="text-sm text-slate-500 dark:text-slate-400">{t("description")}</p>

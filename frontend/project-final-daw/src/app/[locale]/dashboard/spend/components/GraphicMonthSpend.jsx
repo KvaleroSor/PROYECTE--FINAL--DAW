@@ -2,58 +2,141 @@
 
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import { useTranslations } from 'next-intl';
-
-const monthlyExpensesData = [
-    { monthKey: "jan", amount: 1250, budget: 1500 },
-    { monthKey: "feb", amount: 1450, budget: 1500 },
-    { monthKey: "mar", amount: 1320, budget: 1500 },
-    { monthKey: "apr", amount: 1680, budget: 1500 },
-    { monthKey: "may", amount: 1520, budget: 1500 },
-    { monthKey: "jun", amount: 1390, budget: 1500 },
-    { monthKey: "jul", amount: 1450, budget: 1500 },
-    { monthKey: "aug", amount: 1680, budget: 1500 },
-    { monthKey: "sep", amount: 1520, budget: 1500 },
-    { monthKey: "oct", amount: 1390, budget: 1500 },
-    { monthKey: "nov", amount: 1450, budget: 1500 },
-    { monthKey: "dec", amount: 1680, budget: 1500 },
-];
+import { useSpends } from '@/app/context/SpendContext';
+import { useMemo, useState } from 'react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function AnalisisMensual() {
     const t = useTranslations('monthlyAnalysis');
+    const { isSpends } = useSpends();
     const currentDate = new Date();
-    const currentYear = currentDate.getFullYear();
+    const [selectedYear, setSelectedYear] = useState(currentDate.getFullYear());
+
+    // Calcular datos mensuales basados en gastos reales
+    const monthlyExpensesData = useMemo(() => {
+        const months = [
+            { monthKey: "jan", monthNum: 0 },
+            { monthKey: "feb", monthNum: 1 },
+            { monthKey: "mar", monthNum: 2 },
+            { monthKey: "apr", monthNum: 3 },
+            { monthKey: "may", monthNum: 4 },
+            { monthKey: "jun", monthNum: 5 },
+            { monthKey: "jul", monthNum: 6 },
+            { monthKey: "aug", monthNum: 7 },
+            { monthKey: "sep", monthNum: 8 },
+            { monthKey: "oct", monthNum: 9 },
+            { monthKey: "nov", monthNum: 10 },
+            { monthKey: "dec", monthNum: 11 },
+        ];
+
+        return months.map(({ monthKey, monthNum }) => {
+            const monthSpends = isSpends?.filter(spend => {
+                if (!spend.date) return false;
+
+                let spendDate = new Date(spend.date);
+
+                // Si la fecha es inválida, intentar con timestamp
+                if (isNaN(spendDate.getTime())) {
+                    spendDate = new Date(parseInt(spend.date));
+                }
+
+                // Si sigue siendo inválida, saltar
+                if (isNaN(spendDate.getTime())) {
+                    return false;
+                }
+
+                return (
+                    spendDate.getMonth() === monthNum &&
+                    spendDate.getFullYear() === selectedYear
+                );
+            }) || [];
+
+            const amount = monthSpends.reduce((sum, spend) => sum + (spend.amount || 0), 0);
+            const budget = 1500;
+
+            return { monthKey, amount, budget };
+        });
+    }, [isSpends, selectedYear]);
 
     const translatedData = monthlyExpensesData.map(item => ({
         ...item,
         month: t(`months.${item.monthKey}`)
     }));
 
+    const currentMonth = currentDate.getMonth();
+    const isCurrentYear = selectedYear === currentDate.getFullYear();
+    const displayData = isCurrentYear
+        ? translatedData.slice(0, currentMonth + 1)
+        : translatedData;
+
     return (
         <div className="w-full bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-sm transition-colors duration-200">
             <div className="flex items-center justify-between mb-6">
-                <div>
-                    <h2 className="text-3xl text-gray-900 dark:text-slate-100 mb-2">
-                        {t('title')} {currentYear - 1}
-                    </h2>
-                    <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-                        {t('subtitle')}
-                    </p>
-                </div>
-                <div className="flex items-center gap-6">
-                    <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full bg-slate-900 dark:bg-slate-100"></div>
-                        <span className="text-sm text-slate-600 dark:text-slate-300">{t('spent')}</span>
+                <div className="flex items-start justify-start gap-4">
+                    <div className='flex items-center'>
+                        <div className='flex flex-col items-start'>
+                            <h2 className="text-3xl text-gray-900 dark:text-slate-100 mb-2">
+                                {t('title')} {selectedYear}
+                            </h2>
+                            <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
+                                {t('subtitle')}
+                            </p>
+                        </div>
                     </div>
-                    <div className="flex items-center gap-2">
-                        <div className="w-3 h-3 rounded-full bg-slate-300 dark:bg-slate-600"></div>
-                        <span className="text-sm text-slate-600 dark:text-slate-300">{t('budget')}</span>
+                    {/* <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-700 rounded-lg p-1">
+                        <button
+                            onClick={() => setSelectedYear(selectedYear - 1)}
+                            className="p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+                        >
+                            <ChevronLeft className="w-5 h-5 text-slate-700 dark:text-slate-300" />
+                        </button>
+                        <span className="text-lg font-semibold text-slate-900 dark:text-slate-100 min-w-[80px] text-center">
+                            {selectedYear}
+                        </span>
+                        <button
+                            onClick={() => setSelectedYear(selectedYear + 1)}
+                            disabled={selectedYear >= currentDate.getFullYear()}
+                            className="p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            <ChevronRight className="w-5 h-5 text-slate-700 dark:text-slate-300" />
+                        </button>
+                    </div> */}
+                </div>
+                <div className="flex flex-col items-center gap-6">
+                    <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-700 rounded-lg p-1">
+                        <button
+                            onClick={() => setSelectedYear(selectedYear - 1)}
+                            className="p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors"
+                        >
+                            <ChevronLeft className="w-5 h-5 text-slate-700 dark:text-slate-300" />
+                        </button>
+                        <span className="text-lg font-semibold text-slate-900 dark:text-slate-100 min-w-[80px] text-center">
+                            {selectedYear}
+                        </span>
+                        <button
+                            onClick={() => setSelectedYear(selectedYear + 1)}
+                            disabled={selectedYear >= currentDate.getFullYear()}
+                            className="p-2 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                        >
+                            <ChevronRight className="w-5 h-5 text-slate-700 dark:text-slate-300" />
+                        </button>
+                    </div>
+                    <div className="flex flex-row gap-2">
+                        <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 rounded-full bg-slate-900 dark:bg-slate-100"></div>
+                            <span className="text-sm text-slate-600 dark:text-slate-300">{t('spent')}</span>
+                        </div>
+                        <div className="flex items-center gap-2">
+                            <div className="w-3 h-3 rounded-full bg-slate-300 dark:bg-slate-600"></div>
+                            <span className="text-sm text-slate-600 dark:text-slate-300">{t('budget')}</span>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <div className="h-80">
                 <ResponsiveContainer width="100%" height="100%">
-                    <BarChart data={translatedData}>
+                    <BarChart data={displayData}>
                         <CartesianGrid
                             strokeDasharray="3 3"
                             stroke="#e2e8f0"

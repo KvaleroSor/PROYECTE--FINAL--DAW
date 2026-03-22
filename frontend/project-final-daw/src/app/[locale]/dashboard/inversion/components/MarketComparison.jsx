@@ -31,8 +31,8 @@ const MarketComparison = () => {
                         {payload[0].payload.name}
                     </p>
                     <p className={`text-sm font-medium ${payload[0].value >= 0
-                            ? "text-green-600 dark:text-green-400"
-                            : "text-red-600 dark:text-red-400"
+                        ? "text-green-600 dark:text-green-400"
+                        : "text-red-600 dark:text-red-400"
                         }`}>
                         {payload[0].value.toFixed(2)}% {t("profitabilityTooltip")}
                     </p>
@@ -43,20 +43,13 @@ const MarketComparison = () => {
     };
 
     return (
-        <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
-            <div className="flex items-center gap-2 mb-4">
-                <div className="w-10 h-10 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
-                    <TrendingUp className="w-5 h-5 text-white" />
-                </div>
-                <div>
-                    <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
-                        {t("marketComparison")}
-                    </h2>
-                    <p className="text-sm text-slate-500 dark:text-slate-400">
-                        {t("averageAnnualReturn")}
-                    </p>
-                </div>
-            </div>
+        <div className="bg-white dark:bg-slate-700 rounded-xl p-4 sm:p-6 shadow-lg hover:shadow-md transition-all duration-300">
+            <h2 className="text-3xl text-gray-900 dark:text-slate-100 mb-2">
+                {t("marketComparison")}
+            </h2>
+            <p className="text-gray-600 dark:text-slate-400 mb-4">
+                {t("averageAnnualReturn")}
+            </p>
 
             {isInversions.length === 0 ? (
                 <div className="text-center py-12 text-slate-500 dark:text-slate-400">

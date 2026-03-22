@@ -66,7 +66,7 @@ const InversionSummary = () => {
             {/* Tarjetas de resumen */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {/* Total Invertido */}
-                <div className="bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-300">
+                <div className="bg-white dark:bg-slate-700 rounded-xl p-4 sm:p-5 shadow-lg hover:shadow-md transition-all duration-300">
                     <div className="flex flex-col gap-2">
                         <div className="flex flex-row justify-between items-center">
                             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
@@ -82,7 +82,7 @@ const InversionSummary = () => {
                 </div>
 
                 {/* Rentabilidad Total */}
-                <div className="bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-300">
+                <div className="bg-white dark:bg-slate-700 rounded-xl p-4 sm:p-5 shadow-lg hover:shadow-md transition-all duration-300">
                     <div className="flex flex-col gap-2">
                         <div className="flex flex-row justify-between items-center">
                             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
@@ -98,7 +98,7 @@ const InversionSummary = () => {
                 </div>
 
                 {/* Valor Total */}
-                <div className="bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-300">
+                <div className="bg-white dark:bg-slate-700 rounded-xl p-4 sm:p-5 shadow-lg hover:shadow-md transition-all duration-300">
                     <div className="flex flex-col gap-2">
                         <div className="flex flex-row justify-between items-center">
                             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
@@ -114,7 +114,7 @@ const InversionSummary = () => {
                 </div>
 
                 {/* Rentabilidad Media */}
-                <div className="bg-white dark:bg-slate-800 rounded-xl p-5 shadow-sm border border-slate-200 dark:border-slate-700 hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600 transition-all duration-300">
+                <div className="bg-white dark:bg-slate-700 rounded-xl p-4 sm:p-5 shadow-lg hover:shadow-md transition-all duration-300">
                     <div className="flex flex-col gap-2">
                         <div className="flex flex-row justify-between items-center">
                             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
@@ -135,43 +135,28 @@ const InversionSummary = () => {
 
             {/* Gráficas de análisis */}
             {isInversions.length > 0 && (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                     {/* Distribución del Portfolio */}
-                    <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
-                        <div className="flex items-center gap-2 mb-4">
-                            <div className="w-10 h-10 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
-                                <PieChart className="w-5 h-5 text-white" />
-                            </div>
-                            <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
-                                {t("portfolioDistribution")}
-                            </h2>
-                        </div>
+                    <div className="bg-white dark:bg-slate-700 rounded-xl p-4 sm:p-6 shadow-lg hover:shadow-md transition-all duration-300">
+                        <h2 className="text-3xl text-gray-900 dark:text-slate-100 mb-4">
+                            {t("portfolioDistribution")}
+                        </h2>
                         <PortfolioDistributionChart />
                     </div>
 
                     {/* Comparación de Rentabilidad */}
-                    <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
-                        <div className="flex items-center gap-2 mb-4">
-                            <div className="w-10 h-10 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
-                                <BarChart3 className="w-5 h-5 text-white" />
-                            </div>
-                            <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
-                                {t("profitabilityComparison")}
-                            </h2>
-                        </div>
+                    <div className="bg-white dark:bg-slate-700 rounded-xl p-4 sm:p-6 shadow-lg hover:shadow-md transition-all duration-300">
+                        <h2 className="text-3xl text-gray-900 dark:text-slate-100 mb-4">
+                            {t("profitabilityComparison")}
+                        </h2>
                         <ProfitabilityComparisonChart />
                     </div>
 
                     {/* Evolución del Portfolio */}
-                    <div className="bg-white dark:bg-slate-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700 lg:col-span-2">
-                        <div className="flex items-center gap-2 mb-4">
-                            <div className="w-10 h-10 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
-                                <LineChart className="w-5 h-5 text-white" />
-                            </div>
-                            <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
-                                {t("portfolioEvolution")}
-                            </h2>
-                        </div>
+                    <div className="bg-white dark:bg-slate-700 rounded-xl p-4 sm:p-6 shadow-lg hover:shadow-md transition-all duration-300 lg:col-span-2">
+                        <h2 className="text-3xl text-gray-900 dark:text-slate-100 mb-4">
+                            {t("portfolioEvolution")}
+                        </h2>
                         <PortfolioEvolutionChart />
                     </div>
                 </div>
@@ -190,8 +175,8 @@ const InversionSummary = () => {
             )}
 
             {/* Lista de inversiones activas */}
-            <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
-                <h2 className="text-2xl font-semibold text-slate-900 dark:text-slate-100 mb-4">
+            <div className="bg-white dark:bg-slate-700 rounded-xl p-4 sm:p-6 shadow-lg hover:shadow-md transition-all duration-300">
+                <h2 className="text-3xl text-gray-900 dark:text-slate-100 mb-4">
                     {t("activeInvestments")} ({activeInversions.length})
                 </h2>
                 {activeInversions.length === 0 ? (

@@ -49,6 +49,7 @@ const FormInversion = () => {
         createInversion,
         updateInversionData,
         resetForm: resetContextForm,
+        fetchInvestmentAlphaVantage,
     } = useInversion();
 
     const { isInvestmentFromNomina } = useFinancial();
@@ -168,6 +169,23 @@ const FormInversion = () => {
         const available = baseCapital - totalInvested;
         setAvailableToInvest(available);
     }, [isInversions, isInvestmentFromNomina]);
+
+    useEffect(() => {
+        if (isFormInversionOpen) {
+            console.log("📊 ESTADO ALPHA VANTAGE AL ABRIR FORMULARIO:");
+            console.log("  - isAlphaVantageLoaded:", isAlphaVantageLoaded);
+            console.log("  - isAlphaVantageLoading:", isAlphaVantageLoading);
+            console.log("  - isAlphaVantageData.length:", isAlphaVantageData.length);
+            console.log("  - Primeros 3 símbolos:", isAlphaVantageData.slice(0, 3));
+
+            if (!isAlphaVantageLoaded && !isAlphaVantageLoading) {
+                console.log("🔄 Formulario abierto - Cargando datos de Alpha Vantage...");
+                fetchInvestmentAlphaVantage();
+            } else if (isAlphaVantageLoaded && isAlphaVantageData.length > 0) {
+                console.log("✅ Datos ya disponibles, no es necesario cargar de nuevo");
+            }
+        }
+    }, [isFormInversionOpen, isAlphaVantageLoaded, isAlphaVantageLoading, isAlphaVantageData, fetchInvestmentAlphaVantage]);
 
     const handleCloseForm = () => {
         resetContextForm();
@@ -301,13 +319,23 @@ const FormInversion = () => {
                     <label className="text-slate-700 dark:text-slate-300 flex items-center justify-between">
                         <span>{t("searchSymbol")}</span>
                         {isAlphaVantageLoading && (
-                            <span className="text-xs text-slate-500 dark:text-slate-400">
-                                {t("loadingData")}
+                            <span className="text-xs text-blue-600 dark:text-blue-400 flex items-center gap-1">
+                                <span className="animate-pulse">⏳</span> {t("loadingData")}
                             </span>
                         )}
-                        {isAlphaVantageLoaded && !isAlphaVantageLoading && (
+                        {isAlphaVantageLoaded && !isAlphaVantageLoading && isAlphaVantageData.length > 0 && (
                             <span className="text-xs text-green-600 dark:text-green-400">
                                 ✓ {isAlphaVantageData.length} {t("symbolsAvailable")}
+                            </span>
+                        )}
+                        {!isAlphaVantageLoading && !isAlphaVantageLoaded && (
+                            <span className="text-xs text-amber-600 dark:text-amber-400">
+                                ⚠️ Datos no cargados
+                            </span>
+                        )}
+                        {isAlphaVantageLoaded && isAlphaVantageData.length === 0 && (
+                            <span className="text-xs text-red-600 dark:text-red-400">
+                                ❌ 0 símbolos disponibles
                             </span>
                         )}
                     </label>
@@ -323,6 +351,13 @@ const FormInversion = () => {
                             <p className="text-sm text-green-800 dark:text-green-300">
                                 ✓ {t("selected")}: <span className="font-bold">{selectedStock.symbol}</span>
                                 {selectedStock.name && ` - ${selectedStock.name}`}
+                            </p>
+                        </div>
+                    )}
+                    {!isAlphaVantageLoading && isAlphaVantageData.length === 0 && (
+                        <div className="mt-2 p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg">
+                            <p className="text-xs text-amber-800 dark:text-amber-300">
+                                ℹ️ Los datos de símbolos se están cargando. Por favor, espera unos segundos o revisa la consola del navegador para más detalles.
                             </p>
                         </div>
                     )}

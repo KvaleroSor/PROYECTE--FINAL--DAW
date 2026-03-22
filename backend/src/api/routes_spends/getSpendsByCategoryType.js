@@ -1,6 +1,6 @@
 import { Router } from "express";
 import getSpendsByCategoryType from "../../functions/functions_spends/getSpendsByCategoryType.js";
-import auth from './../../middleware/auth.js';
+import auth from "./../../middleware/auth.js";
 
 const router = Router();
 
@@ -20,7 +20,7 @@ router.get("/type/:category_type", auth, async (req, res) => {
     } catch (err) {
         res.status(500).json({
             mensaje: `❌ ERROR - INTERNAL ERROR | SEVER`,
-            error: err.mensage,
+            error: err.message,
         });
     }
 });

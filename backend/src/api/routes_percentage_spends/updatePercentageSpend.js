@@ -1,6 +1,6 @@
 import { Router } from "express";
-import updateSpendPercentage from './../../functions/functions_percentage_spends/updatePercentageSpend.js';
-import auth from './../../middleware/auth.js';
+import updateSpendPercentage from "./../../functions/functions_percentage_spends/updatePercentageSpend.js";
+import auth from "./../../middleware/auth.js";
 
 const router = Router();
 
@@ -13,7 +13,8 @@ router.put("/:id", auth, async (req, res) => {
 
         !resultUpdate
             ? res.status(404).json({
-                  mensaje: "❌ ERROR - THE SPEND PERCENTAGE HAS NOT BEEN FOUND | SERVER",
+                  mensaje:
+                      "❌ ERROR - THE SPEND PERCENTAGE HAS NOT BEEN FOUND | SERVER",
               })
             : res.status(200).json({
                   mensaje: "✅ EXITO - THE SPEND PERCENTAGE HAS BEEN UPDATED",
@@ -23,7 +24,7 @@ router.put("/:id", auth, async (req, res) => {
     } catch (err) {
         res.status(500).json({
             mensaje: `❌ ERROR - INTERNAL ERROR | SERVER`,
-            error: err.mensage,
+            error: err.message,
         });
     }
 });

@@ -27,6 +27,10 @@ const inversion = new mongoose.Schema({
         required: true,
         default: Date.now,
     },
+    initial_price: {
+        type: Number,
+        required: false,
+    },
     target_profitability: {
         type: Number,
         required: false,

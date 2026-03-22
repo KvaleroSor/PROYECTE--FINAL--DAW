@@ -1,6 +1,6 @@
 import { Router } from "express";
-import updateInversion from './../../functions/functions_inversion/updateInversion.js';
-import auth from './../../middleware/auth.js';
+import updateInversion from "./../../functions/functions_inversion/updateInversion.js";
+import auth from "./../../middleware/auth.js";
 
 const router = Router();
 
@@ -13,7 +13,8 @@ router.put("/:id", auth, async (req, res) => {
 
         !resultUpdate
             ? res.status(404).json({
-                  mensaje: "❌ ERROR - THE INVERSION HAS NOT BEEN FOUND | SERVER",
+                  mensaje:
+                      "❌ ERROR - THE INVERSION HAS NOT BEEN FOUND | SERVER",
               })
             : res.status(200).json({
                   mensaje: "✅ EXITO - THE INVERSION HAS BEEN UPDATED",
@@ -23,7 +24,7 @@ router.put("/:id", auth, async (req, res) => {
     } catch (err) {
         res.status(500).json({
             mensaje: `❌ ERROR - INTERNAL ERROR | SERVER`,
-            error: err.mensage,
+            error: err.message,
         });
     }
 });

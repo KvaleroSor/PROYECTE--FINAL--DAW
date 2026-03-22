@@ -1,13 +1,13 @@
-import Inversion from './../../models/inversion.js';
+import Inversion from "./../../models/inversion.js";
 
 const updateInversion = async (id, data) => {
     try {
-        const ressultUpdate = await Inversion.findByIdAndUpdate(id, data, {
+        const resultUpdate = await Inversion.findByIdAndUpdate(id, data, {
             new: true,
             runValidators: true,
         });
 
-        return ressultUpdate;
+        return resultUpdate;
     } catch (err) {
         console.log("❌ ERROR - THE INVERSION HAS NOT BEEN UPDATED | BBDD");
         console.error(err);

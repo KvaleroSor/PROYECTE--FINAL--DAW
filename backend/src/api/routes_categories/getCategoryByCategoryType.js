@@ -1,6 +1,6 @@
 import { Router } from "express";
-import getCategoryByCategoryType from './../../functions/functions_categories/getCategoryByCategoryType.js';
-import auth from './../../middleware/auth.js';
+import getCategoryByCategoryType from "./../../functions/functions_categories/getCategoryByCategoryType.js";
+import auth from "./../../middleware/auth.js";
 
 const router = Router();
 
@@ -11,7 +11,8 @@ router.get("/category/:category_id", auth, async (req, res) => {
 
         !resultGetId
             ? res.status(404).json({
-                  mensaje: "❌ ERROR - THE CATEGORIES HAS NOT BEEN FOUND | SERVER",
+                  mensaje:
+                      "❌ ERROR - THE CATEGORIES HAS NOT BEEN FOUND | SERVER",
               })
             : res.status(200).json({
                   mensaje: "✅ - THE CATEGORIES HAS BEEN FOUND",
@@ -20,7 +21,7 @@ router.get("/category/:category_id", auth, async (req, res) => {
     } catch (err) {
         res.status(500).json({
             mensaje: `❌ ERROR - INTERNAL ERROR | SEVER`,
-            error: err.mensage,
+            error: err.message,
         });
     }
 });

@@ -104,7 +104,7 @@
         "exceedingLimit": "DESPESA EXCEDINT EL LÍMIT",
         "maxAmount": "Quantitat Màxima",
         "categoryNotFound": "Categoria no trobada",
-        "searchPlaceholder": "Cercar per nom o categoria..."
+        "searchPlaceholder": "Cercar per nom ..."
     },
     "categories": {
         "title": "Categoria de Despeses",

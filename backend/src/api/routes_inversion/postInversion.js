@@ -1,6 +1,6 @@
-import { Router } from 'express';
-import postInversion from './../../functions/functions_inversion/postInversion.js';
-import auth from './../../middleware/auth.js';
+import { Router } from "express";
+import postInversion from "./../../functions/functions_inversion/postInversion.js";
+import auth from "./../../middleware/auth.js";
 
 const router = Router();
 
@@ -10,8 +10,10 @@ router.post("/", auth, async (req, res) => {
         const reqInversion = { ...req.body, user_id };
         const { type, amount } = req.body;
 
-        if(!user_id || !type || !amount){
-            console.log("❌ ERROR - SOME ELEMENT OF THE NEW SPEND IS EMPTY | SERVER");
+        if (!user_id || !type || !amount) {
+            console.log(
+                "❌ ERROR - SOME ELEMENT OF THE NEW SPEND IS EMPTY | SERVER",
+            );
             res.status(204).send();
         }
 
@@ -26,7 +28,7 @@ router.post("/", auth, async (req, res) => {
         res.status(500).json({
             mensaje: `❌ ERROR - INTERNAL ERROR | SERVIDOR`,
 
-            error: err.mensage,
+            error: err.message,
         });
     }
 });

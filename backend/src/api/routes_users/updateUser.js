@@ -23,7 +23,7 @@ router.put("/:id", auth, async (req, res) => {
     } catch (err) {
         res.status(500).json({
             mensaje: `❌ ERROR - INTERNAL ERROR | SERVER`,
-            error: err.mensage,
+            error: err.message,
         });
     }
 });

@@ -185,6 +185,26 @@ export const SavingProvider = ({ children }) => {
         console.log("Data:", updateData);
 
         try {
+            if (updateData.percentage_allocation !== undefined) {
+                const currentGoal = savingGoals.find((g) => g._id === id);
+                if (!currentGoal) {
+                    throw new Error("Meta no encontrada");
+                }
+
+                const totalAllocatedExcludingCurrent = savingGoals
+                    .filter((goal) => goal._id !== id)
+                    .reduce((sum, goal) => sum + (goal.percentage_allocation || 0), 0);
+
+                const availablePercentage = 100 - totalAllocatedExcludingCurrent;
+
+                if (updateData.percentage_allocation > availablePercentage) {
+                    const errorMsg = `Solo tienes ${availablePercentage}% disponible para asignar`;
+                    console.error("❌", errorMsg);
+                    setError(errorMsg);
+                    throw new Error(errorMsg);
+                }
+            }
+
             const res = await updateSaving(id, updateData, session);
             console.log("✅ SAVING GOAL ACTUALIZADO:", res);
             await fetchSavings();

@@ -1,12 +1,12 @@
 import { Router } from "express";
 import getSpendById from "../../functions/functions_spends/getSpendById.js";
-import auth from './../../middleware/auth.js';
+import auth from "./../../middleware/auth.js";
 
 const router = Router();
 
 router.get("/:id", auth, async (req, res) => {
     try {
-        const id = req.params.id;        
+        const id = req.params.id;
         const resultGetId = await getSpendById(id);
 
         !resultGetId
@@ -20,7 +20,7 @@ router.get("/:id", auth, async (req, res) => {
     } catch (err) {
         res.status(500).json({
             mensaje: `❌ ERROR - INTERNAL ERROR | SEVER`,
-            error: err.mensage,
+            error: err.message,
         });
     }
 });

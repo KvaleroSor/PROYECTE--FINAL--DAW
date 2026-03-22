@@ -1,6 +1,6 @@
 import { Router } from "express";
-import updateSpend from './../../functions/functions_spends/updateSpend.js';
-import auth from './../../middleware/auth.js';
+import updateSpend from "./../../functions/functions_spends/updateSpend.js";
+import auth from "./../../middleware/auth.js";
 
 const router = Router();
 
@@ -23,7 +23,7 @@ router.put("/:id", auth, async (req, res) => {
     } catch (err) {
         res.status(500).json({
             mensaje: `❌ ERROR - INTERNAL ERROR | SERVER`,
-            error: err.mensage,
+            error: err.message,
         });
     }
 });

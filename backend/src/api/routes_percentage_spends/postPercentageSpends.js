@@ -13,24 +13,22 @@ router.post("/", auth, async (req, res) => {
 
         if (!user_id || !spend || !leisureSpend || !saving || !inversion) {
             console.log(
-                "❌ ERROR - SOME ELEMENT OF THE NEW SPEND PERCENTAGE IS EMPTY | SERVER"
+                "❌ ERROR - SOME ELEMENT OF THE NEW SPEND PERCENTAGE IS EMPTY | SERVER",
             );
             res.status(204).send();
         }
 
-        if ( TOTAL > 100 || TOTAL < 100) {
+        if (TOTAL > 100 || TOTAL < 100) {
             console.log(
-                `❌ ERROR - PERCENTAGE OF SPEND IS NOT EQUAL TO 100 | ${TOTAL} % | SERVER`
+                `❌ ERROR - PERCENTAGE OF SPEND IS NOT EQUAL TO 100 | ${TOTAL} % | SERVER`,
             );
             return res.status(400).json({
-                mensaje:
-                    `❌ ERROR - PERCENTAGE OF SPEND IS NOT EQUAL TO 100 | ${TOTAL} % | SERVER`
+                mensaje: `❌ ERROR - PERCENTAGE OF SPEND IS NOT EQUAL TO 100 | ${TOTAL} % | SERVER`,
             });
         }
 
-        const resultNewSpendPercentage = await postSpendPercentage(
-            reqSpendPercentage
-        );
+        const resultNewSpendPercentage =
+            await postSpendPercentage(reqSpendPercentage);
 
         res.status(201).json({
             mensaje: "✅ - THE SPEND PERCENTAGE HAS BEEN CREATED",
@@ -41,7 +39,7 @@ router.post("/", auth, async (req, res) => {
         res.status(500).json({
             mensaje: `❌ ERROR - INTERNAL ERROR | SERVIDOR`,
 
-            error: err.mensage,
+            error: err.message,
         });
     }
 });

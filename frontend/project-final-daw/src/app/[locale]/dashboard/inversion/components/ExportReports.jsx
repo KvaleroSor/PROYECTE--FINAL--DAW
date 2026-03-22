@@ -191,15 +191,10 @@ const ExportReports = () => {
     };
 
     return (
-        <div className="bg-white dark:bg-slate-800 rounded-xl p-6 shadow-sm border border-slate-200 dark:border-slate-700">
-            <div className="flex items-center gap-2 mb-4">
-                <div className="w-10 h-10 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
-                    <FileText className="w-5 h-5 text-white" />
-                </div>
-                <h2 className="text-xl font-semibold text-slate-900 dark:text-slate-100">
-                    {t("exportReports")}
-                </h2>
-            </div>
+        <div className="bg-white dark:bg-slate-700 rounded-xl p-4 sm:p-6 shadow-lg hover:shadow-md transition-all duration-300">
+            <h2 className="text-3xl text-gray-900 dark:text-slate-100 mb-4">
+                {t("exportReports")}
+            </h2>
 
             <div className="space-y-3">
                 <p className="text-sm text-slate-600 dark:text-slate-400 mb-4">

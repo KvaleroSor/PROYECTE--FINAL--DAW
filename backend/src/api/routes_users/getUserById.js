@@ -1,11 +1,11 @@
 import { Router } from "express";
-import getUserById from './../../functions/functions_users/getUserById.js';
+import getUserById from "./../../functions/functions_users/getUserById.js";
 
 const router = Router();
 
 router.get("/:id", async (req, res) => {
     try {
-        const id = req.params.id;        
+        const id = req.params.id;
         const resultGetId = await getUserById(id);
 
         !resultGetId
@@ -19,7 +19,7 @@ router.get("/:id", async (req, res) => {
     } catch (err) {
         res.status(500).json({
             mensaje: `❌ ERROR - INTERNAL ERROR | SERVER`,
-            error: err.mensage,
+            error: err.message,
         });
     }
 });

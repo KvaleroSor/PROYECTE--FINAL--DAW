@@ -1,6 +1,6 @@
 import { Router } from "express";
-import getInversion from './../../functions/functions_inversion/getInversion.js';
-import auth from './../../middleware/auth.js';
+import getInversion from "./../../functions/functions_inversion/getInversion.js";
+import auth from "./../../middleware/auth.js";
 
 const router = Router();
 
@@ -11,16 +11,17 @@ router.get("/", auth, async (req, res) => {
 
         !resultGet
             ? res.status(404).json({
-                  mensaje: "❌ ERROR - THE INVERSION HAVE NOT BEEN FOUNDED | SERVER",
+                  mensaje:
+                      "❌ ERROR - THE INVERSION HAVE NOT BEEN FOUNDED | SERVER",
               })
-            : res.status(201).json({
+            : res.status(200).json({
                   mensaje: "✅ - THE INVERSION HAVE BEEN FOUNDED",
-                  data: resultGet
+                  data: resultGet,
               });
     } catch (err) {
         res.status(500).json({
             mensaje: `❌ ERROR - INTERNAL ERROR | SERVER`,
-            error: err.mensage,
+            error: err.message,
         });
     }
 });

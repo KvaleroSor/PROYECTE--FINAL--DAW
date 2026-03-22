@@ -104,7 +104,7 @@
         "exceedingLimit": "EXPENSE EXCEEDING LIMIT",
         "maxAmount": "Maximum Amount",
         "categoryNotFound": "Category not found",
-        "searchPlaceholder": "Search by name or category..."
+        "searchPlaceholder": "Search by name ..."
     },
     "categories": {
         "title": "Expense Categories",
