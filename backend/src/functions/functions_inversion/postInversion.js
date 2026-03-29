@@ -12,6 +12,7 @@ const postInversion = async (newInversion) => {
             target_profitability,
             real_profitability,
             total,
+            initial_price,
         } = newInversion;
 
         const registerInversion = await Inversion.create({
@@ -24,6 +25,7 @@ const postInversion = async (newInversion) => {
             target_profitability: target_profitability,
             real_profitability: real_profitability,
             total: total,
+            initial_price: initial_price,
         });
 
         return registerInversion;
