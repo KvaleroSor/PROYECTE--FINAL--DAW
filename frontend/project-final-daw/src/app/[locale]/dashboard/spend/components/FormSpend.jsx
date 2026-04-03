@@ -84,7 +84,7 @@ const FormSpend = () => {
     const [isButtonPushed, setIsButtonPushed] = useState("create");
 
     const spendSchema = createSpendSchema(isMaxToSpend);
-    const { register, handleSubmit, control, formState: { errors }, reset } = useForm({
+    const { register, handleSubmit, control, formState: { errors }, reset, watch } = useForm({
         resolver: zodResolver(spendSchema),
         mode: "onSubmit",
         reValidateMode: "onChange",
@@ -96,6 +96,8 @@ const FormSpend = () => {
             date: new Date().toISOString().split('T')[0],
         },
     });
+
+    const selectedDate = watch("date");
 
     useEffect(() => {
         if (isSpend && isUpdatedPushed) {
@@ -130,16 +132,16 @@ const FormSpend = () => {
     }, [isCategoryId, isCategories]);
 
     useEffect(() => {
-        if (isCategoryType || isAmount) {
+        if (isCategoryType || isAmount || selectedDate) {
             handleCalculateMonthlyBudgetExceded();
             handleCalculateMonthlyBudgetImprevistosExceded();
         }
-    }, [isCategoryType, isAmount]);
+    }, [isCategoryType, isAmount, selectedDate]);
 
     const handleCalculateMonthlyBudgetExceded = () => {
-        const currentDate = new Date();
-        const currentMonth = currentDate.getMonth();
-        const currentYear = currentDate.getFullYear();
+        const formDate = selectedDate ? new Date(selectedDate) : new Date();
+        const targetMonth = formDate.getMonth();
+        const targetYear = formDate.getFullYear();
 
         const totalSpendsFixed = isSpends
             .filter((spend) => {
@@ -150,8 +152,8 @@ const FormSpend = () => {
                 return (
                     category &&
                     (category.category_type === "Gasto Fijo") &&
-                    spendDate.getMonth() === currentMonth &&
-                    spendDate.getFullYear() === currentYear
+                    spendDate.getMonth() === targetMonth &&
+                    spendDate.getFullYear() === targetYear
                 );
             })
             .reduce((acc, spend) => acc + spend.amount, 0);
@@ -165,8 +167,8 @@ const FormSpend = () => {
                 return (
                     category &&
                     (category.category_type === "Gasto Ocio") &&
-                    spendDate.getMonth() === currentMonth &&
-                    spendDate.getFullYear() === currentYear
+                    spendDate.getMonth() === targetMonth &&
+                    spendDate.getFullYear() === targetYear
                 );
             })
             .reduce((acc, spend) => acc + spend.amount, 0);
@@ -180,8 +182,8 @@ const FormSpend = () => {
                 return (
                     category &&
                     (category.category_type === "Imprevistos") &&
-                    spendDate.getMonth() === currentMonth &&
-                    spendDate.getFullYear() === currentYear
+                    spendDate.getMonth() === targetMonth &&
+                    spendDate.getFullYear() === targetYear
                 );
             })
             .reduce((acc, spend) => acc + spend.amount, 0);
