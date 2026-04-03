@@ -440,6 +440,12 @@ export const InversionProvider = ({ children }) => {
         let currentIndex = 0;
         let isUpdating = false;
 
+        /**
+         *************************************************************
+         *     REVISAR UPDATE AUTO PARA DEVOLVER VALORES ACCIONES    *
+         *************************************************************
+         */
+
         const updateNextInvestment = async () => {
             if (isUpdating) {
                 console.log("⏳ Actualización en progreso, esperando...");
@@ -474,18 +480,24 @@ export const InversionProvider = ({ children }) => {
             isUpdating = false;
         };
 
+        /**
+         *************************************************************
+         *     REVISAR UPDATE AUTO PARA DEVOLVER VALORES ACCIONES    *
+         *************************************************************
+         */
+
         // Actualizar la primera inversión después de 5 segundos (dar tiempo a que cargue la UI)
-        const initialTimeout = setTimeout(() => {
-            updateNextInvestment();
-        }, 5000);
+        // const initialTimeout = setTimeout(() => {
+        //     updateNextInvestment();
+        // }, 5000);
 
         // Actualizar cada 15 segundos (respetando límite de 5 llamadas/minuto de Alpha Vantage)
-        const interval = setInterval(updateNextInvestment, 15000);
+        // const interval = setInterval(updateNextInvestment, 15000);
 
-        return () => {
-            clearTimeout(initialTimeout);
-            clearInterval(interval);
-        };
+        // return () => {
+        //     clearTimeout(initialTimeout);
+        //     clearInterval(interval);
+        // };
     }, [isInversions]);
 
     return (

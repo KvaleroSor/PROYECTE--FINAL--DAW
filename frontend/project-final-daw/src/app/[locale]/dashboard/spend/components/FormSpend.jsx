@@ -137,14 +137,22 @@ const FormSpend = () => {
     }, [isCategoryType, isAmount]);
 
     const handleCalculateMonthlyBudgetExceded = () => {
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth();
+        const currentYear = currentDate.getFullYear();
+
         const totalSpendsFixed = isSpends
             .filter((spend) => {
                 const category = isCategories.find(
                     (cat) => cat._id === spend.category_id
                 );
+                const spendDate = new Date(spend.date);
                 return (
                     category &&
-                    (category.category_type === "Gasto Fijo"));
+                    (category.category_type === "Gasto Fijo") &&
+                    spendDate.getMonth() === currentMonth &&
+                    spendDate.getFullYear() === currentYear
+                );
             })
             .reduce((acc, spend) => acc + spend.amount, 0);
 
@@ -153,9 +161,13 @@ const FormSpend = () => {
                 const category = isCategories.find(
                     (cat) => cat._id === spend.category_id
                 );
+                const spendDate = new Date(spend.date);
                 return (
                     category &&
-                    (category.category_type === "Gasto Ocio"));
+                    (category.category_type === "Gasto Ocio") &&
+                    spendDate.getMonth() === currentMonth &&
+                    spendDate.getFullYear() === currentYear
+                );
             })
             .reduce((acc, spend) => acc + spend.amount, 0);
 
@@ -164,9 +176,13 @@ const FormSpend = () => {
                 const category = isCategories.find(
                     (cat) => cat._id === spend.category_id
                 );
+                const spendDate = new Date(spend.date);
                 return (
                     category &&
-                    (category.category_type === "Imprevistos"));
+                    (category.category_type === "Imprevistos") &&
+                    spendDate.getMonth() === currentMonth &&
+                    spendDate.getFullYear() === currentYear
+                );
             })
             .reduce((acc, spend) => acc + spend.amount, 0);
 
