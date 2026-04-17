@@ -49,8 +49,10 @@ const GridSpends = () => {
                         </div>
                     ) : (
                         <>
-                            <div className="text-sm text-slate-600 dark:text-slate-400 mb-2">
-                                <span className="font-semibold">{isSpendsOfMonth.length}</span> {t("expensesRegistered")}
+                            <div className="flex flex-row justify-between">
+                                <div className="text-sm text-slate-600 dark:text-slate-400 mb-2">
+                                    <span className="font-semibold">{isSpendsOfMonth.length}</span> {t("expensesRegistered")}
+                                </div>
                             </div>
                             <div className="max-h-[610px] overflow-y-auto flex flex-col gap-3 no-scrollbar px-1 py-1">
                                 {isSpendsOfMonth.map((spend) => (

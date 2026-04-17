@@ -20,6 +20,7 @@ export const SpendProvider = ({ children }) => {
     const [error, setError] = useState(null);
     const [isFormSpendOpen, setIsFormSpendOpen] = useState(false);
     const [isUpdatedPushed, setIsUpdatedPushed] = useState(false);
+    const [isTotalSpendByMonth, setIsTotalSpendByMonth] = useState(0);
 
     // Estados del formulario
     const [isCategoryId, setIsCategoryId] = useState("");
@@ -123,6 +124,7 @@ export const SpendProvider = ({ children }) => {
                 error,
                 isFormSpendOpen,
                 isUpdatedPushed,
+                isTotalSpendByMonth,
 
                 // Estados del formulario
                 isCategoryId,
@@ -145,6 +147,7 @@ export const SpendProvider = ({ children }) => {
                 setIsCategoryType,
                 setIsSpendDate,
                 setIsSpend,
+                setIsTotalSpendByMonth,
 
                 // Funciones CRUD
                 fetchSpends,
