@@ -84,28 +84,31 @@ const SavingGoalCard = ({ goal }) => {
             {/* Header */}
             <div className="flex justify-between items-start mb-3">
                 <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                        <Target className="w-5 h-5 text-slate-700 dark:text-slate-300" />
-                        <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">{goal.goal_name}</h3>
+                    <div className="flex justify-between items-center gap-2 mb-2">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                            <Target className="w-5 h-5 text-white" />
+                        </div>
+                        {/* Tags: Estado y Prioridad */}
+                        <div className="flex gap-2 mb-4">
+                            <span
+                                className={`px-3 py-1 rounded-full text-xs font-medium  ${statusColors[goal.status]
+                                    }`}
+                            >
+                                {statusLabels[goal.status]}
+                            </span>
+                            <span className="px-3 py-1 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-600 text-slate-700 dark:text-slate-300">
+                                {t("priority")} {priorityLabels[goal.priority]}
+                            </span>
+                        </div>
                     </div>
+                    <h3 className="text-lg font-bold text-slate-900 dark:text-slate-100">{goal.goal_name}</h3>
                     {goal.description && (
                         <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">{goal.description}</p>
                     )}
                 </div>
             </div>
 
-            {/* Tags: Estado y Prioridad */}
-            <div className="flex gap-2 mb-4">
-                <span
-                    className={`px-3 py-1 rounded-full text-xs font-medium  ${statusColors[goal.status]
-                        }`}
-                >
-                    {statusLabels[goal.status]}
-                </span>
-                <span className="px-3 py-1 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-600 text-slate-700 dark:text-slate-300">
-                    {t("priority")} {priorityLabels[goal.priority]}
-                </span>
-            </div>
+
 
             {/* Montos */}
             <div className="mb-4">

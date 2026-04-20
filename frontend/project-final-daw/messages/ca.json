@@ -23,7 +23,8 @@
         "warning": "Advertència",
         "of": "de",
         "create": "Crear",
-        "update": "Actualitzar"
+        "update": "Actualitzar",
+        "date": "Data"
     },
     "auth": {
         "login": "Iniciar sessió",
@@ -104,7 +105,26 @@
         "exceedingLimit": "DESPESA EXCEDINT EL LÍMIT",
         "maxAmount": "Quantitat Màxima",
         "categoryNotFound": "Categoria no trobada",
-        "searchPlaceholder": "Cercar per nom ..."
+        "searchPlaceholder": "Cercar per nom ...",
+        "pageTitle": "Despeses",
+        "pageSubtitle": "Gestiona les teues despeses i aconsegueix les teues metes",
+        "monthlyAverage": "Mitjana Mensual",
+        "yearTotal": "Total de l'Any",
+        "totalTransactions": "Transaccions totals",
+        "searchTitle": "Cercador Despeses",
+        "byExpense": "Per Despesa",
+        "byCategory": "Per Categoria",
+        "byDay": "Per dia",
+        "byMonth": "Per mes",
+        "byYear": "Per any",
+        "results": "Resultats",
+        "expenseFound": "despesa trobada",
+        "expensesFound": "despeses trobades",
+        "searching": "Cercant:",
+        "totalInSystem": "Total de despeses en el sistema:",
+        "totalAccumulated": "Total Acumulat",
+        "noExpensesFound": "No es van trobar despeses",
+        "tryChangingFilters": "Intenta canviar els filtres o la cerca"
     },
     "categories": {
         "title": "Categoria de Despeses",
@@ -207,12 +227,13 @@
         }
     },
     "savingsPage": {
-        "totalProgress": "Progrés Total",
+        "totalProgress": "PROGRÉS TOTAL",
         "of": "de",
-        "activeGoals": "Metes Actives",
+        "activeGoals": "METES ACTIVES",
+        "activedGoals": "Metas activadas",
         "completed": "completades",
         "completedGoals": "Metes Completades",
-        "availableBudget": "Pressupost Disponible",
+        "availableBudget": "PRESSUPOST DISPONIBLE",
         "month": "mes",
         "createNewGoal": "Crear Nova Meta d'Estalvi",
         "budgetFullWarning": "Has assignat el 100% del teu pressupost d'estalvi. Per crear noves metes, edita o elimina alguna existent.",

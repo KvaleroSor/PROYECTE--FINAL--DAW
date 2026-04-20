@@ -51,9 +51,11 @@ const GridSavingGoals = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
                     {/* Tarjeta de resumen total */}
                     <div className="bg-white dark:bg-slate-700 rounded-xl p-4 sm:p-5 shadow-lg hover:shadow-md transition-all duration-300">
-                        <div className="flex items-center gap-2 mb-2">
-                            <Target className="w-5 h-5 text-slate-700 dark:text-slate-300" />
-                            <p className="text-sm font-medium text-slate-600 dark:text-slate-400">{t("totalProgress")}</p>
+                        <div className="flex justify-between items-center gap-2 mb-2">
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <Target className="w-5 h-5 text-white" />
+                            </div>
+                            <h1 className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">{t("totalProgress")}</h1>
                         </div>
                         <p className="text-3xl text-slate-900 dark:text-slate-100 mb-1">{overallProgress.toFixed(1)}%</p>
                         <p className="text-sm text-slate-500 dark:text-slate-400">
@@ -63,8 +65,10 @@ const GridSavingGoals = () => {
 
                     {/* Tarjeta de metas activas */}
                     <div className="bg-white dark:bg-slate-700 rounded-xl p-4 sm:p-5 shadow-lg hover:shadow-md transition-all duration-300">
-                        <div className="flex items-center gap-2 mb-2">
-                            <TrendingUp className="w-5 h-5 text-slate-700 dark:text-slate-300" />
+                        <div className="flex justify-between items-center gap-2 mb-2">
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <TrendingUp className="w-5 h-5 text-white" />
+                            </div>
                             <p className="text-sm font-medium text-slate-600 dark:text-slate-400">{t("activeGoals")}</p>
                         </div>
                         <p className="text-3xl text-slate-900 dark:text-slate-100 mb-1">{activeGoals.length}</p>
@@ -75,8 +79,10 @@ const GridSavingGoals = () => {
 
                     {/* Tarjeta de presupuesto disponible */}
                     <div className="bg-white dark:bg-slate-700 rounded-xl p-4 sm:p-5 shadow-lg hover:shadow-md transition-all duration-300">
-                        <div className="flex items-center gap-2 mb-2">
-                            <Wallet className="w-5 h-5 text-slate-700 dark:text-slate-300" />
+                        <div className="flex justify-between items-center gap-2 mb-2">
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center flex-shrink-0">
+                                <Wallet className="w-5 h-5 text-white" />
+                            </div>
                             <p className="text-sm font-medium text-slate-600 dark:text-slate-400">{t("availableBudget")}</p>
                         </div>
                         <p className="text-3xl text-slate-900 dark:text-slate-100 mb-1">{unallocatedPercentage.toFixed(1)}%</p>
@@ -93,7 +99,7 @@ const GridSavingGoals = () => {
                 <div className="mb-6 mt-6 flex flex-row justify-between">
                     <div>
                         <h2 className="text-3xl text-gray-900 dark:text-slate-100 mb-2">
-                            {t("activeGoals")} ({activeGoals.length})
+                            {t("activedGoals")} ({activeGoals.length})
                         </h2>
                     </div>
                     <button

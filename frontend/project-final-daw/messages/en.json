@@ -23,7 +23,8 @@
         "warning": "Warning",
         "of": "of",
         "create": "Create",
-        "update": "Update"
+        "update": "Update",
+        "date": "Date"
     },
     "auth": {
         "login": "Log in",
@@ -104,7 +105,26 @@
         "exceedingLimit": "EXPENSE EXCEEDING LIMIT",
         "maxAmount": "Maximum Amount",
         "categoryNotFound": "Category not found",
-        "searchPlaceholder": "Search by name ..."
+        "searchPlaceholder": "Search by name ...",
+        "pageTitle": "Expenses",
+        "pageSubtitle": "Manage your expenses and reach your goals",
+        "monthlyAverage": "Monthly Average",
+        "yearTotal": "Year Total",
+        "totalTransactions": "Total transactions",
+        "searchTitle": "Expense Search",
+        "byExpense": "By Expense",
+        "byCategory": "By Category",
+        "byDay": "By day",
+        "byMonth": "By month",
+        "byYear": "By year",
+        "results": "Results",
+        "expenseFound": "expense found",
+        "expensesFound": "expenses found",
+        "searching": "Searching:",
+        "totalInSystem": "Total expenses in the system:",
+        "totalAccumulated": "Total Accumulated",
+        "noExpensesFound": "No expenses found",
+        "tryChangingFilters": "Try changing the filters or search"
     },
     "categories": {
         "title": "Expense Categories",
@@ -207,12 +227,13 @@
         }
     },
     "savingsPage": {
-        "totalProgress": "Total Progress",
+        "totalProgress": "TOTAL PROGRESS",
         "of": "of",
-        "activeGoals": "Active Goals",
+        "activeGoals": "ACTIVE GOALS",
+        "activedGoals": "Active Goals",
         "completed": "completed",
         "completedGoals": "Completed Goals",
-        "availableBudget": "Available Budget",
+        "availableBudget": "AVAILABLE BUDGET",
         "month": "month",
         "createNewGoal": "Create New Savings Goal",
         "budgetFullWarning": "You have allocated 100% of your savings budget. To create new goals, edit or delete an existing one.",

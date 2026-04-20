@@ -249,9 +249,9 @@ const GridSpendsMainPage = () => {
             {/* Header */}
             <div className="bg-slate-50 dark:bg-slate-800 p-4 rounded-xl shadow-lg hover:shadow-md transition-all duration-300">
                 <div className="mb-8">
-                    <h1 className="text-3xl text-gray-900 dark:text-slate-100 mb-2">Gastos</h1>
+                    <h1 className="text-3xl text-gray-900 dark:text-slate-100 mb-2">{t("pageTitle")}</h1>
                     <p className="text-gray-600 dark:text-slate-400">
-                        Gestiona tus gastos y alcanza tus metas
+                        {t("pageSubtitle")}
                     </p>
                 </div>
                 <div className="w-full rounded-xl">
@@ -264,7 +264,7 @@ const GridSpendsMainPage = () => {
                                         <Wallet className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                                     </div>
                                 </div>
-                                <h1 className="text-xs sm:text-lg text-slate-500 dark:text-slate-400">Media Mensual</h1>
+                                <h1 className="text-xs sm:text-lg text-slate-500 dark:text-slate-400">{t("monthlyAverage")}</h1>
                             </div>
                             <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1">
                                 €{Number(statistics.monthlyAverage).toFixed(2)}
@@ -279,7 +279,7 @@ const GridSpendsMainPage = () => {
                                         <HandCoins className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                                     </div>
                                 </div>
-                                <h1 className="text-xs sm:text-lg text-slate-500 dark:text-slate-400">Total del Año</h1>
+                                <h1 className="text-xs sm:text-lg text-slate-500 dark:text-slate-400">{t("yearTotal")}</h1>
                             </div>
                             <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1">
                                 €{Number(statistics.yearlyTotal).toFixed(2)}
@@ -294,7 +294,7 @@ const GridSpendsMainPage = () => {
                                         <ReceiptText className="w-5 h-5 sm:w-6 sm:h-6 text-white" />
                                     </div>
                                 </div>
-                                <h1 className="text-xs sm:text-lg text-slate-500 dark:text-slate-400">Transacciones totales</h1>
+                                <h1 className="text-xs sm:text-lg text-slate-500 dark:text-slate-400">{t("totalTransactions")}</h1>
                             </div>
                             <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1">
                                 {statistics.totalTransactions}
@@ -319,7 +319,7 @@ const GridSpendsMainPage = () => {
 
                     <div className="w-full h-fit] rounded-xl flex justify-center items-center">
                         <div className="w-full flex flex-col gap-3 p-2">
-                            <h1 className="text-3xl text-gray-900 dark:text-slate-100 mb-2">Buscador Gastos</h1>
+                            <h1 className="text-3xl text-gray-900 dark:text-slate-100 mb-2">{t("searchTitle")}</h1>
                             <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2 rounded-xl bg-slate-50 dark:bg-slate-700 py-2">
                                 <button
                                     onClick={() => setIsSearchOptionSpendCategorySelected("spend")}
@@ -328,7 +328,7 @@ const GridSpendsMainPage = () => {
                                         : "bg-white dark:bg-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-500"
                                         }`}
                                 >
-                                    Por Gasto
+                                    {t("byExpense")}
                                 </button>
                                 <button
                                     onClick={() => setIsSearchOptionSpendCategorySelected("category")}
@@ -337,7 +337,7 @@ const GridSpendsMainPage = () => {
                                         : "bg-white dark:bg-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-500"
                                         }`}
                                 >
-                                    Por Categoría
+                                    {t("byCategory")}
                                 </button>
                             </div>
                             <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-2 rounded-xl bg-slate-50 dark:bg-slate-700 py-2">
@@ -348,7 +348,7 @@ const GridSpendsMainPage = () => {
                                         : "bg-white dark:bg-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-500"
                                         }`}
                                 >
-                                    Por día
+                                    {t("byDay")}
                                 </button>
                                 <button
                                     onClick={() => setIsSearchOptionSelected("month")}
@@ -357,7 +357,7 @@ const GridSpendsMainPage = () => {
                                         : "bg-white dark:bg-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-500"
                                         }`}
                                 >
-                                    Por mes
+                                    {t("byMonth")}
                                 </button>
                                 <button
                                     onClick={() => setIsSearchOptionSelected("year")}
@@ -366,7 +366,7 @@ const GridSpendsMainPage = () => {
                                         : "bg-white dark:bg-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-500"
                                         }`}
                                 >
-                                    Por año
+                                    {t("byYear")}
                                 </button>
                             </div>
                             <div className="w-full flex flex-col sm:flex-row gap-2">
@@ -414,26 +414,26 @@ const GridSpendsMainPage = () => {
                 <div className="w-full bg-white dark:bg-slate-700 rounded-xl p-4">
                     <div className="flex flex-row justify-between">
                         <div className="mb-4">
-                            <h2 className="text-3xl text-gray-900 dark:text-slate-100 mb-2">Resultados</h2>
+                            <h2 className="text-3xl text-gray-900 dark:text-slate-100 mb-2">{t("results")}</h2>
                             <p className="text-gray-600 dark:text-slate-400">
-                                {filteredSpends.length} {filteredSpends.length === 1 ? 'gasto encontrado' : 'gastos encontrados'}
+                                {filteredSpends.length} {filteredSpends.length === 1 ? t("expenseFound") : t("expensesFound")}
                                 {isSearchOptionSelected === "day" && ` el ${selectedDate.toLocaleDateString('es-ES')}`}
                                 {isSearchOptionSelected === "month" && ` en ${selectedDate.toLocaleDateString('es-ES', { month: 'long', year: 'numeric' })}`}
                                 {isSearchOptionSelected === "year" && ` en ${selectedDate.getFullYear()}`}
                             </p>
                             {searchQuery && (
                                 <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
-                                    Buscando: "{searchQuery}"
+                                    {t("searching")} "{searchQuery}"
                                 </p>
                             )}
                             <p className="text-xs text-slate-400 dark:text-slate-500 mt-2">
-                                Total de gastos en el sistema: {isSpends?.length || 0}
+                                {t("totalInSystem")} {isSpends?.length || 0}
                             </p>
                         </div>
 
                         {(isTotalSpendByMonth > 0) && (
                             <div className="flex flex-col justify-center items-center gap-2 bg-slate-100 rounded-xl p-4 mb-2 shadow-lg hover:shadow-md dark:shadow-lg dark:hover:shadow-md dark:shadow-slate-900 dark:bg-slate-600 transition-all duration-300 px-10">
-                                <h3 className="text-lg dark:text-slate-100">Total Acumulado</h3>
+                                <h3 className="text-lg dark:text-slate-100">{t("totalAccumulated")}</h3>
                                 <span className="text-3xl text-slate-900 dark:text-slate-100">{isTotalSpendByMonth.toFixed(2)} €</span>
                             </div>
                         )}
@@ -443,10 +443,10 @@ const GridSpendsMainPage = () => {
                         <div className="text-center py-12">
                             <Search className="w-16 h-16 text-slate-300 dark:text-slate-600 mx-auto mb-4" />
                             <p className="text-slate-500 dark:text-slate-400 text-lg">
-                                No se encontraron gastos
+                                {t("noExpensesFound")}
                             </p>
                             <p className="text-slate-400 dark:text-slate-500 text-sm mt-2">
-                                Intenta cambiar los filtros o la búsqueda
+                                {t("tryChangingFilters")}
                             </p>
                         </div>
                     ) : (

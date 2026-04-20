@@ -23,7 +23,8 @@
         "warning": "Advertencia",
         "of": "de",
         "create": "Crear",
-        "update": "Actualizar"
+        "update": "Actualizar",
+        "date": "Fecha"
     },
     "auth": {
         "login": "Iniciar sesión",
@@ -104,7 +105,26 @@
         "exceedingLimit": "GASTO EXCEDIENDO EL LÍMITE",
         "maxAmount": "Cantidad Máxima",
         "categoryNotFound": "Categoría no encontrada",
-        "searchPlaceholder": "Buscar por nombre ..."
+        "searchPlaceholder": "Buscar por nombre ...",
+        "pageTitle": "Gastos",
+        "pageSubtitle": "Gestiona tus gastos y alcanza tus metas",
+        "monthlyAverage": "Media Mensual",
+        "yearTotal": "Total del Año",
+        "totalTransactions": "Transacciones totales",
+        "searchTitle": "Buscador Gastos",
+        "byExpense": "Por Gasto",
+        "byCategory": "Por Categoría",
+        "byDay": "Por día",
+        "byMonth": "Por mes",
+        "byYear": "Por año",
+        "results": "Resultados",
+        "expenseFound": "gasto encontrado",
+        "expensesFound": "gastos encontrados",
+        "searching": "Buscando:",
+        "totalInSystem": "Total de gastos en el sistema:",
+        "totalAccumulated": "Total Acumulado",
+        "noExpensesFound": "No se encontraron gastos",
+        "tryChangingFilters": "Intenta cambiar los filtros o la búsqueda"
     },
     "categories": {
         "title": "Categoría de Gastos",
@@ -207,12 +227,13 @@
         }
     },
     "savingsPage": {
-        "totalProgress": "Progreso Total",
+        "totalProgress": "PROGRESO TOTAL",
         "of": "de",
-        "activeGoals": "Metas Activas",
+        "activeGoals": "METAS ACTIVAS",
+        "activedGoals": "Metas activadas",
         "completed": "completadas",
         "completedGoals": "Metas Completadas",
-        "availableBudget": "Presupuesto Disponible",
+        "availableBudget": "PRESUPUESTO DISPONIBLE",
         "month": "mes",
         "createNewGoal": "Crear Nueva Meta de Ahorro",
         "budgetFullWarning": "Has asignado el 100% de tu presupuesto de ahorro. Para crear nuevas metas, edita o elimina alguna existente.",

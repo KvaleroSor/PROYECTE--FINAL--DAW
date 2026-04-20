@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useRef } from "react";
 import { useSession } from "next-auth/react";
 import { useFinancial } from "./FinancialContext.js";
 import getInversions from "@/services/inversion/getInversions.js";
@@ -26,6 +26,13 @@ export const InversionProvider = ({ children }) => {
     const [isAlphaVantageData, setIsAlphaVantageData] = useState([]);
     const [isAlphaVantageLoading, setIsAlphaVantageLoading] = useState(false);
     const [isAlphaVantageLoaded, setIsAlphaVantageLoaded] = useState(false);
+
+    // Estado de actualización de rentabilidad
+    const [isUpdatingProfitability, setIsUpdatingProfitability] = useState(false);
+    const [lastUpdateTime, setLastUpdateTime] = useState(null);
+
+    // Ref para evitar loops infinitos
+    const inversionsRef = useRef([]);
 
     // Estados del formulario
     const [isType, setIsType] = useState("");
@@ -72,19 +79,22 @@ export const InversionProvider = ({ children }) => {
             };
             delete inversionData.date;
 
+            // ❌ DESACTIVADO - No obtener precio automáticamente para no consumir API
             // Si la inversión tiene un símbolo, obtener el precio inicial
-            if (inversionData.symbol) {
-                console.log(`📊 Obteniendo precio inicial para ${inversionData.symbol}...`);
-                const stockPrice = await fetchStockPrice(inversionData.symbol);
-                if (stockPrice && stockPrice.price) {
-                    inversionData.initial_price = stockPrice.price;
-                    console.log(`✅ Precio inicial guardado: $${stockPrice.price}`);
-                } else {
-                    console.warn(
-                        `⚠️ No se pudo obtener precio inicial para ${inversionData.symbol}`
-                    );
-                }
-            }
+            // if (inversionData.symbol) {
+            //     console.log(`📊 Obteniendo precio inicial para ${inversionData.symbol}...`);
+            //     const stockPrice = await fetchStockPrice(inversionData.symbol);
+            //     if (stockPrice && stockPrice.price) {
+            //         inversionData.initial_price = stockPrice.price;
+            //         console.log(`✅ Precio inicial guardado: $${stockPrice.price}`);
+            //     } else {
+            //         console.warn(
+            //             `⚠️ No se pudo obtener precio inicial para ${inversionData.symbol}`
+            //         );
+            //     }
+            // }
+
+            // El usuario deberá introducir el precio inicial manualmente
 
             const res = await postInversion(inversionData, session);
             console.log("✅ INVERSIÓN CREADA EXITOSAMENTE:", res);
@@ -262,17 +272,68 @@ export const InversionProvider = ({ children }) => {
     const fetchStockPrice = async (symbol) => {
         if (!symbol) return null;
 
+        // 🧪 MODO MOCK para desarrollo (no consume API)
+        // Cambia a false cuando quieras usar la API real
+        const USE_MOCK_DATA = false; // ❌ DESACTIVADO - No hacer peticiones automáticas
+
+        if (USE_MOCK_DATA) {
+            console.log(`🧪 MODO MOCK: Generando precio simulado para ${symbol}`);
+            // Simular delay de red
+            await new Promise((resolve) => setTimeout(resolve, 500));
+
+            // Generar precio aleatorio basado en el símbolo (para consistencia)
+            const basePrice = 100 + symbol.charCodeAt(0) * 2;
+            const variation = (Math.random() - 0.5) * 10;
+            const price = basePrice + variation;
+            const change = (Math.random() - 0.5) * 5;
+
+            return {
+                symbol: symbol,
+                price: parseFloat(price.toFixed(2)),
+                change: parseFloat(change.toFixed(2)),
+                changePercent: `${((change / price) * 100).toFixed(2)}%`,
+                volume: Math.floor(Math.random() * 10000000),
+                latestTradingDay: new Date().toISOString().split("T")[0],
+            };
+        }
+
         try {
             console.log(`🔄 Obteniendo precio de ${symbol}...`);
 
-            const response = await fetch(
-                `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${api_key_alpha}`
-            );
-            const data = await response.json();
+            if (!api_key_alpha) {
+                console.error("❌ API Key de Alpha Vantage no configurada");
+                return null;
+            }
 
-            if (data["Global Quote"]) {
+            const url = `https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=${symbol}&apikey=${api_key_alpha}`;
+            console.log(`📡 Llamando a Alpha Vantage para ${symbol}...`);
+
+            const response = await fetch(url);
+
+            if (!response.ok) {
+                console.error(`❌ HTTP Error: ${response.status} ${response.statusText}`);
+                return null;
+            }
+
+            const data = await response.json();
+            console.log(`📦 Respuesta de Alpha Vantage para ${symbol}:`, data);
+
+            // Verificar si hay error de límite de API
+            if (data["Note"]) {
+                console.warn(`⚠️ Límite de API alcanzado: ${data["Note"]}`);
+                return null;
+            }
+
+            // Verificar si hay error de API
+            if (data["Error Message"]) {
+                console.error(`❌ Error de API: ${data["Error Message"]}`);
+                return null;
+            }
+
+            // Verificar si hay datos válidos
+            if (data["Global Quote"] && Object.keys(data["Global Quote"]).length > 0) {
                 const quote = data["Global Quote"];
-                return {
+                const priceData = {
                     symbol: quote["01. symbol"],
                     price: parseFloat(quote["05. price"]),
                     change: parseFloat(quote["09. change"]),
@@ -280,12 +341,18 @@ export const InversionProvider = ({ children }) => {
                     volume: parseInt(quote["06. volume"]),
                     latestTradingDay: quote["07. latest trading day"],
                 };
+                console.log(`✅ Precio obtenido para ${symbol}: $${priceData.price}`);
+                return priceData;
             }
 
-            console.warn(`⚠️ No se encontró precio para ${symbol}`);
+            console.warn(
+                `⚠️ No se encontró precio para ${symbol}. Respuesta vacía o símbolo inválido.`
+            );
+            console.warn(`💡 Verifica que el símbolo sea correcto y esté listado en Alpha Vantage`);
             return null;
         } catch (error) {
             console.error(`❌ Error obteniendo precio de ${symbol}:`, error);
+            console.error(`💡 Detalles del error:`, error.message);
             return null;
         }
     };
@@ -295,9 +362,11 @@ export const InversionProvider = ({ children }) => {
         if (!symbol) return;
 
         try {
+            setIsUpdatingProfitability(true);
             const currentPriceData = await fetchStockPrice(symbol);
             if (!currentPriceData || !initialPrice) {
                 console.log(`⚠️ No se pudo obtener precio para ${symbol}`);
+                setIsUpdatingProfitability(false);
                 return;
             }
 
@@ -308,25 +377,30 @@ export const InversionProvider = ({ children }) => {
                 `📊 ${symbol}: Precio inicial: $${initialPrice}, Precio actual: $${currentPriceData.price}, Rentabilidad: ${realProfitability.toFixed(2)}%`
             );
 
-            // Actualizar en el backend
-            await updateInversionData(inversionId, {
+            // Actualizar en el backend de forma silenciosa (sin esperar respuesta)
+            updateInversionData(inversionId, {
                 real_profitability: realProfitability,
-            });
+            }).catch((err) => console.error("Error actualizando backend:", err));
 
             // CRÍTICO: Actualizar el estado local DIRECTAMENTE sin refetch (evita loop infinito)
-            setIsInversions((prevInversions) =>
-                prevInversions.map((inv) =>
+            setIsInversions((prevInversions) => {
+                const updated = prevInversions.map((inv) =>
                     inv._id === inversionId
                         ? { ...inv, real_profitability: realProfitability }
                         : inv
-                )
-            );
+                );
+                inversionsRef.current = updated;
+                return updated;
+            });
 
             console.log(
                 `✅ Rentabilidad actualizada para ${symbol}: ${realProfitability.toFixed(2)}%`
             );
+            setLastUpdateTime(new Date());
         } catch (error) {
             console.error("❌ Error actualizando rentabilidad:", error);
+        } finally {
+            setIsUpdatingProfitability(false);
         }
     };
 
@@ -417,53 +491,42 @@ export const InversionProvider = ({ children }) => {
         }
     }, [status, session, isAlphaVantageLoaded, isAlphaVantageLoading, isAlphaVantageData.length]);
 
+    // Sincronizar ref con estado
+    useEffect(() => {
+        inversionsRef.current = isInversions;
+    }, [isInversions]);
+
     // Actualizar rentabilidad de inversiones activas automáticamente
     useEffect(() => {
-        if (!isInversions || isInversions.length === 0) {
-            console.log("ℹ️ No hay inversiones para actualizar rentabilidad");
+        // Solo ejecutar si hay sesión autenticada
+        if (status !== "authenticated" || !session?.user?.user_id) {
             return;
         }
 
-        const activeInversions = isInversions.filter(
-            (inv) => inv.status !== "closed" && inv.symbol && inv.initial_price
-        );
-
-        if (activeInversions.length === 0) {
-            console.log("ℹ️ No hay inversiones activas con símbolo para actualizar");
-            return;
-        }
-
-        console.log(
-            `📊 Configurando actualización automática para ${activeInversions.length} inversiones activas`
-        );
+        console.log("� Iniciando sistema de actualización automática de inversiones");
 
         let currentIndex = 0;
         let isUpdating = false;
 
-        /**
-         *************************************************************
-         *     REVISAR UPDATE AUTO PARA DEVOLVER VALORES ACCIONES    *
-         *************************************************************
-         */
-
         const updateNextInvestment = async () => {
             if (isUpdating) {
-                console.log("⏳ Actualización en progreso, esperando...");
                 return;
             }
 
-            // Obtener inversiones activas actualizadas del estado actual
-            const currentActiveInversions = isInversions.filter(
+            // Usar ref para obtener inversiones actuales sin causar re-render
+            const currentActiveInversions = inversionsRef.current.filter(
                 (inv) => inv.status !== "closed" && inv.symbol && inv.initial_price
             );
 
-            if (currentActiveInversions.length === 0) return;
+            if (currentActiveInversions.length === 0) {
+                return;
+            }
 
             isUpdating = true;
             const inversion = currentActiveInversions[currentIndex];
 
             console.log(
-                `🔄 Actualizando rentabilidad ${currentIndex + 1}/${currentActiveInversions.length}: ${inversion.symbol}`
+                `🔄 Actualizando ${currentIndex + 1}/${currentActiveInversions.length}: ${inversion.symbol}`
             );
 
             try {
@@ -480,25 +543,19 @@ export const InversionProvider = ({ children }) => {
             isUpdating = false;
         };
 
-        /**
-         *************************************************************
-         *     REVISAR UPDATE AUTO PARA DEVOLVER VALORES ACCIONES    *
-         *************************************************************
-         */
-
-        // Actualizar la primera inversión después de 5 segundos (dar tiempo a que cargue la UI)
+        // Actualizar la primera inversión después de 10 segundos
         // const initialTimeout = setTimeout(() => {
         //     updateNextInvestment();
-        // }, 5000);
+        // }, 10000);
 
-        // Actualizar cada 15 segundos (respetando límite de 5 llamadas/minuto de Alpha Vantage)
-        // const interval = setInterval(updateNextInvestment, 15000);
+        // Actualizar cada 30 segundos (2 llamadas/minuto, muy conservador)
+        // const interval = setInterval(updateNextInvestment, 30000);
 
         // return () => {
         //     clearTimeout(initialTimeout);
         //     clearInterval(interval);
         // };
-    }, [isInversions]);
+    }, [status, session]); // Solo depende de la sesión, NO de isInversions
 
     return (
         <InversionContext.Provider
@@ -515,6 +572,10 @@ export const InversionProvider = ({ children }) => {
                 isAlphaVantageData,
                 isAlphaVantageLoading,
                 isAlphaVantageLoaded,
+
+                // Estados de actualización
+                isUpdatingProfitability,
+                lastUpdateTime,
 
                 // Estados del formulario
                 isType,

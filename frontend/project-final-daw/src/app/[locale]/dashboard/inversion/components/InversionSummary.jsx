@@ -15,7 +15,7 @@ import InvestmentHistory from "./InvestmentHistory";
 const InversionSummary = () => {
     const t = useTranslations("investments");
     const tCommon = useTranslations("common");
-    const { isInversions, isInversionFromNomina, isLoading, closeInversion } = useInversion();
+    const { isInversions, isInversionFromNomina, isLoading, closeInversion, isUpdatingProfitability, lastUpdateTime } = useInversion();
     const [closingInversion, setClosingInversion] = useState(null);
     const [isClosing, setIsClosing] = useState(false);
 
@@ -82,7 +82,13 @@ const InversionSummary = () => {
                 </div>
 
                 {/* Rentabilidad Total */}
-                <div className="bg-white dark:bg-slate-700 rounded-xl p-4 sm:p-5 shadow-lg hover:shadow-md transition-all duration-300">
+                <div className="bg-white dark:bg-slate-700 rounded-xl p-4 sm:p-5 shadow-lg hover:shadow-md transition-all duration-300 relative">
+                    {isUpdatingProfitability && (
+                        <div className="absolute top-2 right-2 flex items-center gap-1 bg-blue-100 dark:bg-blue-900 text-blue-600 dark:text-blue-300 text-xs px-2 py-1 rounded-full">
+                            <Activity className="w-3 h-3 animate-pulse" />
+                            <span>Actualizando...</span>
+                        </div>
+                    )}
                     <div className="flex flex-col gap-2">
                         <div className="flex flex-row justify-between items-center">
                             <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
@@ -93,7 +99,14 @@ const InversionSummary = () => {
                         <h1 className="text-4xl text-slate-900 dark:text-slate-100 mb-1">
                             € {Number(totalProfitability).toFixed(2)}
                         </h1>
-                        <p className="text-slate-500 dark:text-slate-400">{t("performance")}</p>
+                        <div className="flex items-center justify-between">
+                            <p className="text-slate-500 dark:text-slate-400">{t("performance")}</p>
+                            {lastUpdateTime && (
+                                <p className="text-xs text-slate-400 dark:text-slate-500">
+                                    {new Date(lastUpdateTime).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })}
+                                </p>
+                            )}
+                        </div>
                     </div>
                 </div>
 

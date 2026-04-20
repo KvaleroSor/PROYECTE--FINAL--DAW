@@ -27,10 +27,10 @@ const userSchema = new mongoose.Schema({
         required: true,
     },
     percentageSpend: {
-        namePercentageSpend: { 
+        namePercentageSpend: {
             type: String,
             required: true,
-            default: "Conservator"
+            default: "Conservator",
         },
         fixedExpenses: {
             type: Number,
@@ -62,14 +62,14 @@ const userSchema = new mongoose.Schema({
         default: "es",
     },
     role: {
-        type: String,     
-        enum: ["user", "admin"],   
-        default: "user"
+        type: String,
+        enum: ["user", "admin"],
+        default: "user",
     },
     ahorroGeneral: {
         type: Number,
         default: 0,
-    }
+    },
 });
 
 const User = mongoose.model("User", userSchema);
