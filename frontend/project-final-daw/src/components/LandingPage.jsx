@@ -91,7 +91,7 @@ const LandingPage = () => {
                 </div>
             </div>
             {/* //PART DRETA */}
-            <div className="relative w-full lg:w-1/2 bg-white dark:bg-slate-900 flex flex-col items-center justify-center p-6 sm:p-8 md:p-12 lg:p-16 transition-colors duration-300">
+            <div className="relative w-full lg:w-1/2 bg-white dark:bg-slate-900 flex flex-col sm:flex-row items-center justify-center p-6 sm:p-8 md:p-12 lg:p-16 transition-colors duration-300">
                 <div className="absolute group top-6 right-6 sm:top-6 sm:right-6 flex justify-center items-center hover:gap-2 hover:border-2 hover:border-slate-200 dark:hover:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-600 rounded-full p-2 cursor-pointer"
                     onClick={toggleTheme}
                 >
