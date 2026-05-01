@@ -70,12 +70,12 @@ export default function AnalisisMensual() {
         : translatedData;
 
     return (
-        <div className="w-full bg-white dark:bg-slate-800 rounded-2xl p-8 shadow-sm transition-colors duration-200">
-            <div className="flex items-center justify-between mb-6">
-                <div className="flex items-start justify-start gap-4">
+        <div className="w-full bg-white dark:bg-slate-800 rounded-2xl p-4 sm:p-6 md:p-8 shadow-sm transition-colors duration-200">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-4 sm:mb-6 gap-4">
+                <div className="flex items-start justify-start gap-4 w-full sm:w-auto">
                     <div className='flex items-center'>
                         <div className='flex flex-col items-start'>
-                            <h2 className="text-3xl text-gray-900 dark:text-slate-100 mb-2">
+                            <h2 className="text-2xl sm:text-3xl text-gray-900 dark:text-slate-100 mb-2">
                                 {t('title')} {selectedYear}
                             </h2>
                             <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
@@ -102,7 +102,7 @@ export default function AnalisisMensual() {
                         </button>
                     </div> */}
                 </div>
-                <div className="flex flex-col items-center gap-6">
+                <div className="flex flex-col items-center gap-4 sm:gap-6 w-full sm:w-auto">
                     <div className="flex items-center gap-2 bg-slate-100 dark:bg-slate-700 rounded-lg p-1">
                         <button
                             onClick={() => setSelectedYear(selectedYear - 1)}
@@ -121,7 +121,7 @@ export default function AnalisisMensual() {
                             <ChevronRight className="w-5 h-5 text-slate-700 dark:text-slate-300" />
                         </button>
                     </div>
-                    <div className="flex flex-row gap-2">
+                    <div className="flex flex-row gap-2 flex-wrap justify-center">
                         <div className="flex items-center gap-2">
                             <div className="w-3 h-3 rounded-full bg-slate-900 dark:bg-slate-100"></div>
                             <span className="text-sm text-slate-600 dark:text-slate-300">{t('spent')}</span>
@@ -134,7 +134,7 @@ export default function AnalisisMensual() {
                 </div>
             </div>
 
-            <div className="h-80">
+            <div className="h-64 sm:h-80">
                 <ResponsiveContainer width="100%" height="100%">
                     <BarChart data={displayData}>
                         <CartesianGrid

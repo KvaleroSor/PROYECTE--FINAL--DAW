@@ -297,15 +297,15 @@ const FormSpend = () => {
                 onSubmit={handleSubmit(handleSubmitSpend)}
             >
 
-                <div className="w-full h-full flex flex-col bg-slate-50 dark:bg-slate-700 rounded-xl p-4 shadow-lg hover:shadow-md transition-all duration-300">
+                <div className="w-full h-full flex flex-col bg-slate-50 dark:bg-slate-700 rounded-xl p-3 sm:p-4 shadow-lg hover:shadow-md transition-all duration-300">
                     <div className="w-full flex flex-row justify-between mb-3 gap-2">
                         <div className="flex flex-col justify-start">
-                            <h1 className="text-2xl text-slate-900 dark:text-slate-100">Crear Nuevo Gasto</h1>
-                            <p className="text-slate-600 dark:text-slate-400">Añade un nuevo gasto a la lista</p>
+                            <h1 className="text-xl sm:text-2xl text-slate-900 dark:text-slate-100">Crear Nuevo Gasto</h1>
+                            <p className="text-sm sm:text-base text-slate-600 dark:text-slate-400">Añade un nuevo gasto a la lista</p>
                         </div>
                         <div className="">
                             <X
-                                className="w-15 h-15 transition-all duration-300 hover:rotate-90 cursor-pointer text-slate-700 dark:text-slate-300"
+                                className="w-6 h-6 sm:w-8 sm:h-8 transition-all duration-300 hover:rotate-90 cursor-pointer text-slate-700 dark:text-slate-300"
                                 onClick={handleCloseForm}
                             />
                         </div>
@@ -313,17 +313,17 @@ const FormSpend = () => {
 
                     <div className="w-full flex flex-col justify-start gap-4">
                         <div className="w-full flex flex-row justify-start items-center gap-2">
-                            <p className="text-2xl text-slate-800 dark:text-slate-100">
+                            <p className="text-xl sm:text-2xl text-slate-800 dark:text-slate-100">
                                 {findNameCategory()}
                             </p>
                         </div>
                         <div className="w-full flex flex-col justify-start gap-2">
-                            <label htmlFor="description" className="text-slate-700 dark:text-slate-300">{t("description")}</label>
+                            <label htmlFor="description" className="text-sm sm:text-base text-slate-700 dark:text-slate-300">{t("description")}</label>
                             <input
                                 id="description"
                                 type="text"
                                 placeholder={t("descriptionPlaceholder")}
-                                className="h-12 w-full bg-gray-50 dark:bg-slate-500 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-900 placeholder-slate-400 dark:placeholder-slate-900"
+                                className="h-10 sm:h-12 w-full bg-gray-50 dark:bg-slate-500 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-900 placeholder-slate-400 dark:placeholder-slate-900 text-sm sm:text-base"
                                 {...register("description")}
                             />
                             {errors.description && (
@@ -331,13 +331,13 @@ const FormSpend = () => {
                             )}
                         </div>
                         <div className="w-full flex flex-col justify-start gap-2">
-                            <label htmlFor="amount" className="text-slate-700 dark:text-slate-300">{t("expenseAmount")}</label>
+                            <label htmlFor="amount" className="text-sm sm:text-base text-slate-700 dark:text-slate-300">{t("expenseAmount")}</label>
                             <input
                                 id="amount"
                                 type="number"
                                 step="any"
                                 placeholder="0.00 €"
-                                className="h-12 w-full bg-gray-50 dark:bg-slate-500 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-900 placeholder-slate-400 dark:placeholder-slate-900"
+                                className="h-10 sm:h-12 w-full bg-gray-50 dark:bg-slate-500 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-900 placeholder-slate-400 dark:placeholder-slate-900 text-sm sm:text-base"
                                 {...register("amount", { valueAsNumber: true })}
                             />
                             {errors.amount && (
@@ -346,11 +346,11 @@ const FormSpend = () => {
                         </div>
 
                         <div className="w-full flex flex-col justify-start gap-2">
-                            <label htmlFor="date" className="text-slate-700 dark:text-slate-300">{t("expenseDate")}</label>
+                            <label htmlFor="date" className="text-sm sm:text-base text-slate-700 dark:text-slate-300">{t("expenseDate")}</label>
                             <input
                                 id="date"
                                 type="date"
-                                className="h-12 w-full bg-gray-50 dark:bg-slate-500 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-900 placeholder-slate-400 dark:placeholder-slate-900"
+                                className="h-10 sm:h-12 w-full bg-gray-50 dark:bg-slate-500 border border-gray-200 dark:border-slate-600 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-slate-900 dark:focus:border-slate-400 transition-colors rounded-lg p-2 shadow-md text-slate-900 dark:text-slate-900 placeholder-slate-400 dark:placeholder-slate-900 text-sm sm:text-base"
                                 {...register("date")}
                             />
                             {errors.date && (
@@ -361,8 +361,8 @@ const FormSpend = () => {
                 </div>
 
 
-                <div className="w-full flex flex-col justify-start gap-4 bg-slate-50 dark:bg-slate-700 rounded-xl p-4 shadow-lg hover:shadow-md">
-                    <label className="text-slate-700 dark:text-slate-300">{t("paymentType")}</label>
+                <div className="w-full flex flex-col justify-start gap-4 bg-slate-50 dark:bg-slate-700 rounded-xl p-3 sm:p-4 shadow-lg hover:shadow-md">
+                    <label className="text-sm sm:text-base text-slate-700 dark:text-slate-300">{t("paymentType")}</label>
                     <Controller
                         name="payment_type"
                         control={control}
@@ -390,19 +390,19 @@ const FormSpend = () => {
                             <button
                                 id="button-create"
                                 type="submit"
-                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 dark:bg-slate-600 text-slate-100 hover:border-slate-100 dark:hover:border-slate-400"
+                                className="w-full p-3 sm:p-4 h-10 sm:h-11 md:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 dark:bg-slate-600 text-slate-100 hover:border-slate-100 dark:hover:border-slate-400 text-sm sm:text-base"
                                 onClick={() => setIsButtonPushed("create")}
                             >
-                                <Plus className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
+                                <Plus className="w-4 h-4 sm:w-5 sm:h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
                                 <span>Crear Gasto</span>
                             </button>
                             <button
                                 id="button-cancel"
                                 type="button"
-                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-100 dark:bg-slate-700 border-slate-200 dark:border-slate-600 hover:bg-slate-300 dark:hover:bg-slate-600 hover:border-slate-900 dark:hover:border-slate-400 text-slate-600 dark:text-slate-300"
+                                className="w-full p-3 sm:p-4 h-10 sm:h-11 md:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-100 dark:bg-slate-700 border-slate-200 dark:border-slate-600 hover:bg-slate-300 dark:hover:bg-slate-600 hover:border-slate-900 dark:hover:border-slate-400 text-slate-600 dark:text-slate-300 text-sm sm:text-base"
                                 onClick={handleCloseForm}
                             >
-                                <Ban className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
+                                <Ban className="w-4 h-4 sm:w-5 sm:h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
                                 <span>Cancelar</span>
                             </button>
                         </div>
@@ -411,19 +411,19 @@ const FormSpend = () => {
                             <button
                                 id="button-update"
                                 type="submit"
-                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 dark:bg-slate-600 text-slate-100 hover:border-slate-100 dark:hover:border-slate-400"
+                                className="w-full p-3 sm:p-4 h-10 sm:h-11 md:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-800 dark:bg-slate-600 text-slate-100 hover:border-slate-100 dark:hover:border-slate-400 text-sm sm:text-base"
                                 onClick={() => setIsButtonPushed("update")}
                             >
-                                <Repeat className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
+                                <Repeat className="w-4 h-4 sm:w-5 sm:h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
                                 <span>Actualizar Gasto</span>
                             </button>
                             <button
                                 id="button-cancel"
                                 type="submit"
-                                className="w-full p-4 h-11 sm:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-100 dark:bg-slate-700 border-slate-200 dark:border-slate-600 hover:bg-slate-300 dark:hover:bg-slate-600 hover:border-slate-900 dark:hover:border-slate-400 text-slate-600 dark:text-slate-300"
+                                className="w-full p-3 sm:p-4 h-10 sm:h-11 md:h-12 flex justify-center items-center border-2 transition-all duration-300 rounded-xl group bg-slate-100 dark:bg-slate-700 border-slate-200 dark:border-slate-600 hover:bg-slate-300 dark:hover:bg-slate-600 hover:border-slate-900 dark:hover:border-slate-400 text-slate-600 dark:text-slate-300 text-sm sm:text-base"
                                 onClick={handleCloseForm}
                             >
-                                <Ban className="w-5 h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
+                                <Ban className="w-4 h-4 sm:w-5 sm:h-5 mr-2 group-hover:rotate-90 transition-transform duration-300" />
                                 <span>Cancelar</span>
                             </button>
                         </div>
