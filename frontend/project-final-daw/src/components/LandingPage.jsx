@@ -92,7 +92,7 @@ const LandingPage = () => {
             </div>
             {/* //PART DRETA */}
             <div className="relative w-full lg:w-1/2 bg-white dark:bg-slate-900 flex flex-col items-center justify-center p-6 sm:p-8 md:p-12 lg:p-16 transition-colors duration-300">
-                <div className="absolute group top-6 right-4 sm:top-6 sm:right-4 flex justify-center items-center hover:gap-2 hover:border-2 hover:border-slate-200 dark:hover:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-600 rounded-full p-2 cursor-pointer"
+                <div className="absolute group top-6 right-6 sm:top-6 sm:right-6 flex justify-center items-center hover:gap-2 hover:border-2 hover:border-slate-200 dark:hover:border-slate-600 hover:bg-slate-50 dark:hover:bg-slate-600 rounded-full p-2 cursor-pointer"
                     onClick={toggleTheme}
                 >
                     <ThemeToggle />
@@ -101,7 +101,7 @@ const LandingPage = () => {
                     </span>
 
                 </div>
-                <div className="absolute group top-16 right-6 sm:top-16 sm:right-6">
+                <div className="absolute group top-16 right-5 sm:top-16 sm:right-5">
                     <LanguageSelector />
                 </div>
                 <div className="max-w-lg w-full border border-slate-200 dark:border-slate-700 p-6 sm:p-8 md:p-10 rounded-xl shadow-2xl bg-white dark:bg-slate-800">
