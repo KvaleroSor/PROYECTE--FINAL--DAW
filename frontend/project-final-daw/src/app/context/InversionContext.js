@@ -274,24 +274,30 @@ export const InversionProvider = ({ children }) => {
 
         // 🧪 MODO MOCK para desarrollo (no consume API)
         // Cambia a false cuando quieras usar la API real
-        const USE_MOCK_DATA = false; // ❌ DESACTIVADO - No hacer peticiones automáticas
+        const USE_MOCK_DATA = true; // ✅ ACTIVADO - Genera datos simulados realistas
 
         if (USE_MOCK_DATA) {
             console.log(`🧪 MODO MOCK: Generando precio simulado para ${symbol}`);
             // Simular delay de red
             await new Promise((resolve) => setTimeout(resolve, 500));
 
-            // Generar precio aleatorio basado en el símbolo (para consistencia)
+            // Generar precio base consistente por símbolo
             const basePrice = 100 + symbol.charCodeAt(0) * 2;
-            const variation = (Math.random() - 0.5) * 10;
+
+            // Usar tiempo como semilla para variación realista (cambios pequeños)
+            const timeSeed = Math.floor(Date.now() / 30000); // Cambia cada 30 segundos
+            const pseudoRandom = (Math.sin(timeSeed + symbol.charCodeAt(0)) + 1) / 2;
+
+            // Variación más pequeña y realista (-2% a +2%)
+            const variation = (pseudoRandom - 0.5) * basePrice * 0.04;
             const price = basePrice + variation;
-            const change = (Math.random() - 0.5) * 5;
+            const change = variation;
 
             return {
                 symbol: symbol,
                 price: parseFloat(price.toFixed(2)),
                 change: parseFloat(change.toFixed(2)),
-                changePercent: `${((change / price) * 100).toFixed(2)}%`,
+                changePercent: `${((change / basePrice) * 100).toFixed(2)}%`,
                 volume: Math.floor(Math.random() * 10000000),
                 latestTradingDay: new Date().toISOString().split("T")[0],
             };
@@ -544,17 +550,17 @@ export const InversionProvider = ({ children }) => {
         };
 
         // Actualizar la primera inversión después de 10 segundos
-        // const initialTimeout = setTimeout(() => {
-        //     updateNextInvestment();
-        // }, 10000);
+        const initialTimeout = setTimeout(() => {
+            updateNextInvestment();
+        }, 10000);
 
         // Actualizar cada 30 segundos (2 llamadas/minuto, muy conservador)
-        // const interval = setInterval(updateNextInvestment, 30000);
+        const interval = setInterval(updateNextInvestment, 30000);
 
-        // return () => {
-        //     clearTimeout(initialTimeout);
-        //     clearInterval(interval);
-        // };
+        return () => {
+            clearTimeout(initialTimeout);
+            clearInterval(interval);
+        };
     }, [status, session]); // Solo depende de la sesión, NO de isInversions
 
     return (

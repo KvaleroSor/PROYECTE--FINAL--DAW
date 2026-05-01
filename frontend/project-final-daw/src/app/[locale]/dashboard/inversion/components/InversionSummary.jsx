@@ -63,6 +63,21 @@ const InversionSummary = () => {
 
     return (
         <div className="space-y-6">
+            {/* Banner de modo demo */}
+            {activeInversions.length > 0 && (
+                <div className="bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl p-4 shadow-lg">
+                    <div className="flex items-center gap-3 text-white">
+                        <Activity className="w-5 h-5 animate-pulse" />
+                        <div className="flex-1">
+                            <p className="font-semibold">🧪 Modo Demo Activo</p>
+                            <p className="text-sm text-blue-100">
+                                Los precios se actualizan automáticamente cada 30 segundos con datos simulados realistas
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* Tarjetas de resumen */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
                 {/* Total Invertido */}
