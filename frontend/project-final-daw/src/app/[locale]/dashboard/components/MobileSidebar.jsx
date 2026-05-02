@@ -58,7 +58,7 @@ const MobileSidebar = () => {
 
             {/* Sidebar móvil */}
             <aside
-                className={`md:hidden fixed top-0 left-0 h-screen w-64 bg-slate-800 z-50 transform transition-transform duration-300 ease-in-out ${isOpen ? "translate-x-0" : "-translate-x-full"
+                className={`md:hidden fixed top-0 left-0 h-screen w-64 bg-slate-800 z-[60] transform transition-transform duration-300 ease-in-out ${isOpen ? "translate-x-0" : "-translate-x-full"
                     }`}
             >
                 <div className="w-full h-full flex flex-col">
