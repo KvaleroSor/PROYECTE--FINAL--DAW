@@ -10,7 +10,7 @@ const PortfolioDistributionChart = () => {
     const distributionData = isInversions.reduce((acc, inv) => {
         const type = inv.type || "Otro";
         const existing = acc.find((item) => item.name === type);
-        
+
         if (existing) {
             existing.value += inv.amount || 0;
         } else {
@@ -19,7 +19,7 @@ const PortfolioDistributionChart = () => {
                 value: inv.amount || 0,
             });
         }
-        
+
         return acc;
     }, []);
 
@@ -38,7 +38,7 @@ const PortfolioDistributionChart = () => {
         if (active && payload && payload.length) {
             const total = distributionData.reduce((sum, item) => sum + item.value, 0);
             const percentage = ((payload[0].value / total) * 100).toFixed(2);
-            
+
             return (
                 <div className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg p-3 shadow-lg">
                     <p className="text-slate-900 dark:text-slate-100 font-semibold">
@@ -83,8 +83,8 @@ const PortfolioDistributionChart = () => {
                         ))}
                     </Pie>
                     <Tooltip content={<CustomTooltip />} />
-                    <Legend 
-                        verticalAlign="bottom" 
+                    <Legend
+                        verticalAlign="bottom"
                         height={36}
                         formatter={(value, entry) => (
                             <span className="text-slate-700 dark:text-slate-300">

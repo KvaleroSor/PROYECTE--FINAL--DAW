@@ -52,57 +52,63 @@ const InvestmentHistory = () => {
 
             {/* Resumen fiscal */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-                <div className="bg-green-800 dark:bg-green-800 rounded-lg p-4">
-                    <div className="flex items-center gap-2 mb-2">
-                        <TrendingUp className="w-5 h-5 text-slate-100 dark:text-slate-100" />
-                        <span className="text-sm text-slate-100 dark:text-slate-100 font-medium">
-                            {t("totalGains")}
-                        </span>
+                {/* Ganancias Totales */}
+                <div className="bg-slate-50 dark:bg-slate-800 rounded-xl p-4 sm:p-5 shadow-lg hover:shadow-md transition-all duration-300">
+                    <div className="flex flex-col gap-4">
+                        <div className="flex flex-row justify-between items-center">
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
+                                <TrendingUp className="w-6 h-6 text-white" />
+                            </div>
+                            <span className="text-slate-500 dark:text-slate-400 text-sm font-medium">
+                                {t("totalGains").toUpperCase()}
+                            </span>
+                        </div>
+                        <p className="text-3xl text-green-500 dark:text-green-300">
+                            €{totalGains.toFixed(2)}
+                        </p>
                     </div>
-                    <p className="text-2xl font-bold text-slate-100 dark:text-slate-100">
-                        €{totalGains.toFixed(2)}
-                    </p>
                 </div>
 
-                <div className="bg-red-600 dark:bg-red-600 rounded-lg p-4">
-                    <div className="flex items-center gap-2 mb-2">
-                        <TrendingDown className="w-5 h-5 text-slate-100 dark:text-slate-100" />
-                        <span className="text-sm text-slate-100 dark:text-slate-100 font-medium">
-                            {t("totalLosses")}
-                        </span>
+                {/* Pérdidas Totales */}
+                <div className="bg-slate-50 dark:bg-slate-800 rounded-xl p-4 sm:p-5 shadow-lg hover:shadow-md transition-all duration-300">
+                    <div className="flex flex-col gap-4">
+                        <div className="flex flex-row justify-between items-center">
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
+                                <TrendingDown className="w-6 h-6 text-white" />
+                            </div>
+                            <span className="text-slate-500 dark:text-slate-400 text-sm font-medium">
+                                {t("totalLosses").toUpperCase()}
+                            </span>
+                        </div>
+                        <p className="text-3xl text-red-500 dark:text-red-200">
+                            €{totalLosses.toFixed(2)}
+                        </p>
                     </div>
-                    <p className="text-2xl font-bold text-slate-100 dark:text-slate-100">
-                        €{totalLosses.toFixed(2)}
-                    </p>
                 </div>
 
-                <div className={`${netResult >= 0
-                    ? "bg-blue-800 dark:bg-blue-800"
-                    : "bg-orange-800 dark:bg-orange-800"
-                    } rounded-lg p-4`}>
-                    <div className="flex items-center gap-2 mb-2">
-                        <DollarSign className={`w-5 h-5 ${netResult >= 0
-                            ? "text-slate-100 dark:text-slate-100"
-                            : "text-slate-100 dark:text-slate-100"
-                            }`} />
-                        <span className={`text-sm font-medium ${netResult >= 0
-                            ? "text-slate-100 dark:text-slate-100"
-                            : "text-slate-100 dark:text-slate-100"
+                {/* Resultado Neto */}
+                <div className="bg-slate-50 dark:bg-slate-800 rounded-xl p-4 sm:p-5 shadow-lg hover:shadow-md transition-all duration-300">
+                    <div className="flex flex-col gap-4">
+                        <div className="flex flex-row justify-between items-center">
+                            <div className="w-10 h-10 sm:w-12 sm:h-12 bg-slate-800 dark:bg-slate-600 rounded-lg flex items-center justify-center">
+                                <DollarSign className="w-6 h-6 text-white" />
+                            </div>
+                            <span className="text-slate-500 dark:text-slate-400 text-sm font-medium">
+                                {t("netFiscalResult").toUpperCase()}
+                            </span>
+                        </div>
+                        <p className={`text-3xl ${netResult >= 0
+                            ? "text-green-500 dark:text-green-300"
+                            : "text-red-500 dark:text-red-200"
                             }`}>
-                            {t("netFiscalResult")}
-                        </span>
+                            {netResult >= 0 ? '+' : ''}€{netResult.toFixed(2)}
+                        </p>
                     </div>
-                    <p className={`text-2xl font-bold ${netResult >= 0
-                        ? "text-slate-100 dark:text-slate-100"
-                        : "text-slate-100 dark:text-slate-100"
-                        }`}>
-                        {netResult >= 0 ? '+ ' : ''}€{netResult.toFixed(2)}
-                    </p>
                 </div>
             </div>
 
             {/* Tabla de historial */}
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto max-h-[400px] overflow-y-auto">
                 <table className="w-full">
                     <thead>
                         <tr className="border-b border-slate-200 dark:border-slate-700">
@@ -174,13 +180,6 @@ const InvestmentHistory = () => {
                             })}
                     </tbody>
                 </table>
-            </div>
-
-            {/* Nota fiscal */}
-            <div className="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-                <p className="text-sm text-blue-800 dark:text-blue-300">
-                    <strong>📋 {t("taxInfo")}:</strong> {t("taxInfoMessage")}
-                </p>
             </div>
         </div>
     );

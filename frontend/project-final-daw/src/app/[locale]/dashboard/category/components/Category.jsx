@@ -158,6 +158,10 @@ const Category = ({ category, session }) => {
                     handleClick(e, category);
                 }}
             >
+
+                {/* Para cambiar el color de la card en el momento se exceda el gasto del presupuesto, poner la card en rojo
+                    - Valor a evaluar --> isCurrentPercentagePerCategory
+                */}
                 <div className="w-full flex items-start justify-between mb-3 sm:mb-4 transition-all duration-300">
                     <div className="w-full flex flex-col justify-start gap-3 sm:gap-4">
                         <div className="flex flex-row justify-between items-center">

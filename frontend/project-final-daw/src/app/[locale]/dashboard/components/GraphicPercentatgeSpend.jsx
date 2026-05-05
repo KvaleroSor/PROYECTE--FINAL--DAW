@@ -1,6 +1,7 @@
 "use client";
 
 import { useFinancial } from "@/app/context/FinancialContext.js";
+import { useInversion } from "@/app/context/InversionContext.js";
 import { useSavingsRealTime } from "@/app/hooks/saving/useSavingsRealTime.js";
 import { useTranslations } from "next-intl";
 import { PencilLine } from "lucide-react";
@@ -9,11 +10,23 @@ const GraphicPercentatgeSpend = () => {
     const t = useTranslations("percentageChart");
     const tCommon = useTranslations("common");
     const { isPercentageSettings, isNomina, isFixedExpensesFromNomina, isLeisureExpensesFromNomina, isInvestmentFromNomina, isSavingFromNomina, setIsFormModifyPercentageOpen } = useFinancial();
+    const { isInversions } = useInversion();
     const fixedPercentage = isPercentageSettings.fixedExpenses;
     const leisurePercentage = isPercentageSettings.leisureExpenses;
     const investmentPercentage = isPercentageSettings.investment;
     const savingsPercentage = isPercentageSettings.savings;
     const { isTotalImprevistosPercentatge, isTotalImprevistos } = useSavingsRealTime();
+
+    // Calcular disponible real para inversiones
+    const activeInversions = isInversions.filter(inv => inv.status !== "closed");
+    const closedInversions = isInversions.filter(inv => inv.status === "closed");
+    const totalInvested = activeInversions.reduce((acc, inv) => acc + Number(inv.amount || 0), 0);
+    const capitalFromClosedInversions = closedInversions.reduce((acc, inv) => {
+        const finalValue = inv.final_value || (Number(inv.amount || 0) + ((inv.real_profitability || 0) * Number(inv.amount || 0)) / 100);
+        return acc + finalValue;
+    }, 0);
+    // LÓGICA CORRECTA: Disponible = Presupuesto inicial - Invertido activo + Capital recuperado
+    const availableToInvest = isInvestmentFromNomina - totalInvested + capitalFromClosedInversions;
 
     const handleClickEditPercentageSettings = () => {
         setIsFormModifyPercentageOpen(true);

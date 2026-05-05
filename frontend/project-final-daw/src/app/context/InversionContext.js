@@ -33,6 +33,7 @@ export const InversionProvider = ({ children }) => {
 
     // Ref para evitar loops infinitos
     const inversionsRef = useRef([]);
+    const hasUpdatedOnLogin = useRef(false);
 
     // Estados del formulario
     const [isType, setIsType] = useState("");
@@ -274,7 +275,7 @@ export const InversionProvider = ({ children }) => {
 
         // 🧪 MODO MOCK para desarrollo (no consume API)
         // Cambia a false cuando quieras usar la API real
-        const USE_MOCK_DATA = true; // ✅ ACTIVADO - Genera datos simulados realistas
+        const USE_MOCK_DATA = true; // ✅ ACTIVADO - Simula precios sin consumir API
 
         if (USE_MOCK_DATA) {
             console.log(`🧪 MODO MOCK: Generando precio simulado para ${symbol}`);
@@ -336,6 +337,8 @@ export const InversionProvider = ({ children }) => {
                 return null;
             }
 
+            console.log("DATA GLOBAL QUOTE", data["Global Quote"]);
+
             // Verificar si hay datos válidos
             if (data["Global Quote"] && Object.keys(data["Global Quote"]).length > 0) {
                 const quote = data["Global Quote"];
@@ -365,13 +368,26 @@ export const InversionProvider = ({ children }) => {
 
     // ACTUALIZAR RENTABILIDAD REAL basada en precios actuales
     const updateRealProfitability = async (inversionId, symbol, initialPrice) => {
-        if (!symbol) return;
+        if (!symbol) {
+            console.warn(`⚠️ No hay símbolo para actualizar (ID: ${inversionId})`);
+            return;
+        }
 
         try {
             setIsUpdatingProfitability(true);
+            console.log(`🔍 Actualizando ${symbol} - Precio inicial: €${initialPrice}`);
             const currentPriceData = await fetchStockPrice(symbol);
-            if (!currentPriceData || !initialPrice) {
-                console.log(`⚠️ No se pudo obtener precio para ${symbol}`);
+
+            if (!currentPriceData) {
+                console.error(
+                    `❌ ${symbol}: No se recibió datos de precio (API falló o límite alcanzado)`
+                );
+                setIsUpdatingProfitability(false);
+                return;
+            }
+
+            if (!initialPrice) {
+                console.error(`❌ ${symbol}: No tiene precio inicial guardado`);
                 setIsUpdatingProfitability(false);
                 return;
             }
@@ -502,66 +518,91 @@ export const InversionProvider = ({ children }) => {
         inversionsRef.current = isInversions;
     }, [isInversions]);
 
-    // Actualizar rentabilidad de inversiones activas automáticamente
-    useEffect(() => {
-        // Solo ejecutar si hay sesión autenticada
-        if (status !== "authenticated" || !session?.user?.user_id) {
+    // Actualizar rentabilidad de todas las inversiones activas al iniciar sesión
+    const updateAllInvestmentsProfitability = async () => {
+        console.log("🔍 Revisando inversiones para actualizar...");
+        console.log("📋 Total inversiones (ref):", inversionsRef.current.length);
+        console.log("📋 Total inversiones (state):", isInversions.length);
+
+        // Usar el estado actual en lugar del ref
+        const currentInversions = isInversions.length > 0 ? isInversions : inversionsRef.current;
+
+        // Log detallado de cada inversión
+        currentInversions.forEach((inv) => {
+            console.log(`📊 ${inv.symbol || "SIN SÍMBOLO"}:`, {
+                _id: inv._id,
+                status: inv.status,
+                symbol: inv.symbol,
+                initial_price: inv.initial_price,
+                tiene_initial_price: inv.initial_price !== undefined && inv.initial_price !== null,
+                cumple:
+                    inv.status !== "closed" && inv.symbol && inv.initial_price ? "✅ SÍ" : "❌ NO",
+            });
+        });
+
+        const activeInversions = currentInversions.filter(
+            (inv) => inv.status !== "closed" && inv.symbol && inv.initial_price
+        );
+
+        if (activeInversions.length === 0) {
+            console.log("ℹ️ No hay inversiones activas para actualizar");
+            console.log("💡 Verifica que tengan: status !== 'closed', symbol y initial_price");
             return;
         }
 
-        console.log("� Iniciando sistema de actualización automática de inversiones");
+        console.log(
+            `🔄 Actualizando rentabilidad de ${activeInversions.length} inversiones activas...`
+        );
+        setIsUpdatingProfitability(true);
 
-        let currentIndex = 0;
-        let isUpdating = false;
+        try {
+            // Actualizar todas las inversiones en paralelo (más rápido)
+            const updatePromises = activeInversions.map(async (inv) => {
+                try {
+                    await updateRealProfitability(inv._id, inv.symbol, inv.initial_price);
+                    console.log(`✅ ${inv.symbol} actualizado`);
+                } catch (error) {
+                    console.error(`❌ Error actualizando ${inv.symbol}:`, error);
+                }
+            });
 
-        const updateNextInvestment = async () => {
-            if (isUpdating) {
-                return;
-            }
+            await Promise.all(updatePromises);
+            console.log(`✅ Todas las inversiones actualizadas correctamente`);
+        } catch (error) {
+            console.error("❌ Error en actualización masiva:", error);
+        } finally {
+            setIsUpdatingProfitability(false);
+        }
+    };
 
-            // Usar ref para obtener inversiones actuales sin causar re-render
-            const currentActiveInversions = inversionsRef.current.filter(
+    // Actualizar rentabilidad al cargar inversiones (solo una vez al iniciar sesión)
+    useEffect(() => {
+        if (status !== "authenticated" || !session?.user?.user_id) {
+            hasUpdatedOnLogin.current = false; // Reset cuando no hay sesión
+            return;
+        }
+
+        // Solo actualizar si hay inversiones cargadas, no estamos actualizando, y NO se ha actualizado ya
+        if (isInversions.length > 0 && !isUpdatingProfitability && !hasUpdatedOnLogin.current) {
+            const activeInversions = isInversions.filter(
                 (inv) => inv.status !== "closed" && inv.symbol && inv.initial_price
             );
 
-            if (currentActiveInversions.length === 0) {
-                return;
-            }
-
-            isUpdating = true;
-            const inversion = currentActiveInversions[currentIndex];
-
-            console.log(
-                `🔄 Actualizando ${currentIndex + 1}/${currentActiveInversions.length}: ${inversion.symbol}`
-            );
-
-            try {
-                await updateRealProfitability(
-                    inversion._id,
-                    inversion.symbol,
-                    inversion.initial_price
+            if (activeInversions.length > 0) {
+                console.log(
+                    "🚀 Iniciando actualización de rentabilidad al iniciar sesión (ÚNICA VEZ)"
                 );
-            } catch (error) {
-                console.error(`❌ Error actualizando ${inversion.symbol}:`, error);
+                hasUpdatedOnLogin.current = true; // Marcar como actualizado
+
+                // Esperar 2 segundos después de cargar para no saturar
+                const timeout = setTimeout(() => {
+                    updateAllInvestmentsProfitability();
+                }, 2000);
+
+                return () => clearTimeout(timeout);
             }
-
-            currentIndex = (currentIndex + 1) % currentActiveInversions.length;
-            isUpdating = false;
-        };
-
-        // Actualizar la primera inversión después de 10 segundos
-        const initialTimeout = setTimeout(() => {
-            updateNextInvestment();
-        }, 10000);
-
-        // Actualizar cada 30 segundos (2 llamadas/minuto, muy conservador)
-        const interval = setInterval(updateNextInvestment, 30000);
-
-        return () => {
-            clearTimeout(initialTimeout);
-            clearInterval(interval);
-        };
-    }, [status, session]); // Solo depende de la sesión, NO de isInversions
+        }
+    }, [isInversions.length, status, session]); // Se ejecuta cuando cambia el número de inversiones
 
     return (
         <InversionContext.Provider
@@ -611,6 +652,7 @@ export const InversionProvider = ({ children }) => {
                 fetchInvestmentAlphaVantage,
                 fetchStockPrice,
                 updateRealProfitability,
+                updateAllInvestmentsProfitability,
                 closeInversion,
             }}
         >

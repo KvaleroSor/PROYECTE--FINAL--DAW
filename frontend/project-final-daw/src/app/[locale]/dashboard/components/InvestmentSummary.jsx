@@ -1,20 +1,36 @@
 "use client";
 
 import { useFinancial } from "@/app/context/FinancialContext.js";
+import { useInversion } from "@/app/context/InversionContext.js";
 import { TrendingUp, DollarSign, Target, ArrowUpRight, Briefcase } from "lucide-react";
 
 const InvestmentSummary = () => {
     const { isInvestmentFromNomina, isNomina, isPercentageSettings } = useFinancial();
+    const { isInversions } = useInversion();
 
-    // Por ahora mostraremos datos del presupuesto de inversión
-    // Cuando implementes el CRUD de inversiones, aquí conectarás con el contexto real
-    const monthlyInvestmentBudget = isInvestmentFromNomina || 0;
     const investmentPercentage = isPercentageSettings?.investment || 0;
 
-    // Datos de ejemplo - reemplazar cuando tengas inversiones reales
-    const totalInvested = 0; // Suma de todas las inversiones
-    const expectedReturn = 0; // target_profitability promedio
-    const currentValue = 0; // total de inversiones
+    // Calcular datos reales de inversiones
+    const activeInversions = isInversions.filter(inv => inv.status !== "closed");
+    const closedInversions = isInversions.filter(inv => inv.status === "closed");
+
+    const totalInvested = activeInversions.reduce((acc, inv) => acc + Number(inv.amount || 0), 0);
+    const capitalFromClosedInversions = closedInversions.reduce((acc, inv) => {
+        const finalValue = inv.final_value || (Number(inv.amount || 0) + ((inv.real_profitability || 0) * Number(inv.amount || 0)) / 100);
+        return acc + finalValue;
+    }, 0);
+
+    // LÓGICA CORRECTA: Disponible = Presupuesto inicial - Invertido activo + Capital recuperado
+    const availableToInvest = isInvestmentFromNomina - totalInvested + capitalFromClosedInversions;
+
+    const currentValue = activeInversions.reduce((acc, inv) => {
+        const profitability = ((inv.real_profitability || 0) * Number(inv.amount || 0)) / 100;
+        return acc + Number(inv.amount || 0) + profitability;
+    }, 0);
+
+    const expectedReturn = activeInversions.length > 0
+        ? activeInversions.reduce((acc, inv) => acc + (inv.target_profitability || 0), 0) / activeInversions.length
+        : 0;
 
     return (
         <div className="w-full h-full flex flex-col p-4">
@@ -27,18 +43,24 @@ const InvestmentSummary = () => {
                 </div>
             </div>
 
-            {/* Presupuesto Mensual */}
+            {/* Disponible para Invertir */}
             <div className="bg-slate-50 border border-slate-200 rounded-lg p-4 mb-4">
                 <div className="flex justify-between items-center mb-2">
-                    <span className="text-sm font-medium text-slate-700">Presupuesto Mensual</span>
-                    <span className="text-lg font-bold text-slate-900">
-                        €{monthlyInvestmentBudget.toFixed(2)}
+                    <span className="text-sm font-medium text-slate-700">Disponible para Invertir</span>
+                    <span className={`text-lg font-bold ${availableToInvest >= 0 ? 'text-green-600' : 'text-red-600'}`}>
+                        €{availableToInvest.toFixed(2)}
                     </span>
                 </div>
                 <div className="flex justify-between items-center text-xs text-slate-600">
-                    <span>Asignado</span>
-                    <span className="font-semibold">{investmentPercentage.toFixed(1)}% de la nómina</span>
+                    <span>Presupuesto mensual</span>
+                    <span className="font-semibold">€{isInvestmentFromNomina.toFixed(2)} ({investmentPercentage.toFixed(1)}%)</span>
                 </div>
+                {capitalFromClosedInversions > 0 && (
+                    <div className="flex justify-between items-center text-xs text-slate-600 mt-1">
+                        <span>+ Capital recuperado</span>
+                        <span className="font-semibold">€{capitalFromClosedInversions.toFixed(2)}</span>
+                    </div>
+                )}
             </div>
 
             {/* Estadísticas */}
@@ -84,7 +106,7 @@ const InvestmentSummary = () => {
                         €{(currentValue - totalInvested).toFixed(2)}
                     </p>
                     <p className="text-xs text-slate-500 mt-1">
-                        {totalInvested > 0 
+                        {totalInvested > 0
                             ? `${(((currentValue - totalInvested) / totalInvested) * 100).toFixed(2)}% ROI`
                             : 'Sin inversiones aún'
                         }

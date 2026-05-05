@@ -31,6 +31,10 @@ const inversionSchema = z.object({
     date: z.string().min(1, "La fecha es requerida"),
     target_profitability: z.number().min(0, "La rentabilidad objetivo debe ser mayor o igual a 0"),
     real_profitability: z.number().optional(),
+    initial_price: z.preprocess(
+        (val) => val ? Number(Number(val).toFixed(2)) : val,
+        z.number().positive().optional()
+    ),
 });
 
 const FormInversion = () => {
@@ -50,6 +54,7 @@ const FormInversion = () => {
         updateInversionData,
         resetForm: resetContextForm,
         fetchInvestmentAlphaVantage,
+        fetchStockPrice,
     } = useInversion();
 
     const { isInvestmentFromNomina } = useFinancial();
@@ -89,12 +94,13 @@ const FormInversion = () => {
             date: new Date().toISOString().split("T")[0],
             target_profitability: "",
             real_profitability: 0,
+            initial_price: 0,
         },
     });
 
     const watchAmount = watch("amount");
 
-    const handleStockSelect = (stock) => {
+    const handleStockSelect = async (stock) => {
         setSelectedStock(stock);
         setValue("symbol", stock.symbol);
         setValue("name", stock.name);
@@ -109,6 +115,22 @@ const FormInversion = () => {
             };
             const mappedType = assetTypeMap[stock.assetType] || "Otro";
             setValue("type", mappedType);
+        }
+
+        // Obtener precio actual del stock
+        try {
+            console.log(`📊 Obteniendo precio para ${stock.symbol}...`);
+            const priceData = await fetchStockPrice(stock.symbol);
+            if (priceData && priceData.price) {
+                // Redondear a 2 decimales
+                const roundedPrice = Number(priceData.price.toFixed(2));
+                setValue("initial_price", roundedPrice);
+                console.log(`✅ Precio inicial establecido: €${roundedPrice}`);
+            } else {
+                console.warn(`⚠️ No se pudo obtener precio para ${stock.symbol}`);
+            }
+        } catch (error) {
+            console.error(`❌ Error obteniendo precio:`, error);
         }
     };
 
@@ -164,9 +186,19 @@ const FormInversion = () => {
             return acc + finalValue;
         }, 0);
 
-        // Si hay capital cerrado, usarlo como base; sino, usar el presupuesto mensual
-        const baseCapital = capitalFromClosedInversions > 0 ? capitalFromClosedInversions : isInvestmentFromNomina;
-        const available = baseCapital - totalInvested;
+        // LÓGICA CORRECTA:
+        // El presupuesto es el punto de partida (250€)
+        // Cuando inviertes, reduces el disponible
+        // Cuando cierras, recuperas capital
+        // Disponible = Presupuesto inicial - Invertido activo + Capital recuperado
+        const available = isInvestmentFromNomina - totalInvested + capitalFromClosedInversions;
+
+        console.log(`💰 Cálculo de disponible:
+            - Presupuesto inicial: €${isInvestmentFromNomina.toFixed(2)}
+            - Invertido activo: €${totalInvested.toFixed(2)}
+            - Capital recuperado (cerradas): €${capitalFromClosedInversions.toFixed(2)}
+            - DISPONIBLE = ${isInvestmentFromNomina.toFixed(2)} - ${totalInvested.toFixed(2)} + ${capitalFromClosedInversions.toFixed(2)} = €${available.toFixed(2)}`);
+
         setAvailableToInvest(available);
     }, [isInversions, isInvestmentFromNomina]);
 
@@ -202,15 +234,18 @@ const FormInversion = () => {
 
         if (isButtonPushed === "create") {
             if (formData.amount > availableToInvest) {
-                setIsError(`${t("onlyAvailable")} €${availableToInvest.toFixed(2)} ${t("availableToInvest")}`);
                 return;
             }
-
             try {
                 const dataToSend = {
                     ...formData,
+                    date: new Date().toISOString(), // Fecha y hora actual completa
+                    initial_price: Number(formData.initial_price), // Asegurar que sea número
                     user_id: session?.user?.user_id,
                 };
+
+                console.log("📤 Datos enviados al crear inversión:", dataToSend);
+                console.log("📊 Initial price:", dataToSend.initial_price);
 
                 await createInversion(dataToSend);
                 setIsSuccess(true);
@@ -227,7 +262,7 @@ const FormInversion = () => {
                 setIsSuccess(true);
                 setTimeout(() => {
                     handleCloseForm();
-                }, 1500);
+                }, 1000);
             } catch (err) {
                 console.error(err);
                 setIsError(t("errorUpdatingInvestment"));
@@ -459,6 +494,36 @@ const FormInversion = () => {
                         />
                     </div>
                 </div>
+
+                {/* Precio inicial (solo si hay símbolo seleccionado) */}
+                {selectedStock && (
+                    <div className="flex flex-col gap-2">
+                        <label
+                            htmlFor="initial_price"
+                            className="text-slate-700 dark:text-slate-300 flex items-center gap-2"
+                        >
+                            <DollarSign className="w-4 h-4" />
+                            Precio de Compra
+                        </label>
+                        <div className="relative">
+                            <input
+                                id="initial_price"
+                                type="number"
+                                step="0.01"
+                                placeholder="0.00"
+                                className="h-12 w-full bg-blue-50 dark:bg-blue-900/20 border-2 border-blue-200 dark:border-blue-800 focus:outline-none focus:bg-white dark:focus:bg-slate-600 focus:border-blue-500 dark:focus:border-blue-400 transition-colors rounded-lg p-2 pl-8 shadow-md text-slate-900 dark:text-slate-100 font-semibold"
+                                {...register("initial_price", { valueAsNumber: true })}
+                            />
+                            <span className="absolute left-2 top-1/2 -translate-y-1/2 text-slate-500 dark:text-slate-400">$</span>
+                        </div>
+                        <p className="text-xs text-slate-500 dark:text-slate-400">
+                            💡 Precio obtenido automáticamente. Puedes modificarlo si es necesario.
+                        </p>
+                        {errors.initial_price && (
+                            <AlertMessage message={errors.initial_price.message} type="error" />
+                        )}
+                    </div>
+                )}
 
                 {/* Retorno potencial */}
                 {watchAmount > 0 && watch("target_profitability") > 0 && (

@@ -391,6 +391,39 @@ const GridSpendsMainPage = () => {
                                         />
                                     </div>
                                 )}
+                                {(isSearchOptionSelected === 'month') && (
+                                    <div className="h-10 relative ml-2 mr-2">
+                                        <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 sm:w-6 sm:h-6 text-slate-500 dark:text-slate-400 pointer-events-none" />
+                                        <input
+                                            type="month"
+                                            value={`${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}`}
+                                            onChange={(e) => {
+                                                const [year, month] = e.target.value.split('-');
+                                                setSelectedDate(new Date(parseInt(year), parseInt(month) - 1, 1));
+                                            }}
+                                            className="w-full sm:w-auto h-full bg-slate-50 dark:bg-slate-600 rounded-xl text-slate-900 dark:text-slate-100 pl-12 pr-4 appearance-none border-2 border-transparent outline-none ring-0 focus:border-2 focus:border-slate-500 focus:ring-0 transition-all duration-300"
+                                        />
+                                    </div>
+                                )}
+                                {(isSearchOptionSelected === 'year') && (
+                                    <div className="h-10 relative ml-2 mr-2">
+                                        <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 sm:w-6 sm:h-6 text-slate-500 dark:text-slate-400 pointer-events-none" />
+                                        <input
+                                            type="number"
+                                            min="2000"
+                                            max="2100"
+                                            value={selectedDate.getFullYear()}
+                                            onChange={(e) => {
+                                                const year = parseInt(e.target.value);
+                                                if (year >= 2000 && year <= 2100) {
+                                                    setSelectedDate(new Date(year, selectedDate.getMonth(), 1));
+                                                }
+                                            }}
+                                            className="w-full sm:w-auto h-full bg-slate-50 dark:bg-slate-600 rounded-xl text-slate-900 dark:text-slate-100 pl-12 pr-4 appearance-none border-2 border-transparent outline-none ring-0 focus:border-2 focus:border-slate-500 focus:ring-0 transition-all duration-300"
+                                            placeholder="YYYY"
+                                        />
+                                    </div>
+                                )}
                                 {/* <div className="group relative w-full h-10 bg-slate-50 dark:bg-slate-600 rounded-xl p-2 border-2 border-transparent focus:border-slate-500 focus:ring-0 transition-all duration-300 mr-2">
                                     <Calendar className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 sm:w-6 sm:h-6 text-slate-500 dark:text-slate-400" />
                                     <select className="w-full h-full appearance-none bg-slate-50 dark:bg-slate-600 rounded-xl pl-12 pr-4 outline-none focus:outline-none text-slate-500 dark:text-slate-400 cursor-pointer" value={"Enero"}>

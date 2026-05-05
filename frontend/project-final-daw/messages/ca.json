@@ -365,7 +365,13 @@
         "portfolioBeatingIndex": "El teu portfolio està superant l'S&P 500 per",
         "portfolioBelowIndex": "El teu portfolio està",
         "belowSP500": "per davall de l'S&P 500",
-        "negativeReturn": "El teu portfolio té rendibilitat negativa"
+        "negativeReturn": "El teu portfolio té rendibilitat negativa",
+        "investments": "Inversions",
+        "manageMonitorInvestments": "Gestiona i monitoritza les teues inversions",
+        "lastUpdate": "Última actualització",
+        "updateProfitability": "Actualitzar rendibilitat",
+        "updating": "Actualitzant",
+        "updateNow": "Actualitzar Ara"
     },
     "settings": {
         "title": "Configuració Usuari",

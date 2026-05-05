@@ -2,15 +2,20 @@
 
 import React from 'react'
 import Inversion from './Inversion'
-import { TrendingUp, Plus } from 'lucide-react'
+import { TrendingUp, Plus, RefreshCw } from 'lucide-react'
 import { useInversion } from '@/app/context/InversionContext.js'
 import { useTranslations } from 'next-intl'
 
 
 const GridInversion = () => {
     const t = useTranslations("investments");
-    const { fetchInvestmentAlphaVantage } = useInversion();
-    const { setIsFormInversionOpen } = useInversion();
+    const {
+        fetchInvestmentAlphaVantage,
+        setIsFormInversionOpen,
+        updateAllInvestmentsProfitability,
+        isUpdatingProfitability,
+        lastUpdateTime
+    } = useInversion();
 
     return (
         <>
@@ -26,13 +31,24 @@ const GridInversion = () => {
                                 <p className="text-slate-200 text-xs sm:text-sm">{t("managePortfolio")}</p>
                             </div>
                         </div>
-                        <button
-                            className="w-full sm:w-auto flex items-center justify-center gap-2 h-10 px-3 sm:px-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl group bg-slate-700 dark:bg-slate-400 text-slate-100 text-sm sm:text-base flex-shrink-0"
-                            onClick={() => setIsFormInversionOpen(true)}
-                        >
-                            <Plus className="w-4 h-4 sm:w-5 sm:h-5 group-hover:rotate-90 transition-transform duration-300" />
-                            <span>{t("addInvestment")}</span>
-                        </button>
+                        <div className="flex flex-col sm:flex-row gap-2 w-full sm:w-auto">
+                            <button
+                                className="w-full sm:w-auto flex items-center justify-center gap-2 h-10 px-3 sm:px-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl group bg-blue-600 hover:bg-blue-700 text-slate-100 text-sm sm:text-base flex-shrink-0 disabled:opacity-50 disabled:cursor-not-allowed"
+                                onClick={updateAllInvestmentsProfitability}
+                                disabled={isUpdatingProfitability}
+                                title={lastUpdateTime ? `Última actualización: ${lastUpdateTime.toLocaleTimeString()}` : 'Actualizar rentabilidad'}
+                            >
+                                <RefreshCw className={`w-4 h-4 sm:w-5 sm:h-5 transition-transform duration-300 ${isUpdatingProfitability ? 'animate-spin' : 'group-hover:rotate-180'}`} />
+                                <span>{isUpdatingProfitability ? 'Actualizando...' : 'Actualizar'}</span>
+                            </button>
+                            <button
+                                className="w-full sm:w-auto flex items-center justify-center gap-2 h-10 px-3 sm:px-4 rounded-xl transition-all duration-300 shadow-lg hover:shadow-xl group bg-slate-700 dark:bg-slate-400 text-slate-100 text-sm sm:text-base flex-shrink-0"
+                                onClick={() => setIsFormInversionOpen(true)}
+                            >
+                                <Plus className="w-4 h-4 sm:w-5 sm:h-5 group-hover:rotate-90 transition-transform duration-300" />
+                                <span>{t("addInvestment")}</span>
+                            </button>
+                        </div>
                     </div>
                 </div>
                 <div className="w-full p-4 sm:p-6 grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">

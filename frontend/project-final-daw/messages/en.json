@@ -365,7 +365,13 @@
         "portfolioBeatingIndex": "Your portfolio is beating the S&P 500 by",
         "portfolioBelowIndex": "Your portfolio is",
         "belowSP500": "below the S&P 500",
-        "negativeReturn": "Your portfolio has negative returns"
+        "negativeReturn": "Your portfolio has negative returns",
+        "investments": "Investments",
+        "manageMonitorInvestments": "Manage and monitor your investments",
+        "lastUpdate": "Last update",
+        "updateProfitability": "Update profitability",
+        "updating": "Updating",
+        "updateNow": "Update Now"
     },
     "settings": {
         "title": "User Settings",
