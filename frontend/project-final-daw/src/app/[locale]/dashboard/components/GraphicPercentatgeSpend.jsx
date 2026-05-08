@@ -2,6 +2,7 @@
 
 import { useFinancial } from "@/app/context/FinancialContext.js";
 import { useInversion } from "@/app/context/InversionContext.js";
+import { useBlur } from "@/app/context/BlurContext";
 import { useSavingsRealTime } from "@/app/hooks/saving/useSavingsRealTime.js";
 import { useTranslations } from "next-intl";
 import { PencilLine } from "lucide-react";
@@ -11,6 +12,7 @@ const GraphicPercentatgeSpend = () => {
     const tCommon = useTranslations("common");
     const { isPercentageSettings, isNomina, isFixedExpensesFromNomina, isLeisureExpensesFromNomina, isInvestmentFromNomina, isSavingFromNomina, setIsFormModifyPercentageOpen } = useFinancial();
     const { isInversions } = useInversion();
+    const { isBlurred } = useBlur();
     const fixedPercentage = isPercentageSettings.fixedExpenses;
     const leisurePercentage = isPercentageSettings.leisureExpenses;
     const investmentPercentage = isPercentageSettings.investment;
@@ -62,7 +64,11 @@ const GraphicPercentatgeSpend = () => {
                             <p className="text-sm sm:text-base text-slate-900 dark:text-slate-100 truncate">{t("fixedExpense")}</p>
                             <div className="flex flex-row justify-center items-center gap-2 sm:gap-4 text-xs sm:text-sm text-slate-700 dark:text-slate-300 flex-shrink-0">
                                 <p>{fixedPercentage}%</p>
-                                <p className="whitespace-nowrap">€{Number(isFixedExpensesFromNomina).toFixed(2)}</p>
+                                {isBlurred ? (
+                                    <p className="whitespace-nowrap blur-md select-none">€{Number(isFixedExpensesFromNomina).toFixed(2)}</p>
+                                ) : (
+                                    <p className="whitespace-nowrap">€{Number(isFixedExpensesFromNomina).toFixed(2)}</p>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -73,7 +79,11 @@ const GraphicPercentatgeSpend = () => {
                             <p className="text-sm sm:text-base text-slate-900 dark:text-slate-100 truncate">{t("leisureExpense")}</p>
                             <div className="flex flex-row justify-center items-center gap-2 sm:gap-4 text-xs sm:text-sm text-slate-700 dark:text-slate-300 flex-shrink-0">
                                 <p>{leisurePercentage}%</p>
-                                <p className="whitespace-nowrap">€{Number(isLeisureExpensesFromNomina).toFixed(2)}</p>
+                                {isBlurred ? (
+                                    <p className="whitespace-nowrap blur-md select-none">€{Number(isLeisureExpensesFromNomina).toFixed(2)}</p>
+                                ) : (
+                                    <p className="whitespace-nowrap">€{Number(isLeisureExpensesFromNomina).toFixed(2)}</p>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -84,7 +94,11 @@ const GraphicPercentatgeSpend = () => {
                             <p className="text-sm sm:text-base text-slate-900 dark:text-slate-100 truncate">{t("investment")}</p>
                             <div className="flex flex-row justify-center items-center gap-2 sm:gap-4 text-xs sm:text-sm text-slate-700 dark:text-slate-300 flex-shrink-0">
                                 <p>{investmentPercentage}%</p>
-                                <p className="whitespace-nowrap">€{Number(isInvestmentFromNomina).toFixed(2)}</p>
+                                {isBlurred ? (
+                                    <p className="whitespace-nowrap blur-md select-none">€{Number(isInvestmentFromNomina).toFixed(2)}</p>
+                                ) : (
+                                    <p className="whitespace-nowrap">€{Number(isInvestmentFromNomina).toFixed(2)}</p>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -95,7 +109,11 @@ const GraphicPercentatgeSpend = () => {
                             <p className="text-sm sm:text-base text-slate-900 dark:text-slate-100 truncate">{t("savings")}</p>
                             <div className="flex flex-row justify-center items-center gap-2 sm:gap-4 text-xs sm:text-sm text-slate-700 dark:text-slate-300 flex-shrink-0">
                                 <p>{savingsPercentage}%</p>
-                                <p className="whitespace-nowrap">€{Number(isSavingFromNomina).toFixed(2)}</p>
+                                {isBlurred ? (
+                                    <p className="whitespace-nowrap blur-md select-none">€{Number(isSavingFromNomina).toFixed(2)}</p>
+                                ) : (
+                                    <p className="whitespace-nowrap">€{Number(isSavingFromNomina).toFixed(2)}</p>
+                                )}
                             </div>
                         </div>
                     </div>
@@ -106,14 +124,22 @@ const GraphicPercentatgeSpend = () => {
                             <p className="text-sm sm:text-base text-slate-900 dark:text-slate-100 truncate">{t("unexpected")}</p>
                             <div className="flex flex-row justify-center items-center gap-2 sm:gap-4 text-xs sm:text-sm text-slate-700 dark:text-slate-300 flex-shrink-0">
                                 <p>{isTotalImprevistosPercentatge}%</p>
-                                <p className="whitespace-nowrap">€{Number(isTotalImprevistos).toFixed(2)}</p>
+                                {isBlurred ? (
+                                    <p className="whitespace-nowrap blur-md select-none">€{Number(isTotalImprevistos).toFixed(2)}</p>
+                                ) : (
+                                    <p className="whitespace-nowrap">€{Number(isTotalImprevistos).toFixed(2)}</p>
+                                )}
                             </div>
                         </div>
                     </div>
                 </div>
                 <div className="flex flex-row justify-start items-center gap-2 sm:gap-4">
                     <h1 className="text-sm sm:text-base text-slate-500 dark:text-slate-400">{t("monthlySalary")}</h1>
-                    <p className="text-lg sm:text-2xl text-slate-900 dark:text-slate-100">€{Number(isNomina).toFixed(2)}</p>
+                    {isBlurred ? (
+                        <p className="text-lg sm:text-2xl text-slate-900 dark:text-slate-100 blur-md select-none">€{Number(isNomina).toFixed(2)}</p>
+                    ) : (
+                        <p className="text-lg sm:text-2xl text-slate-900 dark:text-slate-100">€{Number(isNomina).toFixed(2)}</p>
+                    )}
                 </div>
             </div>
         </>

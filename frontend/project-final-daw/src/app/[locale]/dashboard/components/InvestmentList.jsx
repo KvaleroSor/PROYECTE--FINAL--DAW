@@ -2,6 +2,7 @@
 
 import { useInversion } from "@/app/context/InversionContext";
 import { useFinancial } from "@/app/context/FinancialContext";
+import { useBlur } from "@/app/context/BlurContext";
 import { DollarSign, TrendingUp, TrendingDown, Plus, Wallet } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -9,6 +10,7 @@ const InvestmentList = () => {
     const t = useTranslations("investments");
     const { isInversions, isLoading, setIsFormInversionOpen } = useInversion();
     const { isInvestmentFromNomina } = useFinancial();
+    const { isBlurred } = useBlur();
 
     // Filtrar inversiones activas y cerradas
     const activeInversions = isInversions.filter(inv => inv.status !== "closed");
@@ -80,9 +82,15 @@ const InvestmentList = () => {
                                         </div>
                                         <h1 className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">{t("available")}</h1>
                                     </div>
-                                    <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1">
-                                        €{availableToInvest.toFixed(2)}
-                                    </h1>
+                                    {isBlurred ? (
+                                        <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1 blur-md select-none">
+                                            €{availableToInvest.toFixed(2)}
+                                        </h1>
+                                    ) : (
+                                        <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1">
+                                            €{availableToInvest.toFixed(2)}
+                                        </h1>
+                                    )}
                                     <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">{t("capitalAvailableToInvest")}</p>
                                 </div>
                             </div>
@@ -97,9 +105,15 @@ const InvestmentList = () => {
                                                 </div>
                                                 <h1 className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">{t("recovered")}</h1>
                                             </div>
-                                            <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1">
-                                                €{capitalFromClosedInversions.toFixed(2)}
-                                            </h1>
+                                            {isBlurred ? (
+                                                <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1 blur-md select-none">
+                                                    €{capitalFromClosedInversions.toFixed(2)}
+                                                </h1>
+                                            ) : (
+                                                <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1">
+                                                    €{capitalFromClosedInversions.toFixed(2)}
+                                                </h1>
+                                            )}
                                             <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">
                                                 {t("from")} {closedInversions.length} {closedInversions.length !== 1 ? t("closedInvestments") : t("closedInvestment")}
                                             </p>
@@ -117,9 +131,15 @@ const InvestmentList = () => {
                                                 </div>
                                                 <h1 className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">{t("profits")}</h1>
                                             </div>
-                                            <h1 className={`text-2xl sm:text-3xl lg:text-4xl mb-1 ${totalProfitFromClosed >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
-                                                {totalProfitFromClosed >= 0 ? '+' : ''}€{totalProfitFromClosed.toFixed(2)}
-                                            </h1>
+                                            {isBlurred ? (
+                                                <h1 className={`text-2xl sm:text-3xl lg:text-4xl mb-1 blur-md select-none ${totalProfitFromClosed >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+                                                    {totalProfitFromClosed >= 0 ? '+' : ''}€{totalProfitFromClosed.toFixed(2)}
+                                                </h1>
+                                            ) : (
+                                                <h1 className={`text-2xl sm:text-3xl lg:text-4xl mb-1 ${totalProfitFromClosed >= 0 ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400'}`}>
+                                                    {totalProfitFromClosed >= 0 ? '+' : ''}€{totalProfitFromClosed.toFixed(2)}
+                                                </h1>
+                                            )}
                                             <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">{t("accumulated")}</p>
                                         </div>
                                     </div>
@@ -133,9 +153,15 @@ const InvestmentList = () => {
                                             </div>
                                             <h1 className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">{t("budget")}</h1>
                                         </div>
-                                        <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1">
-                                            €{isInvestmentFromNomina.toFixed(2)}
-                                        </h1>
+                                        {isBlurred ? (
+                                            <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1 blur-md select-none">
+                                                €{isInvestmentFromNomina.toFixed(2)}
+                                            </h1>
+                                        ) : (
+                                            <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1">
+                                                €{isInvestmentFromNomina.toFixed(2)}
+                                            </h1>
+                                        )}
                                         <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">{t("assignedFromSalary")}</p>
                                     </div>
                                 </div>
@@ -197,15 +223,30 @@ const InvestmentList = () => {
                                         </div>
 
                                         <div className="text-right flex-shrink-0 ml-4">
-                                            <p className="text-slate-900 dark:text-slate-100 font-semibold">
-                                                €{totalValue.toFixed(2)}
-                                            </p>
-                                            <p className={`text-sm font-medium ${isPositive
-                                                ? 'text-green-600 dark:text-green-400'
-                                                : 'text-red-600 dark:text-red-400'
-                                                }`}>
-                                                {isPositive ? '+' : ''}{(inversion.real_profitability || 0).toFixed(2)}%
-                                            </p>
+                                            {isBlurred ? (
+                                                <p className="text-slate-900 dark:text-slate-100 font-semibold blur-md select-none">
+                                                    €{totalValue.toFixed(2)}
+                                                </p>
+                                            ) : (
+                                                <p className="text-slate-900 dark:text-slate-100 font-semibold">
+                                                    €{totalValue.toFixed(2)}
+                                                </p>
+                                            )}
+                                            {isBlurred ? (
+                                                <p className={`text-sm font-medium blur-md select-none ${isPositive
+                                                    ? 'text-green-600 dark:text-green-400'
+                                                    : 'text-red-600 dark:text-red-400'
+                                                    }`}>
+                                                    {isPositive ? '+' : ''}{(inversion.real_profitability || 0).toFixed(2)}%
+                                                </p>
+                                            ) : (
+                                                <p className={`text-sm font-medium ${isPositive
+                                                    ? 'text-green-600 dark:text-green-400'
+                                                    : 'text-red-600 dark:text-red-400'
+                                                    }`}>
+                                                    {isPositive ? '+' : ''}{(inversion.real_profitability || 0).toFixed(2)}%
+                                                </p>
+                                            )}
                                         </div>
                                     </div>
                                 );

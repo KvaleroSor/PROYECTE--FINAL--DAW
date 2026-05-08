@@ -2,12 +2,14 @@
 
 import { useSaving } from "@/app/context/SavingContext.js";
 import { useFinancial } from "@/app/context/FinancialContext.js";
+import { useBlur } from "@/app/context/BlurContext";
 import { TrendingUp, Target, Calendar, ArrowUp, ArrowDown, Minus, History } from "lucide-react";
 import { useRouter } from "@/i18n/navigation";
 
 const SavingsProgressDashboard = () => {
     const { savingGoals, calculateProgress } = useSaving();
     const { isSavingFromNomina } = useFinancial();
+    const { isBlurred } = useBlur();
     const router = useRouter();
 
     // Calcular estadísticas
@@ -50,8 +52,8 @@ const SavingsProgressDashboard = () => {
                 <div className="flex items-center gap-3">
                     {/* Indicador de tendencia */}
                     <div className={`flex items-center gap-2 px-3 py-2 rounded-lg ${trend === 'up' ? 'bg-green-50 text-green-700' :
-                            trend === 'stable' ? 'bg-yellow-50 text-yellow-700' :
-                                'bg-red-50 text-red-700'
+                        trend === 'stable' ? 'bg-yellow-50 text-yellow-700' :
+                            'bg-red-50 text-red-700'
                         }`}>
                         {trend === 'up' && <ArrowUp className="w-4 h-4" />}
                         {trend === 'stable' && <Minus className="w-4 h-4" />}
@@ -107,7 +109,11 @@ const SavingsProgressDashboard = () => {
                             </div>
                         </div>
                         <div className="text-xs text-slate-600">
-                            <p>€{totalSaved.toFixed(2)} de €{totalTarget.toFixed(2)}</p>
+                            {isBlurred ? (
+                                <p className="blur-md select-none">€{totalSaved.toFixed(2)} de €{totalTarget.toFixed(2)}</p>
+                            ) : (
+                                <p>€{totalSaved.toFixed(2)} de €{totalTarget.toFixed(2)}</p>
+                            )}
                         </div>
                     </div>
 
@@ -118,13 +124,23 @@ const SavingsProgressDashboard = () => {
                             <h3 className="font-semibold text-slate-900">Este Mes</h3>
                         </div>
                         <div className="mb-3">
-                            <p className="text-4xl text-slate-900">
-                                €{totalMonthlyContribution.toFixed(2)}
-                            </p>
+                            {isBlurred ? (
+                                <p className="text-4xl text-slate-900 blur-md select-none">
+                                    €{totalMonthlyContribution.toFixed(2)}
+                                </p>
+                            ) : (
+                                <p className="text-4xl text-slate-900">
+                                    €{totalMonthlyContribution.toFixed(2)}
+                                </p>
+                            )}
                             <p className="text-sm text-slate-500 mt-1">Contribución total</p>
                         </div>
                         <div className="text-xs text-slate-600">
-                            <p>Presupuesto: €{isSavingFromNomina.toFixed(2)}</p>
+                            {isBlurred ? (
+                                <p className="blur-md select-none">Presupuesto: €{isSavingFromNomina.toFixed(2)}</p>
+                            ) : (
+                                <p>Presupuesto: €{isSavingFromNomina.toFixed(2)}</p>
+                            )}
                         </div>
                     </div>
 
@@ -148,7 +164,11 @@ const SavingsProgressDashboard = () => {
                                     </div>
                                 </div>
                                 <div className="text-xs text-slate-600">
-                                    <p>{goalsByProgress[0].progress.toFixed(1)}% completado</p>
+                                    {isBlurred ? (
+                                        <p className="blur-md select-none">{goalsByProgress[0].progress.toFixed(1)}% completado</p>
+                                    ) : (
+                                        <p>{goalsByProgress[0].progress.toFixed(1)}% completado</p>
+                                    )}
                                 </div>
                             </>
                         ) : (
@@ -179,8 +199,17 @@ const SavingsProgressDashboard = () => {
                                                 />
                                             </div>
                                             <div className="flex justify-between mt-1 text-xs text-slate-500">
-                                                <span>€{goal.current_amount.toFixed(2)}</span>
-                                                <span>€{goal.target_amount.toFixed(2)}</span>
+                                                {isBlurred ? (
+                                                    <>
+                                                        <span className="blur-md select-none">€{goal.current_amount.toFixed(2)}</span>
+                                                        <span className="blur-md select-none">€{goal.target_amount.toFixed(2)}</span>
+                                                    </>
+                                                ) : (
+                                                    <>
+                                                        <span>€{goal.current_amount.toFixed(2)}</span>
+                                                        <span>€{goal.target_amount.toFixed(2)}</span>
+                                                    </>
+                                                )}
                                             </div>
                                         </div>
                                     </div>
