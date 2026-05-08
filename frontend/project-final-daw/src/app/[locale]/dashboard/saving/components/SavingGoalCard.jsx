@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useSaving } from "@/app/context/SavingContext.js";
+import { useBlur } from "@/app/context/BlurContext";
 import { Target, TrendingUp, Calendar, Trash2, Edit, Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import ConfirmationModal from "@/components/ConfirmationModal";
@@ -16,6 +17,7 @@ const SavingGoalCard = ({ goal }) => {
         setSelectedGoal,
         setIsFormSavingOpen,
     } = useSaving();
+    const { isBlurred } = useBlur();
 
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [isDeleting, setIsDeleting] = useState(false);
@@ -114,9 +116,15 @@ const SavingGoalCard = ({ goal }) => {
             <div className="mb-4">
                 <div className="flex justify-between text-sm mb-2">
                     <span className="text-slate-600 dark:text-slate-300">Progreso</span>
-                    <span className="text-md text-slate-900 dark:text-slate-300">
-                        {goal.current_amount.toFixed(2)}€ / {goal.target_amount.toFixed(2)}€
-                    </span>
+                    {isBlurred ? (
+                        <span className="text-md text-slate-900 dark:text-slate-300 blur-md select-none">
+                            {goal.current_amount.toFixed(2)}€ / {goal.target_amount.toFixed(2)}€
+                        </span>
+                    ) : (
+                        <span className="text-md text-slate-900 dark:text-slate-300">
+                            {goal.current_amount.toFixed(2)}€ / {goal.target_amount.toFixed(2)}€
+                        </span>
+                    )}
                 </div>
 
                 {/* Barra de progreso */}
@@ -129,7 +137,11 @@ const SavingGoalCard = ({ goal }) => {
 
                 <div className="flex justify-between text-sm text-slate-500 dark:text-slate-300 mt-1">
                     <span>{progress.toFixed(1)}% completado</span>
-                    <span className="text-slate-700">{(goal.target_amount - goal.current_amount).toFixed(2)}€ restantes</span>
+                    {isBlurred ? (
+                        <span className="text-slate-700 blur-md select-none">{(goal.target_amount - goal.current_amount).toFixed(2)}€ restantes</span>
+                    ) : (
+                        <span className="text-slate-700">{(goal.target_amount - goal.current_amount).toFixed(2)}€ restantes</span>
+                    )}
                 </div>
             </div>
 
@@ -140,9 +152,15 @@ const SavingGoalCard = ({ goal }) => {
                         <TrendingUp className="w-4 h-4" />
                         <span>Contribución mensual:</span>
                     </div>
-                    <span className="text-slate-900 dark:text-slate-300">
-                        {monthlyContribution.toFixed(2)}€
-                    </span>
+                    {isBlurred ? (
+                        <span className="text-slate-900 dark:text-slate-300 blur-md select-none">
+                            {monthlyContribution.toFixed(2)}€
+                        </span>
+                    ) : (
+                        <span className="text-slate-900 dark:text-slate-300">
+                            {monthlyContribution.toFixed(2)}€
+                        </span>
+                    )}
                 </div>
 
                 <div className="flex items-center justify-between">

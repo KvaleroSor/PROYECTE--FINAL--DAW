@@ -9,6 +9,7 @@ import { useTranslations } from "next-intl";
 import { useSpends } from "@/app/context/SpendContext";
 import { useCategories } from "@/app/context/CategoryContext";
 import { useSession } from "next-auth/react";
+import { useBlur } from "@/app/context/BlurContext";
 
 const GridSpendsMainPage = () => {
     const t = useTranslations("expenses");
@@ -17,6 +18,7 @@ const GridSpendsMainPage = () => {
     const { isTotalSpendByMonth } = useSpends();
     const { isCategories } = useCategories();
     const { data: session } = useSession();
+    const { isBlurred } = useBlur();
     const [isSearchOptionSelected, setIsSearchOptionSelected] = useState("year");
     const [isSearchOptionSpendCategorySelected, setIsSearchOptionSpendCategorySelected] = useState("spend");
     const [searchQuery, setSearchQuery] = useState("");
@@ -266,9 +268,15 @@ const GridSpendsMainPage = () => {
                                 </div>
                                 <h1 className="text-xs sm:text-sm md:text-base text-slate-500 dark:text-slate-400">{t("monthlyAverage")}</h1>
                             </div>
-                            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1">
-                                €{Number(statistics.monthlyAverage).toFixed(2)}
-                            </h1>
+                            {isBlurred ? (
+                                <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1 blur-md select-none">
+                                    €{Number(statistics.monthlyAverage).toFixed(2)}
+                                </h1>
+                            ) : (
+                                <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1">
+                                    €{Number(statistics.monthlyAverage).toFixed(2)}
+                                </h1>
+                            )}
                         </div>
 
                         {/* Tarjeta de total anual */}
@@ -281,9 +289,15 @@ const GridSpendsMainPage = () => {
                                 </div>
                                 <h1 className="text-xs sm:text-sm md:text-base text-slate-500 dark:text-slate-400">{t("yearTotal")}</h1>
                             </div>
-                            <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1">
-                                €{Number(statistics.yearlyTotal).toFixed(2)}
-                            </h1>
+                            {isBlurred ? (
+                                <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1 blur-md select-none">
+                                    €{Number(statistics.yearlyTotal).toFixed(2)}
+                                </h1>
+                            ) : (
+                                <h1 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1">
+                                    €{Number(statistics.yearlyTotal).toFixed(2)}
+                                </h1>
+                            )}
                         </div>
 
                         {/* Tarjeta de número de transacciones */}
@@ -467,7 +481,11 @@ const GridSpendsMainPage = () => {
                         {(isTotalSpendByMonth > 0) && (
                             <div className="flex flex-col justify-center items-center gap-2 bg-slate-100 rounded-xl p-3 sm:p-4 mb-2 shadow-lg hover:shadow-md dark:shadow-lg dark:hover:shadow-md dark:shadow-slate-900 dark:bg-slate-600 transition-all duration-300 px-4 sm:px-10">
                                 <h3 className="text-sm sm:text-base md:text-lg dark:text-slate-100">{t("totalAccumulated")}</h3>
-                                <span className="text-xl sm:text-2xl md:text-3xl text-slate-900 dark:text-slate-100">{isTotalSpendByMonth.toFixed(2)} €</span>
+                                {isBlurred ? (
+                                    <span className="text-xl sm:text-2xl md:text-3xl text-slate-900 dark:text-slate-100 blur-md select-none">{isTotalSpendByMonth.toFixed(2)} €</span>
+                                ) : (
+                                    <span className="text-xl sm:text-2xl md:text-3xl text-slate-900 dark:text-slate-100">{isTotalSpendByMonth.toFixed(2)} €</span>
+                                )}
                             </div>
                         )}
                     </div>

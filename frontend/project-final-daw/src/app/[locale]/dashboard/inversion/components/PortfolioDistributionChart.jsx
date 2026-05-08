@@ -2,9 +2,11 @@
 
 import { PieChart, Pie, Cell, ResponsiveContainer, Legend, Tooltip } from "recharts";
 import { useInversion } from "@/app/context/InversionContext";
+import { useBlur } from "@/app/context/BlurContext";
 
 const PortfolioDistributionChart = () => {
     const { isInversions } = useInversion();
+    const { isBlurred } = useBlur();
 
     // Agrupar inversiones por tipo
     const distributionData = isInversions.reduce((acc, inv) => {
@@ -44,9 +46,15 @@ const PortfolioDistributionChart = () => {
                     <p className="text-slate-900 dark:text-slate-100 font-semibold">
                         {payload[0].name}
                     </p>
-                    <p className="text-slate-600 dark:text-slate-400">
-                        €{payload[0].value.toFixed(2)}
-                    </p>
+                    {isBlurred ? (
+                        <p className="text-slate-600 dark:text-slate-400 blur-md select-none">
+                            €{payload[0].value.toFixed(2)}
+                        </p>
+                    ) : (
+                        <p className="text-slate-600 dark:text-slate-400">
+                            €{payload[0].value.toFixed(2)}
+                        </p>
+                    )}
                     <p className="text-slate-500 dark:text-slate-500 text-sm">
                         {percentage}% del total
                     </p>

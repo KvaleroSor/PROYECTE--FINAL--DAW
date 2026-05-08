@@ -17,6 +17,7 @@ import {
 } from "lucide-react";
 import { useIconSpendCategory } from "@/app/hooks/spend/useIconSpendCategory.js";
 import { useSpends } from "@/app/context/SpendContext.js";
+import { useBlur } from "@/app/context/BlurContext";
 
 const Spend = ({ spend, session }) => {
     const {
@@ -42,6 +43,7 @@ const Spend = ({ spend, session }) => {
         setIsSpend,
     } = useSpends();
     const { isIconSpendCategory, isCategoryName } = useIconSpendCategory(spend.category_id);
+    const { isBlurred } = useBlur();
     const Icon = isIconSpendCategory;
 
     const handleClickUpdate = () => {
@@ -80,9 +82,15 @@ const Spend = ({ spend, session }) => {
                                     </p>
                                 </div>
                             </div>
-                            <p className="text-xl sm:text-2xl text-slate-900 dark:text-slate-100 font-medium">
-                                € {spend.amount.toFixed(2)}
-                            </p>
+                            {isBlurred ? (
+                                <p className="text-xl sm:text-2xl text-slate-900 dark:text-slate-100 font-medium blur-md select-none">
+                                    € {spend.amount.toFixed(2)}
+                                </p>
+                            ) : (
+                                <p className="text-xl sm:text-2xl text-slate-900 dark:text-slate-100 font-medium">
+                                    € {spend.amount.toFixed(2)}
+                                </p>
+                            )}
                         </div>
 
                         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between pt-2 sm:pt-3 border-t border-slate-100 dark:border-slate-700 gap-2 sm:gap-0">

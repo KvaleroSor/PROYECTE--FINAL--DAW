@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useInversion } from "@/app/context/InversionContext";
+import { useBlur } from "@/app/context/BlurContext";
 import { TrendingUp, DollarSign, Target, Activity, PieChart, BarChart3, LineChart, X, CheckCircle, RefreshCw } from "lucide-react";
 import { useTranslations } from "next-intl";
 import PortfolioDistributionChart from "./PortfolioDistributionChart";
@@ -15,6 +16,7 @@ const InversionSummary = () => {
     const t = useTranslations("investments");
     const tCommon = useTranslations("common");
     const { isInversions, isInversionFromNomina, isLoading, closeInversion, isUpdatingProfitability, lastUpdateTime, updateAllInvestmentsProfitability } = useInversion();
+    const { isBlurred } = useBlur();
     const [closingInversion, setClosingInversion] = useState(null);
     const [isClosing, setIsClosing] = useState(false);
 
@@ -101,9 +103,15 @@ const InversionSummary = () => {
                                 </div>
                                 <h1 className="text-slate-500 dark:text-slate-400">{t("totalInvested").toUpperCase()}</h1>
                             </div>
-                            <h1 className="text-4xl text-slate-900 dark:text-slate-100 mb-1">
-                                € {Number(totalInvested).toFixed(2)}
-                            </h1>
+                            {isBlurred ? (
+                                <h1 className="text-4xl text-slate-900 dark:text-slate-100 mb-1 blur-md select-none">
+                                    € {Number(totalInvested).toFixed(2)}
+                                </h1>
+                            ) : (
+                                <h1 className="text-4xl text-slate-900 dark:text-slate-100 mb-1">
+                                    € {Number(totalInvested).toFixed(2)}
+                                </h1>
+                            )}
                             <p className="text-slate-500 dark:text-slate-400">{t("totalInvested")}</p>
                         </div>
                     </div>
@@ -123,9 +131,15 @@ const InversionSummary = () => {
                                 </div>
                                 <h1 className="text-slate-500 dark:text-slate-400">{t("performance").toUpperCase()}</h1>
                             </div>
-                            <h1 className="text-4xl text-slate-900 dark:text-slate-100 mb-1">
-                                € {Number(totalProfitability).toFixed(2)}
-                            </h1>
+                            {isBlurred ? (
+                                <h1 className="text-4xl text-slate-900 dark:text-slate-100 mb-1 blur-md select-none">
+                                    € {Number(totalProfitability).toFixed(2)}
+                                </h1>
+                            ) : (
+                                <h1 className="text-4xl text-slate-900 dark:text-slate-100 mb-1">
+                                    € {Number(totalProfitability).toFixed(2)}
+                                </h1>
+                            )}
                             <div className="flex items-center justify-between">
                                 <p className="text-slate-500 dark:text-slate-400">{t("performance")}</p>
                                 {lastUpdateTime && (
@@ -146,9 +160,15 @@ const InversionSummary = () => {
                                 </div>
                                 <h1 className="text-slate-500 dark:text-slate-400">{t("currentValue").toUpperCase()}</h1>
                             </div>
-                            <h1 className="text-4xl text-slate-900 dark:text-slate-100 mb-1">
-                                € {Number(totalValue).toFixed(2)}
-                            </h1>
+                            {isBlurred ? (
+                                <h1 className="text-4xl text-slate-900 dark:text-slate-100 mb-1 blur-md select-none">
+                                    € {Number(totalValue).toFixed(2)}
+                                </h1>
+                            ) : (
+                                <h1 className="text-4xl text-slate-900 dark:text-slate-100 mb-1">
+                                    € {Number(totalValue).toFixed(2)}
+                                </h1>
+                            )}
                             <p className="text-slate-500 dark:text-slate-400">{t("currentValue")}</p>
                         </div>
                     </div>
@@ -278,9 +298,15 @@ const InversionSummary = () => {
                                                             {inversion.type}
                                                         </span>
                                                     </td>
-                                                    <td className="py-3 px-4 text-right text-slate-900 dark:text-slate-100 font-medium">
-                                                        €{Number(inversion.amount).toFixed(2)}
-                                                    </td>
+                                                    {isBlurred ? (
+                                                        <td className="py-3 px-4 text-right text-slate-900 dark:text-slate-100 font-medium blur-md select-none">
+                                                            €{Number(inversion.amount).toFixed(2)}
+                                                        </td>
+                                                    ) : (
+                                                        <td className="py-3 px-4 text-right text-slate-900 dark:text-slate-100 font-medium">
+                                                            €{Number(inversion.amount).toFixed(2)}
+                                                        </td>
+                                                    )}
                                                     <td className="py-3 px-4 text-right text-slate-600 dark:text-slate-400">
                                                         {Number(inversion.target_profitability || 0).toFixed(2)}%
                                                     </td>
@@ -292,17 +318,34 @@ const InversionSummary = () => {
                                                             {Number(inversion.real_profitability || 0).toFixed(2)}%
                                                         </span>
                                                     </td>
-                                                    <td className="py-3 px-4 text-right">
-                                                        <span className={`font-medium ${profitability >= 0
-                                                            ? 'text-green-600 dark:text-green-400'
-                                                            : 'text-red-600 dark:text-red-400'
-                                                            }`}>
-                                                            €{Number(profitability).toFixed(2)}
-                                                        </span>
-                                                    </td>
-                                                    <td className="py-3 px-4 text-right text-slate-900 dark:text-slate-100 font-semibold">
-                                                        €{Number(totalValue).toFixed(2)}
-                                                    </td>
+                                                    {isBlurred ? (
+                                                        <td className="py-3 px-4 text-right">
+                                                            <span className={`font-medium blur-md select-none ${profitability >= 0
+                                                                ? 'text-green-600 dark:text-green-400'
+                                                                : 'text-red-600 dark:text-red-400'
+                                                                }`}>
+                                                                €{Number(profitability).toFixed(2)}
+                                                            </span>
+                                                        </td>
+                                                    ) : (
+                                                        <td className="py-3 px-4 text-right">
+                                                            <span className={`font-medium ${profitability >= 0
+                                                                ? 'text-green-600 dark:text-green-400'
+                                                                : 'text-red-600 dark:text-red-400'
+                                                                }`}>
+                                                                €{Number(profitability).toFixed(2)}
+                                                            </span>
+                                                        </td>
+                                                    )}
+                                                    {isBlurred ? (
+                                                        <td className="py-3 px-4 text-right text-slate-900 dark:text-slate-100 font-semibold blur-md select-none">
+                                                            €{Number(totalValue).toFixed(2)}
+                                                        </td>
+                                                    ) : (
+                                                        <td className="py-3 px-4 text-right text-slate-900 dark:text-slate-100 font-semibold">
+                                                            €{Number(totalValue).toFixed(2)}
+                                                        </td>
+                                                    )}
                                                     <td className="py-3 px-4 text-center text-slate-600 dark:text-slate-400 text-sm">
                                                         <div className="flex flex-row gap-2 justify-center items-center">
                                                             <span>{new Date(inversion.inversion_date).toLocaleDateString('es-ES')}</span>
@@ -335,91 +378,93 @@ const InversionSummary = () => {
             </div>
 
             {/* Modal de confirmación para cerrar inversión */}
-            {closingInversion && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
-                    <div className="bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full shadow-2xl border-2 border-slate-200 dark:border-slate-700">
-                        <div className="flex items-center gap-3 mb-4">
-                            <div className="w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center">
-                                <X className="w-6 h-6 text-red-600 dark:text-red-400" />
-                            </div>
-                            <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100">
-                                {t("closeInvestment")}
-                            </h3>
-                        </div>
-
-                        <div className="mb-6">
-                            <p className="text-slate-700 dark:text-slate-300 mb-4">
-                                {t("closeInvestmentConfirm")}
-                            </p>
-
-                            <div className="bg-slate-50 dark:bg-slate-700/50 rounded-lg p-4 space-y-2">
-                                <div className="flex justify-between">
-                                    <span className="text-slate-600 dark:text-slate-400">{t("title")}:</span>
-                                    <span className="font-bold text-slate-900 dark:text-slate-100">
-                                        {closingInversion.symbol || closingInversion.type}
-                                    </span>
+            {
+                closingInversion && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+                        <div className="bg-white dark:bg-slate-800 rounded-xl p-6 max-w-md w-full shadow-2xl border-2 border-slate-200 dark:border-slate-700">
+                            <div className="flex items-center gap-3 mb-4">
+                                <div className="w-12 h-12 bg-red-100 dark:bg-red-900/30 rounded-full flex items-center justify-center">
+                                    <X className="w-6 h-6 text-red-600 dark:text-red-400" />
                                 </div>
-                                <div className="flex justify-between">
-                                    <span className="text-slate-600 dark:text-slate-400">{t("investedCapital")}:</span>
-                                    <span className="font-medium text-slate-900 dark:text-slate-100">
-                                        €{closingInversion.amount.toFixed(2)}
-                                    </span>
-                                </div>
-                                <div className="flex justify-between">
-                                    <span className="text-slate-600 dark:text-slate-400">{t("performance")}:</span>
-                                    <span className={`font-medium ${(closingInversion.real_profitability || 0) >= 0
-                                        ? 'text-green-600 dark:text-green-400'
-                                        : 'text-red-600 dark:text-red-400'
-                                        }`}>
-                                        {(closingInversion.real_profitability || 0) >= 0 ? '+' : ''}
-                                        {(closingInversion.real_profitability || 0).toFixed(2)}%
-                                    </span>
-                                </div>
-                                <div className="flex justify-between pt-2 border-t border-slate-200 dark:border-slate-600">
-                                    <span className="text-slate-600 dark:text-slate-400 font-medium">{t("finalValue")}:</span>
-                                    <span className="font-bold text-slate-900 dark:text-slate-100">
-                                        €{(closingInversion.amount + ((closingInversion.real_profitability || 0) * closingInversion.amount) / 100).toFixed(2)}
-                                    </span>
-                                </div>
+                                <h3 className="text-xl font-bold text-slate-900 dark:text-slate-100">
+                                    {t("closeInvestment")}
+                                </h3>
                             </div>
 
-                            <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
-                                <p className="text-sm text-blue-800 dark:text-blue-300">
-                                    💰 {t("closeInvestmentNote")}
+                            <div className="mb-6">
+                                <p className="text-slate-700 dark:text-slate-300 mb-4">
+                                    {t("closeInvestmentConfirm")}
                                 </p>
-                            </div>
-                        </div>
 
-                        <div className="flex gap-3">
-                            <button
-                                onClick={() => setClosingInversion(null)}
-                                disabled={isClosing}
-                                className="flex-1 px-4 py-2.5 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors font-medium disabled:opacity-50"
-                            >
-                                {tCommon("cancel")}
-                            </button>
-                            <button
-                                onClick={handleCloseInversion}
-                                disabled={isClosing}
-                                className="flex-1 px-4 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium disabled:opacity-50 flex items-center justify-center gap-2"
-                            >
-                                {isClosing ? (
-                                    <>
-                                        <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
-                                        {t("closingAction")}...
-                                    </>
-                                ) : (
-                                    <>
-                                        <CheckCircle className="w-4 h-4" />
-                                        {t("confirmClose")}
-                                    </>
-                                )}
-                            </button>
+                                <div className="bg-slate-50 dark:bg-slate-700/50 rounded-lg p-4 space-y-2">
+                                    <div className="flex justify-between">
+                                        <span className="text-slate-600 dark:text-slate-400">{t("title")}:</span>
+                                        <span className="font-bold text-slate-900 dark:text-slate-100">
+                                            {closingInversion.symbol || closingInversion.type}
+                                        </span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span className="text-slate-600 dark:text-slate-400">{t("investedCapital")}:</span>
+                                        <span className="font-medium text-slate-900 dark:text-slate-100">
+                                            €{closingInversion.amount.toFixed(2)}
+                                        </span>
+                                    </div>
+                                    <div className="flex justify-between">
+                                        <span className="text-slate-600 dark:text-slate-400">{t("performance")}:</span>
+                                        <span className={`font-medium ${(closingInversion.real_profitability || 0) >= 0
+                                            ? 'text-green-600 dark:text-green-400'
+                                            : 'text-red-600 dark:text-red-400'
+                                            }`}>
+                                            {(closingInversion.real_profitability || 0) >= 0 ? '+' : ''}
+                                            {(closingInversion.real_profitability || 0).toFixed(2)}%
+                                        </span>
+                                    </div>
+                                    <div className="flex justify-between pt-2 border-t border-slate-200 dark:border-slate-600">
+                                        <span className="text-slate-600 dark:text-slate-400 font-medium">{t("finalValue")}:</span>
+                                        <span className="font-bold text-slate-900 dark:text-slate-100">
+                                            €{(closingInversion.amount + ((closingInversion.real_profitability || 0) * closingInversion.amount) / 100).toFixed(2)}
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+                                    <p className="text-sm text-blue-800 dark:text-blue-300">
+                                        💰 {t("closeInvestmentNote")}
+                                    </p>
+                                </div>
+                            </div>
+
+                            <div className="flex gap-3">
+                                <button
+                                    onClick={() => setClosingInversion(null)}
+                                    disabled={isClosing}
+                                    className="flex-1 px-4 py-2.5 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-600 transition-colors font-medium disabled:opacity-50"
+                                >
+                                    {tCommon("cancel")}
+                                </button>
+                                <button
+                                    onClick={handleCloseInversion}
+                                    disabled={isClosing}
+                                    className="flex-1 px-4 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-colors font-medium disabled:opacity-50 flex items-center justify-center gap-2"
+                                >
+                                    {isClosing ? (
+                                        <>
+                                            <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
+                                            {t("closingAction")}...
+                                        </>
+                                    ) : (
+                                        <>
+                                            <CheckCircle className="w-4 h-4" />
+                                            {t("confirmClose")}
+                                        </>
+                                    )}
+                                </button>
+                            </div>
                         </div>
                     </div>
-                </div>
-            )}
-        </div>
+                )
+            }
+        </div >
     );
 };
 

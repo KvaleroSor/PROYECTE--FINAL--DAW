@@ -2,6 +2,7 @@
 
 import { useSaving } from "@/app/context/SavingContext.js";
 import { useFinancial } from "@/app/context/FinancialContext.js";
+import { useBlur } from "@/app/context/BlurContext";
 import SavingGoalCard from "./SavingGoalCard.jsx";
 import MonthlyContributionStatus from "./MonthlyContributionStatus.jsx";
 import { Plus, Target, Wallet, TrendingUp, AlertCircle } from "lucide-react";
@@ -16,6 +17,7 @@ const GridSavingGoals = () => {
         calculateUnallocatedPercentage,
         isSavingFromNomina,
     } = useSaving();
+    const { isBlurred } = useBlur();
 
     const unallocatedPercentage = calculateUnallocatedPercentage();
     const unallocatedAmount = (unallocatedPercentage / 100) * (isSavingFromNomina || 0);
@@ -58,9 +60,15 @@ const GridSavingGoals = () => {
                             <h1 className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">{t("totalProgress")}</h1>
                         </div>
                         <p className="text-3xl text-slate-900 dark:text-slate-100 mb-1">{overallProgress.toFixed(1)}%</p>
-                        <p className="text-sm text-slate-500 dark:text-slate-400">
-                            {totalSaved.toFixed(2)}€ {t("of")} {totalTarget.toFixed(2)}€
-                        </p>
+                        {isBlurred ? (
+                            <p className="text-sm text-slate-500 dark:text-slate-400 blur-md select-none">
+                                {totalSaved.toFixed(2)}€ {t("of")} {totalTarget.toFixed(2)}€
+                            </p>
+                        ) : (
+                            <p className="text-sm text-slate-500 dark:text-slate-400">
+                                {totalSaved.toFixed(2)}€ {t("of")} {totalTarget.toFixed(2)}€
+                            </p>
+                        )}
                     </div>
 
                     {/* Tarjeta de metas activas */}
@@ -86,7 +94,11 @@ const GridSavingGoals = () => {
                             <p className="text-sm font-medium text-slate-600 dark:text-slate-400">{t("availableBudget")}</p>
                         </div>
                         <p className="text-3xl text-slate-900 dark:text-slate-100 mb-1">{unallocatedPercentage.toFixed(1)}%</p>
-                        <p className="text-sm text-slate-500 dark:text-slate-400">{unallocatedAmount.toFixed(2)}€/{t("month")}</p>
+                        {isBlurred ? (
+                            <p className="text-sm text-slate-500 dark:text-slate-400 blur-md select-none">{unallocatedAmount.toFixed(2)}€/{t("month")}</p>
+                        ) : (
+                            <p className="text-sm text-slate-500 dark:text-slate-400">{unallocatedAmount.toFixed(2)}€/{t("month")}</p>
+                        )}
                     </div>
                 </div>
             </div>
