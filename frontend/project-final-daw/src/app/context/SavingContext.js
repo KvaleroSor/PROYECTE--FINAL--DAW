@@ -338,12 +338,12 @@ export const SavingProvider = ({ children }) => {
         }
     }, [session, status]);
 
-    // Verificar y procesar contribuciones automáticamente cuando cambia isSavingFromNomina
+    // Verificar y procesar contribuciones automáticamente solo una vez al cargar
     useEffect(() => {
-        if (session?.user?.user_id && isSavingFromNomina) {
+        if (session?.user?.user_id && isSavingFromNomina && savingGoals.length > 0) {
             checkAndProcessMonthlyContributions();
         }
-    }, [session?.user?.user_id, isSavingFromNomina]);
+    }, [session?.user?.user_id]); // Solo cuando cambia el usuario, no cuando cambia isSavingFromNomina
 
     return (
         <SavingContext.Provider

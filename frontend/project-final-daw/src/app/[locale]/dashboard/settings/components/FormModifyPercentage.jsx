@@ -5,9 +5,9 @@ import { useSavingsRealTime } from "@/app/hooks/saving/useSavingsRealTime.js";
 import { useState, useEffect } from 'react';
 import { X, Repeat, Ban } from 'lucide-react';
 
-const FormModifyPercentage = () => {
+const FormModifyPercentage = ({ onClose }) => {
     const t = useTranslations("percentageChart");
-    const { isPercentageSettings, isNomina, isFixedExpensesFromNomina, isLeisureExpensesFromNomina, isInvestmentFromNomina, isSavingFromNomina, setIsFormModifyPercentageOpen, setIsNomina, updatePercentageSettings, updateNomina } = useFinancial();
+    const { isPercentageSettings, isNomina, isFixedExpensesFromNomina, isLeisureExpensesFromNomina, isInvestmentFromNomina, isSavingFromNomina, setIsNomina, updatePercentageSettings, updateNomina } = useFinancial();
     const { isTotalImprevistosPercentatge, isTotalImprevistos, setIsTotalImprevistosPercentatge, setIsTotalImprevistos } = useSavingsRealTime();
     const [fixedPercentage, setFixedPercentage] = useState(isPercentageSettings.fixedExpenses);
     const [leisurePercentage, setLeisurePercentage] = useState(isPercentageSettings.leisureExpenses);
@@ -19,7 +19,7 @@ const FormModifyPercentage = () => {
     const [isOldNominaValue, setIsOldNominaValue] = useState(isNomina);
 
     const handleClickCloseFormModifyPercentage = () => {
-        setIsFormModifyPercentageOpen(false);
+        if (onClose) onClose();
         setIsNomina(isOldNominaValue);
     };
 
@@ -58,7 +58,7 @@ const FormModifyPercentage = () => {
             try {
                 updateNomina(isNomina);
                 setIsNominaUpdated(false);
-                setIsFormModifyPercentageOpen(false);
+                if (onClose) onClose();
             } catch (err) {
                 console.error("ERROR - NO SE PUEDE ACTUALIZAR LA NÓMINA DEL USUARIO:", err);
             }
@@ -77,7 +77,7 @@ const FormModifyPercentage = () => {
 
             setIsTotalImprevistosPercentatge(isTotalImprevistosPercentatge);
             setIsTotalImprevistos(isTotalImprevistos);
-            setIsFormModifyPercentageOpen(false);
+            if (onClose) onClose();
         }
     };
 

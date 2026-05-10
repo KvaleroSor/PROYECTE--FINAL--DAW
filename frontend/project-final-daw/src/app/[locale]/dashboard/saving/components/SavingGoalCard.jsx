@@ -9,6 +9,7 @@ import ConfirmationModal from "@/components/ConfirmationModal";
 
 const SavingGoalCard = ({ goal }) => {
     const t = useTranslations("savings");
+    const tCommon = useTranslations("common");
     const {
         calculateProgress,
         calculateMonthlyContribution,
@@ -222,15 +223,15 @@ const SavingGoalCard = ({ goal }) => {
                 title={t("deleteGoalButton")}
                 message={t("deleteConfirm", { goalName: goal.goal_name })}
                 confirmText={t("deleteGoalButton")}
-                cancelText="Cancelar"
+                cancelText={tCommon("cancel")}
                 type="danger"
                 isLoading={isDeleting}
                 itemDetails={{
-                    "Objetivo": goal.goal_name,
-                    "Cantidad objetivo": `€${goal.target_amount.toFixed(2)}`,
-                    "Cantidad actual": `€${goal.current_amount.toFixed(2)}`,
-                    "Progreso": `${progress.toFixed(1)}%`,
-                    "Prioridad": priorityLabels[goal.priority],
+                    [t("goalObjective")]: goal.goal_name,
+                    [t("targetAmountLabel")]: `€${goal.target_amount.toFixed(2)}`,
+                    [t("currentAmountLabel")]: `€${goal.current_amount.toFixed(2)}`,
+                    [t("progressLabel")]: `${progress.toFixed(1)}%`,
+                    [t("priorityLabel")]: priorityLabels[goal.priority],
                 }}
             />
         </div>

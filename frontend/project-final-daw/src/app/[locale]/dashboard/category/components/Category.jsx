@@ -5,6 +5,7 @@ import { useFinancial } from "@/app/context/FinancialContext.js";
 import { useSpends } from "@/app/context/SpendContext.js";
 import { useState, useEffect } from "react";
 import ConfirmationModal from "@/components/ConfirmationModal";
+import { useTranslations } from "next-intl";
 import {
     Plus,
     ShoppingCart,
@@ -17,6 +18,8 @@ import {
 } from "lucide-react";
 
 const Category = ({ category, session }) => {
+    const t = useTranslations("categories");
+    const tCommon = useTranslations("common");
     const {
         setIsCategory,
         setIsUpdatedPushed,
@@ -252,7 +255,7 @@ const Category = ({ category, session }) => {
                                 setShowDeleteModal(true);
                             }}
                         >
-                            Eliminar Categoria
+                            {t("deleteCategoryButton")}
                         </button>
                         <button
                             className="flex-1 px-3 py-2 text-xs sm:text-sm bg-slate-900 dark:bg-slate-600 hover:bg-slate-800 dark:hover:bg-slate-500 text-white rounded-lg transition-colors"
@@ -262,7 +265,7 @@ const Category = ({ category, session }) => {
                                 setIsCategoryId(_id);
                             }}
                         >
-                            Añadir gasto
+                            {t("addExpenseButton")}
                         </button>
                     </div>
                 </div>
@@ -273,17 +276,17 @@ const Category = ({ category, session }) => {
                 isOpen={showDeleteModal}
                 onClose={() => setShowDeleteModal(false)}
                 onConfirm={handleClickRemoveCategory}
-                title="Eliminar Categoría"
-                message="¿Estás seguro de que quieres eliminar esta categoría?"
-                confirmText="Eliminar"
-                cancelText="Cancelar"
+                title={t("deleteCategoryTitle")}
+                message={t("deleteCategoryConfirm")}
+                confirmText={tCommon("delete")}
+                cancelText={tCommon("cancel")}
                 type="danger"
                 isLoading={isDeleting}
                 itemDetails={{
-                    "Nombre": name,
-                    "Presupuesto mensual": `€${monthly_budget}`,
-                    "Tipo": category_type,
-                    "Gastado este mes": `€${isAmountSpendByCategory}`,
+                    [t("categoryName")]: name,
+                    [t("monthlyBudgetLabel")]: `€${monthly_budget}`,
+                    [t("categoryTypeLabel")]: category_type,
+                    [t("spentThisMonth")]: `€${isAmountSpendByCategory}`,
                 }}
             />
         </>

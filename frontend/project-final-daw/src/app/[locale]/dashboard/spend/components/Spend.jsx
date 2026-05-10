@@ -1,3 +1,4 @@
+import { useState } from "react";
 import {
     Plus,
     ShoppingCart,
@@ -14,12 +15,18 @@ import {
     Calendar,
     CreditCard,
     TriangleAlert,
+    Trash2,
+    Edit,
 } from "lucide-react";
 import { useIconSpendCategory } from "@/app/hooks/spend/useIconSpendCategory.js";
 import { useSpends } from "@/app/context/SpendContext.js";
 import { useBlur } from "@/app/context/BlurContext";
+import ConfirmationModal from "@/components/ConfirmationModal";
+import { useTranslations } from "next-intl";
 
 const Spend = ({ spend, session }) => {
+    const t = useTranslations("expenses");
+    const tCommon = useTranslations("common");
     const {
         //Estado
         isCategoryId,
@@ -39,12 +46,16 @@ const Spend = ({ spend, session }) => {
         setIsSpendDate,
         //Crud
         postNewSpend,
+        deleteSpend,
         isCategoryType,
         setIsSpend,
     } = useSpends();
     const { isIconSpendCategory, isCategoryName } = useIconSpendCategory(spend.category_id);
     const { isBlurred } = useBlur();
     const Icon = isIconSpendCategory;
+
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [isDeleting, setIsDeleting] = useState(false);
 
     const handleClickUpdate = () => {
         setIsSpend(spend);
@@ -56,11 +67,22 @@ const Spend = ({ spend, session }) => {
         console.log("SPEND DATE", spend);
     };
 
+    const handleDeleteSpend = async () => {
+        setIsDeleting(true);
+        try {
+            await deleteSpend(spend._id, session);
+            setShowDeleteModal(false);
+        } catch (err) {
+            console.error("Error eliminando gasto:", err);
+        } finally {
+            setIsDeleting(false);
+        }
+    };
+
     return (
         <>
             <div
-                className="bg-white dark:bg-slate-700 rounded-xl shadow-xl hover:shadow-md transition-all duration-300 cursor-pointer group overflow-hidden flex-shrink-0"
-                onClick={handleClickUpdate}
+                className="bg-white dark:bg-slate-700 rounded-xl shadow-xl hover:shadow-md transition-all duration-300 group overflow-hidden flex-shrink-0"
             >
                 <div className="flex">
                     {/* Línea de color lateral */}
@@ -110,9 +132,59 @@ const Spend = ({ spend, session }) => {
                                 </div>
                             )}
                         </div>
+
+                        {/* Botones de acción en hover */}
+                        <div className="border-t border-slate-100 dark:border-slate-700 mt-3 pt-3 opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity duration-200">
+                            <div className="flex flex-col sm:flex-row gap-2">
+                                <button
+                                    className="flex-1 flex items-center justify-center gap-2 px-3 py-2 text-xs sm:text-sm bg-slate-50 dark:bg-slate-700 hover:bg-red-100 dark:hover:bg-red-900/30 text-slate-700 dark:text-slate-300 hover:text-red-500 dark:hover:text-red-400 rounded-lg transition-colors"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setShowDeleteModal(true);
+                                    }}
+                                >
+                                    <Trash2 className="w-4 h-4" />
+                                    {t("deleteExpenseButton")}
+                                </button>
+                                <button
+                                    className="flex-1 flex items-center justify-center gap-2 px-3 py-2 text-xs sm:text-sm bg-slate-900 dark:bg-slate-600 hover:bg-slate-800 dark:hover:bg-slate-500 text-white rounded-lg transition-colors"
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleClickUpdate();
+                                    }}
+                                >
+                                    <Edit className="w-4 h-4" />
+                                    {t("editExpenseButton")}
+                                </button>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+
+            {/* Modal de confirmación para eliminar gasto */}
+            <ConfirmationModal
+                isOpen={showDeleteModal}
+                onClose={() => setShowDeleteModal(false)}
+                onConfirm={handleDeleteSpend}
+                title={t("deleteExpenseTitle")}
+                message={t("deleteExpenseConfirm")}
+                confirmText={tCommon("delete")}
+                cancelText={tCommon("cancel")}
+                type="danger"
+                isLoading={isDeleting}
+                itemDetails={{
+                    [t("expenseDescription")]: spend.description,
+                    [t("expenseCategory")]: isCategoryName,
+                    [t("expenseAmount")]: `€${spend.amount.toFixed(2)}`,
+                    [t("expenseDate")]: new Date(spend.date).toLocaleDateString("es-ES", {
+                        day: "2-digit",
+                        month: "long",
+                        year: "numeric"
+                    }),
+                    [t("expensePaymentType")]: spend.payment_type || t("noPaymentType")
+                }}
+            />
         </>
     );
 };

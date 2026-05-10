@@ -20,7 +20,7 @@ const ConfirmationModal = ({
         danger: {
             iconBg: "bg-red-100 dark:bg-red-900/30",
             iconColor: "text-red-600 dark:text-red-400",
-            confirmBg: "bg-red-600 hover:bg-red-700",
+            confirmBg: "bg-red-300 hover:bg-red-500",
             Icon: Trash2,
         },
         warning: {
@@ -74,13 +74,13 @@ const ConfirmationModal = ({
                     )}
 
                     {/* Warning message for deletions */}
-                    {type === "danger" && (
+                    {/* {type === "danger" && (
                         <div className="mt-4 p-3 bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg">
                             <p className="text-sm text-red-800 dark:text-red-300">
                                 ⚠️ Esta acción no se puede deshacer.
                             </p>
                         </div>
-                    )}
+                    )} */}
                 </div>
 
                 {/* Actions */}
@@ -95,7 +95,7 @@ const ConfirmationModal = ({
                     <button
                         onClick={onConfirm}
                         disabled={isLoading}
-                        className={`flex-1 px-4 py-2.5 ${style.confirmBg} text-white rounded-lg transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2`}
+                        className={`flex-1 px-4 py-2.5 ${style.confirmBg} text-slate-800 hover:text-white rounded-lg transition-colors font-medium disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2`}
                     >
                         {isLoading ? (
                             <>

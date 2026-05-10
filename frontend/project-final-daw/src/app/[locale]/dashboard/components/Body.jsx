@@ -23,7 +23,7 @@ const Body = () => {
     const { isFormCategoryOpen } = useCategories();
     const { isFormSpendOpen } = useSpends();
     const { isFormSavingOpen } = useSaving();
-    const { isFormModifyPercentageOpen } = useFinancial();
+    const { isFormModifyPercentageOpen, setIsFormModifyPercentageOpen } = useFinancial();
     const { isFormInversionOpen } = useInversion();
 
     return (
@@ -54,7 +54,7 @@ const Body = () => {
                 {isFormModifyPercentageOpen && (
                     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
                         <div className="w-full max-w-xl max-h-[90vh] overflow-y-auto rounded-xl bg-white dark:bg-slate-800 dark:border-2 dark:border-slate-700 p-4 sm:p-6">
-                            <FormModifyPercentage />
+                            <FormModifyPercentage onClose={() => setIsFormModifyPercentageOpen(false)} />
                         </div>
                     </div>
                 )}
