@@ -104,7 +104,7 @@ const GridCategories = () => {
                     <div className="max-h-[800px] grid grid-cols-1 sm:grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 overflow-y-auto no-scrollbar">
                         {isCategories?.map((category) => (
                             <Category
-                                key={category.id}
+                                key={category._id}
                                 category={category}
                                 session={session}
                             />

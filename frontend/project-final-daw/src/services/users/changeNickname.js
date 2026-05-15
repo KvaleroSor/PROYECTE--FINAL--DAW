@@ -11,6 +11,12 @@ const changeNickname = async (newName, accessToken) => {
             }),
         });
 
+        // Verificar si la respuesta es JSON
+        const contentType = response.headers.get("content-type");
+        if (!contentType || !contentType.includes("application/json")) {
+            throw new Error("El servidor no está disponible. Por favor, intenta más tarde.");
+        }
+
         const data = await response.json();
 
         if (!response.ok) {
