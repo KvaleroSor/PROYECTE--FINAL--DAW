@@ -109,22 +109,32 @@
 
 **Dispositivos objetivo:**
 
-- [ ] **Móvil** (320px - 480px)
-- [ ] **Tablet** (481px - 768px)
-- [ ] **Laptop** (769px - 1024px)
-- [ ] **Desktop** (1025px - 1200px)
-- [ ] **Desktop grande** (1201px+)
+- [x] **Móvil** (320px - 480px)
+- [x] **Tablet** (481px - 768px)
+- [x] **Laptop** (769px - 1024px)
+- [x] **Desktop** (1025px - 1200px)
+- [x] **Desktop grande** (1201px+)
 
-**Áreas a revisar:**
+**Áreas revisadas y optimizadas:**
 
-- Sidebar (colapsable en móvil)
-- Cards del dashboard
-- Formularios
-- Tablas y listados
-- Gráficos
-- Header y navegación
+- [x] Sidebar (colapsable en móvil con hamburger menu)
+- [x] Cards del dashboard (textos escalados, padding adaptativo)
+- [x] Formularios (touch-friendly, inputs apilados en móvil)
+- [x] Tablas y listados (grid responsive)
+- [x] Gráficos (contenedores con max-width)
+- [x] Header y navegación (compacto en móvil, completo en desktop)
 
-**Estado:** [ ] Pendiente
+**Cambios implementados:**
+
+- Header optimizado (padding, gaps, tamaños de texto)
+- CardsMainCategories con textos escalados progresivamente
+- GridCategories con layout flexible
+- FormSavingGoal con inputs apilados en móvil
+- Todos los botones touch-friendly (min 44px)
+
+**Documentación:** Ver `docs/RESPONSIVE_FIXES.md` para detalles completos
+
+**Estado:** [x] Completado
 
 ---
 

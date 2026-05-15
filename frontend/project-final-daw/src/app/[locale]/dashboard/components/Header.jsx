@@ -28,7 +28,6 @@ const Header = () => {
                     <div className="flex flex-row items-center gap-4 ml-0 lg:ml-4">
                         <BalanceLogoCircle className="w-10 h-10" />
                         <h1 className="text-xl sm:text-2xl lg:text-3xl text-slate-900 dark:text-slate-100">{t("title")}</h1>
-                        {/* <p className="text-xs sm:text-sm text-slate-600 dark:text-slate-400 hidden sm:block">{t("subtitle")}</p> */}
                     </div>
                     <div className="flex justify-end items-center gap-2 sm:gap-2 md:gap-2 rounded-2xl bg-white dark:bg-slate-700 shadow-lg hover:shadow-md transition-all duration-300 mr-4 pl-2">
                         {/* <Search className="w-4 h-4 sm:w-5 sm:h-5 text-gray-700 dark:text-gray-300 hidden sm:block" /> */}

@@ -269,6 +269,10 @@
     },
     "investments": {
         "title": "Inversions",
+        "loading": "Carregant inversions...",
+        "recovered": "Recuperat",
+        "profits": "Beneficis",
+        "showing": "mostrant",
         "addInvestment": "Afegir inversió",
         "editInvestment": "Editar inversió",
         "deleteInvestment": "Eliminar inversió",

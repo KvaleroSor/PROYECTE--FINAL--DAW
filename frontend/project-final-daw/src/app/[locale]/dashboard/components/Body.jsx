@@ -65,13 +65,13 @@ const Body = () => {
                         </div>
                     </div>
                 )}
-                <div className="flex flex-col justify-center items-center gap-4 px-2 py-3 sm:px-4 sm:py-3 lg:px-4 lg:py-4 w-full">
+                <div className="w-full px-2 sm:px-4 lg:px-4">
                     <CardsMainCategories />
                 </div>
-                <div className="pt-4 pb-4 px-2 sm:px-4 lg:px-6 w-full">
+                <div className="w-full px-2 sm:px-4 lg:px-4 mt-8">
                     <GridCategories />
                 </div>
-                <div className="w-full flex flex-col lg:flex-row gap-3 lg:gap-6 px-2 py-4 sm:px-4 lg:px-6">
+                <div className="w-full flex flex-col lg:flex-row gap-3 lg:gap-6 px-2 sm:px-4 lg:px-4 mt-8">
                     <div className="w-full lg:w-[60%] min-w-0">
                         {/* <Saving /> */}
                         <GridSpends />
@@ -81,7 +81,7 @@ const Body = () => {
                         <GraphicPercentatgeSpend />
                     </div>
                 </div>
-                <div className="px-2 py-4 sm:px-4 lg:px-6 w-full">
+                <div className="w-full px-2 sm:px-4 lg:px-4 mt-8">
                     <InvestmentList />
                 </div>
             </div>

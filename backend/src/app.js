@@ -1,5 +1,7 @@
 import express from "express";
 import cors from "cors";
+import swaggerUi from "swagger-ui-express";
+import { swaggerSpec } from "./config/swagger.js";
 
 //USERS
 import postUser from "./api/routes_users/postNewUser.js";
@@ -63,6 +65,25 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
+
+/**
+ * 📚 Swagger API Documentation
+ * Accesible en: http://localhost:3003/api-docs
+ */
+app.use(
+    "/api-docs",
+    swaggerUi.serve,
+    swaggerUi.setup(swaggerSpec, {
+        customCss: ".swagger-ui .topbar { display: none }",
+        customSiteTitle: "Balance.app API Docs",
+    }),
+);
+
+// Endpoint para obtener el spec en JSON
+app.get("/api-docs.json", (req, res) => {
+    res.setHeader("Content-Type", "application/json");
+    res.send(swaggerSpec);
+});
 
 /**
  * Routes for users 🧑🏽‍💻👩🏽‍💻

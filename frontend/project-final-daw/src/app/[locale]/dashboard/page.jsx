@@ -14,5 +14,10 @@ export default async function DashboardPage({ params }) {
     if (session?.user?.role === "admin") {
         redirect(`/${locale}/dashboard/admin`);
     }
-    return <Body />;
+
+    return (
+        <div className="w-full min-h-screen bg-white dark:bg-slate-900 py-8 transition-colors duration-300">
+            <Body />
+        </div>
+    );
 }

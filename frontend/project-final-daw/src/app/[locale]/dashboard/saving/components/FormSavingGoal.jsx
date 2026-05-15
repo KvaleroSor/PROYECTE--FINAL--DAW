@@ -243,7 +243,7 @@ const FormSavingGoal = () => {
             </div>
 
             {/* Monto objetivo y actual */}
-            <div className="w-full grid grid-cols-2 gap-4">
+            <div className="w-full grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div className="flex flex-col gap-2">
                     <label className="flex items-center gap-2 font-medium text-slate-900 dark:text-slate-100">
                         <TrendingUp className="w-4 h-4" />
@@ -322,13 +322,13 @@ const FormSavingGoal = () => {
             {/* Prioridad */}
             <div className="w-full flex flex-col gap-2">
                 <label className="font-medium text-slate-900 dark:text-slate-100">Prioridad</label>
-                <div className="flex gap-3">
+                <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
                     {priorities.map((priority) => (
                         <button
                             key={priority.value}
                             type="button"
                             onClick={() => setIsPriority(priority.value)}
-                            className={`border-2 flex flex-1 justify-center items-center p-5 rounded-xl gap-2 cursor-pointer transition-colors ${isPriority === priority.value
+                            className={`border-2 flex flex-1 justify-center items-center p-3 sm:p-5 rounded-xl gap-2 cursor-pointer transition-colors ${isPriority === priority.value
                                 ? "bg-slate-800 dark:bg-slate-600 text-slate-100 shadow-md"
                                 : "border-slate-300 dark:border-slate-600 hover:border-slate-800 dark:hover:border-slate-400 bg-gray-100 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 text-slate-800 dark:text-slate-200"
                                 }`}

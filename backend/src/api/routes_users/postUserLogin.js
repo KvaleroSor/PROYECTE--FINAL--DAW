@@ -5,9 +5,70 @@ import jwt from "jsonwebtoken";
 
 const router = Router();
 
+/**
+ * @swagger
+ * /api/users/login:
+ *   post:
+ *     summary: Login de usuario
+ *     description: Valida las credenciales y devuelve un token JWT para autenticar las siguientes peticiones
+ *     tags: [Users]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 format: email
+ *                 example: juan@example.com
+ *               password:
+ *                 type: string
+ *                 format: password
+ *                 example: password123
+ *     responses:
+ *       200:
+ *         description: Todo OK, devuelve los datos del usuario y el token
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 id:
+ *                   type: string
+ *                   example: 507f1f77bcf86cd799439011
+ *                 email:
+ *                   type: string
+ *                   example: juan@example.com
+ *                 name:
+ *                   type: string
+ *                   example: Juan Pérez
+ *                 role:
+ *                   type: string
+ *                   example: user
+ *                 token:
+ *                   type: string
+ *                   example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+ *       401:
+ *         description: Email o contraseña incorrectos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ *       500:
+ *         description: Error interno del servidor
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Error'
+ */
 router.post("/login", async (req, res) => {
     try {
-        const { email, password } = req.body; 
+        const { email, password } = req.body;
 
         //Consultem en la BBDD que l´usuari "EXISTISCA".
         const user = await postUserLogin(email);
@@ -24,7 +85,7 @@ router.post("/login", async (req, res) => {
         const isValid = await verifyPassword(user.password_hash, password);
 
         //Creem el token
-        if (!process.env.JWT_SECRET) {        
+        if (!process.env.JWT_SECRET) {
             throw new Error("JWT_SECRET not configured");
         }
 
@@ -37,7 +98,7 @@ router.post("/login", async (req, res) => {
         const token = jwt.sign(
             { userId: user._id, role: user.role },
             process.env.JWT_SECRET,
-            { expiresIn: "1d" }
+            { expiresIn: "1d" },
         );
 
         const userObj = {
@@ -54,7 +115,7 @@ router.post("/login", async (req, res) => {
         console.error("💥 LOGIN ERROR:", err.message);
         res.status(500).json({
             mensaje: `❌ ERROR - INTERNAL ERROR | SERVER`,
-            error: err.message, 
+            error: err.message,
         });
     }
 });

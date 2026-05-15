@@ -65,9 +65,6 @@ const CardsMainCategories = () => {
                             </div>
                             <h1 className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">{t("spent")}</h1>
                         </div>
-                        {/* <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1">
-                            €{Number(isTotalSpends).toFixed(2)}
-                        </h1> */}
                         {isBlurred ? <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1 blur-md select-none">
                             €{Number(isTotalSpends).toFixed(2)}
                         </h1> :
@@ -86,9 +83,6 @@ const CardsMainCategories = () => {
                             </div>
                             <h1 className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">{t("available")}</h1>
                         </div>
-                        {/* <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1">
-                            €{Number(isAvailableFixed).toFixed(2)}
-                        </h1> */}
                         {isBlurred ? <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1 blur-md select-none">
                             €{Number(isAvailableFixed).toFixed(2)}
                         </h1> :
@@ -107,9 +101,6 @@ const CardsMainCategories = () => {
                             </div>
                             <h1 className="text-xs sm:text-sm text-slate-500 dark:text-slate-400">{t("available")}</h1>
                         </div>
-                        {/* <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1">
-                            €{Number(isAvailableLeisure).toFixed(2)}
-                        </h1> */}
                         {isBlurred ? <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 mb-1 blur-md select-none">
                             €{Number(isAvailableLeisure).toFixed(2)}
                         </h1> :

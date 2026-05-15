@@ -106,6 +106,23 @@ Nos situaremos en el directorio de "frontend/project-final-daw"
 - https://proyecte-final-daw.onrender.com
 ```
 
-## 🔗 Enlace a Guía de Estilos
+## � Documentación API
+
+La API REST está completamente documentada con **Swagger/OpenAPI 3.0**
+
+### **Acceso a la documentación interactiva:**
+
+- **Desarrollo**: http://localhost:3003/api-docs
+- **Producción**: https://proyecte-final-daw.onrender.com/api-docs
+
+### **Recursos:**
+
+- [Documentación API Completa](./backend/API_DOCUMENTATION.md)
+- [Especificación OpenAPI JSON](http://localhost:3003/api-docs.json)
+
+---
+
+## 🔗 Enlaces Adicionales
 
 - [Guía de Estilos](./docs/GUIA_ESTILOS_PRESENTACION.md)
+- [Documentación de Testing](./frontend/project-final-daw/TESTING.md)

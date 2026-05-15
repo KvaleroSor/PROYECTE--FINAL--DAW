@@ -269,6 +269,10 @@
     },
     "investments": {
         "title": "Investments",
+        "loading": "Loading investments...",
+        "recovered": "Recovered",
+        "profits": "Profits",
+        "showing": "showing",
         "addInvestment": "Add investment",
         "editInvestment": "Edit investment",
         "deleteInvestment": "Delete investment",
