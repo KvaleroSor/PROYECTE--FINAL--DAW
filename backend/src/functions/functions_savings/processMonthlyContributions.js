@@ -58,6 +58,21 @@ const processMonthlyContributions = async (user_id, savingFromNomina) => {
         const updates = [];
 
         for (const goal of activeGoals) {
+            // Verificar si ya existe una contribución para este mes/año
+            const existingContribution =
+                goal.monthly_contributions_history?.find(
+                    (contribution) =>
+                        contribution.month === currentMonth &&
+                        contribution.year === currentYear,
+                );
+
+            if (existingContribution) {
+                console.log(
+                    `⚠️ Ya existe una contribución para ${goal.goal_name} en ${currentMonth + 1}/${currentYear}. Saltando...`,
+                );
+                continue; // Saltar esta meta, ya tiene contribución este mes
+            }
+
             // Calcular la contribución mensual USANDO AHORRO NETO (después de imprevistos)
             const monthlyContribution =
                 (goal.percentage_allocation / 100) * netSaving;
@@ -95,6 +110,9 @@ const processMonthlyContributions = async (user_id, savingFromNomina) => {
             );
 
             updates.push(updated);
+            console.log(
+                `✅ Contribución procesada para ${goal.goal_name}: €${monthlyContribution.toFixed(2)}`,
+            );
         }
 
         // Calcular cuánto se distribuyó a las metas

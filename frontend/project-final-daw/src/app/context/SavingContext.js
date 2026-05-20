@@ -309,22 +309,33 @@ export const SavingProvider = ({ children }) => {
     const manualProcessContributions = async () => {
         if (!session?.user?.user_id || !isSavingFromNomina) {
             setError("No se puede procesar: datos insuficientes");
-            return;
+            return { success: false, alreadyProcessed: false };
         }
 
         try {
             setIsLoading(true);
-            await processMonthlyContributions(isSavingFromNomina, session);
+            const result = await processMonthlyContributions(isSavingFromNomina, session);
+
+            // Verificar si ya se procesaron las contribuciones este mes
+            if (result.alreadyProcessed) {
+                console.log("⚠️ Ya existen contribuciones para este mes");
+                await fetchSavings();
+                await fetchContributionHistory();
+                return { success: true, alreadyProcessed: true, message: result.mensaje };
+            }
 
             // Actualizar la fecha de último procesamiento
             const lastProcessedKey = `lastProcessed_${session.user.user_id}`;
             localStorage.setItem(lastProcessedKey, new Date().toISOString());
 
             await fetchSavings();
+            await fetchContributionHistory();
             console.log("✅ Contribuciones procesadas manualmente");
+            return { success: true, alreadyProcessed: false, message: result.mensaje };
         } catch (err) {
             console.error("❌ Error al procesar contribuciones:", err);
             setError(err.message);
+            return { success: false, alreadyProcessed: false, error: err.message };
         } finally {
             setIsLoading(false);
         }

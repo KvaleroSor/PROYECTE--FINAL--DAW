@@ -40,17 +40,26 @@ const MonthlyContributionStatus = () => {
         });
     };
 
-    //💡 REVISAR LA FORMA DE MOSTRAR PARA LA CONFIRMACIÓN ❌
     const handleManualProcess = async () => {
         if (window.confirm(t("processContributionsConfirm"))) {
-            await manualProcessContributions();
-            // Actualizar las fechas
-            const date = new Date();
-            setLastProcessed(date);
-            const next = new Date(date);
-            next.setMonth(next.getMonth() + 1);
-            next.setDate(1);
-            setNextProcessing(next);
+            const result = await manualProcessContributions();
+
+            if (result.success) {
+                if (result.alreadyProcessed) {
+                    alert("⚠️ Ya existen contribuciones para este mes. No se pueden procesar contribuciones duplicadas.");
+                } else {
+                    alert("✅ Contribuciones procesadas exitosamente");
+                    // Actualizar las fechas
+                    const date = new Date();
+                    setLastProcessed(date);
+                    const next = new Date(date);
+                    next.setMonth(next.getMonth() + 1);
+                    next.setDate(1);
+                    setNextProcessing(next);
+                }
+            } else {
+                alert("❌ Error al procesar contribuciones: " + (result.error || "Error desconocido"));
+            }
         }
     };
 

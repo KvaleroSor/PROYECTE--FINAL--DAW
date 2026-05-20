@@ -3,6 +3,7 @@
 import { useCategories } from "@/app/context/CategoryContext.js";
 import { useFinancial } from "@/app/context/FinancialContext.js";
 import { useSpends } from "@/app/context/SpendContext.js";
+import { useBlur } from "@/app/context/BlurContext";
 import { useState, useEffect } from "react";
 import ConfirmationModal from "@/components/ConfirmationModal";
 import { useTranslations } from "next-intl";
@@ -45,6 +46,7 @@ const Category = ({ category, session }) => {
         setIsFormSpendOpen,
         setIsCategoryId,
     } = useSpends();
+    const { isBlurred } = useBlur();
 
     const [isCurrentPercentagePerCategory, setIsCurrentPercentagePerCategory] =
         useState(0);
@@ -184,14 +186,24 @@ const Category = ({ category, session }) => {
                         <div className="w-full flex-col text-gray-700 dark:text-gray-300">
                             <h3 className="mb-2 text-base sm:text-lg lg:text-xl text-slate-900 dark:text-slate-100 truncate">{name}</h3>
                             <div className="flex flex-row gap-1 sm:gap-2 items-baseline">
-                                <h1 className="text-xl sm:text-2xl mb-2 sm:mb-4 text-slate-900 dark:text-slate-100">
-                                    €{monthly_budget}
-                                </h1>
+                                {isBlurred ? (
+                                    <h1 className="text-xl sm:text-2xl mb-2 sm:mb-4 text-slate-900 dark:text-slate-100 blur-md select-none">
+                                        €{monthly_budget}
+                                    </h1>
+                                ) : (
+                                    <h1 className="text-xl sm:text-2xl mb-2 sm:mb-4 text-slate-900 dark:text-slate-100">
+                                        €{monthly_budget}
+                                    </h1>
+                                )}
                                 <p className="text-xs sm:text-sm text-slate-400 dark:text-slate-500">/mes</p>
                             </div>
                             <div className="mb-2 flex flex-row justify-between text-xs sm:text-sm text-slate-700 dark:text-slate-300">
                                 <p>Gastado</p>
-                                <p>€{isAmountSpendByCategory}</p>
+                                {isBlurred ? (
+                                    <p className="blur-md select-none">€{isAmountSpendByCategory}</p>
+                                ) : (
+                                    <p>€{isAmountSpendByCategory}</p>
+                                )}
                             </div>
                             <div className="w-full flex flex-col justify-center items-start gap-2 sm:gap-3">
                                 <div className="w-full h-2 sm:h-3 bg-slate-100 dark:bg-slate-700 rounded-full border-2 dark:border-slate-800">
@@ -226,19 +238,37 @@ const Category = ({ category, session }) => {
                                             monthly_budget,
                                             isAmountSpendByCategory
                                         ) ? (
-                                            <span className="text-red-500 dark:text-red-400 text-sm sm:text-base whitespace-nowrap">
-                                                €{Number(
-                                                    monthly_budget -
-                                                    isAmountSpendByCategory
-                                                ).toFixed(2)} excedido
-                                            </span>
+                                            isBlurred ? (
+                                                <span className="text-red-500 dark:text-red-400 text-sm sm:text-base whitespace-nowrap blur-md select-none">
+                                                    €{Number(
+                                                        monthly_budget -
+                                                        isAmountSpendByCategory
+                                                    ).toFixed(2)} excedido
+                                                </span>
+                                            ) : (
+                                                <span className="text-red-500 dark:text-red-400 text-sm sm:text-base whitespace-nowrap">
+                                                    €{Number(
+                                                        monthly_budget -
+                                                        isAmountSpendByCategory
+                                                    ).toFixed(2)} excedido
+                                                </span>
+                                            )
                                         ) : (
-                                            <span className="text-slate-700 dark:text-slate-300 text-sm sm:text-base whitespace-nowrap">
-                                                €{Number(
-                                                    monthly_budget -
-                                                    isAmountSpendByCategory
-                                                ).toFixed(2)} disponible
-                                            </span>
+                                            isBlurred ? (
+                                                <span className="text-slate-700 dark:text-slate-300 text-sm sm:text-base whitespace-nowrap blur-md select-none">
+                                                    €{Number(
+                                                        monthly_budget -
+                                                        isAmountSpendByCategory
+                                                    ).toFixed(2)} disponible
+                                                </span>
+                                            ) : (
+                                                <span className="text-slate-700 dark:text-slate-300 text-sm sm:text-base whitespace-nowrap">
+                                                    €{Number(
+                                                        monthly_budget -
+                                                        isAmountSpendByCategory
+                                                    ).toFixed(2)} disponible
+                                                </span>
+                                            )
                                         )}
                                     </div>
                                 </div>

@@ -3,6 +3,7 @@
 import { useCategories } from "@/app/context/CategoryContext.js";
 import { useSpends } from "@/app/context/SpendContext.js";
 import { useFinancial } from "@/app/context/FinancialContext.js";
+import { useBlur } from "@/app/context/BlurContext";
 import { useState, useEffect } from "react";
 import Category from "./Category.jsx";
 import { useSession } from "next-auth/react";
@@ -15,6 +16,7 @@ const GridCategories = () => {
     const { isCategories, isLoading, setIsFormCategoryOpen, fetchCategories } =
         useCategories();
     const { isTotalAmountToSpendFixedAndLeisure } = useFinancial();
+    const { isBlurred } = useBlur();
     const [isData, setIsData] = useState(null);
     const [isShowTotalSpend, setIsShowTotalSpend] = useState(0);
     const [isShowTotalAvailable, setIsShowTotalAvailable] = useState(0);
@@ -76,17 +78,35 @@ const GridCategories = () => {
                         </button>
                     </div>
                     <div className="flex flex-col items-end">
-                        <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100">
-                            €{Number(isShowTotalSpend).toFixed(2)}
-                        </h1>
-                        {evaluateTotalAmountToSpend() !== false ? (
-                            <h1 className="text-sm sm:text-base text-red-500 dark:text-red-400">
-                                {t("of")} €{Number(isTotalAmountToSpendFixedAndLeisure).toFixed(2)}
+                        {isBlurred ? (
+                            <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100 blur-md select-none">
+                                €{Number(isShowTotalSpend).toFixed(2)}
                             </h1>
                         ) : (
-                            <h1 className="text-sm sm:text-base text-slate-500 dark:text-slate-400">
-                                {t("of")} €{Number(isTotalAmountToSpendFixedAndLeisure).toFixed(2)}
+                            <h1 className="text-2xl sm:text-3xl lg:text-4xl text-slate-900 dark:text-slate-100">
+                                €{Number(isShowTotalSpend).toFixed(2)}
                             </h1>
+                        )}
+                        {evaluateTotalAmountToSpend() !== false ? (
+                            isBlurred ? (
+                                <h1 className="text-sm sm:text-base text-red-500 dark:text-red-400 blur-md select-none">
+                                    {t("of")} €{Number(isTotalAmountToSpendFixedAndLeisure).toFixed(2)}
+                                </h1>
+                            ) : (
+                                <h1 className="text-sm sm:text-base text-red-500 dark:text-red-400">
+                                    {t("of")} €{Number(isTotalAmountToSpendFixedAndLeisure).toFixed(2)}
+                                </h1>
+                            )
+                        ) : (
+                            isBlurred ? (
+                                <h1 className="text-sm sm:text-base text-slate-500 dark:text-slate-400 blur-md select-none">
+                                    {t("of")} €{Number(isTotalAmountToSpendFixedAndLeisure).toFixed(2)}
+                                </h1>
+                            ) : (
+                                <h1 className="text-sm sm:text-base text-slate-500 dark:text-slate-400">
+                                    {t("of")} €{Number(isTotalAmountToSpendFixedAndLeisure).toFixed(2)}
+                                </h1>
+                            )
                         )}
                     </div>
                 </div>
