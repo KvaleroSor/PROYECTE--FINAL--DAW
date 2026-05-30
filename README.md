@@ -1,4 +1,4 @@
-# 💰 App de Gestión Financiera Personal | Balance.app
+# 💰 App de Gestión Financiera Personal | Numoes.app
 
 Aplicación web para ayudar a personas sin conocimientos financieros a **gestionar su dinero de forma sencilla**, distribuyendo automáticamente su nómina entre **ahorro, gastos fijos, ocio e inversión**.
 
